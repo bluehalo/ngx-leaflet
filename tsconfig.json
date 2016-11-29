@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"moduleResolution": "node",
+
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"noEmitHelpers": false,
+		"noImplicitAny": true,
+		"declaration": true,
+		"skipLibCheck": true,
+		"stripInternal": true,
+		"removeComments": false
+
+	},
+	
+	"include": [
+		"src/**/*"
+	],
+	
+	"exclude": [
+		"node_modules",
+		"config",
+		"examples",
+		"dist"
+	]
+}
