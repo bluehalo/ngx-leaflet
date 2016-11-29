@@ -9,4 +9,4 @@ import { NgModule } from '@angular/core';
 	providers: [
 	]
 })
-export class LeafletModule { }
+export class TemplateModule { }

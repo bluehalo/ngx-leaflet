@@ -105,5 +105,5 @@ gulp.task('rollup-js', () => {
 
 gulp.task('build', (done) => { runSequence('validate-ts', 'build-ts', 'build-js', done); } );
 
-// Default task builds and tests
-gulp.task('default', [ 'test' ]);
+// Default task builds
+gulp.task('default', [ 'build' ]);
