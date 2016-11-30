@@ -22,6 +22,7 @@ import 'ts-helpers';
 import 'reflect-metadata';
 import 'zone.js';
 
+// Global Imports
 
 // Angular2 Imports
 import '@angular/platform-browser';
@@ -29,6 +30,7 @@ import '@angular/platform-browser-dynamic';
 import '@angular/core';
 import '@angular/common';
 
+// Angular2 Third-Party
 
 // Other Dependencies
 import 'rxjs';

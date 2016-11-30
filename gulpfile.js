@@ -12,7 +12,6 @@ let
 	webpack = require('webpack'),
 	webpackDevServer = require('webpack-dev-server'),
 
-
 	plugins = gulpLoadPlugins(),
 	pkg = require('./package.json'),
 	assets = require('./config/assets');
@@ -89,9 +88,7 @@ gulp.task('rollup-js', () => {
 				sourceMap: true,
 				banner: bannerString,
 				globals: {
-					'@angular/core': 'ng.core',
-					'@asymmetrik/sentio': 'sentio',
-					'd3': 'd3'
+					'@angular/core': 'ng.core'
 				}
 			});
 		});
@@ -123,6 +120,7 @@ gulp.task('webpack-dev-server', (done) => {
  * Main Tasks
  * --------------------------
  */
+
 gulp.task('develop', [ 'webpack-dev-server' ]);
 
 gulp.task('build', (done) => { runSequence('validate-ts', 'build-ts', 'build-js', done); } );
