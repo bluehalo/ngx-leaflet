@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 
-import { ExampleComponent } from './example.component';
+import { LeafletDirective } from './leaflet.directive';
 
 @NgModule({
 	imports: [],
 	exports: [
-		ExampleComponent
+		LeafletDirective
 	],
 	declarations: [
-		ExampleComponent
+		LeafletDirective
 	],
 	providers: [
 	]
 })
-export class ExampleModule { }
+export class LeafletModule { }

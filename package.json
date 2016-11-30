@@ -1,19 +1,19 @@
 {
-	"name": "@asymmetrik/angular2-template",
-	"artifactName": "angular2-template",
-	"description": "Angular 2 components template project",
-	"version": "0.0.3",
+	"name": "@asymmetrik/angular2-leaflet",
+	"artifactName": "angular2-leaflet",
+	"description": "Angular 2 components for Leaflet",
+	"version": "0.0.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
 
-	"main": "dist/bundles/angular2-template.js",
+	"main": "dist/bundles/angular2-leaflet.js",
 	"module": "src/index.ts",
 	"typings": "dist/index.d.ts",
 
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Asymmetrik/angular2-template.git"
+		"url": "https://github.com/Asymmetrik/angular2-leaflet.git"
 	},
 
 	"peerDependencies": {
