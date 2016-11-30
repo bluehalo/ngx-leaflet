@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { ExampleDemoComponent } from './example-demo.component';
-import { ExampleModule } from '../../../example/example.module'
+import { ExampleModule } from '../../../example/example.module';
 
 @NgModule({
 	imports: [
