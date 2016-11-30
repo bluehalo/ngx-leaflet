@@ -13,7 +13,8 @@ module.exports = {
 
 	// Source files and directories
 	src: {
-		ts: [ 'src/**/*.ts' ]
+		allTs: [ 'src/**/*.ts' ],
+		ts: [ 'src/**/*.ts', '!src/demo/**/*.ts' ]
 	},
 
 	// Distribution related items

@@ -9,6 +9,9 @@ let
 	path = require('path'),
 	rollup = require('rollup'),
 	runSequence = require('run-sequence'),
+	webpack = require('webpack'),
+	webpackDevServer = require('webpack-dev-server'),
+
 
 	plugins = gulpLoadPlugins(),
 	pkg = require('./package.json'),
@@ -29,7 +32,7 @@ gulp.task('validate-ts', () => {
 	var config = require(path.resolve('./config/tslint.conf.js'));
 	config.formatter = 'prose';
 
-	return gulp.src(assets.src.ts)
+	return gulp.src(assets.src.allTs)
 		// Lint the Typescript
 		.pipe(plugins.tslint(config))
 		.pipe(plugins.tslint.report({
@@ -45,7 +48,7 @@ gulp.task('validate-ts', () => {
  */
 
 // Build JS from the TS source
-var tsProject = plugins.typescript.createProject('tsconfig.json');
+var tsProject = plugins.typescript.createProject(path.resolve('./config/tsconfig.json'));
 gulp.task('build-ts', () => {
 
 	let tsResult = gulp.src(assets.src.ts, { base: './src' })
@@ -96,12 +99,31 @@ gulp.task('rollup-js', () => {
 });
 
 
+/**
+ * Develop
+ */
+gulp.task('webpack-dev-server', (done) => {
+	// Start a webpack-dev-server
+	var webpackConfig = require(path.resolve('./config/webpack.config.js'))();
+	var compiler = webpack(webpackConfig);
+
+	new webpackDevServer(compiler, {
+		stats: { colors: true, chunks: false }
+	}).listen(9000, 'localhost', (err) => {
+		if(err) throw new plugins.util.PluginError('webpack', err);
+
+		// Server listening
+		plugins.util.log('[webpack]', 'http://localhost:9000/webpack-dev-server/index.html');
+	});
+});
+
 
 /**
  * --------------------------
  * Main Tasks
  * --------------------------
  */
+gulp.task('develop', [ 'webpack-dev-server' ]);
 
 gulp.task('build', (done) => { runSequence('validate-ts', 'build-ts', 'build-js', done); } );
 
