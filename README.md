@@ -1,5 +1,7 @@
 # Angular2 Component Template
 
+[![Build Status][travis-image]][travis-url]
+
 ## What is it?
 This is a template project for an Angular2 Component
 
@@ -7,21 +9,21 @@ This is a template project for an Angular2 Component
 The best way to use this template is to either fork the repository, or to git clone it and then delete the ./.git directory.
 Once you've got your own version of the repo, you will need to make changes to the following files:
 
-### package.json
+### ./package.json
 You will want to modify all of the metadata about the package to be specific to your module.
 
 * dependencies - These should generally be empty. These dependencies will get packaged with your module in NPM, which is probably not what you intend.
 * peerDependencies - Specify all of the runtime dependencies of the module that someone using it will need. This would include any Angular2 dependencies referenced from within your code and any third party dependencies on which you depend.
 * devDependencies - You can specify all of the dependencies needed to build, run, and test your code in this project.
 
-### LICENSE
+### ./LICENSE
 If you want the license to be something other than MIT, modify this file. You should make sure the package.json file is consistent with the LICENSE file.
 
-### src/index.ts
-This file should export your Angular 2 module(s). The package.json references this file as the main entry point of the NPM module. 
-
-### README.md
+### ./README.md
 You can modify this README.md file by removing this section and updating the other relevant content.
+
+### ./src/index.ts
+This file should export your Angular 2 module(s). The package.json references this file as the main entry point of the NPM module. 
 
 ### ./src
 Obviously. Change stuff here.
@@ -29,8 +31,8 @@ Obviously. Change stuff here.
 
 ## Project Layout
 
-### ./
-**./.editorconfig**
+### ./ (Root of the project)
+**.editorconfig**
 EditorConfig config file. See http://editorconfig.org/. IDEs like IntelliJ will automatically pick up and enforce these baseline code formatting rules.
 
 **./.gitignore**
@@ -43,7 +45,7 @@ Travis CI configuration file. See (https://travis-ci.org/). If you configure thi
 Gulp build file. The details of the Gulp build are explained in this README.
 
 
-### ./config
+### ./config/ (Configuration)
 Contains most of the major config files used to build and develop
 
 **./config/assets.js**
@@ -62,11 +64,11 @@ Typescript configuration file used by Webpack to run the demo.
 Webpack configuration file used to build the component and demo and run Webpack Dev Server.
 
 
-### ./dist
+### ./dist (Distributed Files)
 The build generates files in here.
 
 
-### ./src
+### ./src (Source Files)
 All the application source code
 
 **./src/index.ts**
