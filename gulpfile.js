@@ -121,7 +121,7 @@ gulp.task('webpack-dev-server', (done) => {
  * --------------------------
  */
 
-gulp.task('develop', [ 'webpack-dev-server' ]);
+gulp.task('dev', [ 'webpack-dev-server' ]);
 
 gulp.task('build', (done) => { runSequence('validate-ts', 'build-ts', 'build-js', done); } );
 
