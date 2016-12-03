@@ -1,1 +1,1 @@
-export { ExampleModule } from './example/example.module';
+export { LeafletModule } from './leaflet/leaflet.module';
