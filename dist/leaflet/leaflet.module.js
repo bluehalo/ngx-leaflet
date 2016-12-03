@@ -1,6 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
-var leaflet_directive_1 = require('./leaflet.directive');
+var leaflet_directive_1 = require('./core/leaflet.directive');
 var LeafletModule = (function () {
     function LeafletModule() {
     }

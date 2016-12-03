@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { LeafletDirective } from './leaflet.directive';
+import { LeafletDirective } from './core/leaflet.directive';
 
 @NgModule({
 	imports: [],
