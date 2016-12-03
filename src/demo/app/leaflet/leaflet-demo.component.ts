@@ -13,19 +13,15 @@ export class LeafletDemoComponent {
 		L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Open Cycle Map'
-		}),
-		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Open Street Map'
 		})
-
 	];
-	zoom = 4;
+	zoom = 12;
+	center = L.latLng([ 46.879966, -121.726909 ]);
 
 	constructor() {
 		setTimeout(() => {
 			this.showDemo = true;
-		}, 500);
+		}, 1000);
 	}
 
 }

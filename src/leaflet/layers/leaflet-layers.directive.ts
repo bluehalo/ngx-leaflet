@@ -16,7 +16,7 @@ export class LeafletLayersDirective
 	map: L.Map;
 
 	// Array of configured layers
-	@Input() layers: L.Layer [];
+	@Input('leafletLayers') layers: L.Layer [];
 
 	constructor(leafletDirective: LeafletDirective) {
 		this.leafletDirective = leafletDirective;

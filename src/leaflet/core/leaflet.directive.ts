@@ -10,23 +10,31 @@ export class LeafletDirective
 
 	readonly DEFAULT_ZOOM = 1;
 	readonly DEFAULT_CENTER = L.latLng([ 38.907192, -77.036871 ]);
+	readonly DEFAULT_FPZ_OPTIONS = {};
 
 	element: ElementRef;
 
 	// Reference to the primary map object
 	map: L.Map;
 
-	// Default config
-	@Input() config = {};
+	fitOptions = this.DEFAULT_FPZ_OPTIONS;
+	panOptions = this.DEFAULT_FPZ_OPTIONS;
+	zoomOptions = this.DEFAULT_FPZ_OPTIONS;
 
-	// Array of configured layers
-	@Input() layers: L.Layer [];
-
-	// Zoom level for the map
-	@Input() zoom: number;
+	// Default configuration
+	@Input('leafletConfig') config = {};
 
 	// Configure callback function for the map
-	@Input('configure') configureFn: (chart: any) => void;
+	@Input('leafletConfigure') configureFn: (chart: any) => void;
+
+	// Zoom level for the map
+	@Input('leafletZoom') zoom: number;
+
+	// Center the map
+	@Input('leafletCenter') center: L.LatLng;
+
+	// Set fit bounds for map
+	@Input('leafletFitBounds') fitBounds: L.LatLngBounds;
 
 
 	constructor(el: ElementRef) {
@@ -37,7 +45,7 @@ export class LeafletDirective
 
 		// Create the map with some reasonable defaults
 		this.map = L.map(this.element.nativeElement, this.config)
-			.setView(this.DEFAULT_CENTER, this.DEFAULT_ZOOM);
+			.setView(this.center, this.zoom);
 
 		// Call for configuration
 		if(null != this.configureFn) {
@@ -45,8 +53,7 @@ export class LeafletDirective
 		}
 
 		// Set up all the initial settings
-		this.setLayers(this.layers);
-		this.setZoom(this.zoom);
+		this.setFitBounds(this.fitBounds);
 
 		this.resize();
 
@@ -54,34 +61,48 @@ export class LeafletDirective
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
 
-		// Configure function, can only set this once
-		if (changes['configureFn'] && changes['configureFn'].isFirstChange()) {
-			this.configureFn = changes['configureFn'].currentValue;
-		}
+		/*
+		 * The following code is to address an issue with our (basic) implementation of
+		 * zooming and panning. From our testing, it seems that a pan operation followed
+		 * by a zoom operation in the same thread will interfere with eachother. The zoom
+		 * operation interrupts/cancels the pan, resulting in a final center point that is
+		 * inaccurate. The solution seems to be to either separate them with a timeout or
+		  * to collapse them into a setView call.
+		 */
 
-		// Initial config, can only set this once
-		if (changes['config'] && changes['config'].isFirstChange()) {
-			this.config = changes['config'].currentValue;
+		// Zooming and Panning
+		if (changes['zoom'] && changes['center'] && null != this.zoom && null != this.center) {
+			this.setView(changes['center'].currentValue, changes['zoom'].currentValue);
 		}
-
-		// Set the layers
-		if (changes['layers']) {
-			this.setLayers(changes['layers'].currentValue);
-		}
-
 		// Set the zoom level
-		if (changes['zoom']) {
+		else if (changes['zoom']) {
 			this.setZoom(changes['zoom'].currentValue);
 		}
+		// Set the map center
+		else if (changes['center']) {
+			this.setCenter(changes['center'].currentValue);
+		}
 
+		// Fit bounds
+		if (changes['fitBounds']) {
+			this.setFitBounds(changes['fitBounds'].currentValue);
+		}
 	}
 
 	public getMap() {
 		return this.map;
 	}
 
-	private resize() {
+	public resize() {
 		this.map.invalidateSize({});
+	}
+
+	private setView(center: L.LatLng, zoom: number) {
+
+		if(this.map && null != center && null != zoom) {
+			this.map.setView(center, zoom);
+		}
+
 	}
 
 	/**
@@ -90,33 +111,33 @@ export class LeafletDirective
 	 */
 	private setZoom(zoom: number) {
 
-		if(this.map) {
-			zoom = (null != zoom) ? zoom : this.DEFAULT_ZOOM;
-			this.map.setZoom(zoom, {});
+		if(this.map && null != zoom) {
+			this.map.setZoom(zoom, this.zoomOptions);
 		}
 
 	}
 
 	/**
-	 * Replace the current layers in the map with the provided array
-	 * @param layers The new complete array of layers for the map
+	 * Set the center of the map
+	 * @param center the center point
 	 */
-	private setLayers(layers: L.Layer[]) {
+	private setCenter(center: L.LatLng) {
 
-		if (null != this.map) {
-			// Remove all existing layers
-			this.map.eachLayer((layer: L.Layer) => {
-				this.map.removeLayer(layer);
-			});
-
-			// Add the new layers
-			if(null != layers) {
-				layers.forEach((layer: L.Layer) => {
-					this.map.addLayer(layer);
-				});
-			}
+		if(this.map && null != center) {
+			this.map.panTo(center, this.panOptions);
 		}
 
 	}
 
+	/**
+	 * Set the center of the map
+	 * @param center the center point
+	 */
+	private setFitBounds(latLngBounds: L.LatLngBounds) {
+
+		if(this.map && null != latLngBounds) {
+			this.map.fitBounds(latLngBounds, this.fitOptions);
+		}
+
+	}
 }
