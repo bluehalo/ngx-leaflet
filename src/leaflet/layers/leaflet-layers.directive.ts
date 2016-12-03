@@ -54,7 +54,7 @@ export class LeafletLayersDirective
 			});
 
 			// Add the new layers
-			if(null != layers) {
+			if (null != layers) {
 				layers.forEach((layer: L.Layer) => {
 					map.addLayer(layer);
 				});

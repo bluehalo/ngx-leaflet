@@ -48,7 +48,7 @@ export class LeafletDirective
 			.setView(this.center, this.zoom);
 
 		// Call for configuration
-		if(null != this.configureFn) {
+		if (null != this.configureFn) {
 			this.configureFn(this.map);
 		}
 
@@ -99,7 +99,7 @@ export class LeafletDirective
 
 	private setView(center: L.LatLng, zoom: number) {
 
-		if(this.map && null != center && null != zoom) {
+		if (this.map && null != center && null != zoom) {
 			this.map.setView(center, zoom);
 		}
 
@@ -111,7 +111,7 @@ export class LeafletDirective
 	 */
 	private setZoom(zoom: number) {
 
-		if(this.map && null != zoom) {
+		if (this.map && null != zoom) {
 			this.map.setZoom(zoom, this.zoomOptions);
 		}
 
@@ -123,7 +123,7 @@ export class LeafletDirective
 	 */
 	private setCenter(center: L.LatLng) {
 
-		if(this.map && null != center) {
+		if (this.map && null != center) {
 			this.map.panTo(center, this.panOptions);
 		}
 
@@ -135,7 +135,7 @@ export class LeafletDirective
 	 */
 	private setFitBounds(latLngBounds: L.LatLngBounds) {
 
-		if(this.map && null != latLngBounds) {
+		if (this.map && null != latLngBounds) {
 			this.map.fitBounds(latLngBounds, this.fitOptions);
 		}
 
