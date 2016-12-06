@@ -20,6 +20,14 @@ let
 // Banner to append to generated files
 let bannerString = '/*! ' + pkg.name + '-' + pkg.version + ' - ' + pkg.copyright + '*/'
 
+/**
+ * ENV Tasks
+ */
+let BUILD = false;
+gulp.task('env:BUILD', () => {
+	BUILD = true;
+});
+
 
 /**
  * Validation Tasks
@@ -28,7 +36,7 @@ let bannerString = '/*! ' + pkg.name + '-' + pkg.version + ' - ' + pkg.copyright
 gulp.task('validate-ts', () => {
 
 	// Grab the tslint config
-	var config = require(path.resolve('./config/tslint.conf.js'));
+	var config = require(path.resolve('./config/tslint.config.js'));
 	config.formatter = 'prose';
 
 	return gulp.src(assets.src.allTs)
@@ -36,7 +44,7 @@ gulp.task('validate-ts', () => {
 		.pipe(plugins.tslint(config))
 		.pipe(plugins.tslint.report({
 			summarizeFailureOutput: true,
-			emitError: true
+			emitError: BUILD
 		}));
 
 });
@@ -47,7 +55,7 @@ gulp.task('validate-ts', () => {
  */
 
 // Build JS from the TS source
-var tsProject = plugins.typescript.createProject(path.resolve('./config/tsconfig.json'));
+var tsProject = plugins.typescript.createProject(path.resolve('./tsconfig.json'));
 gulp.task('build-ts', () => {
 
 	let tsResult = gulp.src(assets.src.ts, { base: './src' })
@@ -121,6 +129,9 @@ gulp.task('webpack-dev-server', (done) => {
 	});
 });
 
+gulp.task('watch-ts', () => {
+	gulp.watch(assets.src.allTs, ['validate-ts']);
+});
 
 /**
  * --------------------------
@@ -128,9 +139,9 @@ gulp.task('webpack-dev-server', (done) => {
  * --------------------------
  */
 
-gulp.task('dev', [ 'webpack-dev-server' ]);
+gulp.task('dev', (done) => { runSequence('validate-ts', [ 'webpack-dev-server', 'watch-ts' ], done); } );
 
-gulp.task('build', (done) => { runSequence('validate-ts', 'build-ts', 'build-js', done); } );
+gulp.task('build', (done) => { runSequence('env:BUILD', 'validate-ts', 'build-ts', 'build-js', done); } );
 
 // Default task builds
 gulp.task('default', [ 'build' ]);

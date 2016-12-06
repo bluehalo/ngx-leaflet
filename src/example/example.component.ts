@@ -10,6 +10,8 @@ export class ExampleComponent {
 	constructor() { }
 
 	ngOnInit() {
-		this.message = 'World';
+		setTimeout(() => {
+			this.message += ' World';
+		}, 1000);
 	}
 }
