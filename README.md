@@ -44,6 +44,12 @@ Travis CI configuration file. See (https://travis-ci.org/). If you configure thi
 **./gulpfile.js**
 Gulp build file. The details of the Gulp build are explained in this README.
 
+**./tsconfig.json**
+Typescript configuration file used by the compiler to build the component code. See https://www.typescriptlang.org/docs/tutorial.html.
+
+**./tsconfig-dev.json**
+Typescript configuration file used by Webpack to run the demo. We locate this at the root of the project to help IDEs pick it up.
+
 
 ### ./config/ (Configuration)
 Contains most of the major config files used to build and develop
@@ -51,14 +57,8 @@ Contains most of the major config files used to build and develop
 **./config/assets.js**
 Centrally specifies paths used by the build
 
-**./config/tslint.conf.js**
+**./config/tslint.config.js**
 TSLint configuration file. Specifies code conventions and Typescript static analysis checks. See https://palantir.github.io/tslint/.
-
-**./config/tsconfig.json**
-Typescript configuration file used by the compiler to build the component code. See https://www.typescriptlang.org/docs/tutorial.html.
-
-**./config/tsconfig-dev.json**
-Typescript configuration file used by Webpack to run the demo.
 
 **./config/webpack.config.js**
 Webpack configuration file used to build the component and demo and run Webpack Dev Server.
@@ -98,7 +98,7 @@ This project uses Gulp as a build framework.
 
 To build the bundles, run ```gulp build```. This task will run TSLint over the source Typescript to ensure code quality and consistency. Then, it runs the Typescript compiler to generate ES5 Javascript. Finally, it uses Rollup to bundle the generated Javascript into and then uses Rollup to bundle the Javascript code into a distributable CommonJS format.
 
-To develop, run ```gulp dev```. This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application.
+To develop, run ```gulp dev```. This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application. Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
 
 
 [travis-url]: https://travis-ci.org/Asymmetrik/angular2-template/
