@@ -22,7 +22,7 @@ export class LeafletDirective
 	zoomOptions = this.DEFAULT_FPZ_OPTIONS;
 
 	// Default configuration
-	@Input('leafletConfig') config = {};
+	@Input('leafletOptions') options = {};
 
 	// Configure callback function for the map
 	@Input('leafletConfigure') configureFn: (chart: any) => void;
@@ -44,7 +44,7 @@ export class LeafletDirective
 	ngOnInit() {
 
 		// Create the map with some reasonable defaults
-		this.map = L.map(this.element.nativeElement, this.config)
+		this.map = L.map(this.element.nativeElement, this.options)
 			.setView(this.center, this.zoom);
 
 		// Call for configuration

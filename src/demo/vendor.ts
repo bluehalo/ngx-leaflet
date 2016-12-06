@@ -23,6 +23,8 @@ import 'reflect-metadata';
 import 'zone.js';
 
 // Global Imports
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 // Angular2 Imports
 import '@angular/platform-browser';
