@@ -21,7 +21,7 @@ export class LeafletDemoModel {
 			layer: L.Layer
 		}[]
 	) {
-		if(null == controlLayers) {
+		if (null == controlLayers) {
 			this.controlLayers = [];
 		}
 	}
