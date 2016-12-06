@@ -49,7 +49,7 @@ export class LeafletLayersControlDirective
 
 		let map = this.leafletDirective.getMap();
 
-		if(null != map) {
+		if (null != map) {
 			this.layersControl = L.control.layers(controlConfig, controlOptions)
 				.addTo(map);
 		}

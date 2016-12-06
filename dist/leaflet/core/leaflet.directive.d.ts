@@ -10,7 +10,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     fitOptions: {};
     panOptions: {};
     zoomOptions: {};
-    config: {};
+    options: {};
     configureFn: (chart: any) => void;
     zoom: number;
     center: L.LatLng;
