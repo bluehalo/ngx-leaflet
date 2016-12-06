@@ -10,12 +10,12 @@ var LeafletDirective = (function () {
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
         this.zoomOptions = this.DEFAULT_FPZ_OPTIONS;
         // Default configuration
-        this.config = {};
+        this.options = {};
         this.element = el;
     }
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
-        this.map = L.map(this.element.nativeElement, this.config)
+        this.map = L.map(this.element.nativeElement, this.options)
             .setView(this.center, this.zoom);
         // Call for configuration
         if (null != this.configureFn) {
@@ -88,9 +88,9 @@ var LeafletDirective = (function () {
         }
     };
     __decorate([
-        core_1.Input('leafletConfig'), 
+        core_1.Input('leafletOptions'), 
         __metadata('design:type', Object)
-    ], LeafletDirective.prototype, "config", void 0);
+    ], LeafletDirective.prototype, "options", void 0);
     __decorate([
         core_1.Input('leafletConfigure'), 
         __metadata('design:type', Function)
