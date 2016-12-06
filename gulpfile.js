@@ -105,7 +105,14 @@ gulp.task('webpack-dev-server', (done) => {
 	var compiler = webpack(webpackConfig);
 
 	new webpackDevServer(compiler, {
-		stats: { colors: true, chunks: false }
+		stats: {
+			colors: true,
+			chunks: false
+		},
+		watchOptions: {
+			aggregateTimeout: 300,
+			poll: 1000
+		},
 	}).listen(9000, 'localhost', (err) => {
 		if(err) throw new plugins.util.PluginError('webpack', err);
 
