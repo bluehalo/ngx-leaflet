@@ -5,7 +5,10 @@ var ExampleComponent = (function () {
         this.message = 'Hello';
     }
     ExampleComponent.prototype.ngOnInit = function () {
-        this.message = 'World';
+        var _this = this;
+        setTimeout(function () {
+            _this.message += ' World';
+        }, 1000);
     };
     ExampleComponent = __decorate([
         core_1.Component({
