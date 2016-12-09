@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 
-export class LeafletDemoModel {
+export class LeafletLayersDemoModel {
 
 	constructor(
 		public zoomLevels: number[],
@@ -14,15 +14,15 @@ export class LeafletDemoModel {
 
 		}[],
 		public baseLayer: string,
-		public controlLayers?: {
+		public overlayLayers?: {
 			formName: string,
 			name: string,
 			enabled: boolean,
 			layer: L.Layer
 		}[]
 	) {
-		if (null == controlLayers) {
-			this.controlLayers = [];
+		if (null == overlayLayers) {
+			this.overlayLayers = [];
 		}
 	}
 

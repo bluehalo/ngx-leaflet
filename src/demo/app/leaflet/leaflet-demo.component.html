@@ -1,83 +1,21 @@
-<div class="container" style="margin-top: 30px;">
+<div class="container" *ngIf="showDemo" style="margin-top: 30px;">
 
 	<div class="row">
+		<div class="col-md-12">
 
-		<!-- Control Form -->
-		<div class="col-sm-12 col-md-6 col-lg-4">
-
-			<form class="form-horizontal">
-
-				<!-- Zoom Levels -->
-				<div class="form-group">
-					<label class="control-label col-sm-4">Zoom Level</label>
-					<div class="col-sm-8">
-						<select class="form-control" name="zoom" [(ngModel)]="model.zoom" required>
-							<option *ngFor="let z of model.zoomLevels" [value]="z">{{z}}</option>
-						</select>
-					</div>
-				</div>
-
-				<!-- Lat/Long -->
-				<div class="form-group">
-					<label class="control-label col-sm-4">Latitude</label>
-					<div class="col-sm-8">
-						<input class="control-label" type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude" required>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-4">Longitude</label>
-					<div class="col-sm-8">
-						<input class="control-label" type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude" required>
-					</div>
-				</div>
-
-				<!-- Base Layers -->
-				<div class="form-group">
-					<label class="control-label col-sm-4">Base Layers</label>
-					<div class="checkbox col-sm-8"
-					     [class.col-sm-offset-4]="i !== 0"
-					     *ngFor="let layer of model.baseLayers; let i = index">
-						<label>
-							<input type="radio"
-							       [name]="layer.id"
-							       [(ngModel)]="model.baseLayer"
-							       [value]="layer.id">
-							{{layer.name}}
-						</label>
-					</div>
-				</div>
-
-				<!-- Control Layers -->
-				<div *ngIf="null != model.controlLayers && model.controlLayers.length > 0" class="form-group">
-					<label class="control-label col-sm-4">Control Layers</label>
-					<div class="checkbox col-sm-8"
-					     [class.col-sm-offset-4]="i !== 0"
-					     *ngFor="let layer of model.controlLayers; let i = index">
-						<label>
-							<input type="checkbox"
-							       [name]="layer.id"
-							       [(ngModel)]="model.controlLayers[i].enabled" >{{layer.name}}
-						</label>
-					</div>
-				</div>
-
-				<button type="button" class="pull-right btn btn-default" (click)="onApply()">Apply</button>
-
-			</form>
-		</div>
-
-		<!-- Map -->
-		<div class="col-sm-12 col-md-6 col-lg-8">
-
-			<div leaflet *ngIf="showDemo" style="width: 400px; height: 200px;"
-			     [leafletOptions]="leaflet.options"
-			     [leafletLayers]="leaflet.layers"
-			     [leafletZoom]="leaflet.zoom"
-			     [leafletCenter]="leaflet.center"
-			></div>
+			<h1>Core - Using options, zoom, center</h1>
+			<leaflet-core-demo></leaflet-core-demo>
 
 		</div>
+	</div>
 
+	<div class="row">
+		<div class="col-md-12">
+
+			<h1>Layers</h1>
+			<leaflet-layers-demo></leaflet-layers-demo>
+
+		</div>
 	</div>
 
 </div>

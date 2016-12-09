@@ -12,7 +12,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.html]
-tab_width = 2
+tab_width = 4
 
 [*.md]
 trim_trailing_whitespace = false

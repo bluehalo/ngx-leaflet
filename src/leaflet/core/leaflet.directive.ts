@@ -44,8 +44,8 @@ export class LeafletDirective
 	ngOnInit() {
 
 		// Create the map with some reasonable defaults
-		this.map = L.map(this.element.nativeElement, this.options)
-			.setView(this.center, this.zoom);
+		this.map = L.map(this.element.nativeElement, this.options);
+		this.setView(this.center, this.zoom);
 
 		// Call for configuration
 		if (null != this.configureFn) {
