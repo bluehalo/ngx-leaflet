@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { LeafletDemoModule } from './leaflet/leaflet-demo.module';
+import { LeafletDrawDemoModule } from './leaflet-draw/leaflet-draw-demo.module';
 
 
 @NgModule({
 	imports: [
 		BrowserModule,
-		LeafletDemoModule
+		LeafletDrawDemoModule
 	],
 	declarations: [
 		AppComponent
