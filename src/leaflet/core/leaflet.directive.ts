@@ -21,6 +21,7 @@ export class LeafletDirective
 	@Input('leafletFitOptions') fitOptions = this.DEFAULT_FPZ_OPTIONS;
 	@Input('leafletPanOptions') panOptions = this.DEFAULT_FPZ_OPTIONS;
 	@Input('leafletZoomOptions') zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletZoomPanOptions') zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
 
 
 	// Default configuration
@@ -89,6 +90,26 @@ export class LeafletDirective
 		if (changes['fitBounds']) {
 			this.setFitBounds(changes['fitBounds'].currentValue);
 		}
+
+		// Fit Options
+		if (changes['fitOptions']) {
+			this.fitOptions = changes['fitOptions'].currentValue;
+		}
+
+		// Pan Options
+		if (changes['panOptions']) {
+			this.panOptions = changes['panOptions'].currentValue;
+		}
+
+		// Zoom Options
+		if (changes['zoomOptions']) {
+			this.zoomOptions = changes['zoomOptions'].currentValue;
+		}
+
+		// Zoom/Pan Options
+		if (changes['zoomPanOptions']) {
+			this.zoomPanOptions = changes['zoomPanOptions'].currentValue;
+		}
 	}
 
 	public getMap() {
@@ -130,7 +151,7 @@ export class LeafletDirective
 	private setView(center: L.LatLng, zoom: number) {
 
 		if (this.map && null != center && null != zoom) {
-			this.map.setView(center, zoom);
+			this.map.setView(center, zoom, this.zoomPanOptions);
 		}
 
 	}

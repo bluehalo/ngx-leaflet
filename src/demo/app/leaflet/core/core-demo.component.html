@@ -2,9 +2,51 @@
 
 	<div class="row">
 
-		<div class="col-sm-12 col-md-6 col-lg-4">
-			options: {{ optionsSpec | json }}
+		<!-- Control Form -->
+		<div class="col-sm-12 col-lg-4">
 
+			<form class="form-horizontal">
+
+				<div class="form-group">
+					<label class="control-label">
+						Options:
+					</label>
+					{{ optionsSpec | json }}
+				</div>
+
+				<!-- Zoom Levels -->
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-lg-4">
+						Zoom Level
+					</label>
+					<div class="col-sm-10 col-lg-8">
+						<select class="form-control" name="zoom" [(ngModel)]="model.zoom" required>
+							<option *ngFor="let z of model.zoomLevels" [value]="z">{{z}}</option>
+						</select>
+					</div>
+				</div>
+
+				<!-- Lat/Long -->
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-lg-4">
+						Latitude
+					</label>
+					<div class="col-sm-10 col-lg-8">
+						<input class="control-label" type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2 col-lg-4">
+						Longitude
+					</label>
+					<div class="col-sm-10 col-lg-8">
+						<input class="control-label" type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude" required>
+					</div>
+				</div>
+
+				<button type="button" class="pull-right btn btn-default" (click)="onApply()">Apply</button>
+
+			</form>
 		</div>
 
 		<!-- Map -->

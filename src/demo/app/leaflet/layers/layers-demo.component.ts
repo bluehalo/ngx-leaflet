@@ -11,7 +11,7 @@ import { LeafletLayersDemoModel } from './layers-demo.model';
 export class LeafletLayersDemoComponent {
 
 	// Open Street Map and Open Cycle Map definitions
-	LAYER_OSM = {
+	LAYER_OCM = {
 		id: 'opencyclemap',
 		name: 'Open Cycle Map',
 		enabled: true,
@@ -20,7 +20,7 @@ export class LeafletLayersDemoComponent {
 			attribution: 'Open Cycle Map'
 		})
 	};
-	LAYER_OCM = {
+	LAYER_OSM = {
 		id: 'openstreetmap',
 		name: 'Open Street Map',
 		enabled: false,
@@ -33,25 +33,17 @@ export class LeafletLayersDemoComponent {
 
 	// Form model object
 	model = new LeafletLayersDemoModel(
-		[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-		12,
-		46.879966, -121.726909,
 		[ this.LAYER_OSM, this.LAYER_OCM ],
-		this.LAYER_OSM.id
+		this.LAYER_OCM.id
 	);
 
 
 	// Values to bind to Leaflet Directive
-	leaflet: {
-		layers: L.Layer[],
-		zoom: number,
-		center: L.LatLng,
-		layersControl: {}
-	} = {
-		layers: [],
-		zoom: 0,
-		center: L.latLng([ 0, 0 ]),
-		layersControl: {}
+	layers: L.Layer[];
+	layersControl: any;
+	options = {
+		zoom: 10,
+		center: L.latLng([ 46.879966, -121.726909 ])
 	};
 
 	constructor() {
@@ -69,14 +61,11 @@ export class LeafletLayersDemoComponent {
 			.map((l) => { return l.layer; });
 		newLayers.unshift(baseLayer.layer);
 
-		this.leaflet.layers = newLayers;
-		this.leaflet.zoom = this.model.zoom;
-		this.leaflet.center = L.latLng([ this.model.latitude, this.model.longitude]);
-
-		this.leaflet.layersControl = {
+		this.layers = newLayers;
+		this.layersControl = {
 			baseLayers: {
 				'Open Street Map': this.LAYER_OSM.layer,
-				'Open Cycle Map': this.LAYER_OSM.layer
+				'Open Cycle Map': this.LAYER_OCM.layer
 			}
 		};
 
