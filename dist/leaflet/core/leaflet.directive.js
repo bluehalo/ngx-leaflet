@@ -9,21 +9,22 @@ var LeafletDirective = (function () {
         this.fitOptions = this.DEFAULT_FPZ_OPTIONS;
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
         this.zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+        this.zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
         // Default configuration
         this.options = {};
         this.element = el;
     }
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
-        this.map = L.map(this.element.nativeElement, this.options)
-            .setView(this.center, this.zoom);
+        this.map = L.map(this.element.nativeElement, this.options);
+        this.setView(this.center, this.zoom);
         // Call for configuration
         if (null != this.configureFn) {
             this.configureFn(this.map);
         }
         // Set up all the initial settings
         this.setFitBounds(this.fitBounds);
-        this.resize();
+        this.doResize();
     };
     LeafletDirective.prototype.ngOnChanges = function (changes) {
         /*
@@ -48,16 +49,53 @@ var LeafletDirective = (function () {
         if (changes['fitBounds']) {
             this.setFitBounds(changes['fitBounds'].currentValue);
         }
+        // Fit Options
+        if (changes['fitOptions']) {
+            this.fitOptions = changes['fitOptions'].currentValue;
+        }
+        // Pan Options
+        if (changes['panOptions']) {
+            this.panOptions = changes['panOptions'].currentValue;
+        }
+        // Zoom Options
+        if (changes['zoomOptions']) {
+            this.zoomOptions = changes['zoomOptions'].currentValue;
+        }
+        // Zoom/Pan Options
+        if (changes['zoomPanOptions']) {
+            this.zoomPanOptions = changes['zoomPanOptions'].currentValue;
+        }
     };
     LeafletDirective.prototype.getMap = function () {
         return this.map;
     };
-    LeafletDirective.prototype.resize = function () {
+    LeafletDirective.prototype.onResize = function (event) {
+        this.delayResize();
+    };
+    /**
+     * Resize the map to fit it's parent container
+     */
+    LeafletDirective.prototype.doResize = function () {
+        // Invalidate the map size to trigger it to update itself
         this.map.invalidateSize({});
     };
+    /**
+     * Manage a delayed resize of the component
+     */
+    LeafletDirective.prototype.delayResize = function () {
+        if (null != this.resizeTimer) {
+            clearTimeout(this.resizeTimer);
+        }
+        this.resizeTimer = setTimeout(this.doResize.bind(this), 200);
+    };
+    /**
+     * Set the view (center/zoom) all at once
+     * @param center The new center
+     * @param zoom The new zoom level
+     */
     LeafletDirective.prototype.setView = function (center, zoom) {
         if (this.map && null != center && null != zoom) {
-            this.map.setView(center, zoom);
+            this.map.setView(center, zoom, this.zoomPanOptions);
         }
     };
     /**
@@ -79,7 +117,7 @@ var LeafletDirective = (function () {
         }
     };
     /**
-     * Set the center of the map
+     * Fit the map to the bounds
      * @param center the center point
      */
     LeafletDirective.prototype.setFitBounds = function (latLngBounds) {
@@ -87,6 +125,22 @@ var LeafletDirective = (function () {
             this.map.fitBounds(latLngBounds, this.fitOptions);
         }
     };
+    __decorate([
+        core_1.Input('leafletFitOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "fitOptions", void 0);
+    __decorate([
+        core_1.Input('leafletPanOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "panOptions", void 0);
+    __decorate([
+        core_1.Input('leafletZoomOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "zoomOptions", void 0);
+    __decorate([
+        core_1.Input('leafletZoomPanOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "zoomPanOptions", void 0);
     __decorate([
         core_1.Input('leafletOptions'), 
         __metadata('design:type', Object)
@@ -107,6 +161,12 @@ var LeafletDirective = (function () {
         core_1.Input('leafletFitBounds'), 
         __metadata('design:type', Object)
     ], LeafletDirective.prototype, "fitBounds", void 0);
+    __decorate([
+        core_1.HostListener('window:resize', ['$event']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], LeafletDirective.prototype, "onResize", null);
     LeafletDirective = __decorate([
         core_1.Directive({
             selector: '[leaflet]'

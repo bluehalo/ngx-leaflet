@@ -6,10 +6,12 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     readonly DEFAULT_CENTER: L.LatLng;
     readonly DEFAULT_FPZ_OPTIONS: {};
     element: ElementRef;
+    resizeTimer: any;
     map: L.Map;
     fitOptions: {};
     panOptions: {};
     zoomOptions: {};
+    zoomPanOptions: {};
     options: {};
     configureFn: (chart: any) => void;
     zoom: number;
@@ -21,7 +23,20 @@ export declare class LeafletDirective implements OnChanges, OnInit {
         [key: string]: SimpleChange;
     }): void;
     getMap(): L.Map;
-    resize(): void;
+    onResize(event: any): void;
+    /**
+     * Resize the map to fit it's parent container
+     */
+    private doResize();
+    /**
+     * Manage a delayed resize of the component
+     */
+    private delayResize();
+    /**
+     * Set the view (center/zoom) all at once
+     * @param center The new center
+     * @param zoom The new zoom level
+     */
     private setView(center, zoom);
     /**
      * Set the map zoom level
@@ -34,7 +49,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
      */
     private setCenter(center);
     /**
-     * Set the center of the map
+     * Fit the map to the bounds
      * @param center the center point
      */
     private setFitBounds(latLngBounds);

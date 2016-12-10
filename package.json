@@ -2,7 +2,7 @@
 	"name": "@asymmetrik/angular2-leaflet",
 	"artifactName": "angular2-leaflet",
 	"description": "Angular 2 components for Leaflet",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 
 import * as L from 'leaflet';
 
@@ -13,13 +13,16 @@ export class LeafletDirective
 	readonly DEFAULT_FPZ_OPTIONS = {};
 
 	element: ElementRef;
+	resizeTimer: any;
 
 	// Reference to the primary map object
 	map: L.Map;
 
-	fitOptions = this.DEFAULT_FPZ_OPTIONS;
-	panOptions = this.DEFAULT_FPZ_OPTIONS;
-	zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletFitOptions') fitOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletPanOptions') panOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletZoomOptions') zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletZoomPanOptions') zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
+
 
 	// Default configuration
 	@Input('leafletOptions') options = {};
@@ -44,8 +47,8 @@ export class LeafletDirective
 	ngOnInit() {
 
 		// Create the map with some reasonable defaults
-		this.map = L.map(this.element.nativeElement, this.options)
-			.setView(this.center, this.zoom);
+		this.map = L.map(this.element.nativeElement, this.options);
+		this.setView(this.center, this.zoom);
 
 		// Call for configuration
 		if (null != this.configureFn) {
@@ -55,7 +58,7 @@ export class LeafletDirective
 		// Set up all the initial settings
 		this.setFitBounds(this.fitBounds);
 
-		this.resize();
+		this.doResize();
 
 	}
 
@@ -87,20 +90,68 @@ export class LeafletDirective
 		if (changes['fitBounds']) {
 			this.setFitBounds(changes['fitBounds'].currentValue);
 		}
+
+		// Fit Options
+		if (changes['fitOptions']) {
+			this.fitOptions = changes['fitOptions'].currentValue;
+		}
+
+		// Pan Options
+		if (changes['panOptions']) {
+			this.panOptions = changes['panOptions'].currentValue;
+		}
+
+		// Zoom Options
+		if (changes['zoomOptions']) {
+			this.zoomOptions = changes['zoomOptions'].currentValue;
+		}
+
+		// Zoom/Pan Options
+		if (changes['zoomPanOptions']) {
+			this.zoomPanOptions = changes['zoomPanOptions'].currentValue;
+		}
 	}
 
 	public getMap() {
 		return this.map;
 	}
 
-	public resize() {
-		this.map.invalidateSize({});
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event: any) {
+		this.delayResize();
 	}
 
+	/**
+	 * Resize the map to fit it's parent container
+	 */
+	private doResize() {
+
+		// Invalidate the map size to trigger it to update itself
+		this.map.invalidateSize({});
+
+	}
+
+	/**
+	 * Manage a delayed resize of the component
+	 */
+	private delayResize() {
+		if (null != this.resizeTimer) {
+			clearTimeout(this.resizeTimer);
+		}
+		this.resizeTimer = setTimeout(this.doResize.bind(this), 200);
+	}
+
+
+	/**
+	 * Set the view (center/zoom) all at once
+	 * @param center The new center
+	 * @param zoom The new zoom level
+	 */
 	private setView(center: L.LatLng, zoom: number) {
 
 		if (this.map && null != center && null != zoom) {
-			this.map.setView(center, zoom);
+			this.map.setView(center, zoom, this.zoomPanOptions);
 		}
 
 	}
@@ -130,7 +181,7 @@ export class LeafletDirective
 	}
 
 	/**
-	 * Set the center of the map
+	 * Fit the map to the bounds
 	 * @param center the center point
 	 */
 	private setFitBounds(latLngBounds: L.LatLngBounds) {
