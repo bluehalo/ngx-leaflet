@@ -2,6 +2,7 @@
 var core_1 = require('@angular/core');
 var leaflet_directive_1 = require('./core/leaflet.directive');
 var leaflet_layers_directive_1 = require('./layers/leaflet-layers.directive');
+var leaflet_control_layers_directive_1 = require('./layers/leaflet-control-layers.directive');
 var LeafletModule = (function () {
     function LeafletModule() {
     }
@@ -10,11 +11,13 @@ var LeafletModule = (function () {
             imports: [],
             exports: [
                 leaflet_directive_1.LeafletDirective,
-                leaflet_layers_directive_1.LeafletLayersDirective
+                leaflet_layers_directive_1.LeafletLayersDirective,
+                leaflet_control_layers_directive_1.LeafletLayersControlDirective
             ],
             declarations: [
                 leaflet_directive_1.LeafletDirective,
-                leaflet_layers_directive_1.LeafletLayersDirective
+                leaflet_layers_directive_1.LeafletLayersDirective,
+                leaflet_control_layers_directive_1.LeafletLayersControlDirective
             ],
             providers: []
         }), 

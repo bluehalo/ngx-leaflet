@@ -15,15 +15,15 @@ var LeafletDirective = (function () {
     }
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
-        this.map = L.map(this.element.nativeElement, this.options)
-            .setView(this.center, this.zoom);
+        this.map = L.map(this.element.nativeElement, this.options);
+        this.setView(this.center, this.zoom);
         // Call for configuration
         if (null != this.configureFn) {
             this.configureFn(this.map);
         }
         // Set up all the initial settings
         this.setFitBounds(this.fitBounds);
-        this.resize();
+        this.doResize();
     };
     LeafletDirective.prototype.ngOnChanges = function (changes) {
         /*
@@ -52,9 +52,30 @@ var LeafletDirective = (function () {
     LeafletDirective.prototype.getMap = function () {
         return this.map;
     };
-    LeafletDirective.prototype.resize = function () {
+    LeafletDirective.prototype.onResize = function (event) {
+        this.delayResize();
+    };
+    /**
+     * Resize the map to fit it's parent container
+     */
+    LeafletDirective.prototype.doResize = function () {
+        // Invalidate the map size to trigger it to update itself
         this.map.invalidateSize({});
     };
+    /**
+     * Manage a delayed resize of the component
+     */
+    LeafletDirective.prototype.delayResize = function () {
+        if (null != this.resizeTimer) {
+            clearTimeout(this.resizeTimer);
+        }
+        this.resizeTimer = setTimeout(this.doResize.bind(this), 200);
+    };
+    /**
+     * Set the view (center/zoom) all at once
+     * @param center The new center
+     * @param zoom The new zoom level
+     */
     LeafletDirective.prototype.setView = function (center, zoom) {
         if (this.map && null != center && null != zoom) {
             this.map.setView(center, zoom);
@@ -107,6 +128,12 @@ var LeafletDirective = (function () {
         core_1.Input('leafletFitBounds'), 
         __metadata('design:type', Object)
     ], LeafletDirective.prototype, "fitBounds", void 0);
+    __decorate([
+        core_1.HostListener('window:resize', ['$event']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [Object]), 
+        __metadata('design:returntype', void 0)
+    ], LeafletDirective.prototype, "onResize", null);
     LeafletDirective = __decorate([
         core_1.Directive({
             selector: '[leaflet]'

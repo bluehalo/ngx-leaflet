@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 
 import * as L from 'leaflet';
 
@@ -13,6 +13,7 @@ export class LeafletDirective
 	readonly DEFAULT_FPZ_OPTIONS = {};
 
 	element: ElementRef;
+	resizeTimer: any;
 
 	// Reference to the primary map object
 	map: L.Map;
@@ -20,6 +21,7 @@ export class LeafletDirective
 	fitOptions = this.DEFAULT_FPZ_OPTIONS;
 	panOptions = this.DEFAULT_FPZ_OPTIONS;
 	zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+
 
 	// Default configuration
 	@Input('leafletOptions') options = {};
@@ -55,7 +57,7 @@ export class LeafletDirective
 		// Set up all the initial settings
 		this.setFitBounds(this.fitBounds);
 
-		this.resize();
+		this.doResize();
 
 	}
 
@@ -93,10 +95,38 @@ export class LeafletDirective
 		return this.map;
 	}
 
-	public resize() {
-		this.map.invalidateSize({});
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event: any) {
+		this.delayResize();
 	}
 
+	/**
+	 * Resize the map to fit it's parent container
+	 */
+	private doResize() {
+
+		// Invalidate the map size to trigger it to update itself
+		this.map.invalidateSize({});
+
+	}
+
+	/**
+	 * Manage a delayed resize of the component
+	 */
+	private delayResize() {
+		if (null != this.resizeTimer) {
+			clearTimeout(this.resizeTimer);
+		}
+		this.resizeTimer = setTimeout(this.doResize.bind(this), 200);
+	}
+
+
+	/**
+	 * Set the view (center/zoom) all at once
+	 * @param center The new center
+	 * @param zoom The new zoom level
+	 */
 	private setView(center: L.LatLng, zoom: number) {
 
 		if (this.map && null != center && null != zoom) {
