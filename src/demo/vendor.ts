@@ -36,9 +36,6 @@ import '@angular/common';
 import 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import 'leaflet-draw';
-import '@asymmetrik/angular2-leaflet';
-
 // Other Dependencies
 import 'rxjs';
 

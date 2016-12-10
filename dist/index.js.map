@@ -1,1 +1,1 @@
-{"version":3,"sources":["index.ts"],"names":[],"mappings":";AAAA,oCAAkC,oCAAoC,CAAC;AAA9D,oEAA8D","file":"index.js","sourcesContent":["export { LeafletDrawModule } from './leaflet-draw/leaflet-draw.module';\n\n\n"]}
+{"version":3,"sources":["index.ts"],"names":[],"mappings":";AAAA,+BAA8B,0BAA0B,CAAC;AAAhD,uDAAgD","file":"index.js","sourcesContent":["export { LeafletModule } from './leaflet/leaflet.module';\n\n\n"]}

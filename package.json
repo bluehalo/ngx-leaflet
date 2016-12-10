@@ -1,8 +1,8 @@
 {
-	"name": "@asymmetrik/angular2-leaflet-draw",
-	"artifactName": "angular2-leaflet-draw",
-	"description": "Angular 2 component for the draw plugin for Leaflet",
-	"version": "0.0.0",
+	"name": "@asymmetrik/angular2-leaflet",
+	"artifactName": "angular2-leaflet",
+	"description": "Angular 2 components for Leaflet",
+	"version": "0.0.2",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -13,15 +13,14 @@
 
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Asymmetrik/angular2-leaflet-draw.git"
+		"url": "https://github.com/Asymmetrik/angular2-leaflet.git"
 	},
 
 	"peerDependencies": {
 		"@angular/core": "2",
 		"@angular/common": "2",
 
-		"leaflet": "1.0",
-		"leaflet-draw": "0.2"
+		"leaflet": "1.0"
 	},
 
 	"devDependencies": {
@@ -34,12 +33,8 @@
 
 		"bootstrap": "3",
 
-		"@asymmetrik/angular2-leaflet": "0.0",
-
 		"leaflet": "1.0",
 		"@types/leaflet": "1.0",
-		"leaflet-draw": "0.2",
-		"@types/leaflet-draw": "0.2",
 
 		"core-js": "2.4",
 		"reflect-metadata": "0.1",

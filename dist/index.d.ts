@@ -1,1 +1,1 @@
-export { LeafletDrawModule } from './leaflet-draw/leaflet-draw.module';
+export { LeafletModule } from './leaflet/leaflet.module';

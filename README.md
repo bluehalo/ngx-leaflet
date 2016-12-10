@@ -1,9 +1,9 @@
-# @asymmetrik/angular2-leaflet-draw
+# @asymmetrik/angular2-leaflet
 
 [![Build Status][travis-image]][travis-url]
 
-> Leaflet Draw extension to the @asymmetrik/angular2-leaflet package for Angular 2
-> Provides Leaflet Draw integration into Angular 2 projects. Compatible with Leaflet v0.7.x and v1.0.x.
+> Leaflet packages for Angular 2
+> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2 projects.
 
 ## Table of Contents
 - [Install](#install)
@@ -13,6 +13,10 @@
 - [License](#license)
 
 ## Install
+This package is intended to be a starting point for a new project in a new repository. As such, installation involves forking the repository, or cloning it and optionally removing the .git directory to get rid of the repository history.
+
+Forking the repository will allow you to maintain a common history with this project. This will allow you to periodically perform git merges with this repository to pull in patches and improvements. If you want total freedom and are willing to manually merge changes in the future, feel free to delete the git history of your clone. 
+
 To get started, ensure that Node and NPM are installed.
 * Node and NPM (https://nodejs.org)
 * Gulp (https://gulpjs.org)
@@ -59,5 +63,5 @@ PRs accepted. If you are part of Asymmetrik, please make contributions on featur
 ## License
 See LICENSE in repository for details.
 
-[travis-url]: https://travis-ci.org/Asymmetrik/angular2-leaflet-draw/
-[travis-image]: https://travis-ci.org/Asymmetrik/angular2-leaflet-draw.svg
+[travis-url]: https://travis-ci.org/Asymmetrik/angular2-leaflet/
+[travis-image]: https://travis-ci.org/Asymmetrik/angular2-leaflet.svg
