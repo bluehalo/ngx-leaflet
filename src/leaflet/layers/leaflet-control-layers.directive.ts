@@ -80,19 +80,25 @@ export class LeafletLayersControlDirective
 			overlays = this.mapSubtract(newConfig.overlays, prevConfig.overlays);
 
 			// Do the actual removal and addition
-			for(let k in toRemove) {
-				let l: L.Layer = toRemove[k];
-				this.layersControl.removeLayer(l);
+			for (let k in toRemove) {
+				if (toRemove.hasOwnProperty(k)) {
+					let l: L.Layer = toRemove[k];
+					this.layersControl.removeLayer(l);
+				}
 			}
 
-			for(let k in baseLayers) {
-				let l: L.Layer = baseLayers[k];
-				this.layersControl.addBaseLayer(l, k);
+			for (let k in baseLayers) {
+				if (baseLayers.hasOwnProperty(k)) {
+					let l: L.Layer = baseLayers[k];
+					this.layersControl.addBaseLayer(l, k);
+				}
 			}
 
-			for(let k in overlays) {
-				let l: L.Layer = overlays[k];
-				this.layersControl.addOverlay(l, k);
+			for (let k in overlays) {
+				if (overlays.hasOwnProperty(k)) {
+					let l: L.Layer = overlays[k];
+					this.layersControl.addOverlay(l, k);
+				}
 			}
 		}
 
@@ -101,15 +107,19 @@ export class LeafletLayersControlDirective
 	private mergeMaps(aMap: {}, bMap: {}) {
 		let toReturn = {};
 
-		if(null != aMap) {
-			for(let k in aMap) {
-				toReturn[k] = aMap[k];
+		if (null != aMap) {
+			for (let k in aMap) {
+				if (aMap.hasOwnProperty(k)) {
+					toReturn[k] = aMap[k];
+				}
 			}
 		}
 
-		if(null != bMap) {
-			for(let k in bMap) {
-				toReturn[k] = bMap[k];
+		if (null != bMap) {
+			for (let k in bMap) {
+				if (bMap.hasOwnProperty(k)) {
+					toReturn[k] = bMap[k];
+				}
 			}
 		}
 
@@ -119,17 +129,21 @@ export class LeafletLayersControlDirective
 	private mapSubtract(aMap: {}, bMap: {}) {
 		let toReturn = {};
 
-		if(null != aMap) {
+		if (null != aMap) {
 
 			// Copy all of aMap into toReturn
-			for(let k in aMap) {
-				toReturn[k] = aMap[k];
+			for (let k in aMap) {
+				if (aMap.hasOwnProperty(k)) {
+					toReturn[k] = aMap[k];
+				}
 			}
 
 			// If there's a bMap, delete all bMap keys from aMap
-			if(null != bMap) {
-				for(let k in bMap) {
-					delete toReturn[k];
+			if (null != bMap) {
+				for (let k in bMap) {
+					if (bMap.hasOwnProperty(k)) {
+						delete toReturn[k];
+					}
 				}
 			}
 		}
