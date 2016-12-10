@@ -9,6 +9,7 @@ var LeafletDirective = (function () {
         this.fitOptions = this.DEFAULT_FPZ_OPTIONS;
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
         this.zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+        this.zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
         // Default configuration
         this.options = {};
         this.element = el;
@@ -48,6 +49,22 @@ var LeafletDirective = (function () {
         if (changes['fitBounds']) {
             this.setFitBounds(changes['fitBounds'].currentValue);
         }
+        // Fit Options
+        if (changes['fitOptions']) {
+            this.fitOptions = changes['fitOptions'].currentValue;
+        }
+        // Pan Options
+        if (changes['panOptions']) {
+            this.panOptions = changes['panOptions'].currentValue;
+        }
+        // Zoom Options
+        if (changes['zoomOptions']) {
+            this.zoomOptions = changes['zoomOptions'].currentValue;
+        }
+        // Zoom/Pan Options
+        if (changes['zoomPanOptions']) {
+            this.zoomPanOptions = changes['zoomPanOptions'].currentValue;
+        }
     };
     LeafletDirective.prototype.getMap = function () {
         return this.map;
@@ -78,7 +95,7 @@ var LeafletDirective = (function () {
      */
     LeafletDirective.prototype.setView = function (center, zoom) {
         if (this.map && null != center && null != zoom) {
-            this.map.setView(center, zoom);
+            this.map.setView(center, zoom, this.zoomPanOptions);
         }
     };
     /**
@@ -100,7 +117,7 @@ var LeafletDirective = (function () {
         }
     };
     /**
-     * Set the center of the map
+     * Fit the map to the bounds
      * @param center the center point
      */
     LeafletDirective.prototype.setFitBounds = function (latLngBounds) {
@@ -108,6 +125,22 @@ var LeafletDirective = (function () {
             this.map.fitBounds(latLngBounds, this.fitOptions);
         }
     };
+    __decorate([
+        core_1.Input('leafletFitOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "fitOptions", void 0);
+    __decorate([
+        core_1.Input('leafletPanOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "panOptions", void 0);
+    __decorate([
+        core_1.Input('leafletZoomOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "zoomOptions", void 0);
+    __decorate([
+        core_1.Input('leafletZoomPanOptions'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "zoomPanOptions", void 0);
     __decorate([
         core_1.Input('leafletOptions'), 
         __metadata('design:type', Object)

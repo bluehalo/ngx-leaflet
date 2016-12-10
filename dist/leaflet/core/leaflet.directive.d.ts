@@ -11,6 +11,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     fitOptions: {};
     panOptions: {};
     zoomOptions: {};
+    zoomPanOptions: {};
     options: {};
     configureFn: (chart: any) => void;
     zoom: number;
@@ -48,7 +49,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
      */
     private setCenter(center);
     /**
-     * Set the center of the map
+     * Fit the map to the bounds
      * @param center the center point
      */
     private setFitBounds(latLngBounds);
