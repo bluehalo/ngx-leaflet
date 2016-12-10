@@ -1,16 +1,64 @@
-# Angular2 Component Template
+# @asymmetrik/angular2-template
 
 [![Build Status][travis-image]][travis-url]
 
-## What is it?
-This is a template project for an Angular2 Component
+> Template project for an Angular2 Component.
+> Provides a template project structure, Gulp build, and Webpack dev server configuration for packaging an Angular 2 component and for running a local demo of that component. 
 
-## Using this Template
-The best way to use this template is to either fork the repository, or to git clone it and then delete the ./.git directory.
-Once you've got your own version of the repo, you will need to make changes to the following files:
+## Table of Contents
+- [Install](#install)
+- [Usage](#usage)
+- [Structure](#structure)
+- [Contribute](#contribute)
+- [License](#license)
+
+## Install
+This package is intended to be a starting point for a new project in a new repository. As such, installation involves forking the repository, or cloning it and optionally removing the .git directory to get rid of the repository history.
+
+Forking the repository will allow you to maintain a common history with this project. This will allow you to periodically perform git merges with this repository to pull in patches and improvements. If you want total freedom and are willing to manually merge changes in the future, feel free to delete the git history of your clone. 
+
+To get started, ensure that Node and NPM are installed.
+* Node and NPM (https://nodejs.org)
+* Gulp (https://gulpjs.org)
+
+Use npm to install gulp globally:
+```
+npm install -g gulp
+```
+
+Next, clone the repository and then install the npm packages in the project directory: 
+```
+npm install
+```
+
+At this point, you should be ready to build the project.
+
+
+## Usage
+This project uses Gulp as a build framework. There are two primary tasks: build and dev, which build distribution artifacts and run the development server respecitvely. 
+
+### Building Artifacts for Distribution
+To build the bundles run:
+
+```
+gulp build
+```
+
+This task will run TSLint over the source Typescript to ensure code quality and consistency. Then, it runs the Typescript compiler to generate ES5 Javascript. Finally, it uses Rollup to bundle the generated Javascript into and then uses Rollup to bundle the Javascript code into a distributable CommonJS format.
+
+### Run the Demo for Development
+To run the demo using Webpack dev server, run
+```
+gulp dev
+```
+
+This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application. Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
+
+
+Once you've got your own copy of the template, you will need to adapt the template to your own project. To do so, make changes to the following files:
 
 ### ./package.json
-You will want to modify all of the metadata about the package to be specific to your module.
+Modify all of the metadata about the package to be specific to your module.
 
 * dependencies - These should generally be empty. These dependencies will get packaged with your module in NPM, which is probably not what you intend.
 * peerDependencies - Specify all of the runtime dependencies of the module that someone using it will need. This would include any Angular2 dependencies referenced from within your code and any third party dependencies on which you depend.
@@ -29,7 +77,8 @@ This file should export your Angular 2 module(s). The package.json references th
 Obviously. Change stuff here.
 
 
-## Project Layout
+## Structure
+The template suggests a straightforward project structure for building out your component and the demo. Some of the following project structure is specific to the build and validation of assets and some is related to how the component is bundled for distribution.
 
 ### ./ (Root of the project)
 **.editorconfig**
@@ -69,37 +118,22 @@ The build generates files in here.
 
 
 ### ./src (Source Files)
-All the application source code
+All the application source code including your component and the demo application for the component
 
 **./src/index.ts**
-This file should export everything you wish to publish in your Angular2 package 
+This file should export everything you wish to publish as part of your Angular2 package 
 
 **./src/demo**
-The purpose of this directory is to contain a lightweight Angular 2 application that can be run using Webpack. This will allow you to embed examples directly in this project, making development easier.
+Contains a lightweight Angular 2 application that is built and run using Webpack. Use the demo to embed examples directly in the project for the purposes of development, testing, and demonstration.
 
 **./src/!(demo)**
-This is up to you. A good basic convention is to package modules into directories.
+This is up to you. A good basic convention is to package modules into directories. You can use the example component as a basic guideline.
 
+## Contribute
+PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.
 
-
-
-THE REST OF THE README IS A TEMPLATE FOR YOUR README FILE
-
-## Getting Started 
-To get started, ensure that Node and NPM are installed, and use npm to install gulp globally ```npm install -g gulp```.
-
-* Node and NPM (https://nodejs.org)
-* Gulp (https://gulpjs.org)
-
-Next, clone the repository and then run ```npm install``` from within the project directory. At this point, you should be ready to build the project.
-
-## Build Overview
-This project uses Gulp as a build framework. 
-
-To build the bundles, run ```gulp build```. This task will run TSLint over the source Typescript to ensure code quality and consistency. Then, it runs the Typescript compiler to generate ES5 Javascript. Finally, it uses Rollup to bundle the generated Javascript into and then uses Rollup to bundle the Javascript code into a distributable CommonJS format.
-
-To develop, run ```gulp dev```. This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application. Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
-
+## License
+See LICENSE in repository for details.
 
 [travis-url]: https://travis-ci.org/Asymmetrik/angular2-template/
 [travis-image]: https://travis-ci.org/Asymmetrik/angular2-template.svg
