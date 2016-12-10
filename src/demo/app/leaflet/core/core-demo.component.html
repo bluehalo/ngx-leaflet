@@ -4,13 +4,19 @@
 
 		<div class="col-sm-12 col-md-6 col-lg-4">
 			options: {{ optionsSpec | json }}
+
 		</div>
 
 		<!-- Map -->
 		<div class="col-sm-12 col-md-6 col-lg-8">
 
 			<div leaflet style="height: 300px;"
-			     [leafletOptions]="options">
+			     [leafletOptions]="options"
+			     [leafletPanOptions]="panOptions"
+			     [leafletZoomOptions]="zoomOptions"
+			     [leafletFitOptions]="fitOptions"
+			     [leafletZoom]="zoom"
+			     [leafletCenter]="center">
 			</div>
 
 		</div>

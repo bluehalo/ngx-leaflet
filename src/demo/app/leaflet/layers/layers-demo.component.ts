@@ -58,10 +58,6 @@ export class LeafletLayersDemoComponent {
 		this.onApply();
 	}
 
-	/**
-	 *
-	 * @returns {boolean}
-	 */
 	onApply() {
 
 		// Get the active base layer
@@ -80,7 +76,7 @@ export class LeafletLayersDemoComponent {
 		this.leaflet.layersControl = {
 			baseLayers: {
 				'Open Street Map': this.LAYER_OSM.layer,
-				'Open Cycle Map': this.LAYER_OCM.layer
+				'Open Cycle Map': this.LAYER_OSM.layer
 			}
 		};
 

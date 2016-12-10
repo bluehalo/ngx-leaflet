@@ -18,9 +18,9 @@ export class LeafletDirective
 	// Reference to the primary map object
 	map: L.Map;
 
-	fitOptions = this.DEFAULT_FPZ_OPTIONS;
-	panOptions = this.DEFAULT_FPZ_OPTIONS;
-	zoomOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletFitOptions') fitOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletPanOptions') panOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletZoomOptions') zoomOptions = this.DEFAULT_FPZ_OPTIONS;
 
 
 	// Default configuration
@@ -160,7 +160,7 @@ export class LeafletDirective
 	}
 
 	/**
-	 * Set the center of the map
+	 * Fit the map to the bounds
 	 * @param center the center point
 	 */
 	private setFitBounds(latLngBounds: L.LatLngBounds) {
