@@ -30,6 +30,7 @@ export class LeafletLayersDemoComponent {
 		})
 	};
 
+
 	// Form model object
 	model = new LeafletLayersDemoModel(
 		[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
@@ -39,22 +40,28 @@ export class LeafletLayersDemoComponent {
 		this.LAYER_OSM.id
 	);
 
-	// Leaflet values
+
+	// Values to bind to Leaflet Directive
 	leaflet: {
 		layers: L.Layer[],
 		zoom: number,
-		center: L.LatLng
+		center: L.LatLng,
+		layersControl: {}
 	} = {
 		layers: [],
 		zoom: 0,
-		center: L.latLng([ 0, 0 ])
+		center: L.latLng([ 0, 0 ]),
+		layersControl: {}
 	};
-
 
 	constructor() {
 		this.onApply();
 	}
 
+	/**
+	 *
+	 * @returns {boolean}
+	 */
 	onApply() {
 
 		// Get the active base layer
@@ -69,6 +76,13 @@ export class LeafletLayersDemoComponent {
 		this.leaflet.layers = newLayers;
 		this.leaflet.zoom = this.model.zoom;
 		this.leaflet.center = L.latLng([ this.model.latitude, this.model.longitude]);
+
+		this.leaflet.layersControl = {
+			baseLayers: {
+				'Open Street Map': this.LAYER_OSM.layer,
+				'Open Cycle Map': this.LAYER_OCM.layer
+			}
+		};
 
 		return false;
 	}
