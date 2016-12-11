@@ -30,11 +30,30 @@ export class LeafletLayersDemoComponent {
 		})
 	};
 
+	circle = {
+		id: 'circle',
+		name: 'A Circle',
+		enabled: true,
+		layer: L.circle([ 46.95, -122 ], { radius: 5000 })
+	};
+	polygon = {
+		id: 'polygon',
+		name: 'A Polygon',
+		enabled: true,
+		layer: L.polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]])
+	};
+	square = {
+		id: 'square',
+		name: 'A Square',
+		enabled: true,
+		layer: L.polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
+	};
 
 	// Form model object
 	model = new LeafletLayersDemoModel(
 		[ this.LAYER_OSM, this.LAYER_OCM ],
-		this.LAYER_OCM.id
+		this.LAYER_OCM.id,
+		[ this.circle, this.polygon, this.square ]
 	);
 
 

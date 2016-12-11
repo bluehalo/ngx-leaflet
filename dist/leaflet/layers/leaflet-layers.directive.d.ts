@@ -3,8 +3,8 @@ import { OnChanges, OnInit, SimpleChange } from '@angular/core';
 import * as L from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 export declare class LeafletLayersDirective implements OnChanges, OnInit {
-    leafletDirective: LeafletDirective;
     map: L.Map;
+    leafletDirective: LeafletDirective;
     layers: L.Layer[];
     constructor(leafletDirective: LeafletDirective);
     ngOnInit(): void;
@@ -15,5 +15,5 @@ export declare class LeafletLayersDirective implements OnChanges, OnInit {
      * Replace the current layers in the map with the provided array
      * @param layers The new complete array of layers for the map
      */
-    private setLayers(layers);
+    private setLayers(newLayers, prevLayers);
 }

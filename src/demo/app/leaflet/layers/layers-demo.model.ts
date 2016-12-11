@@ -6,12 +6,12 @@ export class LeafletLayersDemoModel {
 		public baseLayers: {
 			id: string,
 			name: string,
-			layer: L.Layer,
-
+			enabled: boolean,
+			layer: L.Layer
 		}[],
 		public baseLayer: string,
 		public overlayLayers: {
-			formName: string,
+			id: string,
 			name: string,
 			enabled: boolean,
 			layer: L.Layer

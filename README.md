@@ -12,11 +12,7 @@
 - [Contribute](#contribute)
 - [License](#license)
 
-## Install
-This package is intended to be a starting point for a new project in a new repository. As such, installation involves forking the repository, or cloning it and optionally removing the .git directory to get rid of the repository history.
-
-Forking the repository will allow you to maintain a common history with this project. This will allow you to periodically perform git merges with this repository to pull in patches and improvements. If you want total freedom and are willing to manually merge changes in the future, feel free to delete the git history of your clone. 
-
+## Install 
 To get started, ensure that Node and NPM are installed.
 * Node and NPM (https://nodejs.org)
 * Gulp (https://gulpjs.org)

@@ -12,7 +12,7 @@
 					<label class="control-label col-sm-2 col-lg-4">
 						Base Layers
 					</label>
-					<div class="checkbox col-sm-10 col-lg-8"
+					<div class="radio col-sm-10 col-lg-8"
 					     [class.col-sm-offset-4]="i !== 0"
 					     *ngFor="let layer of model.baseLayers; let i = index">
 						<label>
@@ -30,13 +30,14 @@
 					<label class="control-label col-sm-2 col-lg-4">
 						Control Layers
 					</label>
-					<div class="checkbox col-sm-10 col-lg-"
+					<div class="checkbox col-sm-10 col-lg-8"
 					     [class.col-sm-offset-4]="i !== 0"
 					     *ngFor="let layer of model.overlayLayers; let i = index">
 						<label>
 							<input type="checkbox"
 							       [name]="layer.id"
-							       [(ngModel)]="model.overlayLayers[i].enabled" >{{layer.name}}
+							       [(ngModel)]="model.overlayLayers[i].enabled" >
+							{{layer.name}}
 						</label>
 					</div>
 				</div>
