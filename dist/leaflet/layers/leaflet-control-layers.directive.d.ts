@@ -15,6 +15,4 @@ export declare class LeafletLayersControlDirective implements OnChanges, OnInit 
     }): void;
     private initializeLayersControl(controlConfig, controlOptions);
     private setLayersControlConfig(newConfig, prevConfig);
-    private mergeMaps(aMap, bMap);
-    private mapSubtract(aMap, bMap);
 }

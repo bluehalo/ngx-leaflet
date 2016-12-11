@@ -3,6 +3,7 @@ import { Directive, Input, OnChanges, OnInit, SimpleChange } from '@angular/core
 import * as L from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
+import { LeafletUtil } from '../util/leaflet-util';
 
 
 @Directive({
@@ -31,6 +32,9 @@ export class LeafletLayersControlDirective
 
 	ngOnInit() {
 
+		// Get the map
+		this.map = this.leafletDirective.getMap();
+
 		// Set up all the initial settings
 		this.initializeLayersControl(this.layersControlConfig, this.layersControlOptions);
 
@@ -49,7 +53,7 @@ export class LeafletLayersControlDirective
 
 	private initializeLayersControl(controlConfig: any, controlOptions: any) {
 
-		let map = this.leafletDirective.getMap();
+		let map = this.map;
 
 		let baseLayers = controlConfig.baseLayers || {};
 		let overlays = controlConfig.overlays || {};
@@ -62,7 +66,7 @@ export class LeafletLayersControlDirective
 
 	private setLayersControlConfig(newConfig: any, prevConfig: any) {
 
-		let map = this.leafletDirective.getMap();
+		let map = this.map;
 
 		if (null != map) {
 
@@ -71,13 +75,13 @@ export class LeafletLayersControlDirective
 			let overlays: {};
 
 			// Figure out which layers need to be removed (prev - new)
-			toRemove = this.mergeMaps(
-				this.mapSubtract(prevConfig.baseLayers, newConfig.baseLayers),
-				this.mapSubtract(prevConfig.overlays, newConfig.overlays));
+			toRemove = LeafletUtil.mergeMaps(
+				LeafletUtil.mapSubtract(prevConfig.baseLayers, newConfig.baseLayers),
+				LeafletUtil.mapSubtract(prevConfig.overlays, newConfig.overlays));
 
 			// Figure out which layers need to be added (new - prev)
-			baseLayers = this.mapSubtract(newConfig.baseLayers, prevConfig.baseLayers);
-			overlays = this.mapSubtract(newConfig.overlays, prevConfig.overlays);
+			baseLayers = LeafletUtil.mapSubtract(newConfig.baseLayers, prevConfig.baseLayers);
+			overlays = LeafletUtil.mapSubtract(newConfig.overlays, prevConfig.overlays);
 
 			// Do the actual removal and addition
 			for (let k in toRemove) {
@@ -102,53 +106,6 @@ export class LeafletLayersControlDirective
 			}
 		}
 
-	}
-
-	private mergeMaps(aMap: {}, bMap: {}) {
-		let toReturn = {};
-
-		if (null != aMap) {
-			for (let k in aMap) {
-				if (aMap.hasOwnProperty(k)) {
-					toReturn[k] = aMap[k];
-				}
-			}
-		}
-
-		if (null != bMap) {
-			for (let k in bMap) {
-				if (bMap.hasOwnProperty(k)) {
-					toReturn[k] = bMap[k];
-				}
-			}
-		}
-
-		return toReturn;
-	}
-
-	private mapSubtract(aMap: {}, bMap: {}) {
-		let toReturn = {};
-
-		if (null != aMap) {
-
-			// Copy all of aMap into toReturn
-			for (let k in aMap) {
-				if (aMap.hasOwnProperty(k)) {
-					toReturn[k] = aMap[k];
-				}
-			}
-
-			// If there's a bMap, delete all bMap keys from aMap
-			if (null != bMap) {
-				for (let k in bMap) {
-					if (bMap.hasOwnProperty(k)) {
-						delete toReturn[k];
-					}
-				}
-			}
-		}
-
-		return toReturn;
 	}
 
 }

@@ -6,32 +6,48 @@ var LeafletLayersDirective = (function () {
         this.leafletDirective = leafletDirective;
     }
     LeafletLayersDirective.prototype.ngOnInit = function () {
-        // Set up all the initial settings
-        this.setLayers(this.layers);
+        // Get the map from the parent directive
+        this.map = this.leafletDirective.getMap();
+        // The way we've set this up, map isn't set until after the first round of changes has gone through
+        this.setLayers(this.layers, []);
     };
     LeafletLayersDirective.prototype.ngOnChanges = function (changes) {
         // Set the layers
         if (changes['layers']) {
-            this.setLayers(changes['layers'].currentValue);
+            var c = changes['layers'].currentValue;
+            var p = (changes['layers'].isFirstChange()) ? [] : changes['layers'].previousValue;
+            this.setLayers(c, p);
         }
     };
     /**
      * Replace the current layers in the map with the provided array
      * @param layers The new complete array of layers for the map
      */
-    LeafletLayersDirective.prototype.setLayers = function (layers) {
-        var map = this.leafletDirective.getMap();
+    LeafletLayersDirective.prototype.setLayers = function (newLayers, prevLayers) {
+        var map = this.map;
         if (null != map) {
-            // Remove all existing layers
-            map.eachLayer(function (layer) {
-                map.removeLayer(layer);
-            });
-            // Add the new layers
-            if (null != layers) {
-                layers.forEach(function (layer) {
-                    map.addLayer(layer);
-                });
+            var toRemove = void 0;
+            var layers = void 0;
+            if (null == newLayers) {
+                newLayers = [];
             }
+            if (null == prevLayers) {
+                prevLayers = [];
+            }
+            // Figure out which layers need to be removed (prev - new)
+            toRemove = prevLayers
+                .filter(function (pl) {
+                return !(newLayers.find(function (nl) { return (pl === nl); }));
+            });
+            // Figure out which layers need to be added (new - prev)
+            layers = newLayers
+                .filter(function (pl) {
+                return !(prevLayers.find(function (nl) { return (pl === nl); }));
+            });
+            // Remove the layers
+            toRemove.forEach(function (l) { map.removeLayer(l); });
+            // Add the new layers
+            layers.forEach(function (l) { map.addLayer(l); });
         }
     };
     __decorate([
