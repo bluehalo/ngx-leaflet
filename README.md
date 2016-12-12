@@ -20,7 +20,8 @@ npm install @asymmetrik/angular2-leaflet
 ```
 
 ## Usage
-TODO: Add basic usage examples
+TODO: Add basic usage examples using demo as a basis
+Include note about markers issue and workaround for Webpack
 
 
 ## API
