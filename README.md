@@ -12,49 +12,25 @@
 - [Contribute](#contribute)
 - [License](#license)
 
+
 ## Install 
-To get started, ensure that Node and NPM are installed.
-* Node and NPM (https://nodejs.org)
-* Gulp (https://gulpjs.org)
-
-Use npm to install gulp globally:
+Install the package via npm:
 ```
-npm install -g gulp
+npm install @asymmetrik/angular2-leaflet
 ```
-
-Next, clone the repository and then install the npm packages in the project directory: 
-```
-npm install
-```
-
-At this point, you should be ready to build the project.
-
 
 ## Usage
-This project uses Gulp as a build framework. There are two primary tasks: build and dev, which build distribution artifacts and run the development server respecitvely. 
+TODO: Add basic usage examples using demo as a basis
+Include note about markers issue and workaround for Webpack
 
-### Building Artifacts for Distribution
-To build the bundles run:
-
-```
-gulp build
-```
-
-This task will run TSLint over the source Typescript to ensure code quality and consistency. Then, it runs the Typescript compiler to generate ES5 Javascript. Finally, it uses Rollup to bundle the generated Javascript into and then uses Rollup to bundle the Javascript code into a distributable CommonJS format.
-
-### Run the Demo for Development
-To run the demo using Webpack dev server, run
-```
-gulp dev
-```
-
-This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application. Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
 
 ## API
+TODO: Add full details of each directive
 
 
 ## Contribute
 PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.
+
 
 ## License
 See LICENSE in repository for details.

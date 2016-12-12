@@ -40,7 +40,7 @@ module.exports = () => {
 
 	// Set up for dev middleware
 	wpConfig.output.path = path.resolve('./public');
-	wpConfig.output.publicPath = 'http://localhost:9000';
+	wpConfig.output.publicPath = 'http://localhost:9000/';
 	wpConfig.output.filename = '[name].js';
 	wpConfig.output.chunkFilename = '[name].js';
 
@@ -52,6 +52,7 @@ module.exports = () => {
 		extensions: [
 			'.ts', '.js','.json',
 			'.woff', '.woff2', '.ttf', '.eot', '.svg',
+			'.gif', '.jpg', '.jpeg', '.png',
 			'.css', '.scss',
 			'.html'
 		]
@@ -87,7 +88,7 @@ module.exports = () => {
 			{ test: /\.scss$/, loaders: [ 'style-loader', 'css-loader', 'sass-loader' ] },
 
 			// Image file loader
-			{ test: /\.png$/, loader: 'url-loader?limit=10000&mimetype=image/png' },
+			{ test: /\.png$/, loader: 'file-loader' },
 			{ test: /\.(gif|jpg|jpeg)$/, loader: 'file-loader' },
 
 			// Font file loader (mostly for bootstrap/font-awesome)
