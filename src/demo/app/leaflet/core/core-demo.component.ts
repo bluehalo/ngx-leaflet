@@ -56,7 +56,7 @@ export class LeafletCoreDemoComponent {
 		center: L.latLng({ lat: this.optionsSpec.center[0], lng: this.optionsSpec.center[1] })
 	};
 
-	fitOptions = {
+	fitBoundsOptions = {
 		padding: 100,
 		maxZoom: 10,
 		animate: true,

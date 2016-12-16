@@ -8,7 +8,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     element: ElementRef;
     resizeTimer: any;
     map: L.Map;
-    fitOptions: {};
+    fitBoundsOptions: {};
     panOptions: {};
     zoomOptions: {};
     zoomPanOptions: {};
