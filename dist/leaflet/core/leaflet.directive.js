@@ -6,7 +6,7 @@ var LeafletDirective = (function () {
         this.DEFAULT_ZOOM = 1;
         this.DEFAULT_CENTER = L.latLng([38.907192, -77.036871]);
         this.DEFAULT_FPZ_OPTIONS = {};
-        this.fitOptions = this.DEFAULT_FPZ_OPTIONS;
+        this.fitBoundsOptions = this.DEFAULT_FPZ_OPTIONS;
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
         this.zoomOptions = this.DEFAULT_FPZ_OPTIONS;
         this.zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
@@ -50,8 +50,8 @@ var LeafletDirective = (function () {
             this.setFitBounds(changes['fitBounds'].currentValue);
         }
         // Fit Options
-        if (changes['fitOptions']) {
-            this.fitOptions = changes['fitOptions'].currentValue;
+        if (changes['fitBoundsOptions']) {
+            this.fitBoundsOptions = changes['fitBoundsOptions'].currentValue;
         }
         // Pan Options
         if (changes['panOptions']) {
@@ -122,13 +122,13 @@ var LeafletDirective = (function () {
      */
     LeafletDirective.prototype.setFitBounds = function (latLngBounds) {
         if (this.map && null != latLngBounds) {
-            this.map.fitBounds(latLngBounds, this.fitOptions);
+            this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
         }
     };
     __decorate([
-        core_1.Input('leafletFitOptions'), 
+        core_1.Input('leafletFitBoundsOptions'), 
         __metadata('design:type', Object)
-    ], LeafletDirective.prototype, "fitOptions", void 0);
+    ], LeafletDirective.prototype, "fitBoundsOptions", void 0);
     __decorate([
         core_1.Input('leafletPanOptions'), 
         __metadata('design:type', Object)

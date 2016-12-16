@@ -18,7 +18,7 @@ export class LeafletDirective
 	// Reference to the primary map object
 	map: L.Map;
 
-	@Input('leafletFitOptions') fitOptions = this.DEFAULT_FPZ_OPTIONS;
+	@Input('leafletFitBoundsOptions') fitBoundsOptions = this.DEFAULT_FPZ_OPTIONS;
 	@Input('leafletPanOptions') panOptions = this.DEFAULT_FPZ_OPTIONS;
 	@Input('leafletZoomOptions') zoomOptions = this.DEFAULT_FPZ_OPTIONS;
 	@Input('leafletZoomPanOptions') zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
@@ -92,8 +92,8 @@ export class LeafletDirective
 		}
 
 		// Fit Options
-		if (changes['fitOptions']) {
-			this.fitOptions = changes['fitOptions'].currentValue;
+		if (changes['fitBoundsOptions']) {
+			this.fitBoundsOptions = changes['fitBoundsOptions'].currentValue;
 		}
 
 		// Pan Options
@@ -187,7 +187,7 @@ export class LeafletDirective
 	private setFitBounds(latLngBounds: L.LatLngBounds) {
 
 		if (this.map && null != latLngBounds) {
-			this.map.fitBounds(latLngBounds, this.fitOptions);
+			this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
 		}
 
 	}
