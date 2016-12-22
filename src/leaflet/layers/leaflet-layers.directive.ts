@@ -3,28 +3,26 @@ import { Directive, Input, OnChanges, OnInit, SimpleChange } from '@angular/core
 import * as L from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
-import { LeafletUtil } from '../util/leaflet-util';
+import { LeafletDirectiveExtensionBase } from "../core/leaflet.directive.extension.base";
 
 @Directive({
 	selector: '[leafletLayers]'
 })
 export class LeafletLayersDirective
+	extends LeafletDirectiveExtensionBase
 	implements OnChanges, OnInit {
-
-	map: L.Map;
-	leafletDirective: LeafletDirective;
 
 	// Array of configured layers
 	@Input('leafletLayers') layers: L.Layer [];
 
 	constructor(leafletDirective: LeafletDirective) {
-		this.leafletDirective = leafletDirective;
+		super(leafletDirective);
 	}
 
 	ngOnInit() {
 
-		// Get the map from the parent directive
-		this.map = this.leafletDirective.getMap();
+		// This will initialize the map
+		super.ngOnInit();
 
 		// The way we've set this up, map isn't set until after the first round of changes has gone through
 		this.setLayers(this.layers, []);
