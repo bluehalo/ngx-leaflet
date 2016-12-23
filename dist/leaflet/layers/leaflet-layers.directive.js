@@ -8,6 +8,8 @@ var LeafletLayersDirective = (function () {
         this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
     }
     LeafletLayersDirective.prototype.ngOnInit = function () {
+        // Init the map
+        this.leafletDirective.init();
         // The way we've set this up, map isn't set until after the first round of changes has gone through
         this.setLayers(this.layers, []);
     };

@@ -9,9 +9,12 @@ var LeafletLayersControlDirective = (function () {
         this.controlLayers = new leaflet_control_layers_wrapper_1.LeafletControlLayersWrapper();
     }
     LeafletLayersControlDirective.prototype.ngOnInit = function () {
+        // Init the map
         this.leafletDirective.init();
         // Set up all the initial settings
-        this.controlLayers.init(this.layersControlConfig, this.layersControlOptions);
+        this.controlLayers
+            .init(this.layersControlConfig, this.layersControlOptions)
+            .addTo(this.leafletDirective.getMap());
     };
     LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
         // Set the layers

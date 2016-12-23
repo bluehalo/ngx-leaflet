@@ -3,8 +3,9 @@ import { OnChanges, OnInit, SimpleChange } from '@angular/core';
 import * as L from 'leaflet';
 import { LeafletDirective } from '../../core/leaflet.directive';
 export declare class LeafletBaseLayersDirective implements OnChanges, OnInit {
-    baseLayers: any;
-    layersControlOptions: any;
+    baseLayers: L.control.LayersObject;
+    layersControlOptions: L.Control.LayersOptions;
+    baseLayer: L.Layer;
     private leafletDirective;
     private controlLayers;
     constructor(leafletDirective: LeafletDirective);
@@ -12,6 +13,9 @@ export declare class LeafletBaseLayersDirective implements OnChanges, OnInit {
     ngOnChanges(changes: {
         [key: string]: SimpleChange;
     }): void;
-    protected initializeBaseLayers(baseLayers: any, controlOptions: any): void;
     protected setBaseLayers(newBaseLayers: L.control.LayersObject, prevBaseLayers: L.control.LayersObject): void;
+    /**
+     * Check the current base layer and change it to the new one if necessary
+     */
+    protected syncBaseLayer(): void;
 }

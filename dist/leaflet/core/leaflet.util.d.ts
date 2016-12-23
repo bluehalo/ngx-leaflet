@@ -7,7 +7,13 @@ export declare class LeafletUtil {
      * @param bMap The second object
      * @returns {{}} The aggregate of both objects
      */
-    static mergeMaps(aMap: {}, bMap: {}): {};
+    static mergeMaps<T>(aMap: {
+        [key: string]: T;
+    }, bMap: {
+        [key: string]: T;
+    }): {
+        [key: string]: T;
+    };
     /**
      * Subtracts the properties of an associative array in a shallow manner.
      * Where there are duplicate properties, the properties will be removed
@@ -17,5 +23,14 @@ export declare class LeafletUtil {
      * @param bMap The object containing properties to subtract
      * @returns {{}}
      */
-    static mapSubtract(aMap: {}, bMap: {}): {};
+    static mapSubtract<T>(aMap: {
+        [key: string]: T;
+    }, bMap: {
+        [key: string]: T;
+    }): {
+        [key: string]: T;
+    };
+    static mapToArray<T>(map: {
+        [key: string]: T;
+    }): T[];
 }

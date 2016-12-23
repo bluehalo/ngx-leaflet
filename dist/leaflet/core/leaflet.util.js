@@ -57,6 +57,15 @@ var LeafletUtil = (function () {
         }
         return toReturn;
     };
+    LeafletUtil.mapToArray = function (map) {
+        var toReturn = [];
+        for (var k in map) {
+            if (map.hasOwnProperty(k)) {
+                toReturn.push(map[k]);
+            }
+        }
+        return toReturn;
+    };
     return LeafletUtil;
 }());
 exports.LeafletUtil = LeafletUtil;

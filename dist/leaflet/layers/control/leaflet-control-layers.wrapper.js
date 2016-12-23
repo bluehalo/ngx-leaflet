@@ -15,6 +15,9 @@ var LeafletControlLayersWrapper = (function () {
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.setLayersControlConfig = function (newConfig, prevConfig) {
+        if (null == this.layersControl) {
+            return new leaflet_layers_object_diff_model_1.LeafletLayersObjectDiff({}, {});
+        }
         var toRemove;
         var baseLayers;
         var overlays;
