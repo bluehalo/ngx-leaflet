@@ -3,7 +3,10 @@ import { Directive, Input, OnChanges, OnInit, SimpleChange } from '@angular/core
 import * as L from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
-import { LeafletUtil } from '../util/leaflet-util';
+
+import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
+import { LeafletLayersUtil } from './leaflet-layers.util';
+
 
 @Directive({
 	selector: '[leafletLayers]'
@@ -11,20 +14,19 @@ import { LeafletUtil } from '../util/leaflet-util';
 export class LeafletLayersDirective
 	implements OnChanges, OnInit {
 
-	map: L.Map;
-	leafletDirective: LeafletDirective;
-
 	// Array of configured layers
 	@Input('leafletLayers') layers: L.Layer [];
 
+	private leafletDirective: LeafletDirectiveWrapper;
+
 	constructor(leafletDirective: LeafletDirective) {
-		this.leafletDirective = leafletDirective;
+		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
 	}
 
 	ngOnInit() {
 
-		// Get the map from the parent directive
-		this.map = this.leafletDirective.getMap();
+		// Init the map
+		this.leafletDirective.init();
 
 		// The way we've set this up, map isn't set until after the first round of changes has gone through
 		this.setLayers(this.layers, []);
@@ -49,33 +51,17 @@ export class LeafletLayersDirective
 	 */
 	private setLayers(newLayers: L.Layer[], prevLayers: L.Layer[]) {
 
-		let map = this.map;
+		let map = this.leafletDirective.getMap();
 
 		if (null != map) {
 
-			let toRemove: L.Layer[];
-			let layers: L.Layer[];
-
-			if (null == newLayers) { newLayers = []; }
-			if (null == prevLayers) { prevLayers = []; }
-
-			// Figure out which layers need to be removed (prev - new)
-			toRemove = prevLayers
-				.filter((pl) => {
-					return !(newLayers.find((nl) => { return (pl === nl); }));
-				});
-
-			// Figure out which layers need to be added (new - prev)
-			layers = newLayers
-				.filter((pl) => {
-					return !(prevLayers.find((nl) => { return (pl === nl); }));
-				});
+			let diff = LeafletLayersUtil.diffLayers(newLayers, prevLayers);
 
 			// Remove the layers
-			toRemove.forEach((l) => { map.removeLayer(l); });
+			diff.remove.forEach((l) => { map.removeLayer(l); });
 
 			// Add the new layers
-			layers.forEach((l) => { map.addLayer(l); });
+			diff.add.forEach((l) => { map.addLayer(l); });
 
 		}
 

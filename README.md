@@ -100,8 +100,45 @@ fitBounds: L.LatLngBounds
 
 On changes, the component calls map.fitBounds using the bound parameter.
 
+### Simple Layer Management: Setting Baselayers
+```leafletBaseLayers```
+
+If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
+This directive will interfere with the ```leafletLayersControl``` directive.
+However, because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
+
+```html
+<div leaflet style="height: 300px;"
+     [leafletOptions]="options"
+     [leafletBaseLayers]="baseLayers"
+     [leafletLayersControlOptions]="layersControlOptions">
+</div>
+```
+
+#### leafletBaseLayers
+Input bind an ```L.control.LayersObject``` to be synced to the map.
+
+```js
+baseLayers: {
+	'layer1': L.Layer,
+	'layer2': L.Layer
+}
+```
+
+On changes, the component syncs the baseLayers on the map with the layers in this object.
+Syncing is performed by tracking the current baselayer and on changes, searching the map to see if any of the current baselayers is added to the map.
+If it finds a baselayer that is still added to the map, it will assume that is still the baselayer and leave it.
+If none of the baselayers can be found on the map, it will add the first layer it finds in the ```L.control.LayersObject``` and use that as the new baselayer.
+Layers are compared using instance equality.
+
+
+### leafletLayersControlOptions
+Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs). These options are passed into the layers control constructor on creation.
+
 
 ### Layers and Layers Control
+The ```leafletLayers``` and ```leafletLayersControl``` directives give you direct access to manipulate layers and the layers control.
+
 ```html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"

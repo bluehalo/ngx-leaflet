@@ -2,19 +2,22 @@ import { NgModule } from '@angular/core';
 
 import { LeafletDirective } from './core/leaflet.directive';
 import { LeafletLayersDirective } from './layers/leaflet-layers.directive';
-import { LeafletLayersControlDirective } from './layers/leaflet-control-layers.directive';
+import { LeafletLayersControlDirective } from './layers/control/leaflet-control-layers.directive';
+import { LeafletBaseLayersDirective } from './layers/base/leaflet-baselayers.directive';
 
 @NgModule({
 	imports: [],
 	exports: [
 		LeafletDirective,
 		LeafletLayersDirective,
-		LeafletLayersControlDirective
+		LeafletLayersControlDirective,
+		LeafletBaseLayersDirective
 	],
 	declarations: [
 		LeafletDirective,
 		LeafletLayersDirective,
-		LeafletLayersControlDirective
+		LeafletLayersControlDirective,
+		LeafletBaseLayersDirective
 	],
 	providers: [
 	]

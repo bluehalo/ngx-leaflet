@@ -1,13 +1,15 @@
 "use strict";
 var core_1 = require('@angular/core');
 var leaflet_directive_1 = require('../core/leaflet.directive');
+var leaflet_directive_wrapper_1 = require('../core/leaflet.directive.wrapper');
+var leaflet_layers_util_1 = require('./leaflet-layers.util');
 var LeafletLayersDirective = (function () {
     function LeafletLayersDirective(leafletDirective) {
-        this.leafletDirective = leafletDirective;
+        this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
     }
     LeafletLayersDirective.prototype.ngOnInit = function () {
-        // Get the map from the parent directive
-        this.map = this.leafletDirective.getMap();
+        // Init the map
+        this.leafletDirective.init();
         // The way we've set this up, map isn't set until after the first round of changes has gone through
         this.setLayers(this.layers, []);
     };
@@ -24,30 +26,13 @@ var LeafletLayersDirective = (function () {
      * @param layers The new complete array of layers for the map
      */
     LeafletLayersDirective.prototype.setLayers = function (newLayers, prevLayers) {
-        var map = this.map;
+        var map = this.leafletDirective.getMap();
         if (null != map) {
-            var toRemove = void 0;
-            var layers = void 0;
-            if (null == newLayers) {
-                newLayers = [];
-            }
-            if (null == prevLayers) {
-                prevLayers = [];
-            }
-            // Figure out which layers need to be removed (prev - new)
-            toRemove = prevLayers
-                .filter(function (pl) {
-                return !(newLayers.find(function (nl) { return (pl === nl); }));
-            });
-            // Figure out which layers need to be added (new - prev)
-            layers = newLayers
-                .filter(function (pl) {
-                return !(prevLayers.find(function (nl) { return (pl === nl); }));
-            });
+            var diff = leaflet_layers_util_1.LeafletLayersUtil.diffLayers(newLayers, prevLayers);
             // Remove the layers
-            toRemove.forEach(function (l) { map.removeLayer(l); });
+            diff.remove.forEach(function (l) { map.removeLayer(l); });
             // Add the new layers
-            layers.forEach(function (l) { map.addLayer(l); });
+            diff.add.forEach(function (l) { map.addLayer(l); });
         }
     };
     __decorate([

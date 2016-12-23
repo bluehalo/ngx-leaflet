@@ -8,8 +8,8 @@ export class LeafletUtil {
 	 * @param bMap The second object
 	 * @returns {{}} The aggregate of both objects
 	 */
-	static mergeMaps(aMap: {}, bMap: {}) {
-		let toReturn = {};
+	static mergeMaps<T> (aMap: { [ key: string ]: T }, bMap: { [ key: string ]: T }): { [ key: string ]: T } {
+		let toReturn: { [ key: string ]: T } = {};
 
 		if (null != aMap) {
 			for (let k in aMap) {
@@ -39,8 +39,8 @@ export class LeafletUtil {
 	 * @param bMap The object containing properties to subtract
 	 * @returns {{}}
 	 */
-	static mapSubtract(aMap: {}, bMap: {}) {
-		let toReturn = {};
+	static mapSubtract<T>(aMap: { [key: string]: T }, bMap: { [key: string]: T }): { [ key: string ]: T } {
+		let toReturn: { [ key: string ]: T } = {};
 
 		if (null != aMap) {
 
@@ -58,6 +58,18 @@ export class LeafletUtil {
 						delete toReturn[k];
 					}
 				}
+			}
+		}
+
+		return toReturn;
+	}
+
+	static mapToArray<T>(map: { [ key: string ]: T }): T[] {
+		let toReturn: T[] = [];
+
+		for (let k in map) {
+			if (map.hasOwnProperty(k)) {
+				toReturn.push(map[k]);
 			}
 		}
 
