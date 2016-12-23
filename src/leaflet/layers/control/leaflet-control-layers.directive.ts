@@ -2,15 +2,15 @@ import { Directive, Input, OnChanges, OnInit, SimpleChange } from '@angular/core
 
 import * as L from 'leaflet';
 
-import { LeafletDirective } from '../core/leaflet.directive';
-import { LeafletLayersControlBase } from './leaflet-control-layers.base';
+import { LeafletDirective } from '../../core/leaflet.directive';
+import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
+import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
 
 
 @Directive({
 	selector: '[leafletLayersControl]'
 })
 export class LeafletLayersControlDirective
-	extends LeafletLayersControlBase
 	implements OnChanges, OnInit {
 
 	// Control Layers Configuration
@@ -18,18 +18,23 @@ export class LeafletLayersControlDirective
 
 	@Input('leafletLayersControlOptions') layersControlOptions: any;
 
+	private controlLayers: LeafletControlLayersWrapper;
+	private leafletDirective: LeafletDirectiveWrapper;
 
 	constructor(leafletDirective: LeafletDirective) {
-		super(leafletDirective);
+		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+		this.controlLayers = new LeafletControlLayersWrapper();
 	}
 
 	ngOnInit() {
 
-		// This will initialize the map
-		super.ngOnInit();
+		// Init the map
+		this.leafletDirective.init();
 
 		// Set up all the initial settings
-		this.initializeLayersControl(this.layersControlConfig, this.layersControlOptions);
+		this.controlLayers
+			.init(this.layersControlConfig, this.layersControlOptions)
+			.addTo(this.leafletDirective.getMap());
 
 	}
 
@@ -37,7 +42,7 @@ export class LeafletLayersControlDirective
 
 		// Set the layers
 		if (changes['layersControlCfg']) {
-			this.setLayersControlConfig(
+			this.controlLayers.setLayersControlConfig(
 				changes['layersControlCfg'].currentValue,
 				changes['layersControlCfg'].previousValue);
 		}

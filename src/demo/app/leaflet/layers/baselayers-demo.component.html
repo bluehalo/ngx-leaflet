@@ -2,36 +2,8 @@
 
 	<div class="row">
 
-		<!-- Control Form -->
-		<div class="col-sm-12 col-lg-4">
-
-			<form class="form-horizontal">
-
-				<!-- Base Layers -->
-				<div class="form-group">
-					<label class="control-label col-sm-2 col-lg-4">
-						Base Layers
-					</label>
-					<div class="radio col-sm-10 col-lg-8"
-					     [class.col-sm-offset-4]="i !== 0"
-					     *ngFor="let layer of model.baseLayers; let i = index">
-						<label>
-							<input type="radio"
-							       [name]="layer.id"
-							       [(ngModel)]="model.baseLayer"
-							       [value]="layer.id">
-							{{layer.name}}
-						</label>
-					</div>
-				</div>
-
-				<button type="button" class="pull-right btn btn-default" (click)="onApply()">Apply</button>
-
-			</form>
-		</div>
-
 		<!-- Map -->
-		<div class="col-sm-12 col-lg-8">
+		<div class="col-md-12" style="margin-top:16px;">
 
 			<div leaflet style="height: 300px;"
 			     [leafletOptions]="options"

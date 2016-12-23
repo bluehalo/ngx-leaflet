@@ -30,34 +30,16 @@ export class LeafletBaseLayersDemoComponent {
 		})
 	};
 
-	// Form model object
-	model = new LeafletLayersDemoModel(
-		[ this.LAYER_OSM, this.LAYER_OCM ],
-		this.LAYER_OCM.id,
-		[]
-	);
-
-
 	// Values to bind to Leaflet Directive
-	layersControlOptions: { position: 'bottomright' };
-	layers: L.Layer[];
-	baseLayers: any;
+	layersControlOptions = { position: 'bottomright' };
+	baseLayers = {
+		'Open Street Map': this.LAYER_OSM.layer,
+		'Open Cycle Map': this.LAYER_OCM.layer
+	};
 	options = {
 		zoom: 10,
 		center: L.latLng([ 46.879966, -121.726909 ])
 	};
 
-	constructor() {
-		this.onApply();
-	}
-
-	onApply() {
-
-		this.baseLayers = {
-			'Open Street Map': this.LAYER_OSM.layer,
-			'Open Cycle Map': this.LAYER_OCM.layer
-		};
-
-		return false;
-	}
+	constructor() {}
 }
