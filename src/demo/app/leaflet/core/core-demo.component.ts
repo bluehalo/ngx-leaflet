@@ -5,7 +5,7 @@ import * as L from 'leaflet';
 import { LeafletCoreDemoModel } from './core-demo.model';
 
 @Component({
-	selector: 'leaflet-core-demo',
+	selector: 'leafletCoreDemo',
 	templateUrl: './core-demo.component.html'
 })
 export class LeafletCoreDemoComponent {

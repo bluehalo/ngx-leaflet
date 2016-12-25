@@ -5,7 +5,7 @@ import * as L from 'leaflet';
 import { LeafletLayersDemoModel } from './layers-demo.model';
 
 @Component({
-	selector: 'leaflet-layers-demo',
+	selector: 'leafletLayersDemo',
 	templateUrl: './layers-demo.component.html'
 })
 export class LeafletLayersDemoComponent {
