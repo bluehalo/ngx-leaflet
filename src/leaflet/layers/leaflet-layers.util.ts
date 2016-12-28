@@ -1,3 +1,5 @@
+import * as L from 'leaflet';
+
 import { LeafletLayerDiff } from './leaflet-layer-diff.model';
 
 export class LeafletLayersUtil {
