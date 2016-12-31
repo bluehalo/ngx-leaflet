@@ -17,15 +17,14 @@ var LeafletDirective = (function () {
         this.element = el;
     }
     LeafletDirective.prototype.ngOnInit = function () {
-        var _this = this;
         // Create the map with some reasonable defaults
         this.map = L.map(this.element.nativeElement, this.options);
         this.setView(this.center, this.zoom);
-        // Fire map ready event
-        setTimeout(function () { _this.mapReady.emit(_this.map); });
         // Set up all the initial settings
         this.setFitBounds(this.fitBounds);
         this.doResize();
+        // Fire map ready event
+        this.mapReady.emit(this.map);
     };
     LeafletDirective.prototype.ngOnChanges = function (changes) {
         /*

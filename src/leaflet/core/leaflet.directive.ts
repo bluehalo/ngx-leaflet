@@ -50,13 +50,13 @@ export class LeafletDirective
 		this.map = L.map(this.element.nativeElement, this.options);
 		this.setView(this.center, this.zoom);
 
-		// Fire map ready event
-		setTimeout(() => { this.mapReady.emit(this.map); });
-
 		// Set up all the initial settings
 		this.setFitBounds(this.fitBounds);
 
 		this.doResize();
+
+		// Fire map ready event
+		this.mapReady.emit(this.map);
 
 	}
 
