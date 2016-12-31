@@ -1,5 +1,5 @@
 /// <reference types="leaflet" />
-import { ElementRef, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import * as L from 'leaflet';
 export declare class LeafletDirective implements OnChanges, OnInit {
     readonly DEFAULT_ZOOM: number;
@@ -13,7 +13,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     zoomOptions: {};
     zoomPanOptions: {};
     options: {};
-    configureFn: (chart: any) => void;
+    mapReady: EventEmitter<L.Map>;
     zoom: number;
     center: L.LatLng;
     fitBounds: L.LatLngBounds;

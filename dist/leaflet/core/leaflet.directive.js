@@ -12,16 +12,17 @@ var LeafletDirective = (function () {
         this.zoomPanOptions = this.DEFAULT_FPZ_OPTIONS;
         // Default configuration
         this.options = {};
+        // Configure callback function for the map
+        this.mapReady = new core_1.EventEmitter();
         this.element = el;
     }
     LeafletDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Create the map with some reasonable defaults
         this.map = L.map(this.element.nativeElement, this.options);
         this.setView(this.center, this.zoom);
-        // Call for configuration
-        if (null != this.configureFn) {
-            this.configureFn(this.map);
-        }
+        // Fire map ready event
+        setTimeout(function () { _this.mapReady.emit(_this.map); });
         // Set up all the initial settings
         this.setFitBounds(this.fitBounds);
         this.doResize();
@@ -146,9 +147,9 @@ var LeafletDirective = (function () {
         __metadata('design:type', Object)
     ], LeafletDirective.prototype, "options", void 0);
     __decorate([
-        core_1.Input('leafletConfigure'), 
-        __metadata('design:type', Function)
-    ], LeafletDirective.prototype, "configureFn", void 0);
+        core_1.Output('leafletMapReady'), 
+        __metadata('design:type', Object)
+    ], LeafletDirective.prototype, "mapReady", void 0);
     __decorate([
         core_1.Input('leafletZoom'), 
         __metadata('design:type', Number)
