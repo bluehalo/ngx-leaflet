@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChange } from '@angular/core';
 
 import * as L from 'leaflet';
 
@@ -28,7 +28,7 @@ export class LeafletDirective
 	@Input('leafletOptions') options = {};
 
 	// Configure callback function for the map
-	@Input('leafletConfigure') configureFn: (chart: any) => void;
+	@Output('leafletMapReady') mapReady = new EventEmitter<L.Map>();
 
 	// Zoom level for the map
 	@Input('leafletZoom') zoom: number;
@@ -50,15 +50,13 @@ export class LeafletDirective
 		this.map = L.map(this.element.nativeElement, this.options);
 		this.setView(this.center, this.zoom);
 
-		// Call for configuration
-		if (null != this.configureFn) {
-			this.configureFn(this.map);
-		}
-
 		// Set up all the initial settings
 		this.setFitBounds(this.fitBounds);
 
 		this.doResize();
+
+		// Fire map ready event
+		this.mapReady.emit(this.map);
 
 	}
 
