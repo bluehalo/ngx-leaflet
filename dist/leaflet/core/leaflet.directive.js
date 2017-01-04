@@ -19,9 +19,14 @@ var LeafletDirective = (function () {
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
         this.map = L.map(this.element.nativeElement, this.options);
-        this.setView(this.center, this.zoom);
+        // Only setView if there is a center/zoom
+        if (null != this.center && null != this.zoom) {
+            this.setView(this.center, this.zoom);
+        }
         // Set up all the initial settings
-        this.setFitBounds(this.fitBounds);
+        if (null != this.fitBounds) {
+            this.setFitBounds(this.fitBounds);
+        }
         this.doResize();
         // Fire map ready event
         this.mapReady.emit(this.map);
@@ -48,22 +53,6 @@ var LeafletDirective = (function () {
         // Fit bounds
         if (changes['fitBounds']) {
             this.setFitBounds(changes['fitBounds'].currentValue);
-        }
-        // Fit Options
-        if (changes['fitBoundsOptions']) {
-            this.fitBoundsOptions = changes['fitBoundsOptions'].currentValue;
-        }
-        // Pan Options
-        if (changes['panOptions']) {
-            this.panOptions = changes['panOptions'].currentValue;
-        }
-        // Zoom Options
-        if (changes['zoomOptions']) {
-            this.zoomOptions = changes['zoomOptions'].currentValue;
-        }
-        // Zoom/Pan Options
-        if (changes['zoomPanOptions']) {
-            this.zoomPanOptions = changes['zoomPanOptions'].currentValue;
         }
     };
     LeafletDirective.prototype.getMap = function () {
