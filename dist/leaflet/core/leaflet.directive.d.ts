@@ -12,7 +12,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     panOptions: {};
     zoomOptions: {};
     zoomPanOptions: {};
-    options: {};
+    options: L.MapOptions;
     mapReady: EventEmitter<L.Map>;
     zoom: number;
     center: L.LatLng;

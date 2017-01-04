@@ -25,7 +25,7 @@ export class LeafletDirective
 
 
 	// Default configuration
-	@Input('leafletOptions') options = {};
+	@Input('leafletOptions') options: L.MapOptions = {};
 
 	// Configure callback function for the map
 	@Output('leafletMapReady') mapReady = new EventEmitter<L.Map>();
@@ -48,10 +48,16 @@ export class LeafletDirective
 
 		// Create the map with some reasonable defaults
 		this.map = L.map(this.element.nativeElement, this.options);
-		this.setView(this.center, this.zoom);
+
+		// Only setView if there is a center/zoom
+		if (null != this.center && null != this.zoom) {
+			this.setView(this.center, this.zoom);
+		}
 
 		// Set up all the initial settings
-		this.setFitBounds(this.fitBounds);
+		if (null != this.fitBounds) {
+			this.setFitBounds(this.fitBounds);
+		}
 
 		this.doResize();
 
@@ -89,25 +95,6 @@ export class LeafletDirective
 			this.setFitBounds(changes['fitBounds'].currentValue);
 		}
 
-		// Fit Options
-		if (changes['fitBoundsOptions']) {
-			this.fitBoundsOptions = changes['fitBoundsOptions'].currentValue;
-		}
-
-		// Pan Options
-		if (changes['panOptions']) {
-			this.panOptions = changes['panOptions'].currentValue;
-		}
-
-		// Zoom Options
-		if (changes['zoomOptions']) {
-			this.zoomOptions = changes['zoomOptions'].currentValue;
-		}
-
-		// Zoom/Pan Options
-		if (changes['zoomPanOptions']) {
-			this.zoomPanOptions = changes['zoomPanOptions'].currentValue;
-		}
 	}
 
 	public getMap() {
