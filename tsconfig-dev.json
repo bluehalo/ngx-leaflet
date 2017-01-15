@@ -11,11 +11,10 @@
 
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
 
+		"declaration": false,
 		"sourceMap": true
-	},
-
-	"files": [
-		"src/**/*"
-	]
+	}
 }

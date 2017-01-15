@@ -1,1 +1,1 @@
-{"version":3,"sources":["index.ts"],"names":[],"mappings":";AAAA,+BAA8B,0BAA0B,CAAC;AAAhD,uDAAgD","file":"index.js","sourcesContent":["export { ExampleModule } from './example/example.module';\n\n\n"]}
+{"version":3,"sources":["index.ts"],"names":[],"mappings":";;;;;;;;;;IAAA,2DAAyD;IAAhD,yCAAA,aAAa,CAAA","file":"index.js","sourcesContent":["export { ExampleModule } from './example/example.module';\n\n\n"]}
