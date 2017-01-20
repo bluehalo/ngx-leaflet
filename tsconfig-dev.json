@@ -13,9 +13,5 @@
 		"suppressImplicitAnyIndexErrors": true,
 
 		"sourceMap": true
-	},
-
-	"files": [
-		"src/**/*"
-	]
+	}
 }

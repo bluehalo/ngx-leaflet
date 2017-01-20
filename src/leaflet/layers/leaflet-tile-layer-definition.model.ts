@@ -17,9 +17,10 @@ export class LeafletTileLayerDefinition {
 		let layer: L.TileLayer;
 
 		switch (layerDef.type) {
-			case 'wms':
+			case 'xyz':
 				layer = L.tileLayer(layerDef.url,  layerDef.options);
 				break;
+			case 'wms':
 			default:
 				layer = L.tileLayer.wms(layerDef.url,  layerDef.options);
 				break;

@@ -2,6 +2,10 @@
 
 [![Build Status][travis-image]][travis-url]
 
+[travis-url]: https://travis-ci.org/Asymmetrik/angular2-leaflet/
+[travis-image]: https://travis-ci.org/Asymmetrik/angular2-leaflet.svg
+
+
 > Leaflet packages for Angular 2
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2 projects.
 
@@ -215,5 +219,3 @@ See LICENSE in repository for details.
 **[Leaflet](http://leafletjs.com/)** Is an awesome mapping package.
 
 
-[travis-url]: https://travis-ci.org/Asymmetrik/angular2-leaflet/
-[travis-image]: https://travis-ci.org/Asymmetrik/angular2-leaflet.svg

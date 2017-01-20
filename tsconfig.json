@@ -1,22 +1,22 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-
+		
 		"module": "commonjs",
 		"moduleResolution": "node",
-
+		
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"noEmitHelpers": true,
-
+		
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true,
-
+		
 		"declaration": true,
 		"sourceMap": true
 	},
-
-	"files": [
+	
+	"include": [
 		"src/**/*"
 	]
 }
