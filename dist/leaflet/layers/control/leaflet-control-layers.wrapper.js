@@ -1,7 +1,7 @@
 "use strict";
-var L = require('leaflet');
-var leaflet_util_1 = require('../../core/leaflet.util');
-var leaflet_layers_object_diff_model_1 = require('./leaflet-layers-object-diff.model');
+var L = require("leaflet");
+var leaflet_util_1 = require("../../core/leaflet.util");
+var leaflet_layers_object_diff_model_1 = require("./leaflet-layers-object-diff.model");
 var LeafletControlLayersWrapper = (function () {
     function LeafletControlLayersWrapper() {
     }

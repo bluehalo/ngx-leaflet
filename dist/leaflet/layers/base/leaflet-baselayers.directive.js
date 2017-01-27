@@ -1,11 +1,11 @@
 "use strict";
-var core_1 = require('@angular/core');
-var L = require('leaflet');
-var leaflet_util_1 = require('../../core/leaflet.util');
-var leaflet_directive_1 = require('../../core/leaflet.directive');
-var leaflet_directive_wrapper_1 = require('../../core/leaflet.directive.wrapper');
-var leaflet_control_layers_wrapper_1 = require('../control/leaflet-control-layers.wrapper');
-var leaflet_control_layers_config_model_1 = require('../control/leaflet-control-layers-config.model');
+var core_1 = require("@angular/core");
+var L = require("leaflet");
+var leaflet_util_1 = require("../../core/leaflet.util");
+var leaflet_directive_1 = require("../../core/leaflet.directive");
+var leaflet_directive_wrapper_1 = require("../../core/leaflet.directive.wrapper");
+var leaflet_control_layers_wrapper_1 = require("../control/leaflet-control-layers.wrapper");
+var leaflet_control_layers_config_model_1 = require("../control/leaflet-control-layers-config.model");
 var LeafletBaseLayersDirective = (function () {
     function LeafletBaseLayersDirective(leafletDirective) {
         this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
@@ -57,22 +57,22 @@ var LeafletBaseLayersDirective = (function () {
             }
         }
     };
-    __decorate([
-        core_1.Input('leafletBaseLayers'), 
-        __metadata('design:type', Object)
-    ], LeafletBaseLayersDirective.prototype, "baseLayers", void 0);
-    __decorate([
-        core_1.Input('leafletLayersControlOptions'), 
-        __metadata('design:type', Object)
-    ], LeafletBaseLayersDirective.prototype, "layersControlOptions", void 0);
-    LeafletBaseLayersDirective = __decorate([
-        core_1.Directive({
-            selector: '[leafletBaseLayers]'
-        }), 
-        __metadata('design:paramtypes', [leaflet_directive_1.LeafletDirective])
-    ], LeafletBaseLayersDirective);
     return LeafletBaseLayersDirective;
 }());
+__decorate([
+    core_1.Input('leafletBaseLayers'),
+    __metadata("design:type", Object)
+], LeafletBaseLayersDirective.prototype, "baseLayers", void 0);
+__decorate([
+    core_1.Input('leafletLayersControlOptions'),
+    __metadata("design:type", Object)
+], LeafletBaseLayersDirective.prototype, "layersControlOptions", void 0);
+LeafletBaseLayersDirective = __decorate([
+    core_1.Directive({
+        selector: '[leafletBaseLayers]'
+    }),
+    __metadata("design:paramtypes", [leaflet_directive_1.LeafletDirective])
+], LeafletBaseLayersDirective);
 exports.LeafletBaseLayersDirective = LeafletBaseLayersDirective;
 
 //# sourceMappingURL=leaflet-baselayers.directive.js.map

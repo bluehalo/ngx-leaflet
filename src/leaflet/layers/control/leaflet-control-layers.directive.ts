@@ -1,7 +1,5 @@
 import { Directive, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
 
-import * as L from 'leaflet';
-
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';

@@ -1,5 +1,5 @@
 "use strict";
-var leaflet_layer_diff_model_1 = require('./leaflet-layer-diff.model');
+var leaflet_layer_diff_model_1 = require("./leaflet-layer-diff.model");
 var LeafletLayersUtil = (function () {
     function LeafletLayersUtil() {
     }
