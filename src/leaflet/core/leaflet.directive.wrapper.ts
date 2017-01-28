@@ -1,5 +1,3 @@
-import * as L from 'leaflet';
-
 import { LeafletDirective } from './leaflet.directive';
 
 export class LeafletDirectiveWrapper {

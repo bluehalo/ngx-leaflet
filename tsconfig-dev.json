@@ -10,6 +10,8 @@
 		"noEmitHelpers": true,
 
 		"noImplicitAny": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
 		"suppressImplicitAnyIndexErrors": true,
 
 		"sourceMap": true

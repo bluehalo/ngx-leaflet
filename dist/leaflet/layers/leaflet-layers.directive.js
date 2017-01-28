@@ -1,8 +1,8 @@
 "use strict";
-var core_1 = require('@angular/core');
-var leaflet_directive_1 = require('../core/leaflet.directive');
-var leaflet_directive_wrapper_1 = require('../core/leaflet.directive.wrapper');
-var leaflet_layers_util_1 = require('./leaflet-layers.util');
+var core_1 = require("@angular/core");
+var leaflet_directive_1 = require("../core/leaflet.directive");
+var leaflet_directive_wrapper_1 = require("../core/leaflet.directive.wrapper");
+var leaflet_layers_util_1 = require("./leaflet-layers.util");
 var LeafletLayersDirective = (function () {
     function LeafletLayersDirective(leafletDirective) {
         this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
@@ -35,18 +35,18 @@ var LeafletLayersDirective = (function () {
             diff.add.forEach(function (l) { map.addLayer(l); });
         }
     };
-    __decorate([
-        core_1.Input('leafletLayers'), 
-        __metadata('design:type', Array)
-    ], LeafletLayersDirective.prototype, "layers", void 0);
-    LeafletLayersDirective = __decorate([
-        core_1.Directive({
-            selector: '[leafletLayers]'
-        }), 
-        __metadata('design:paramtypes', [leaflet_directive_1.LeafletDirective])
-    ], LeafletLayersDirective);
     return LeafletLayersDirective;
 }());
+__decorate([
+    core_1.Input('leafletLayers'),
+    __metadata("design:type", Array)
+], LeafletLayersDirective.prototype, "layers", void 0);
+LeafletLayersDirective = __decorate([
+    core_1.Directive({
+        selector: '[leafletLayers]'
+    }),
+    __metadata("design:paramtypes", [leaflet_directive_1.LeafletDirective])
+], LeafletLayersDirective);
 exports.LeafletLayersDirective = LeafletLayersDirective;
 
 //# sourceMappingURL=leaflet-layers.directive.js.map

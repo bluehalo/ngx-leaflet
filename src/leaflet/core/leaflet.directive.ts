@@ -103,7 +103,7 @@ export class LeafletDirective
 
 
 	@HostListener('window:resize', ['$event'])
-	onResize(event: any) {
+	onResize() {
 		this.delayResize();
 	}
 
