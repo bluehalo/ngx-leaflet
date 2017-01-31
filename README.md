@@ -105,11 +105,6 @@ fitBounds: L.LatLngBounds
 On changes, the component calls map.fitBounds using the bound parameter.
 
 ### Simple Layer Management: Setting Baselayers
-```leafletBaseLayers```
-
-If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
-This directive will interfere with the ```leafletLayersControl``` directive.
-However, because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
 
 ```html
 <div leaflet style="height: 300px;"
@@ -134,6 +129,10 @@ Syncing is performed by tracking the current baselayer and on changes, searching
 If it finds a baselayer that is still added to the map, it will assume that is still the baselayer and leave it.
 If none of the baselayers can be found on the map, it will add the first layer it finds in the ```L.control.LayersObject``` and use that as the new baselayer.
 Layers are compared using instance equality.
+
+If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
+This directive will interfere with the ```leafletLayersControl``` directive.
+However, because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
 
 
 ### leafletLayersControlOptions
