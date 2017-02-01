@@ -19,7 +19,6 @@ module.exports = {
 
 	// Distribution related items
 	dist: {
-		dir: 'dist',
-		bundleDir: 'dist/bundles'
+		dir: 'dist'
 	}
 };

@@ -7,9 +7,12 @@
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
 
-	"main": "dist/bundles/angular2-leaflet.js",
-	"module": "src/index.ts",
+	"main": "dist/angular2-leaflet.js",
+	"module": "dist/index.js",
 	"typings": "dist/index.d.ts",
+	"files": [
+		"dist/*"
+	],
 
 	"repository": {
 		"type": "git",
