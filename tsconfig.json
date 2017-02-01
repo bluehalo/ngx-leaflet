@@ -7,13 +7,12 @@
 
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"noEmitHelpers": true,
 
 		"noImplicitAny": true,
 		"noUnusedParameters": true,
 		"noUnusedLocals": true,
 		"suppressImplicitAnyIndexErrors": true,
-		
+
 		"declaration": true,
 		"sourceMap": true
 	},

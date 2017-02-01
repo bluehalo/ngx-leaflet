@@ -75,10 +75,10 @@ gulp.task('build-ts', () => {
 gulp.task('build-js', ['rollup-js'], () => {
 
 	// Uglify
-	return gulp.src(path.join(assets.dist.bundleDir, (pkg.artifactName + '.js')))
+	return gulp.src(path.join(assets.dist.dir, (pkg.artifactName + '.js')))
 		.pipe(plugins.uglify({ preserveComments: 'license' }))
 		.pipe(plugins.rename(pkg.artifactName + '.min.js'))
-		.pipe(gulp.dest(assets.dist.bundleDir));
+		.pipe(gulp.dest(assets.dist.dir));
 
 });
 
@@ -90,7 +90,7 @@ gulp.task('rollup-js', () => {
 		})
 		.then((bundle) => {
 			return bundle.write({
-				dest: path.join(assets.dist.bundleDir, (pkg.artifactName + '.js')),
+				dest: path.join(assets.dist.dir, (pkg.artifactName + '.js')),
 				format: 'umd',
 				moduleName: 'angular2Sentio',
 				sourceMap: true,
