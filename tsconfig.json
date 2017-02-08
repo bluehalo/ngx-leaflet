@@ -2,21 +2,27 @@
 	"compilerOptions": {
 		"target": "es5",
 
-		"module": "commonjs",
+		"module": "es6",
 		"moduleResolution": "node",
 
+		"declaration": false,
+		"noEmitHelpers": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"noEmitHelpers": true,
+
+		"lib": [ "es6", "dom" ],
 
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true,
+		"allowUnreachableCode": false,
 
-		"declaration": true,
 		"sourceMap": true
 	},
 
 	"files": [
 		"src/**/*"
+	],
+	"exclude": [
+		"node_modules"
 	]
 }

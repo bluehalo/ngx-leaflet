@@ -28,7 +28,6 @@ module.exports = {
 			"no-console": [ false ],
 			"no-construct": true,
 			"no-debugger": true,
-			"no-duplicate-key": true,
 			"no-duplicate-variable": true,
 			"no-empty": false,
 			"no-eval": true,
@@ -39,11 +38,8 @@ module.exports = {
 			"no-string-literal": false,
 			"no-switch-case-fall-through": false,
 			"no-trailing-whitespace": true,
-			"no-unreachable": true,
 			"no-unused-expression": true,
 			"no-unused-new": true,
-			// deprecated as of v4.0
-			"no-unused-variable": false,
 			// disable this rule as it is very heavy performance-wise and not that useful
 			"no-use-before-declare": false,
 			"no-var-keyword": true,
