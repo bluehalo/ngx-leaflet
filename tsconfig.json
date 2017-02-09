@@ -19,9 +19,6 @@
 		"sourceMap": true
 	},
 
-	"files": [
-		"src/**/*"
-	],
 	"exclude": [
 		"node_modules"
 	]
