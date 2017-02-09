@@ -94,10 +94,7 @@ Travis CI configuration file. See (https://travis-ci.org/). If you configure thi
 Gulp build file. The details of the Gulp build are explained in this README.
 
 **./tsconfig.json**
-Typescript configuration file used by the compiler to build the component code. See https://www.typescriptlang.org/docs/tutorial.html.
-
-**./tsconfig-dev.json**
-Typescript configuration file used by Webpack to run the demo. We locate this at the root of the project to help IDEs pick it up.
+Typescript configuration file used by the typescipt compiler and webpack dev server to build the component code. See https://www.typescriptlang.org/docs/tutorial.html.
 
 
 ### ./config/ (Configuration)
