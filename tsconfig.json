@@ -14,7 +14,10 @@
 
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true,
+
 		"allowUnreachableCode": false,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
 
 		"sourceMap": true
 	},
