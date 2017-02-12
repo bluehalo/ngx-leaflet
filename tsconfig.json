@@ -6,7 +6,7 @@
 		"moduleResolution": "node",
 
 		"declaration": true,
-		"noEmitHelpers": false,
+		"noEmitHelpers": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 

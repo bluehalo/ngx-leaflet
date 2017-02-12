@@ -18,9 +18,9 @@
  */
 
 // Polyfills
-import 'reflect-metadata';
+import 'core-js/es6';
+import 'core-js/es7/reflect';
 import 'ts-helpers';
-import 'zone.js';
 
 // Global Imports
 
@@ -34,4 +34,5 @@ import '@angular/platform-browser-dynamic';
 
 // Other Dependencies
 import 'rxjs';
+import 'zone.js';
 
