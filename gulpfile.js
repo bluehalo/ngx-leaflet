@@ -100,7 +100,7 @@ gulp.task('rollup-js', () => {
 			return bundle.write({
 				dest: path.join(assets.dist.bundleDir, (pkg.artifactName + '.js')),
 				format: 'umd',
-				moduleName: 'angular2Sentio',
+				moduleName: 'angular2Leaflet',
 				sourceMap: true,
 				banner: bannerString,
 				globals: {

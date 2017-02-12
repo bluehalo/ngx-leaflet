@@ -1,8 +1,8 @@
-/*! @asymmetrik/angular2-leaflet-1.1.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
+/*! @asymmetrik/angular2-leaflet-1.2.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
-	(factory((global.angular2Sentio = global.angular2Sentio || {}),global.ng.core,global.L));
+	(factory((global.angular2Leaflet = global.angular2Leaflet || {}),global.ng.core,global.L));
 }(this, (function (exports,_angular_core,L$1) { 'use strict';
 
 exports.LeafletDirective = (function () {
