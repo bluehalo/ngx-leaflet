@@ -18,7 +18,7 @@ let
 
 
 // Banner to append to generated files
-let bannerString = '/*! ' + pkg.name + '-' + pkg.version + ' - ' + pkg.copyright + '*/'
+let bannerString = '/*! ' + pkg.name + '-' + pkg.version + ' - ' + pkg.copyright + '*/';
 
 /**
  * ENV Tasks
@@ -35,13 +35,11 @@ gulp.task('env:BUILD', () => {
 
 gulp.task('validate-ts', () => {
 
-	// Grab the tslint config
-	var config = require(path.resolve('./config/tslint.config.js'));
-	config.formatter = 'prose';
-
 	return gulp.src(assets.src.allTs)
 		// Lint the Typescript
-		.pipe(plugins.tslint(config))
+		.pipe(plugins.tslint({
+			formatter: 'prose'
+		}))
 		.pipe(plugins.tslint.report({
 			summarizeFailureOutput: true,
 			emitError: BUILD
@@ -55,7 +53,7 @@ gulp.task('validate-ts', () => {
  */
 
 // Build JS from the TS source
-var tsProject = plugins.typescript.createProject(path.resolve('./tsconfig.json'));
+let tsProject = plugins.typescript.createProject(path.resolve('./tsconfig.json'));
 gulp.task('build-ts', () => {
 
 	let tsResult = gulp.src(assets.src.ts, { base: './src' })
@@ -86,7 +84,16 @@ gulp.task('build-js', ['rollup-js'], () => {
 gulp.task('rollup-js', () => {
 
 	return rollup.rollup({
-			entry: path.join(assets.dist.dir, '/index.js')
+			entry: path.join(assets.dist.dir, '/index.js'),
+			external: [
+			'@angular/core'
+			],
+			onwarn: (warning) => {
+				if ('THIS_IS_UNDEFINED' === warning.code) {
+					return;
+				}
+				plugins.util.log(warning.message);
+			}
 		})
 		.then((bundle) => {
 			return bundle.write({
@@ -109,8 +116,8 @@ gulp.task('rollup-js', () => {
  */
 gulp.task('webpack-dev-server', (done) => {
 	// Start a webpack-dev-server
-	var webpackConfig = require(path.resolve('./config/webpack.config.js'))();
-	var compiler = webpack(webpackConfig);
+	let webpackConfig = require(path.resolve('./config/webpack.config.js'))();
+	let compiler = webpack(webpackConfig);
 
 	new webpackDevServer(compiler, {
 		stats: {

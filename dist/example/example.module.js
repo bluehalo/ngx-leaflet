@@ -1,23 +1,22 @@
-"use strict";
-var core_1 = require("@angular/core");
-var example_component_1 = require("./example.component");
+import { NgModule } from '@angular/core';
+import { ExampleComponent } from './example.component';
 var ExampleModule = (function () {
     function ExampleModule() {
     }
     return ExampleModule;
 }());
 ExampleModule = __decorate([
-    core_1.NgModule({
+    NgModule({
         imports: [],
         exports: [
-            example_component_1.ExampleComponent
+            ExampleComponent
         ],
         declarations: [
-            example_component_1.ExampleComponent
+            ExampleComponent
         ],
         providers: []
     })
 ], ExampleModule);
-exports.ExampleModule = ExampleModule;
+export { ExampleModule };
 
 //# sourceMappingURL=example.module.js.map

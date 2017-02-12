@@ -1,5 +1,4 @@
-"use strict";
-var core_1 = require("@angular/core");
+import { Component } from '@angular/core';
 var ExampleComponent = (function () {
     function ExampleComponent() {
         this.message = 'Hello';
@@ -13,12 +12,11 @@ var ExampleComponent = (function () {
     return ExampleComponent;
 }());
 ExampleComponent = __decorate([
-    core_1.Component({
+    Component({
         selector: 'example-component',
         template: '{{message}}'
-    }),
-    __metadata("design:paramtypes", [])
+    })
 ], ExampleComponent);
-exports.ExampleComponent = ExampleComponent;
+export { ExampleComponent };
 
 //# sourceMappingURL=example.component.js.map
