@@ -94,7 +94,13 @@ Travis CI configuration file. See (https://travis-ci.org/). If you configure thi
 Gulp build file. The details of the Gulp build are explained in this README.
 
 **./tsconfig.json**
-Typescript configuration file used by the typescipt compiler and webpack dev server to build the component code. See https://www.typescriptlang.org/docs/tutorial.html.
+Typescript configuration file used by the typescipt compiler to build the production component code. See https://www.typescriptlang.org/docs/tutorial.html.
+
+**./tsconfig-dev.json**
+Typescript configuration file used by webpack dev server to build the development component code. This file is essentially the same as ```./tsconfig.json``` only it changes a few settings since it is not being bundled for external consumption.
+
+**./tslint.json**
+TSLint configuration file. Specifies code conventions and Typescript static analysis checks. See https://palantir.github.io/tslint/.
 
 
 ### ./config/ (Configuration)
@@ -102,9 +108,6 @@ Contains most of the major config files used to build and develop
 
 **./config/assets.js**
 Centrally specifies paths used by the build
-
-**./config/tslint.config.js**
-TSLint configuration file. Specifies code conventions and Typescript static analysis checks. See https://palantir.github.io/tslint/.
 
 **./config/webpack.config.js**
 Webpack configuration file used to build the component and demo and run Webpack Dev Server.

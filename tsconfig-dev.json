@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "es6",
+		"module": "commonjs",
 
 		"moduleResolution": "node",
 
-		"declaration": true,
+		"declaration": false,
 		"noEmitHelpers": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
