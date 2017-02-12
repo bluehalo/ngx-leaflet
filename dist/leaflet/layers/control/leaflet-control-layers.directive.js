@@ -1,12 +1,11 @@
-"use strict";
-var core_1 = require("@angular/core");
-var leaflet_directive_1 = require("../../core/leaflet.directive");
-var leaflet_directive_wrapper_1 = require("../../core/leaflet.directive.wrapper");
-var leaflet_control_layers_wrapper_1 = require("./leaflet-control-layers.wrapper");
+import { Directive, Input } from '@angular/core';
+import { LeafletDirective } from '../../core/leaflet.directive';
+import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
+import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
 var LeafletLayersControlDirective = (function () {
     function LeafletLayersControlDirective(leafletDirective) {
-        this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new leaflet_control_layers_wrapper_1.LeafletControlLayersWrapper();
+        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+        this.controlLayers = new LeafletControlLayersWrapper();
     }
     LeafletLayersControlDirective.prototype.ngOnInit = function () {
         // Init the map
@@ -25,19 +24,19 @@ var LeafletLayersControlDirective = (function () {
     return LeafletLayersControlDirective;
 }());
 __decorate([
-    core_1.Input('leafletLayersControl'),
+    Input('leafletLayersControl'),
     __metadata("design:type", Object)
 ], LeafletLayersControlDirective.prototype, "layersControlConfig", void 0);
 __decorate([
-    core_1.Input('leafletLayersControlOptions'),
+    Input('leafletLayersControlOptions'),
     __metadata("design:type", Object)
 ], LeafletLayersControlDirective.prototype, "layersControlOptions", void 0);
 LeafletLayersControlDirective = __decorate([
-    core_1.Directive({
+    Directive({
         selector: '[leafletLayersControl]'
     }),
-    __metadata("design:paramtypes", [leaflet_directive_1.LeafletDirective])
+    __metadata("design:paramtypes", [LeafletDirective])
 ], LeafletLayersControlDirective);
-exports.LeafletLayersControlDirective = LeafletLayersControlDirective;
+export { LeafletLayersControlDirective };
 
 //# sourceMappingURL=leaflet-control-layers.directive.js.map

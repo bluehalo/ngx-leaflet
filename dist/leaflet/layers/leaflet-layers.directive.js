@@ -1,11 +1,10 @@
-"use strict";
-var core_1 = require("@angular/core");
-var leaflet_directive_1 = require("../core/leaflet.directive");
-var leaflet_directive_wrapper_1 = require("../core/leaflet.directive.wrapper");
-var leaflet_layers_util_1 = require("./leaflet-layers.util");
+import { Directive, Input } from '@angular/core';
+import { LeafletDirective } from '../core/leaflet.directive';
+import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
+import { LeafletLayersUtil } from './leaflet-layers.util';
 var LeafletLayersDirective = (function () {
     function LeafletLayersDirective(leafletDirective) {
-        this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
+        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
     }
     LeafletLayersDirective.prototype.ngOnInit = function () {
         // Init the map
@@ -28,7 +27,7 @@ var LeafletLayersDirective = (function () {
     LeafletLayersDirective.prototype.setLayers = function (newLayers, prevLayers) {
         var map = this.leafletDirective.getMap();
         if (null != map) {
-            var diff = leaflet_layers_util_1.LeafletLayersUtil.diffLayers(newLayers, prevLayers);
+            var diff = LeafletLayersUtil.diffLayers(newLayers, prevLayers);
             // Remove the layers
             diff.remove.forEach(function (l) { map.removeLayer(l); });
             // Add the new layers
@@ -38,15 +37,15 @@ var LeafletLayersDirective = (function () {
     return LeafletLayersDirective;
 }());
 __decorate([
-    core_1.Input('leafletLayers'),
+    Input('leafletLayers'),
     __metadata("design:type", Array)
 ], LeafletLayersDirective.prototype, "layers", void 0);
 LeafletLayersDirective = __decorate([
-    core_1.Directive({
+    Directive({
         selector: '[leafletLayers]'
     }),
-    __metadata("design:paramtypes", [leaflet_directive_1.LeafletDirective])
+    __metadata("design:paramtypes", [LeafletDirective])
 ], LeafletLayersDirective);
-exports.LeafletLayersDirective = LeafletLayersDirective;
+export { LeafletLayersDirective };
 
 //# sourceMappingURL=leaflet-layers.directive.js.map

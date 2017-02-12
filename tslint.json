@@ -1,0 +1,22 @@
+{
+	"extends": "tslint:recommended",
+	"rules": {
+
+		"array-type": false,
+		"indent": [ true, "tabs" ],
+		"max-line-length": false,
+		"member-access": false,
+		"member-ordering": [ true, { "order": "fields-first" } ],
+		"no-consecutive-blank-lines": [ true, 2 ],
+		"no-empty": true,
+		"no-string-literal": false,
+		"object-literal-sort-keys": false,
+		"one-line": [ true, "check-open-brace", "check-whitespace" ],
+		"ordered-imports": [ true, { "import-sources-order": "any", "named-imports-order": "case-insensitive" } ],
+		"quotemark": [ true, "single" ],
+		"trailing-comma": false,
+		"triple-equals": [ true, "allow-null-check" ],
+		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+
+	}
+}

@@ -7,5 +7,3 @@ export { LeafletControlLayersUtil } from './leaflet/layers/control/leaflet-contr
 export { LeafletLayersUtil } from './leaflet/layers/leaflet-layers.util';
 
 export { LeafletTileLayerDefinition } from './leaflet/layers/leaflet-tile-layer-definition.model';
-
-

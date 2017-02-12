@@ -1,4 +1,3 @@
-"use strict";
 var LeafletTileLayerDefinition = (function () {
     function LeafletTileLayerDefinition(type, url, options) {
         this.type = type;
@@ -51,6 +50,6 @@ var LeafletTileLayerDefinition = (function () {
     };
     return LeafletTileLayerDefinition;
 }());
-exports.LeafletTileLayerDefinition = LeafletTileLayerDefinition;
+export { LeafletTileLayerDefinition };
 
 //# sourceMappingURL=leaflet-tile-layer-definition.model.js.map

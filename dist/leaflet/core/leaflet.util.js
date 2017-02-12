@@ -1,4 +1,3 @@
-"use strict";
 var LeafletUtil = (function () {
     function LeafletUtil() {
     }
@@ -68,6 +67,6 @@ var LeafletUtil = (function () {
     };
     return LeafletUtil;
 }());
-exports.LeafletUtil = LeafletUtil;
+export { LeafletUtil };
 
 //# sourceMappingURL=leaflet.util.js.map

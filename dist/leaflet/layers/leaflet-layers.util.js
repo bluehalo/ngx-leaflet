@@ -1,5 +1,4 @@
-"use strict";
-var leaflet_layer_diff_model_1 = require("./leaflet-layer-diff.model");
+import { LeafletLayerDiff } from './leaflet-layer-diff.model';
 var LeafletLayersUtil = (function () {
     function LeafletLayersUtil() {
     }
@@ -22,10 +21,10 @@ var LeafletLayersUtil = (function () {
             .filter(function (pl) {
             return !(prevLayers.find(function (nl) { return (pl === nl); }));
         });
-        return new leaflet_layer_diff_model_1.LeafletLayerDiff(toRemove, toAdd);
+        return new LeafletLayerDiff(toRemove, toAdd);
     };
     return LeafletLayersUtil;
 }());
-exports.LeafletLayersUtil = LeafletLayersUtil;
+export { LeafletLayersUtil };
 
 //# sourceMappingURL=leaflet-layers.util.js.map

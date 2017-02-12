@@ -5,7 +5,7 @@ import { LeafletLayersObjectDiff } from '../control/leaflet-layers-object-diff.m
 
 export class LeafletControlLayersUtil {
 
-	public diffLayers(newLayers: L.control.LayersObject, prevLayers: L.control.LayersObject): LeafletLayersObjectDiff {
+	public diffLayers(newLayers: L.Control.LayersObject, prevLayers: L.Control.LayersObject): LeafletLayersObjectDiff {
 		let toRemove: {};
 		let toAdd: {};
 

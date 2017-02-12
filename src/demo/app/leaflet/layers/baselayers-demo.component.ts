@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 import * as L from 'leaflet';
 
-import { LeafletLayersDemoModel } from './layers-demo.model';
-
 @Component({
 	selector: 'leafletBaselayersDemo',
 	templateUrl: './baselayers-demo.component.html'
@@ -41,5 +39,4 @@ export class LeafletBaseLayersDemoComponent {
 		center: L.latLng([ 46.879966, -121.726909 ])
 	};
 
-	constructor() {}
 }

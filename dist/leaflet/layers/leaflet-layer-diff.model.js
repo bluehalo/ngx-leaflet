@@ -1,4 +1,3 @@
-"use strict";
 var LeafletLayerDiff = (function () {
     function LeafletLayerDiff(remove, add) {
         this.remove = remove;
@@ -6,6 +5,6 @@ var LeafletLayerDiff = (function () {
     }
     return LeafletLayerDiff;
 }());
-exports.LeafletLayerDiff = LeafletLayerDiff;
+export { LeafletLayerDiff };
 
 //# sourceMappingURL=leaflet-layer-diff.model.js.map

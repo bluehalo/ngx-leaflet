@@ -16,7 +16,7 @@ export class LeafletBaseLayersDirective
 	implements OnChanges, OnInit {
 
 	// Base Layers
-	@Input('leafletBaseLayers') baseLayers: L.control.LayersObject;
+	@Input('leafletBaseLayers') baseLayers: L.Control.LayersObject;
 
 	// Control Options
 	@Input('leafletLayersControlOptions') layersControlOptions: L.Control.LayersOptions;
@@ -57,7 +57,7 @@ export class LeafletBaseLayersDirective
 
 	}
 
-	protected setBaseLayers(newBaseLayers: L.control.LayersObject, prevBaseLayers: L.control.LayersObject) {
+	protected setBaseLayers(newBaseLayers: L.Control.LayersObject, prevBaseLayers: L.Control.LayersObject) {
 
 		// Update the layers control
 		this.controlLayers.setLayersControlConfig(
@@ -78,7 +78,7 @@ export class LeafletBaseLayersDirective
 		let foundLayer: L.Layer;
 
 		// Search all the layers in the map to see if we can find them in the baselayer array
-		map.eachLayer((l) => {
+		map.eachLayer((l: L.Layer) => {
 			foundLayer = layers.find((bl) => { return l === bl; });
 		});
 

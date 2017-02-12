@@ -9,7 +9,9 @@ export class LeafletDirectiveWrapper {
 		this.leafletDirective = leafletDirective;
 	}
 
-	public init() { }
+	public init() {
+		// Nothing for now
+	}
 
 	public getMap() {
 		return this.leafletDirective.getMap();

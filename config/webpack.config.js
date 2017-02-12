@@ -40,7 +40,7 @@ module.exports = () => {
 
 	// Set up for dev middleware
 	wpConfig.output.path = path.resolve('./public');
-	wpConfig.output.publicPath = 'http://localhost:9000/';
+	wpConfig.output.publicPath = '/';
 	wpConfig.output.filename = '[name].js';
 	wpConfig.output.chunkFilename = '[name].js';
 
@@ -117,7 +117,8 @@ module.exports = () => {
 			leaflet: 'leaflet'
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
-			name: [ 'vendor' ]
+			name: 'vendor',
+			minChunks: Infinity
 		}),
 		new webpack.ContextReplacementPlugin(
 			/angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/
