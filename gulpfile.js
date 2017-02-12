@@ -86,7 +86,7 @@ gulp.task('rollup-js', () => {
 	return rollup.rollup({
 			entry: path.join(assets.dist.dir, '/index.js'),
 			external: [
-			'@angular/core'
+				'@angular/core'
 			],
 			onwarn: (warning) => {
 				if ('THIS_IS_UNDEFINED' === warning.code) {
