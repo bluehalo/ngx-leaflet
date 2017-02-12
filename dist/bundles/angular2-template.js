@@ -1,8 +1,8 @@
-/*! @asymmetrik/angular2-template-0.1.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
+/*! @asymmetrik/angular2-template-0.2.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core'], factory) :
-	(factory((global.angular2Sentio = global.angular2Sentio || {}),global.ng.core));
+	(factory((global.angular2Template = global.angular2Template || {}),global.ng.core));
 }(this, (function (exports,_angular_core) { 'use strict';
 
 var ExampleComponent = (function () {
