@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+// Local Imports
 import { ExampleDemoComponent } from './example-demo.component';
 import { ExampleModule } from '../../../example/example.module';
 

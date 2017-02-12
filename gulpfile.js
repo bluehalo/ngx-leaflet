@@ -35,13 +35,11 @@ gulp.task('env:BUILD', () => {
 
 gulp.task('validate-ts', () => {
 
-	// Grab the tslint config
-	let config = require(path.resolve('./config/tslint.config.js'));
-	config.formatter = 'prose';
-
 	return gulp.src(assets.src.allTs)
 		// Lint the Typescript
-		.pipe(plugins.tslint(config))
+		.pipe(plugins.tslint({
+			formatter: 'prose'
+		}))
 		.pipe(plugins.tslint.report({
 			summarizeFailureOutput: true,
 			emitError: BUILD

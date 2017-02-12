@@ -2,7 +2,7 @@
 	"name": "@asymmetrik/angular2-template",
 	"artifactName": "angular2-template",
 	"description": "Angular 2 components template project",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -40,7 +40,7 @@
 		"typescript": "2.1",
 		"ts-helpers": "1.1",
 		"tslint": "4.4",
-		"tslint-stylish": "2.1.0-beta",
+		"tslint-stylish": "2.1",
 
 		"webpack": "2.2",
 		"webpack-dev-server": "2.3",
@@ -49,7 +49,7 @@
 		"file-loader": "0.10",
 		"html-loader": "0.4",
 		"resolve-url-loader": "1.6",
-		"sass-loader": "4.1",
+		"sass-loader": "5.0",
 		"style-loader": "0.13",
 		"ts-loader": "2.0",
 		"url-loader": "0.5",
@@ -57,7 +57,7 @@
 		"gulp": "3.9",
 		"gulp-filter": "5.0",
 		"gulp-insert": "0.5",
-		"gulp-load-plugins": "1.4",
+		"gulp-load-plugins": "1.5",
 		"gulp-rename": "1.2",
 		"gulp-sourcemaps": "2.4",
 		"gulp-typescript": "3.1",
@@ -65,7 +65,7 @@
 		"gulp-uglify": "2.0",
 		"gulp-util": "3.0",
 		"run-sequence": "1.2",
-		"node-sass": "4.3"
+		"node-sass": "4.5"
 
 	}
 }
