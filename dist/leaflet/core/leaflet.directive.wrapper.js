@@ -1,14 +1,15 @@
-"use strict";
 var LeafletDirectiveWrapper = (function () {
     function LeafletDirectiveWrapper(leafletDirective) {
         this.leafletDirective = leafletDirective;
     }
-    LeafletDirectiveWrapper.prototype.init = function () { };
+    LeafletDirectiveWrapper.prototype.init = function () {
+        // Nothing for now
+    };
     LeafletDirectiveWrapper.prototype.getMap = function () {
         return this.leafletDirective.getMap();
     };
     return LeafletDirectiveWrapper;
 }());
-exports.LeafletDirectiveWrapper = LeafletDirectiveWrapper;
+export { LeafletDirectiveWrapper };
 
 //# sourceMappingURL=leaflet.directive.wrapper.js.map

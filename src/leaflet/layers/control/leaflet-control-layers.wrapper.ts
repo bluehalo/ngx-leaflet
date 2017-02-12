@@ -29,9 +29,9 @@ export class LeafletControlLayersWrapper {
 			return new LeafletLayersObjectDiff({}, {});
 		}
 
-		let toRemove: L.control.LayersObject;
-		let baseLayers: L.control.LayersObject;
-		let overlays: L.control.LayersObject;
+		let toRemove: L.Control.LayersObject;
+		let baseLayers: L.Control.LayersObject;
+		let overlays: L.Control.LayersObject;
 
 		// Figure out which layers need to be removed (prev - new)
 		toRemove = LeafletUtil.mergeMaps(

@@ -78,9 +78,6 @@ export class LeafletCoreDemoComponent {
 		duration: 1
 	};
 
-
-	constructor() { }
-
 	onApply() {
 		this.zoom = this.model.zoom;
 		this.center = L.latLng([ this.model.latitude, this.model.longitude]);

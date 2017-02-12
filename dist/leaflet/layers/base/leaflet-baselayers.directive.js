@@ -1,15 +1,14 @@
-"use strict";
-var core_1 = require("@angular/core");
-var L = require("leaflet");
-var leaflet_util_1 = require("../../core/leaflet.util");
-var leaflet_directive_1 = require("../../core/leaflet.directive");
-var leaflet_directive_wrapper_1 = require("../../core/leaflet.directive.wrapper");
-var leaflet_control_layers_wrapper_1 = require("../control/leaflet-control-layers.wrapper");
-var leaflet_control_layers_config_model_1 = require("../control/leaflet-control-layers-config.model");
+import { Directive, Input } from '@angular/core';
+import * as L from 'leaflet';
+import { LeafletUtil } from '../../core/leaflet.util';
+import { LeafletDirective } from '../../core/leaflet.directive';
+import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
+import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.wrapper';
+import { LeafletControlLayersConfig } from '../control/leaflet-control-layers-config.model';
 var LeafletBaseLayersDirective = (function () {
     function LeafletBaseLayersDirective(leafletDirective) {
-        this.leafletDirective = new leaflet_directive_wrapper_1.LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new leaflet_control_layers_wrapper_1.LeafletControlLayersWrapper();
+        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+        this.controlLayers = new LeafletControlLayersWrapper();
     }
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         // Init the map
@@ -29,7 +28,7 @@ var LeafletBaseLayersDirective = (function () {
     };
     LeafletBaseLayersDirective.prototype.setBaseLayers = function (newBaseLayers, prevBaseLayers) {
         // Update the layers control
-        this.controlLayers.setLayersControlConfig(new leaflet_control_layers_config_model_1.LeafletControlLayersConfig(newBaseLayers), new leaflet_control_layers_config_model_1.LeafletControlLayersConfig(prevBaseLayers));
+        this.controlLayers.setLayersControlConfig(new LeafletControlLayersConfig(newBaseLayers), new LeafletControlLayersConfig(prevBaseLayers));
         // Sync the new baseLayer
         this.syncBaseLayer();
     };
@@ -38,7 +37,7 @@ var LeafletBaseLayersDirective = (function () {
      */
     LeafletBaseLayersDirective.prototype.syncBaseLayer = function () {
         var map = this.leafletDirective.getMap();
-        var layers = leaflet_util_1.LeafletUtil.mapToArray(this.baseLayers);
+        var layers = LeafletUtil.mapToArray(this.baseLayers);
         var foundLayer;
         // Search all the layers in the map to see if we can find them in the baselayer array
         map.eachLayer(function (l) {
@@ -60,19 +59,19 @@ var LeafletBaseLayersDirective = (function () {
     return LeafletBaseLayersDirective;
 }());
 __decorate([
-    core_1.Input('leafletBaseLayers'),
+    Input('leafletBaseLayers'),
     __metadata("design:type", Object)
 ], LeafletBaseLayersDirective.prototype, "baseLayers", void 0);
 __decorate([
-    core_1.Input('leafletLayersControlOptions'),
+    Input('leafletLayersControlOptions'),
     __metadata("design:type", Object)
 ], LeafletBaseLayersDirective.prototype, "layersControlOptions", void 0);
 LeafletBaseLayersDirective = __decorate([
-    core_1.Directive({
+    Directive({
         selector: '[leafletBaseLayers]'
     }),
-    __metadata("design:paramtypes", [leaflet_directive_1.LeafletDirective])
+    __metadata("design:paramtypes", [LeafletDirective])
 ], LeafletBaseLayersDirective);
-exports.LeafletBaseLayersDirective = LeafletBaseLayersDirective;
+export { LeafletBaseLayersDirective };
 
 //# sourceMappingURL=leaflet-baselayers.directive.js.map

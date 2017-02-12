@@ -1,6 +1,5 @@
-"use strict";
-var core_1 = require("@angular/core");
-var L = require("leaflet");
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import * as L from 'leaflet';
 var LeafletDirective = (function () {
     function LeafletDirective(el) {
         this.DEFAULT_ZOOM = 1;
@@ -13,7 +12,7 @@ var LeafletDirective = (function () {
         // Default configuration
         this.options = {};
         // Configure callback function for the map
-        this.mapReady = new core_1.EventEmitter();
+        this.mapReady = new EventEmitter();
         this.element = el;
     }
     LeafletDirective.prototype.ngOnInit = function () {
@@ -117,53 +116,53 @@ var LeafletDirective = (function () {
     return LeafletDirective;
 }());
 __decorate([
-    core_1.Input('leafletFitBoundsOptions'),
+    Input('leafletFitBoundsOptions'),
     __metadata("design:type", Object)
 ], LeafletDirective.prototype, "fitBoundsOptions", void 0);
 __decorate([
-    core_1.Input('leafletPanOptions'),
+    Input('leafletPanOptions'),
     __metadata("design:type", Object)
 ], LeafletDirective.prototype, "panOptions", void 0);
 __decorate([
-    core_1.Input('leafletZoomOptions'),
+    Input('leafletZoomOptions'),
     __metadata("design:type", Object)
 ], LeafletDirective.prototype, "zoomOptions", void 0);
 __decorate([
-    core_1.Input('leafletZoomPanOptions'),
+    Input('leafletZoomPanOptions'),
     __metadata("design:type", Object)
 ], LeafletDirective.prototype, "zoomPanOptions", void 0);
 __decorate([
-    core_1.Input('leafletOptions'),
+    Input('leafletOptions'),
     __metadata("design:type", Object)
 ], LeafletDirective.prototype, "options", void 0);
 __decorate([
-    core_1.Output('leafletMapReady'),
+    Output('leafletMapReady'),
     __metadata("design:type", Object)
 ], LeafletDirective.prototype, "mapReady", void 0);
 __decorate([
-    core_1.Input('leafletZoom'),
+    Input('leafletZoom'),
     __metadata("design:type", Number)
 ], LeafletDirective.prototype, "zoom", void 0);
 __decorate([
-    core_1.Input('leafletCenter'),
-    __metadata("design:type", Object)
+    Input('leafletCenter'),
+    __metadata("design:type", L.LatLng)
 ], LeafletDirective.prototype, "center", void 0);
 __decorate([
-    core_1.Input('leafletFitBounds'),
-    __metadata("design:type", Object)
+    Input('leafletFitBounds'),
+    __metadata("design:type", L.LatLngBounds)
 ], LeafletDirective.prototype, "fitBounds", void 0);
 __decorate([
-    core_1.HostListener('window:resize', ['$event']),
+    HostListener('window:resize', ['$event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], LeafletDirective.prototype, "onResize", null);
 LeafletDirective = __decorate([
-    core_1.Directive({
+    Directive({
         selector: '[leaflet]'
     }),
-    __metadata("design:paramtypes", [core_1.ElementRef])
+    __metadata("design:paramtypes", [ElementRef])
 ], LeafletDirective);
-exports.LeafletDirective = LeafletDirective;
+export { LeafletDirective };
 
 //# sourceMappingURL=leaflet.directive.js.map

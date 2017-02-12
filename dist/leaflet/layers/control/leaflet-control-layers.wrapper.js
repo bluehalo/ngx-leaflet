@@ -1,7 +1,6 @@
-"use strict";
-var L = require("leaflet");
-var leaflet_util_1 = require("../../core/leaflet.util");
-var leaflet_layers_object_diff_model_1 = require("./leaflet-layers-object-diff.model");
+import * as L from 'leaflet';
+import { LeafletUtil } from '../../core/leaflet.util';
+import { LeafletLayersObjectDiff } from './leaflet-layers-object-diff.model';
 var LeafletControlLayersWrapper = (function () {
     function LeafletControlLayersWrapper() {
     }
@@ -16,16 +15,16 @@ var LeafletControlLayersWrapper = (function () {
     };
     LeafletControlLayersWrapper.prototype.setLayersControlConfig = function (newConfig, prevConfig) {
         if (null == this.layersControl) {
-            return new leaflet_layers_object_diff_model_1.LeafletLayersObjectDiff({}, {});
+            return new LeafletLayersObjectDiff({}, {});
         }
         var toRemove;
         var baseLayers;
         var overlays;
         // Figure out which layers need to be removed (prev - new)
-        toRemove = leaflet_util_1.LeafletUtil.mergeMaps(leaflet_util_1.LeafletUtil.mapSubtract(prevConfig.baseLayers, newConfig.baseLayers), leaflet_util_1.LeafletUtil.mapSubtract(prevConfig.overlays, newConfig.overlays));
+        toRemove = LeafletUtil.mergeMaps(LeafletUtil.mapSubtract(prevConfig.baseLayers, newConfig.baseLayers), LeafletUtil.mapSubtract(prevConfig.overlays, newConfig.overlays));
         // Figure out which layers need to be added (new - prev)
-        baseLayers = leaflet_util_1.LeafletUtil.mapSubtract(newConfig.baseLayers, prevConfig.baseLayers);
-        overlays = leaflet_util_1.LeafletUtil.mapSubtract(newConfig.overlays, prevConfig.overlays);
+        baseLayers = LeafletUtil.mapSubtract(newConfig.baseLayers, prevConfig.baseLayers);
+        overlays = LeafletUtil.mapSubtract(newConfig.overlays, prevConfig.overlays);
         // Do the actual removal and addition
         for (var k in toRemove) {
             if (toRemove.hasOwnProperty(k)) {
@@ -45,10 +44,10 @@ var LeafletControlLayersWrapper = (function () {
                 this.layersControl.addOverlay(l, k);
             }
         }
-        return new leaflet_layers_object_diff_model_1.LeafletLayersObjectDiff(toRemove, leaflet_util_1.LeafletUtil.mergeMaps(baseLayers, overlays));
+        return new LeafletLayersObjectDiff(toRemove, LeafletUtil.mergeMaps(baseLayers, overlays));
     };
     return LeafletControlLayersWrapper;
 }());
-exports.LeafletControlLayersWrapper = LeafletControlLayersWrapper;
+export { LeafletControlLayersWrapper };
 
 //# sourceMappingURL=leaflet-control-layers.wrapper.js.map

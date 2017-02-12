@@ -1,5 +1,3 @@
-import * as L from 'leaflet';
-
 export class LeafletCoreDemoModel {
 
 	constructor(

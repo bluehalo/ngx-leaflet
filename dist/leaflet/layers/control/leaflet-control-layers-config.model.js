@@ -1,4 +1,3 @@
-"use strict";
 var LeafletControlLayersConfig = (function () {
     function LeafletControlLayersConfig(baseLayers, overlays) {
         this.baseLayers = baseLayers;
@@ -6,6 +5,6 @@ var LeafletControlLayersConfig = (function () {
     }
     return LeafletControlLayersConfig;
 }());
-exports.LeafletControlLayersConfig = LeafletControlLayersConfig;
+export { LeafletControlLayersConfig };
 
 //# sourceMappingURL=leaflet-control-layers-config.model.js.map
