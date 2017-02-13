@@ -2,7 +2,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
-	(factory((global.angular2Template = global.angular2Template || {}),global.ng.core,global.L));
+	(factory((global.angular2Leaflet = global.angular2Leaflet || {}),global.ng.core,global.L));
 }(this, (function (exports,_angular_core,L$1) { 'use strict';
 
 var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {

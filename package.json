@@ -21,7 +21,7 @@
 		"@angular/core": "2",
 		"@angular/common": "2",
 
-		"leaflet": "1.0"
+		"leaflet": "1"
 	},
 
 	"devDependencies": {
