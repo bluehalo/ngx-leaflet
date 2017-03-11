@@ -1,4 +1,4 @@
-/*! @asymmetrik/angular2-leaflet-1.2.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
+/*! @asymmetrik/angular2-leaflet-1.3.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -542,14 +542,16 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.LeafletModule = (function () {
+exports.LeafletModule = LeafletModule_1 = (function () {
     function LeafletModule() {
     }
+    LeafletModule.forRoot = function () {
+        return { ngModule: LeafletModule_1, providers: [] };
+    };
     return LeafletModule;
 }());
-exports.LeafletModule = __decorate([
+exports.LeafletModule = LeafletModule_1 = __decorate([
     _angular_core.NgModule({
-        imports: [],
         exports: [
             exports.LeafletDirective,
             LeafletLayersDirective,
@@ -561,10 +563,10 @@ exports.LeafletModule = __decorate([
             LeafletLayersDirective,
             LeafletLayersControlDirective,
             LeafletBaseLayersDirective
-        ],
-        providers: []
+        ]
     })
 ], exports.LeafletModule);
+var LeafletModule_1;
 
 var LeafletControlLayersUtil = (function () {
     function LeafletControlLayersUtil() {

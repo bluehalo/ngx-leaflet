@@ -6,5 +6,4 @@ var LeafletLayersObjectDiff = (function () {
     return LeafletLayersObjectDiff;
 }());
 export { LeafletLayersObjectDiff };
-
 //# sourceMappingURL=leaflet-layers-object-diff.model.js.map

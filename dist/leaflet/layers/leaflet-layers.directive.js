@@ -56,5 +56,4 @@ LeafletLayersDirective = __decorate([
     __metadata("design:paramtypes", [LeafletDirective])
 ], LeafletLayersDirective);
 export { LeafletLayersDirective };
-
 //# sourceMappingURL=leaflet-layers.directive.js.map

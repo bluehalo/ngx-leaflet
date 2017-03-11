@@ -173,5 +173,4 @@ LeafletDirective = __decorate([
     __metadata("design:paramtypes", [ElementRef])
 ], LeafletDirective);
 export { LeafletDirective };
-
 //# sourceMappingURL=leaflet.directive.js.map

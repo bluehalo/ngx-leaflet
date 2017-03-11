@@ -7,14 +7,11 @@ module.exports = {
 	},
 
 	// Test files
-	tests: {
-		js: [ ]
-	},
+	tests: [],
 
 	// Source files and directories
 	src: {
-		allTs: [ 'src/**/*.ts' ],
-		ts: [ 'src/**/*.ts', '!src/demo/**/*.ts' ]
+		allTs: [ 'src/**/*.ts' ]
 	},
 
 	// Distribution related items

@@ -6,5 +6,4 @@ var LeafletControlLayersConfig = (function () {
     return LeafletControlLayersConfig;
 }());
 export { LeafletControlLayersConfig };
-
 //# sourceMappingURL=leaflet-control-layers-config.model.js.map

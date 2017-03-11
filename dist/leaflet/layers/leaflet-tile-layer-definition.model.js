@@ -51,5 +51,4 @@ var LeafletTileLayerDefinition = (function () {
     return LeafletTileLayerDefinition;
 }());
 export { LeafletTileLayerDefinition };
-
 //# sourceMappingURL=leaflet-tile-layer-definition.model.js.map
