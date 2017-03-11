@@ -2,13 +2,12 @@
 	"name": "@asymmetrik/angular2-template",
 	"artifactName": "angular2-template",
 	"description": "Angular 2 components template project",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
 
 	"scripts": {
-		"build": "rimraf dist && ngc -p ./tsconfig.json"
 	},
 
 	"main": "dist/bundles/angular2-template.js",
