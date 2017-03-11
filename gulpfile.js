@@ -54,7 +54,7 @@ gulp.task('validate-ts', () => {
 
 // Build JS from the TS source
 gulp.task('build-ts', () => {
-	return plugins.ngc('./tsconfig.json');
+	return plugins.ngc('./tsconfig-aot.json');
 });
 
 // Bundle the generated JS (rollup and then uglify)
