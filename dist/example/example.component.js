@@ -24,5 +24,4 @@ ExampleComponent = __decorate([
     })
 ], ExampleComponent);
 export { ExampleComponent };
-
 //# sourceMappingURL=example.component.js.map

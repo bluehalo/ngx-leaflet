@@ -1,4 +1,4 @@
-/*! @asymmetrik/angular2-template-0.2.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
+/*! @asymmetrik/angular2-template-0.2.2 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core'], factory) :
@@ -36,23 +36,21 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.ExampleModule = (function () {
+exports.ExampleModule = ExampleModule_1 = (function () {
     function ExampleModule() {
     }
+    ExampleModule.forRoot = function () {
+        return { ngModule: ExampleModule_1, providers: [] };
+    };
     return ExampleModule;
 }());
-exports.ExampleModule = __decorate([
+exports.ExampleModule = ExampleModule_1 = __decorate([
     _angular_core.NgModule({
-        imports: [],
-        exports: [
-            ExampleComponent
-        ],
-        declarations: [
-            ExampleComponent
-        ],
-        providers: []
+        exports: [ExampleComponent],
+        declarations: [ExampleComponent]
     })
 ], exports.ExampleModule);
+var ExampleModule_1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
