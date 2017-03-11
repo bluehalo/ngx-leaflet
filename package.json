@@ -36,6 +36,7 @@
 
 		"rxjs": "5.2",
 		"zone.js": "0.7",
+		"@types/node": "6",
 
 		"merge2": "1.0",
 		"rollup": "0.41",
@@ -67,7 +68,6 @@
 		"gulp-tslint": "7.1",
 		"gulp-uglify": "2.0",
 		"gulp-util": "3.0",
-		"del": "2.2",
 		"run-sequence": "1.2",
 		"node-sass": "4.5"
 
