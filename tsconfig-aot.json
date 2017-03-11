@@ -1,16 +1,16 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "commonjs",
+		"module": "es2015",
 
 		"moduleResolution": "node",
 
-		"declaration": false,
+		"declaration": true,
 		"noEmitHelpers": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 
-		"lib": [ "es5", "dom" ],
+		"lib": [ "es5", "es2015", "dom" ],
 
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true,
@@ -19,10 +19,22 @@
 		"noUnusedParameters": true,
 		"noUnusedLocals": true,
 
-		"sourceMap": true
+		"sourceMap": true,
+
+		"outDir": "./dist"
 	},
 
 	"exclude": [
-		"node_modules"
-	]
+		"./node_modules"
+	],
+
+	"files": [
+		"./src/index.ts"
+	],
+
+	"angularCompilerOptions": {
+		"skipTemplateCodegen": true,
+		"debug": true
+	}
+
 }

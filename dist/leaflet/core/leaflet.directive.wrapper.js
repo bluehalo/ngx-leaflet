@@ -11,5 +11,4 @@ var LeafletDirectiveWrapper = (function () {
     return LeafletDirectiveWrapper;
 }());
 export { LeafletDirectiveWrapper };
-
 //# sourceMappingURL=leaflet.directive.wrapper.js.map

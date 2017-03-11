@@ -4,5 +4,4 @@ export { LeafletDirectiveWrapper } from './leaflet/core/leaflet.directive.wrappe
 export { LeafletControlLayersUtil } from './leaflet/layers/control/leaflet-control-layers.util';
 export { LeafletLayersUtil } from './leaflet/layers/leaflet-layers.util';
 export { LeafletTileLayerDefinition } from './leaflet/layers/leaflet-tile-layer-definition.model';
-
 //# sourceMappingURL=index.js.map

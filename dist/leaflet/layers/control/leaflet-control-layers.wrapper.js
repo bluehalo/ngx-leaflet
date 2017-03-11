@@ -49,5 +49,4 @@ var LeafletControlLayersWrapper = (function () {
     return LeafletControlLayersWrapper;
 }());
 export { LeafletControlLayersWrapper };
-
 //# sourceMappingURL=leaflet-control-layers.wrapper.js.map

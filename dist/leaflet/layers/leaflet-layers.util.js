@@ -26,5 +26,4 @@ var LeafletLayersUtil = (function () {
     return LeafletLayersUtil;
 }());
 export { LeafletLayersUtil };
-
 //# sourceMappingURL=leaflet-layers.util.js.map

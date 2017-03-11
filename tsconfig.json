@@ -1,16 +1,16 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "es6",
+		"module": "commonjs",
 
 		"moduleResolution": "node",
 
-		"declaration": true,
+		"declaration": false,
 		"noEmitHelpers": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 
-		"lib": [ "es5", "dom" ],
+		"lib": [ "es5", "es2015", "dom" ],
 
 		"noImplicitAny": true,
 		"suppressImplicitAnyIndexErrors": true,
@@ -20,13 +20,5 @@
 		"noUnusedLocals": true,
 
 		"sourceMap": true
-	},
-
-	"include": [
-		"src/**/*"
-	],
-
-	"exclude": [
-		"node_modules"
-	]
+	}
 }

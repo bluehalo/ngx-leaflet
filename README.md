@@ -24,6 +24,12 @@ npm install leaflet
 npm install @asymmetrik/angular2-leaflet
 ```
 
+If you intend to use this library in a typescript project (utilizing the typings), you will need to also install the leaflet typings via npm:
+```
+npm install @types/leaflet
+```
+
+
 If you want to run the demo, clone the repository, perform an ```npm install```, ```gulp dev``` and then go to http://localhost:9000/src/demo/index.html
 
 
@@ -203,7 +209,6 @@ But, here is a rough overview of the steps taken to get them working.
 				shadowUrl: '44a526eed258222515aa21eaffd14a96.png'
 			})
 		});
-
 
 
 ## Contribute

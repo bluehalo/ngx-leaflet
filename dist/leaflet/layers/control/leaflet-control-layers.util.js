@@ -15,5 +15,4 @@ var LeafletControlLayersUtil = (function () {
     return LeafletControlLayersUtil;
 }());
 export { LeafletControlLayersUtil };
-
 //# sourceMappingURL=leaflet-control-layers.util.js.map

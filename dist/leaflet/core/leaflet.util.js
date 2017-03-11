@@ -68,5 +68,4 @@ var LeafletUtil = (function () {
     return LeafletUtil;
 }());
 export { LeafletUtil };
-
 //# sourceMappingURL=leaflet.util.js.map
