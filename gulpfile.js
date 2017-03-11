@@ -53,20 +53,8 @@ gulp.task('validate-ts', () => {
  */
 
 // Build JS from the TS source
-let tsProject = plugins.typescript.createProject(path.resolve('./tsconfig.json'));
 gulp.task('build-ts', () => {
-
-	let tsResult = gulp.src(assets.src.ts, { base: './src' })
-		.pipe(plugins.sourcemaps.init())
-		.pipe(tsProject());
-
-	return merge([
-			tsResult.js
-				.pipe(plugins.sourcemaps.write('./'))
-				.pipe(gulp.dest(assets.dist.dir)),
-			tsResult.dts.pipe(gulp.dest(assets.dist.dir))
-		]).on('error', plugins.util.log);
-
+	return plugins.ngc('./tsconfig.json');
 });
 
 // Bundle the generated JS (rollup and then uglify)

@@ -6,23 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { ExampleComponent } from './example.component';
-var ExampleModule = (function () {
+var ExampleModule = ExampleModule_1 = (function () {
     function ExampleModule() {
     }
+    ExampleModule.forRoot = function () {
+        return { ngModule: ExampleModule_1, providers: [] };
+    };
     return ExampleModule;
 }());
-ExampleModule = __decorate([
+ExampleModule = ExampleModule_1 = __decorate([
     NgModule({
-        imports: [],
-        exports: [
-            ExampleComponent
-        ],
-        declarations: [
-            ExampleComponent
-        ],
-        providers: []
+        exports: [ExampleComponent],
+        declarations: [ExampleComponent]
     })
 ], ExampleModule);
 export { ExampleModule };
-
+var ExampleModule_1;
 //# sourceMappingURL=example.module.js.map

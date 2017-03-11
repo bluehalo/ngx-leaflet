@@ -2,10 +2,13 @@
 	"name": "@asymmetrik/angular2-template",
 	"artifactName": "angular2-template",
 	"description": "Angular 2 components template project",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
+
+	"scripts": {
+	},
 
 	"main": "dist/bundles/angular2-template.js",
 	"module": "dist/index.js",
@@ -24,17 +27,16 @@
 	"devDependencies": {
 		"@angular/common": "2.4",
 		"@angular/compiler": "2.4",
+		"@angular/compiler-cli": "2.4",
 		"@angular/core": "2.4",
 		"@angular/platform-browser": "2.4",
 		"@angular/platform-browser-dynamic": "2.4",
 
 		"core-js": "2.4",
-		"@types/core-js": "0.9",
 
 		"rxjs": "5.2",
 		"zone.js": "0.7",
-
-		"@types/node": "6.0",
+		"@types/node": "6",
 
 		"merge2": "1.0",
 		"rollup": "0.41",
@@ -59,6 +61,7 @@
 		"gulp-filter": "5.0",
 		"gulp-insert": "0.5",
 		"gulp-load-plugins": "1.5",
+		"gulp-ngc": "0.2",
 		"gulp-rename": "1.2",
 		"gulp-sourcemaps": "2.4",
 		"gulp-typescript": "3.1",

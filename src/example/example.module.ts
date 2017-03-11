@@ -1,16 +1,15 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { ExampleComponent } from './example.component';
 
 @NgModule({
-	imports: [],
-	exports: [
-		ExampleComponent
-	],
-	declarations: [
-		ExampleComponent
-	],
-	providers: [
-	]
+	exports: [ ExampleComponent ],
+	declarations: [ ExampleComponent ]
 })
-export class ExampleModule { }
+export class ExampleModule {
+
+	static forRoot(): ModuleWithProviders {
+		return { ngModule: ExampleModule, providers: [] };
+	}
+
+}
