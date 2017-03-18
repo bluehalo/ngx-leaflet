@@ -1,4 +1,4 @@
-/*! @asymmetrik/angular2-leaflet-1.3.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
+/*! @asymmetrik/angular2-leaflet-1.3.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.*/
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -166,7 +166,7 @@ __decorate$1([
     __metadata("design:type", L$1.LatLngBounds)
 ], exports.LeafletDirective.prototype, "fitBounds", void 0);
 __decorate$1([
-    _angular_core.HostListener('window:resize', ['$event']),
+    _angular_core.HostListener('window:resize', []),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

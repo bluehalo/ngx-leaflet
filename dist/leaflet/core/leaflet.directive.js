@@ -161,7 +161,7 @@ __decorate([
     __metadata("design:type", L.LatLngBounds)
 ], LeafletDirective.prototype, "fitBounds", void 0);
 __decorate([
-    HostListener('window:resize', ['$event']),
+    HostListener('window:resize', []),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

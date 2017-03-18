@@ -23,7 +23,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
         [key: string]: SimpleChange;
     }): void;
     getMap(): L.Map;
-    onResize(event?:any): void;
+    onResize(): void;
     /**
      * Resize the map to fit it's parent container
      */
