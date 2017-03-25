@@ -17,7 +17,7 @@
 - [Credits](#credits)
 
 
-## Install 
+## Install
 Install the package and its peer dependencies via npm:
 ```
 npm install leaflet
@@ -82,9 +82,9 @@ Input bind a zoom level to the map.
 zoom: number
 ```
 
-On changes, the component applies the new zoom level to the map. 
-There is no output binding or events emitted for map zoom level changes made using the map controls. 
- 
+On changes, the component applies the new zoom level to the map.
+There is no output binding or events emitted for map zoom level changes made using the map controls.
+
 
 #### leafletCenter
 Input bind a center position to the map.
@@ -188,11 +188,13 @@ Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) 
 
 
 ### A Note About Markers
-If you use this component in an Angular 2 project and your project uses a bundler like Webpack, you might run into issues using Markers on maps. 
+If you use this component in an Angular 2 project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
 The issue is related to how Leaflet manipulates the image URLs used to render markers when you are using the default marker images.
 The url manipulation is done at runtime and it alters the URLs in a way that breaks their format (this happens regardless of if you're using a file-loader or a url-loader).
 The demo contained in this project demonstrates how to get around this problem (at least in a Webpack environment).
 But, here is a rough overview of the steps taken to get them working.
+
+#### Webpack Marker Workaround
 
 1. Import the marker images in your vendor file to get Webpack to process the images in the asset pipeline
 
@@ -210,6 +212,35 @@ But, here is a rough overview of the steps taken to get them working.
 			})
 		});
 
+#### Angular CLI Marker Workaround
+
+If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), as of angular-cli release 1.0.0-rc.1 you can make the default leaflet marker assets available by doing the following:
+
+1. Edit `.angular-cli` (formerly `angular-cli.json`)
+1. Configure the CLI to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
+    ```json
+    {
+      "project": {
+        ...
+      },
+      "apps": [
+        {
+          ...
+          "assets": [
+            "assets",
+            "favicon.ico",
+            {
+              "glob": "**/*",
+              "input": "../node_modules/leaflet/dist/images",
+              "output": "./assets/"
+            }
+          ]
+        }
+      ]
+    }
+    ```
+
+1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
 
 ## Contribute
 PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.
@@ -221,5 +252,3 @@ See LICENSE in repository for details.
 
 ## Credits
 **[Leaflet](http://leafletjs.com/)** Is an awesome mapping package.
-
-
