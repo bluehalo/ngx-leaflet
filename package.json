@@ -2,7 +2,7 @@
 	"name": "@asymmetrik/angular2-template",
 	"artifactName": "angular2-template",
 	"description": "Angular 2 components template project",
-	"version": "0.3.1",
+	"version": "1.0.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -20,22 +20,22 @@
 	},
 
 	"peerDependencies": {
-		"@angular/core": "2",
-		"@angular/common": "2"
+		"@angular/core": "4",
+		"@angular/common": "4"
 	},
 
 	"devDependencies": {
-		"@angular/common": "2.4",
-		"@angular/compiler": "2.4",
-		"@angular/compiler-cli": "2.4",
-		"@angular/core": "2.4",
-		"@angular/platform-browser": "2.4",
-		"@angular/platform-browser-dynamic": "2.4",
+		"@angular/common": "4",
+		"@angular/compiler": "4",
+		"@angular/compiler-cli": "4",
+		"@angular/core": "4",
+		"@angular/platform-browser": "4",
+		"@angular/platform-browser-dynamic": "4",
 
 		"core-js": "2.4",
 
 		"rxjs": "5.2",
-		"zone.js": "0.7",
+		"zone.js": "0.8",
 		"@types/node": "6",
 
 		"merge2": "1.0",
@@ -45,15 +45,15 @@
 		"tslint": "4.5",
 		"tslint-stylish": "2.1",
 
-		"webpack": "2.2",
+		"webpack": "2.3",
 		"webpack-dev-server": "2.4",
 		"angular2-template-loader": "0.6",
-		"css-loader": "0.26",
+		"css-loader": "0.27",
 		"file-loader": "0.10",
 		"html-loader": "0.4",
 		"resolve-url-loader": "2.0",
 		"sass-loader": "6.0",
-		"style-loader": "0.13",
+		"style-loader": "0.16",
 		"ts-loader": "2.0",
 		"url-loader": "0.5",
 
@@ -66,7 +66,7 @@
 		"gulp-sourcemaps": "2.4",
 		"gulp-typescript": "3.1",
 		"gulp-tslint": "7.1",
-		"gulp-uglify": "2.0",
+		"gulp-uglify": "2.1",
 		"gulp-util": "3.0",
 		"run-sequence": "1.2",
 		"node-sass": "4.5"
