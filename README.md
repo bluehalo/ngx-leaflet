@@ -38,13 +38,18 @@ At this point, you should be ready to build the project.
 This project uses Gulp as a build framework. There are two primary tasks: build and dev, which build distribution artifacts and run the development server respecitvely. 
 
 ### Building Artifacts for Distribution
-To build the bundles run:
+To build the distribution bundle run:
 
 ```
 gulp build
 ```
 
-This task will run TSLint over the source Typescript to ensure code quality and consistency. Then, it runs the Typescript compiler to generate ES5 Javascript. Finally, it uses Rollup to bundle the generated Javascript into and then uses Rollup to bundle the Javascript code into a distributable CommonJS format.
+This task runs TSLint over the source Typescript to ensure code quality and consistency. 
+Then, it uses the Angular compiler (ngc) to compile the Typescript-based Angular source code into ES5 Javascript.
+Finally, it uses Rollup to bundle the generated JS files into a single distributable JS library using CommonJS.
+
+The build generates all artifacts necessary for consuming libraries to utilize Angular's Ahead-of-Time compiler.
+
 
 ### Run the Demo for Development
 To run the demo using Webpack dev server, run
@@ -52,7 +57,10 @@ To run the demo using Webpack dev server, run
 gulp dev
 ```
 
-This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application. Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
+This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application.
+Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
+
+In dev mode, tsc (as opposed to ngc) is used. This means the bundle that is served by Webpack dev server is not utilizing AOT.
 
 ### Customize
 Once you've got your own copy of the template, you will need to adapt the template to your own project. To do so, make changes to the following files:
@@ -71,7 +79,7 @@ If you want the license to be something other than MIT, modify this file. You sh
 You can modify this README.md file by removing this section and updating the other relevant content.
 
 #### ./src/index.ts
-This file should export your Angular 2 module(s). The package.json references this file as the main entry point of the NPM module. 
+This file should export your Angular 2 module(s). The build treats this as the primary library entry point. 
 
 #### ./src
 Obviously. Change stuff here.
@@ -82,10 +90,6 @@ We're using a few polyfills to help with building and bundling
 #### core-js
 https://github.com/zloirock/core-js
 core-js bundles a bunch of es5/es6/es7 polyfills. We're importing the es6 and some of the es7 ones into our demo example application.
-
-### ts-helpers
-https://github.com/ngParty/ts-helpers
-ts-helpers helps reduce the size of the application bundle by reducing redundant helpers code.
 
 
 ## Structure
@@ -104,14 +108,14 @@ Travis CI configuration file. See (https://travis-ci.org/). If you configure thi
 **./gulpfile.js**
 Gulp build file. The Gulp build currently has two primary modes: build and dev. Build will generate the bundle files, and dev will run Webpack Dev Server.
 
+**./tsconfig-aot.json**
+Typescript configuration file used by ngc to build the production component code. See https://www.typescriptlang.org/docs/tutorial.html.
+
+This config is used for bundling. The Gulp build runs ngc using this config file, and generates es5 Javascript, but uses es2015 modules. This is because the output of this compile step is fed into Rollup to generate the bundle files. Rollup will change the module format to umd. 
+
+
 **./tsconfig.json**
-Typescript configuration file used by the typescipt compiler to build the production component code. See https://www.typescriptlang.org/docs/tutorial.html.
-
-This config is used for bundling. The Gulp build runs tsc using this config file, and generates es5 Javascript, but uses es6 modules. This is because the output of this compile step is fed into Rollup to generate the bundle files. Rollup will change the module format to umd. 
-
-
-**./tsconfig-dev.json**
-Typescript configuration file used by webpack dev server to build the development component code. This file is essentially the same as ```./tsconfig.json``` only it changes a few settings since it is not being bundled for external consumption.
+Typescript configuration file used by webpack dev server to build the development component code. This file is essentially the same as ```./tsconfig-aot.json``` only it changes a few settings since it is not being bundled for external consumption and not using ngc.
 
 This config is used by Webpack dev server to compile the Typescript files in memory and serve them for the demo example application. In this config, we disable declaration since the d.ts files aren't needed, and we build to es5 with commonjs as the module system (so it's compatible with es5).
 
