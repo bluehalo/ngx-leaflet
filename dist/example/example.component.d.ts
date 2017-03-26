@@ -1,4 +1,4 @@
 export declare class ExampleComponent {
-    private message;
+    message: string;
     ngOnInit(): void;
 }

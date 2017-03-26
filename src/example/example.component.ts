@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 	template: '{{message}}'
 })
 export class ExampleComponent {
-	private message = 'Hello';
+	message = 'Hello';
 
 	ngOnInit() {
 		setTimeout(() => {
