@@ -6,8 +6,9 @@
 [travis-image]: https://travis-ci.org/Asymmetrik/angular2-leaflet.svg
 
 
-> Leaflet packages for Angular 2
-> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2 projects.
+> Leaflet packages for Angular 2. Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2 projects.
+
+> Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects
 
 ## Table of Contents
 - [Install](#install)

@@ -121,7 +121,8 @@ module.exports = () => {
 			minChunks: Infinity
 		}),
 		new webpack.ContextReplacementPlugin(
-			/angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/
+			/angular(\\|\/)core(\\|\/)@angular/,
+			path.posix.resolve('./src')
 		)
 	);
 
