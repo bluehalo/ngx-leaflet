@@ -1,14 +1,4 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 import { Directive, Input } from '@angular/core';
-import * as L from 'leaflet';
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
@@ -67,19 +57,18 @@ var LeafletBaseLayersDirective = (function () {
     };
     return LeafletBaseLayersDirective;
 }());
-__decorate([
-    Input('leafletBaseLayers'),
-    __metadata("design:type", Object)
-], LeafletBaseLayersDirective.prototype, "baseLayers", void 0);
-__decorate([
-    Input('leafletLayersControlOptions'),
-    __metadata("design:type", Object)
-], LeafletBaseLayersDirective.prototype, "layersControlOptions", void 0);
-LeafletBaseLayersDirective = __decorate([
-    Directive({
-        selector: '[leafletBaseLayers]'
-    }),
-    __metadata("design:paramtypes", [LeafletDirective])
-], LeafletBaseLayersDirective);
 export { LeafletBaseLayersDirective };
+LeafletBaseLayersDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[leafletBaseLayers]'
+            },] },
+];
+/** @nocollapse */
+LeafletBaseLayersDirective.ctorParameters = function () { return [
+    { type: LeafletDirective, },
+]; };
+LeafletBaseLayersDirective.propDecorators = {
+    'baseLayers': [{ type: Input, args: ['leafletBaseLayers',] },],
+    'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
+};
 //# sourceMappingURL=leaflet-baselayers.directive.js.map

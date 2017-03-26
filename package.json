@@ -2,7 +2,7 @@
 	"name": "@asymmetrik/angular2-leaflet",
 	"artifactName": "angular2-leaflet",
 	"description": "Angular 2 components for Leaflet",
-	"version": "2.0.0",
+	"version": "2.1.0",
 
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
@@ -18,8 +18,8 @@
 	},
 
 	"peerDependencies": {
-		"@angular/core": "4",
-		"@angular/common": "4",
+		"@angular/core": ">=2",
+		"@angular/common": ">=2",
 
 		"leaflet": "1"
 	},
@@ -67,7 +67,6 @@
 		"gulp-filter": "5.0",
 		"gulp-insert": "0.5",
 		"gulp-load-plugins": "1.5",
-		"gulp-ngc": "0.2",
 		"gulp-rename": "1.2",
 		"gulp-sourcemaps": "2.4",
 		"gulp-typescript": "3.1",
@@ -75,6 +74,7 @@
 		"gulp-uglify": "2.1",
 		"gulp-util": "3.0",
 		"run-sequence": "1.2",
+		"through2": "2.0",
 		"node-sass": "4.5"
 
 	}

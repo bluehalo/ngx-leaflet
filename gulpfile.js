@@ -5,10 +5,12 @@ let
 	glob = require('glob'),
 	gulp = require('gulp'),
 	gulpLoadPlugins = require('gulp-load-plugins'),
+	ngc = require('@angular/compiler-cli/src/main').main,
 	merge = require('merge2'),
 	path = require('path'),
 	rollup = require('rollup'),
 	runSequence = require('run-sequence'),
+	through = require('through2'),
 	webpack = require('webpack'),
 	webpackDevServer = require('webpack-dev-server'),
 
@@ -54,7 +56,22 @@ gulp.task('validate-ts', () => {
 
 // Build JS from the TS source
 gulp.task('build-ts', () => {
-	return plugins.ngc('./tsconfig-aot.json');
+	let configPath = './tsconfig-aot.json';
+
+	return gulp.src(configPath)
+		.pipe(through.obj((file, encoding, callback) => {
+			ngc({ _: [], p: configPath })
+				.then((code) => {
+					let err = code === 0
+						? null
+						: new plugins.util.PluginError(
+							'ngc',
+							`${gutil.colors.red('Compilation error.')}\nSee details in the ngc output`,
+							{fileName: file.path});
+
+					callback(err, file);
+				});
+		}));
 });
 
 // Bundle the generated JS (rollup and then uglify)
