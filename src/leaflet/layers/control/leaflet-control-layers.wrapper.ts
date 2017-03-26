@@ -9,11 +9,11 @@ export class LeafletControlLayersWrapper {
 	// The layers control object
 	protected layersControl: L.Control.Layers;
 
-	public getLayersControl() {
+	getLayersControl() {
 		return this.layersControl;
 	}
 
-	public init(controlConfig: any, controlOptions: any): L.Control.Layers {
+	init(controlConfig: any, controlOptions: any): L.Control.Layers {
 
 		let baseLayers = controlConfig.baseLayers || {};
 		let overlays = controlConfig.overlays || {};
@@ -23,7 +23,7 @@ export class LeafletControlLayersWrapper {
 		return this.layersControl;
 	}
 
-	public setLayersControlConfig( newConfig: LeafletControlLayersConfig, prevConfig: LeafletControlLayersConfig): LeafletLayersObjectDiff {
+	setLayersControlConfig( newConfig: LeafletControlLayersConfig, prevConfig: LeafletControlLayersConfig): LeafletLayersObjectDiff {
 
 		if (null == this.layersControl) {
 			return new LeafletLayersObjectDiff({}, {});

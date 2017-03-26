@@ -13,7 +13,7 @@ export class LeafletTileLayerDefinition {
 	 * @param layerDef The layer to create
 	 * @returns {L.TileLayer} The TileLayer that has been created
 	 */
-	public static createTileLayer(layerDef: LeafletTileLayerDefinition): L.TileLayer {
+	static createTileLayer(layerDef: LeafletTileLayerDefinition): L.TileLayer {
 		let layer: L.TileLayer;
 
 		switch (layerDef.type) {
@@ -36,7 +36,7 @@ export class LeafletTileLayerDefinition {
 	 * @param layerDefs A map of key to tile layer definition
 	 * @returns {{[p: string]: L.TileLayer}} A new map of key to TileLayer
 	 */
-	public static createTileLayers(layerDefs: { [ key: string ]: LeafletTileLayerDefinition }): { [ key: string ]: L.TileLayer } {
+	static createTileLayers(layerDefs: { [ key: string ]: LeafletTileLayerDefinition }): { [ key: string ]: L.TileLayer } {
 		let layers: { [ key: string ]: L.TileLayer } = {};
 
 		for (let k in layerDefs) {
