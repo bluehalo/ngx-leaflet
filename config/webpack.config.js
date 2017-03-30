@@ -4,8 +4,8 @@ let
 	path = require('path'),
 	webpack = require('webpack'),
 
-	pkg = require(path.resolve('./package.json')),
-	assets = require(path.resolve('./config/assets.js'));
+	pkg = require(path.posix.resolve('./package.json')),
+	assets = require(path.posix.resolve('./config/assets.js'));
 
 module.exports = () => {
 
@@ -27,8 +27,8 @@ module.exports = () => {
 	 *   'application' - Application code
 	 */
 	wpConfig.entry = {
-		application: path.resolve('./src/demo/main.ts'),
-		vendor: path.resolve('./src/demo/vendor.ts')
+		application: path.posix.resolve('./src/demo/main.ts'),
+		vendor: path.posix.resolve('./src/demo/vendor.ts')
 	};
 
 
@@ -39,7 +39,7 @@ module.exports = () => {
 	wpConfig.output = {};
 
 	// Set up for dev middleware
-	wpConfig.output.path = path.resolve('./public');
+	wpConfig.output.path = path.posix.resolve('./public');
 	wpConfig.output.publicPath = '/';
 	wpConfig.output.filename = '[name].js';
 	wpConfig.output.chunkFilename = '[name].js';
@@ -72,7 +72,7 @@ module.exports = () => {
 				test: /\.ts$/,
 				loader: 'ts-loader',
 				options: {
-					configFileName: path.resolve('./tsconfig.json')
+					configFileName: path.posix.resolve('./tsconfig.json')
 				}
 			},
 
