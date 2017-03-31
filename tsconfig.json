@@ -26,7 +26,7 @@
 		"./node_modules"
 	],
 
-	"include": [
-		"./src/**/*.ts"
+	"files": [
+		"./src/demo/main.ts"
 	]
 }
