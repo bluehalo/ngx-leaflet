@@ -5,7 +5,9 @@ let
 	webpack = require('webpack'),
 
 	pkg = require(path.posix.resolve('./package.json')),
-	assets = require(path.posix.resolve('./config/assets.js'));
+	assets = require(path.posix.resolve('./config/assets.js')),
+	atl = require('awesome-typescript-loader');
+
 
 module.exports = () => {
 
@@ -16,8 +18,8 @@ module.exports = () => {
 	/**
 	 * Source map configuration
 	 */
-	// Eval source maps for development (provides trace back to original TS)
-	wpConfig.devtool = 'eval-source-map';
+	// Source maps for development (provides trace back to original TS)
+	wpConfig.devtool = 'source-map';
 
 
 	/**
@@ -70,15 +72,16 @@ module.exports = () => {
 			// Typescript loader
 			{
 				test: /\.ts$/,
-				loader: 'ts-loader',
-				options: {
-					configFileName: path.posix.resolve('./tsconfig.json')
-				}
+				loader: 'awesome-typescript-loader',
+				exclude: [/\.(spec|e2e)\.ts$/]
 			},
 
+			// Template Loader
 			{
 				test: /\.ts$/,
-				loader: 'angular2-template-loader'
+				loader: 'angular2-template-loader',
+				enforce: 'pre',
+				exclude: [/\.(spec|e2e)\.ts$/]
 			},
 
 			// CSS loader

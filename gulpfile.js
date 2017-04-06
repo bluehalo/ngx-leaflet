@@ -121,7 +121,7 @@ gulp.task('rollup-js', () => {
  */
 gulp.task('webpack-dev-server', (done) => {
 	// Start a webpack-dev-server
-	let webpackConfig = require(path.posix.resolve('./config/webpack.config.js'))();
+	let webpackConfig = require('./config/webpack.config.js')();
 	let compiler = webpack(webpackConfig);
 
 	new webpackDevServer(compiler, {
