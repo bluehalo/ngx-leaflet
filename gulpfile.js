@@ -20,7 +20,7 @@ let
 
 
 // Banner to append to generated files
-let bannerString = '/*! ' + pkg.name + '-' + pkg.version + ' - ' + pkg.copyright + '*/';
+let bannerString = `/*! ${pkg.name} - ${pkg.version} - ${pkg.copyright} + */`;
 
 /**
  * ENV Tasks
@@ -78,7 +78,7 @@ gulp.task('build-ts', () => {
 gulp.task('build-js', ['rollup-js'], () => {
 
 	// Uglify
-	return gulp.src(path.join(assets.dist.bundleDir, (pkg.artifactName + '.js')))
+	return gulp.src(path.posix.join(assets.dist.bundleDir, `${pkg.artifactName}.js`))
 		.pipe(plugins.uglify({ preserveComments: 'license' }))
 		.pipe(plugins.rename(pkg.artifactName + '.min.js'))
 		.pipe(gulp.dest(assets.dist.bundleDir));
@@ -89,7 +89,7 @@ gulp.task('build-js', ['rollup-js'], () => {
 gulp.task('rollup-js', () => {
 
 	return rollup.rollup({
-			entry: path.join(assets.dist.dir, '/index.js'),
+			entry: path.posix.join(assets.dist.dir, '/index.js'),
 			external: [
 				'@angular/core',
 				'leaflet'
@@ -103,7 +103,7 @@ gulp.task('rollup-js', () => {
 		})
 		.then((bundle) => {
 			return bundle.write({
-				dest: path.join(assets.dist.bundleDir, (pkg.artifactName + '.js')),
+				dest: path.posix.join(assets.dist.bundleDir, `${pkg.artifactName}.js`),
 				format: 'umd',
 				moduleName: 'angular2Leaflet',
 				sourceMap: true,
@@ -123,7 +123,7 @@ gulp.task('rollup-js', () => {
  */
 gulp.task('webpack-dev-server', (done) => {
 	// Start a webpack-dev-server
-	let webpackConfig = require(path.resolve('./config/webpack.config.js'))();
+	let webpackConfig = require('./config/webpack.config.js')();
 	let compiler = webpack(webpackConfig);
 
 	new webpackDevServer(compiler, {
