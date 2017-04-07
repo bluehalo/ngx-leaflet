@@ -28,9 +28,6 @@
 
 	"include": [
 		"./src/**/*.ts"
-	],
+	]
 
-	"awesomeTypescriptLoaderOptions": {
-
-	}
 }
