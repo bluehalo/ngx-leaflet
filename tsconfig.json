@@ -20,5 +20,14 @@
 		"noUnusedLocals": true,
 
 		"sourceMap": true
-	}
+	},
+
+	"exclude": [
+		"./node_modules"
+	],
+
+	"include": [
+		"./src/**/*.ts"
+	]
+
 }
