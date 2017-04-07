@@ -20,7 +20,7 @@ let
 
 
 // Banner to append to generated files
-let bannerString = '/*! ' + pkg.name + '-' + pkg.version + ' - ' + pkg.copyright + '*/';
+let bannerString = `/*! ${pkg.name} - ${pkg.version} - ${pkg.copyright} + */`;
 
 /**
  * ENV Tasks
@@ -78,7 +78,7 @@ gulp.task('build-ts', () => {
 gulp.task('build-js', ['rollup-js'], () => {
 
 	// Uglify
-	return gulp.src(path.posix.join(assets.dist.bundleDir, (pkg.artifactName + '.js')))
+	return gulp.src(path.posix.join(assets.dist.bundleDir, `${pkg.artifactName}.js`))
 		.pipe(plugins.uglify({ preserveComments: 'license' }))
 		.pipe(plugins.rename(pkg.artifactName + '.min.js'))
 		.pipe(gulp.dest(assets.dist.bundleDir));
@@ -102,7 +102,7 @@ gulp.task('rollup-js', () => {
 		})
 		.then((bundle) => {
 			return bundle.write({
-				dest: path.posix.join(assets.dist.bundleDir, (pkg.artifactName + '.js')),
+				dest: path.posix.join(assets.dist.bundleDir, `${pkg.artifactName}.js`),
 				format: 'umd',
 				moduleName: 'angular2Template',
 				sourceMap: true,
