@@ -5,9 +5,7 @@ let
 	webpack = require('webpack'),
 
 	pkg = require(path.posix.resolve('./package.json')),
-	assets = require(path.posix.resolve('./config/assets.js')),
-	atl = require('awesome-typescript-loader');
-
+	assets = require(path.posix.resolve('./config/assets.js'));
 
 module.exports = () => {
 
@@ -72,8 +70,7 @@ module.exports = () => {
 			// Typescript loader
 			{
 				test: /\.ts$/,
-				loader: 'awesome-typescript-loader',
-				exclude: [/\.(spec|e2e)\.ts$/]
+				loader: 'awesome-typescript-loader'
 			},
 
 			// Template Loader
