@@ -66,7 +66,7 @@ gulp.task('build-ts', () => {
 						? null
 						: new plugins.util.PluginError(
 							'ngc',
-							`${gutil.colors.red('Compilation error.')}\nSee details in the ngc output`,
+							`${plugins.util.colors.red('Compilation error.')}\nSee details in the ngc output`,
 							{fileName: file.path});
 
 					callback(err, file);
