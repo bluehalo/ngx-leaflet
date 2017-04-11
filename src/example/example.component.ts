@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'example-component',
 	template: '{{message}}'
 })
-export class ExampleComponent {
+export class ExampleComponent implements OnInit {
 	message = 'Hello';
 
 	ngOnInit() {
