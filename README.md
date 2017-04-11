@@ -36,6 +36,67 @@ If you want to run the demo, clone the repository, perform an ```npm install```,
 
 ## Usage
 
+### Styles
+For leaflet to work, you need to have the leaflet stylesheets loaded into your application.
+If you've installed via npm, you will need to load ```./node_modules/leaflet/dist/leaflet.css```. 
+How you include the stylesheet will depend on your specific setup. Here are a few examples:
+
+#### Direct Import from HTML
+If you are just building a webpage and not using a bundler for your css, you'll want to directly import the css file in your HTML page.
+
+```html
+<head>
+	...
+	<link rel="stylesheet" type="text/css" href="./node_modules/leaflet/dist/leaflet.css">
+	...
+</head>
+```
+
+#### Webpack
+If you are using Webpack, you will need to import the css file and have a style-loader configured.
+You can use the demo included in this application as a reference.
+
+Generally, in ```vendor.ts```:
+```ts
+import 'leaflet/dist/leaflet.css';
+```
+
+And then in your webpack config file:
+```js
+{
+    ...
+    "module" : {
+		loaders: [
+		    ...
+		    { test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
+		    ...
+		]    
+    },
+    ...
+}
+```
+
+
+#### Angular CLI
+If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular-cli.json```
+
+```js
+{
+    ...
+    "apps": [
+        {
+            ...
+        	"styles": [
+                "styles.css",
+                "../node_modules/leaflet/dist/leaflet.css"
+            ],
+            ...
+        }
+    ]
+    ...
+}
+```
+
 ### Basic Map Setup
 To create a map, use the ```leaflet``` attribute directive.
 You must specify an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
