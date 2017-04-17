@@ -36,7 +36,7 @@ If you want to run the demo, clone the repository, perform an ```npm install```,
 
 ## Usage
 
-### Styles
+### Import the Leaflet Stylesheet
 For leaflet to work, you need to have the leaflet stylesheets loaded into your application.
 If you've installed via npm, you will need to load ```./node_modules/leaflet/dist/leaflet.css```. 
 How you include the stylesheet will depend on your specific setup. Here are a few examples:
@@ -247,6 +247,72 @@ layersControl: {
 
 ### leafletLayersControlOptions
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs). These options are passed into the constructor on creation.
+
+
+### Getting a Reference to the Map
+Occasionally, you may need to directly access the Leaflet map instance.
+For example, to call ```invalidateSize()``` when the map div changes size or is shown/hidden.
+There are a couple of different ways to achieve this depending on what you're trying to do.
+
+The easiest and most flexible way is to use the output binding ```leafletMapReady```.
+This output is invoked after the map is created, the argument of the event being the ```L.Map``` instance.
+
+The second is to get a reference to the leaflet directive itself - and there are a couple of ways to do this.
+With a reference to the directive, you can invoke the ```getMap()``` function to get a reference to the ```L.Map``` instance.
+
+
+#### leafletMapReady
+This output is emitted when once when the map is initially created inside of the Leaflet directive.
+The event will only fire when the map exists and is ready for manipulation.
+
+```html
+<div leaflet
+	[leafletOptions]="options"
+	(leafletMapReady)="onMapReady($event)">
+</div>
+```
+
+```js
+onMapReady(map: L.Map) {
+	// Do stuff with map
+}
+```
+
+This method of getting the map makes the most sense if you are using the Leaflet directive inside your own component
+and just need to add some limited functionality or register some event handlers.
+
+
+#### Inject LeafletDirective into your Component
+In Angular 2, directives are injectable the same way that Services are.
+This means that you can create your own component or directive and inject the ```LeafletDirective``` into it.
+This will only work if your custom component/directive exists on the same DOM element and is ordered after the injected LeafletDirective.
+
+```html
+<div leaflet myCustomDirective>
+</div>
+```
+
+```js
+@Directive({
+	selector: '[myCustomDirective]'
+})
+export class MyCustomDirective {
+	leafletDriective: LeafletDirective;
+	
+	constructor(leafletDirective: LeafletDirective) {
+    	this.leafletDirective = leafletDirective;
+    }
+
+	someFunction() {
+	    if (null != this.leafletDirective.getMap()) {
+	        // Do stuff with the map
+	    }
+	}
+}
+```
+
+The benefit of this approach is it's a bit cleaner if you're interested in adding some reusable capability to the existing leaflet map directive.
+This is how the ```@asymmetrik/angualr2-leaflet-draw``` and ```@asymmetrik/angualr2-leaflet-d3``` packages work, so you can use them as references.
 
 
 ### A Note About Markers

@@ -1,8 +1,9 @@
 {
 	"name": "@asymmetrik/angular2-leaflet",
 	"artifactName": "angular2-leaflet",
+	"moduleName": "angular2Leaflet",
 	"description": "Angular 2 components for Leaflet",
-	"version": "2.1.2",
+	"version": "2.1.3",
 
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
