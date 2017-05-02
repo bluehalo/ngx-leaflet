@@ -54,17 +54,35 @@ export class LeafletLayersDemoComponent {
 		enabled: true,
 		layer: L.marker([ 46.879966, -121.726909 ], {
 			icon: L.icon({
+				iconSize: [ 25, 41 ],
+				iconAnchor: [ 13, 41 ],
 				iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
 				shadowUrl: '44a526eed258222515aa21eaffd14a96.png'
 			})
 		})
+	};
+	geoJSON = {
+		id: 'geoJSON',
+		name: 'Geo JSON Polygon',
+		enabled: true,
+		layer: L.geoJSON(
+			({
+				type: 'Polygon',
+				coordinates: [[
+					[ -121.6, 46.87 ],
+					[ -121.5, 46.87 ],
+					[ -121.5, 46.93],
+					[ -121.6, 46.87 ]
+				]]
+			}) as any,
+			{ style: () => { return { color: '#ff7800' }; } })
 	};
 
 	// Form model object
 	model = new LeafletLayersDemoModel(
 		[ this.LAYER_OSM, this.LAYER_OCM ],
 		this.LAYER_OCM.id,
-		[ this.circle, this.polygon, this.square, this.marker ]
+		[ this.circle, this.polygon, this.square, this.marker, this.geoJSON ]
 	);
 
 
@@ -96,6 +114,13 @@ export class LeafletLayersDemoComponent {
 			baseLayers: {
 				'Open Street Map': this.LAYER_OSM.layer,
 				'Open Cycle Map': this.LAYER_OCM.layer
+			},
+			overlays: {
+				Circle: this.circle.layer,
+				Square: this.square.layer,
+				Polygon: this.polygon.layer,
+				Marker: this.marker.layer,
+				GeoJSON: this.geoJSON.layer
 			}
 		};
 

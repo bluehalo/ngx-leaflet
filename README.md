@@ -13,6 +13,7 @@
 ## Table of Contents
 - [Install](#install)
 - [Usage](#usage)
+- [API](#api)
 - [Contribute](#contribute)
 - [License](#license)
 - [Credits](#credits)
@@ -100,6 +101,39 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 ### Basic Map Setup
 To create a map, use the ```leaflet``` attribute directive.
 You must specify an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
+For an example of the basic map setup, you should check out the *Core* demo.
+
+```html
+<div leaflet style="height: 300px;"
+     [leafletOptions]="options">
+</div>
+```
+#### leaflet
+This is the attribute directive that activates the plugin and creates the map.
+
+#### leafletOptions
+Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com) docs).
+These options can only be set initially because they are used to create the map. Later changes are ignored.
+
+Example:
+
+```js
+options = {
+	layers: [
+		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+	],
+	zoom: 5,
+	center: L.latLng({ lat: 38.991709, lng: -76.886109 })
+};
+```
+
+See the API section below for details regarding how to bind additional options, dynamically bind baselayers, layers, overlays, and layer controls.
+
+
+## API
+
+### Advanced Map Configuration
+There are several input bindings available for configuring the map.
 
 ```html
 <div leaflet style="height: 300px;"
@@ -127,7 +161,7 @@ Input binding for zoom/pan options (see [Leaflet's](http://leafletjs.com) docs).
 Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com) docs). These options are stored and used whenever FitBounds operations are invoked.
 
 
-### Zoom level, center, and FitBounds
+### Dynamically changing zoom level, center, and fitBounds
 ```html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"
@@ -160,7 +194,8 @@ There is no output binding or events emitted for map pan changes made using map 
 
 
 #### Note: center/zoom operations may cancel each other
-Zoom/Center operations cancel each other. If both changes are picked up at the same time, they will be applied as a map.setView() operation so both are processed.
+Zoom/Center operations cancel each other.
+If both changes are picked up at the same time, they will be applied as a map.setView() operation so both are processed.
 
 
 #### leafletFitBounds
@@ -172,7 +207,13 @@ fitBounds: L.LatLngBounds
 
 On changes, the component calls map.fitBounds using the bound parameter.
 
+
 ### Simple Layer Management: Setting Baselayers
+There is a convenience input binding for setting the baselayers on the map called ```leafletBaseLayers```.
+You can also provide ```leafletLayersControlOptions``` if you want to show the control on the map that allows you to switch between baselayers.
+If you plan to show more than just baselayers, you should use the more advanced layers controls described in *Advanced Layer Management* below.
+
+For an example of the basic map setup, you should check out the *Simple Base Layers* demo.
 
 ```html
 <div leaflet style="height: 300px;"
@@ -204,11 +245,22 @@ However, because it uses ```L.control.Layers``` under the hood, you can still pr
 
 
 ### leafletLayersControlOptions
-Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs). These options are passed into the layers control constructor on creation.
+Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
+These options are passed into the layers control constructor on creation.
 
 
-### Layers and Layers Control
-The ```leafletLayers``` and ```leafletLayersControl``` directives give you direct access to manipulate layers and the layers control.
+### Advanced Layer Management: Layers, and Layers Control
+The ```leafletLayers``` and ```leafletLayersControl``` input bindings give you direct access to manipulate layers and the layers control.
+When the array bound to ```leafletLayers``` is changed, the directive will synchronize the layers on the map to the layers in the array.
+This includes tile layers and any added shapes.
+
+The ```leafletLayersControl``` input binding allows you to provide a set of base layers and overlay layers that can be managed within leaflet using the layers control.
+When the user manipulates the control via Leaflet, Leaflet will automatically manage the layers, but the input bound layer array isn't going to get updated to reflect those changes.
+
+So, basically, you use ```leafletLayers``` to assert what should be added to/removed from the map.
+Use ```leafletLayersContro``` to tell Leaflet what layers the user can optionally turn on and off.
+
+For an example of using the layers controls, you should check out the *Layers and Layer Controls* demo.
 
 ```html
 <div leaflet style="height: 300px;"
@@ -220,7 +272,7 @@ The ```leafletLayers``` and ```leafletLayersControl``` directives give you direc
 ```
 
 #### leafletLayers
-Input bind an array of layers to be synced to the map.
+Input bind an array of all layers to be synced (and made visible) in the map.
 
 ```js
 layers: L.Layer[]
@@ -246,7 +298,8 @@ layersControl: {
 ```
 
 ### leafletLayersControlOptions
-Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs). These options are passed into the constructor on creation.
+Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
+These options are passed into the constructor on creation.
 
 
 ### Getting a Reference to the Map
@@ -335,6 +388,8 @@ But, here is a rough overview of the steps taken to get them working.
 
 		let layer= L.marker([ 46.879966, -121.726909 ], {
 			icon: L.icon({
+				iconSize: [ 25, 41 ],
+				iconAnchor: [ 13, 0 ],
 				iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
 				shadowUrl: '44a526eed258222515aa21eaffd14a96.png'
 			})
