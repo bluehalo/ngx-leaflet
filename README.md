@@ -31,7 +31,6 @@ If you intend to use this library in a typescript project (utilizing the typings
 npm install @types/leaflet
 ```
 
-
 If you want to run the demo, clone the repository, perform an ```npm install```, ```gulp dev``` and then go to http://localhost:9000/src/demo/index.html
 
 
@@ -98,6 +97,22 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 }
 ```
 
+#### Typescript and Angular 2+ Module Import
+In your ```app.module.ts```, add:
+ 
+```js
+import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+
+...
+imports: [
+    ...
+    LeafletModule
+]
+...
+
+```
+
+
 ### Basic Map Setup
 To create a map, use the ```leaflet``` attribute directive.
 You must specify an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
@@ -113,7 +128,7 @@ This is the attribute directive that activates the plugin and creates the map.
 
 #### leafletOptions
 Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com) docs).
-These options can only be set initially because they are used to create the map. Later changes are ignored.
+These options can only be set initially because they are used to create the map. Later changes are ignored.`
 
 Example:
 
