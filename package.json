@@ -1,6 +1,7 @@
 {
 	"name": "@asymmetrik/angular2-template",
 	"artifactName": "angular2-template",
+	"moduleName": "angular2Template",
 	"description": "Angular 2 components template project",
 	"version": "1.3.0",
 	"author": "Asymmetrik, Ltd.",
