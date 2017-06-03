@@ -1,4 +1,4 @@
-/*! @asymmetrik/angular2-leaflet - 2.1.6 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/angular2-leaflet - 2.2.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -368,32 +368,6 @@ LeafletLayersControlDirective.propDecorators = {
 var LeafletUtil = (function () {
     function LeafletUtil() {
     }
-    /**
-     * Combine two associative arrays in a shallow manner. Where there are duplicate properties,
-     * the value in the second object will overwrite the value of the first object
-     *
-     * @param aMap The first object
-     * @param bMap The second object
-     * @returns {{}} The aggregate of both objects
-     */
-    LeafletUtil.mergeMaps = function (aMap, bMap) {
-        var toReturn = {};
-        if (null != aMap) {
-            for (var k in aMap) {
-                if (aMap.hasOwnProperty(k)) {
-                    toReturn[k] = aMap[k];
-                }
-            }
-        }
-        if (null != bMap) {
-            for (var k in bMap) {
-                if (bMap.hasOwnProperty(k)) {
-                    toReturn[k] = bMap[k];
-                }
-            }
-        }
-        return toReturn;
-    };
     LeafletUtil.mapToArray = function (map$$1) {
         var toReturn = [];
         for (var k in map$$1) {
