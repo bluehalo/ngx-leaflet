@@ -1,4 +1,4 @@
-/*! @asymmetrik/angular2-leaflet - 2.1.5 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/angular2-leaflet - 2.1.6 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -378,8 +378,8 @@ var LeafletLayersControlDirective = (function () {
     };
     LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
         // Set the layers
-        if (changes['layersControlCfg']) {
-            this.controlLayers.setLayersControlConfig(changes['layersControlCfg'].currentValue, changes['layersControlCfg'].previousValue);
+        if (changes['layersControlConfig']) {
+            this.controlLayers.setLayersControlConfig(changes['layersControlConfig'].currentValue, changes['layersControlConfig'].previousValue);
         }
     };
     return LeafletLayersControlDirective;

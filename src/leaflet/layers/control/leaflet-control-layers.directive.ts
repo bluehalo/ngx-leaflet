@@ -39,10 +39,10 @@ export class LeafletLayersControlDirective
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
 
 		// Set the layers
-		if (changes['layersControlCfg']) {
+		if (changes['layersControlConfig']) {
 			this.controlLayers.setLayersControlConfig(
-				changes['layersControlCfg'].currentValue,
-				changes['layersControlCfg'].previousValue);
+				changes['layersControlConfig'].currentValue,
+				changes['layersControlConfig'].previousValue);
 		}
 
 	}

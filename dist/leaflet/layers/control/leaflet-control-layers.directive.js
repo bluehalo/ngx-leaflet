@@ -17,8 +17,8 @@ var LeafletLayersControlDirective = (function () {
     };
     LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
         // Set the layers
-        if (changes['layersControlCfg']) {
-            this.controlLayers.setLayersControlConfig(changes['layersControlCfg'].currentValue, changes['layersControlCfg'].previousValue);
+        if (changes['layersControlConfig']) {
+            this.controlLayers.setLayersControlConfig(changes['layersControlConfig'].currentValue, changes['layersControlConfig'].previousValue);
         }
     };
     return LeafletLayersControlDirective;

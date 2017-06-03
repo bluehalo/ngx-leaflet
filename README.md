@@ -97,8 +97,16 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 }
 ```
 
+### Import the Code Dependencies
+
+#### Direct Import
+The code is exported using UMD (bundles are in the ./dist dir) so you should be able to import is using whatever module system/builder you're using.
+Typings are included alongside the bundles.
+
 #### Typescript and Angular 2+ Module Import
-In your ```app.module.ts```, add:
+Before you can use the module in your Angular 2+ app, you'll need to import it in your application.
+
+For example, in your ```app.module.ts```, add:
  
 ```js
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
@@ -106,7 +114,7 @@ import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 ...
 imports: [
     ...
-    LeafletModule
+    LeafletModule.forRoot()
 ]
 ...
 
@@ -123,12 +131,14 @@ For an example of the basic map setup, you should check out the *Core* demo.
      [leafletOptions]="options">
 </div>
 ```
+
 #### leaflet
 This is the attribute directive that activates the plugin and creates the map.
 
+
 #### leafletOptions
 Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com) docs).
-These options can only be set initially because they are used to create the map. Later changes are ignored.`
+These options can only be set initially because they are used to create the map. Later changes are ignored.
 
 Example:
 
@@ -214,7 +224,7 @@ If both changes are picked up at the same time, they will be applied as a map.se
 
 
 #### leafletFitBounds
-Input bind a fitBound operation to the map.
+Input bind a fitBounds operation to the map.
 
 ```js
 fitBounds: L.LatLngBounds
@@ -365,7 +375,7 @@ This will only work if your custom component/directive exists on the same DOM el
 	selector: '[myCustomDirective]'
 })
 export class MyCustomDirective {
-	leafletDriective: LeafletDirective;
+	leafletDirective: LeafletDirective;
 	
 	constructor(leafletDirective: LeafletDirective) {
     	this.leafletDirective = leafletDirective;
