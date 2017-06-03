@@ -15,7 +15,7 @@ import { LeafletBaseLayersDemoComponent } from './layers/baselayers-demo.compone
 		CommonModule,
 		FormsModule,
 
-		LeafletModule
+		LeafletModule.forRoot()
 	],
 	declarations: [
 		LeafletDemoComponent,
