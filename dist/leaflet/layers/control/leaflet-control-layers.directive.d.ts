@@ -1,13 +1,18 @@
-import { OnChanges, OnInit, SimpleChange } from '@angular/core';
+/// <reference types="leaflet" />
+import { DoCheck, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
 import { LeafletDirective } from '../../core/leaflet.directive';
-export declare class LeafletLayersControlDirective implements OnChanges, OnInit {
-    layersControlConfig: any;
+import { LeafletControlLayersConfig } from './leaflet-control-layers-config.model';
+export declare class LeafletLayersControlDirective implements DoCheck, OnInit {
+    private differs;
+    layersControlConfigValue: LeafletControlLayersConfig;
+    baseLayersDiffer: KeyValueDiffer<string, L.Layer>;
+    overlaysDiffer: KeyValueDiffer<string, L.Layer>;
+    layersControlConfig: LeafletControlLayersConfig;
     layersControlOptions: any;
     private controlLayers;
     private leafletDirective;
-    constructor(leafletDirective: LeafletDirective);
+    constructor(leafletDirective: LeafletDirective, differs: KeyValueDiffers);
     ngOnInit(): void;
-    ngOnChanges(changes: {
-        [key: string]: SimpleChange;
-    }): void;
+    ngDoCheck(): void;
+    protected updateLayers(): void;
 }

@@ -1,7 +1,7 @@
 var LeafletControlLayersConfig = (function () {
-    function LeafletControlLayersConfig(baseLayers, overlays) {
-        this.baseLayers = baseLayers;
-        this.overlays = overlays;
+    function LeafletControlLayersConfig() {
+        this.baseLayers = {};
+        this.overlays = {};
     }
     return LeafletControlLayersConfig;
 }());

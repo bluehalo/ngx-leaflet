@@ -1,8 +1,6 @@
 import * as L from 'leaflet';
 
 export class LeafletControlLayersConfig {
-	constructor(
-		public baseLayers?: L.Control.LayersObject,
-		public overlays?: L.Control.LayersObject
-	) { }
+	baseLayers: { [name: string]: L.Layer } = {};
+	overlays: { [name: string]: L.Layer } = {};
 }

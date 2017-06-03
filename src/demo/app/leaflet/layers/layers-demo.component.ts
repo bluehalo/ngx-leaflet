@@ -88,7 +88,19 @@ export class LeafletLayersDemoComponent {
 
 	// Values to bind to Leaflet Directive
 	layers: L.Layer[];
-	layersControl: any;
+	layersControl = {
+		baseLayers: {
+			'Open Street Map': this.LAYER_OSM.layer,
+			'Open Cycle Map': this.LAYER_OCM.layer
+		},
+		overlays: {
+			Circle: this.circle.layer,
+			Square: this.square.layer,
+			Polygon: this.polygon.layer,
+			Marker: this.marker.layer,
+			GeoJSON: this.geoJSON.layer
+		}
+	};
 	options = {
 		zoom: 10,
 		center: L.latLng([ 46.879966, -121.726909 ])
@@ -110,19 +122,6 @@ export class LeafletLayersDemoComponent {
 		newLayers.unshift(baseLayer.layer);
 
 		this.layers = newLayers;
-		this.layersControl = {
-			baseLayers: {
-				'Open Street Map': this.LAYER_OSM.layer,
-				'Open Cycle Map': this.LAYER_OCM.layer
-			},
-			overlays: {
-				Circle: this.circle.layer,
-				Square: this.square.layer,
-				Polygon: this.polygon.layer,
-				Marker: this.marker.layer,
-				GeoJSON: this.geoJSON.layer
-			}
-		};
 
 		return false;
 	}

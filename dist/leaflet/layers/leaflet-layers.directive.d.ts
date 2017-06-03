@@ -1,18 +1,21 @@
 /// <reference types="leaflet" />
-import { OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { DoCheck, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
-export declare class LeafletLayersDirective implements OnChanges, OnInit {
+export declare class LeafletLayersDirective implements DoCheck, OnInit {
+    private differs;
+    layersValue: L.Layer[];
+    layersDiffer: IterableDiffer<L.Layer>;
     layers: L.Layer[];
     private leafletDirective;
-    constructor(leafletDirective: LeafletDirective);
+    constructor(leafletDirective: LeafletDirective, differs: IterableDiffers);
+    ngDoCheck(): void;
     ngOnInit(): void;
-    ngOnChanges(changes: {
-        [key: string]: SimpleChange;
-    }): void;
     /**
-     * Replace the current layers in the map with the provided array
-     * @param layers The new complete array of layers for the map
+     * Update the state of the layers.
+     * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+     * This is important because it allows us to react to changes to the contents of the array as well
+     * as changes to the actual array instance.
      */
-    private setLayers(newLayers, prevLayers);
+    private updateLayers();
 }

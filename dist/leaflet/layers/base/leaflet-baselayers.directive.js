@@ -1,35 +1,49 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, KeyValueDiffers } from '@angular/core';
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.wrapper';
-import { LeafletControlLayersConfig } from '../control/leaflet-control-layers-config.model';
 var LeafletBaseLayersDirective = (function () {
-    function LeafletBaseLayersDirective(leafletDirective) {
+    function LeafletBaseLayersDirective(leafletDirective, differs) {
+        this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.controlLayers = new LeafletControlLayersWrapper();
+        this.baseLayersDiffer = this.differs.find({}).create();
     }
+    Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
+        get: function () {
+            return this.baseLayersValue;
+        },
+        // Set/get baseLayers
+        set: function (v) {
+            this.baseLayersValue = v;
+            this.updateBaseLayers();
+        },
+        enumerable: true,
+        configurable: true
+    });
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();
         // Initially configure the controlLayers
         this.controlLayers
-            .init({ baseLayers: this.baseLayers }, this.layersControlOptions)
+            .init({}, this.layersControlOptions)
             .addTo(this.leafletDirective.getMap());
-        // Sync the baselayer (will default to the first layer in the map)
-        this.syncBaseLayer();
+        this.updateBaseLayers();
     };
-    LeafletBaseLayersDirective.prototype.ngOnChanges = function (changes) {
-        // Set the new baseLayers
-        if (changes['baseLayers']) {
-            this.setBaseLayers(changes['baseLayers'].currentValue, changes['baseLayers'].previousValue);
+    LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
+        this.updateBaseLayers();
+    };
+    LeafletBaseLayersDirective.prototype.updateBaseLayers = function () {
+        var map = this.leafletDirective.getMap();
+        var layersControl = this.controlLayers.getLayersControl();
+        if (null != map && null != layersControl && null != this.baseLayersDiffer) {
+            var changes = this.baseLayersDiffer.diff(this.baseLayersValue);
+            var results = this.controlLayers.applyBaseLayerChanges(changes);
+            if (results.changed()) {
+                this.syncBaseLayer();
+            }
         }
-    };
-    LeafletBaseLayersDirective.prototype.setBaseLayers = function (newBaseLayers, prevBaseLayers) {
-        // Update the layers control
-        this.controlLayers.setLayersControlConfig(new LeafletControlLayersConfig(newBaseLayers), new LeafletControlLayersConfig(prevBaseLayers));
-        // Sync the new baseLayer
-        this.syncBaseLayer();
     };
     /**
      * Check the current base layer and change it to the new one if necessary
@@ -66,6 +80,7 @@ LeafletBaseLayersDirective.decorators = [
 /** @nocollapse */
 LeafletBaseLayersDirective.ctorParameters = function () { return [
     { type: LeafletDirective, },
+    { type: KeyValueDiffers, },
 ]; };
 LeafletBaseLayersDirective.propDecorators = {
     'baseLayers': [{ type: Input, args: ['leafletBaseLayers',] },],

@@ -21,15 +21,10 @@ export class LeafletCoreDemoComponent {
 	} = {
 		layers: [
 			{
-				url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-				maxZoom: 18,
-				attribution: 'Open Cycle Map'
-			},
-			{
 				url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 				maxZoom: 18,
 				attribution: 'Open Street Map'
-			},
+			}
 		],
 		zoom: 5,
 		center: [ 46.879966, -121.726909 ]
