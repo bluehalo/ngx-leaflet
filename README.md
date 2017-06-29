@@ -14,6 +14,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
+- [Changelog](#changelog)
 - [Contribute](#contribute)
 - [License](#license)
 - [Credits](#credits)
@@ -449,6 +450,16 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
     ```
 
 1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
+
+## Changelog
+
+### Version 2.2.x
+
+#### Iterable and Key-Value Change Detection
+Changed directives to use Angular 4 iterable and key-value differs for change detection on layer and overlay bindings.
+This has the benefit of reducing the code size by reusing Angular change detection, while also adding support for array and object mutation detection.
+I decided to make this a minor version change as it it backwards compatible.
+
 
 ## Contribute
 PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.
