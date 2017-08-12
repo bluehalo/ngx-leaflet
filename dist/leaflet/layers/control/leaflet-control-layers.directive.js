@@ -3,6 +3,17 @@ import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
 import { LeafletControlLayersConfig } from './leaflet-control-layers-config.model';
+/**
+ * Layers Control
+ *
+ * This directive is used to configure the layers control. The input accepts an object with two
+ * key-value maps of layer name -> layer. The input object is treated as immutable, so changes are
+ * only detected when the instance changes. On changes, a differ is used to determine what
+ * changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive.
+ */
 var LeafletLayersControlDirective = (function () {
     function LeafletLayersControlDirective(leafletDirective, differs) {
         this.differs = differs;
@@ -44,8 +55,10 @@ var LeafletLayersControlDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
-    LeafletLayersControlDirective.prototype.ngDoCheck = function () {
-        this.updateLayers();
+    LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
+        if (changes['layersControlConfig']) {
+            this.updateLayers();
+        }
     };
     LeafletLayersControlDirective.prototype.updateLayers = function () {
         var map = this.leafletDirective.getMap();

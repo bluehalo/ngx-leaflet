@@ -1,8 +1,19 @@
 /// <reference types="leaflet" />
-import { DoCheck, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { KeyValueDiffer, KeyValueDiffers, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletControlLayersConfig } from './leaflet-control-layers-config.model';
-export declare class LeafletLayersControlDirective implements DoCheck, OnInit {
+/**
+ * Layers Control
+ *
+ * This directive is used to configure the layers control. The input accepts an object with two
+ * key-value maps of layer name -> layer. The input object is treated as immutable, so changes are
+ * only detected when the instance changes. On changes, a differ is used to determine what
+ * changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive.
+ */
+export declare class LeafletLayersControlDirective implements OnChanges, OnInit {
     private differs;
     layersControlConfigValue: LeafletControlLayersConfig;
     baseLayersDiffer: KeyValueDiffer<string, L.Layer>;
@@ -13,6 +24,8 @@ export declare class LeafletLayersControlDirective implements DoCheck, OnInit {
     private leafletDirective;
     constructor(leafletDirective: LeafletDirective, differs: KeyValueDiffers);
     ngOnInit(): void;
-    ngDoCheck(): void;
+    ngOnChanges(changes: {
+        [key: string]: SimpleChange;
+    }): void;
     protected updateLayers(): void;
 }

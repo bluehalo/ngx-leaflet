@@ -3,6 +3,17 @@ import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.wrapper';
+/**
+ * Baselayers directive
+ *
+ * This directive is provided as a convenient way to add baselayers to the map. The input accepts
+ * a key-value map of layer name -> layer. The input map is treated as immutable, so changes are
+ * only detected when the map instance changes. On changes, a differ is used to determine what
+ * changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive.
+ */
 var LeafletBaseLayersDirective = (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs) {
         this.differs = differs;
@@ -31,8 +42,11 @@ var LeafletBaseLayersDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateBaseLayers();
     };
-    LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
-        this.updateBaseLayers();
+    LeafletBaseLayersDirective.prototype.ngOnChanges = function (changes) {
+        // Trigger a change detection based on an instance change
+        if (changes['baseLayers']) {
+            this.updateBaseLayers();
+        }
     };
     LeafletBaseLayersDirective.prototype.updateBaseLayers = function () {
         var map = this.leafletDirective.getMap();

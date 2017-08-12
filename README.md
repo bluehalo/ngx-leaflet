@@ -21,7 +21,7 @@
 
 
 ## Install
-Install the package and its peer dependencies via npm:
+Install the package and its peer dependencies via npm (or yarn):
 ```
 npm install leaflet
 npm install @asymmetrik/angular2-leaflet
@@ -36,6 +36,14 @@ If you want to run the demo, clone the repository, perform an ```npm install```,
 
 
 ## Usage
+To use this library, there are a handful of setup steps to go through that vary based on your app environment (e.g., Webpack, ngCli, SystemJS, etc.).
+Generally, the steps are:
+
+* Install Leaflet, this library, and potentially the Leaflet typings (see above).
+* Import the Leaflet stylesheet
+* Import the Leaflet module into your Angular project
+* Create and configure a map
+
 
 ### Import the Leaflet Stylesheet
 For leaflet to work, you need to have the leaflet stylesheets loaded into your application.
@@ -98,7 +106,7 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 }
 ```
 
-### Import the Code Dependencies
+### Import Code Dependencies and Module
 
 #### Direct Import
 The code is exported using UMD (bundles are in the ./dist dir) so you should be able to import is using whatever module system/builder you're using.
@@ -122,41 +130,164 @@ imports: [
 ```
 
 
-### Basic Map Setup
-To create a map, use the ```leaflet``` attribute directive.
-You must specify an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
-For an example of the basic map setup, you should check out the *Core* demo.
+### Create and Configure a Map
+Once the dependencies are installed and you have imported the ```LeafletModule```, you're ready to add a map to your page.
+To get a basic map to work, you have to:
 
+* Apply the ```leaflet``` attribute directive (see the example below) to an existing DOM element.
+* Style the map DOM element with a height. Otherwise, it'll render with a 0 pixel height.
+* Provide an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
+
+Template:
 ```html
-<div leaflet style="height: 300px;"
+<div style="height: 300px;"
+     leaflet 
      [leafletOptions]="options">
 </div>
 ```
 
-#### leaflet
-This is the attribute directive that activates the plugin and creates the map.
-
-
-#### leafletOptions
-Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com) docs).
-These options can only be set initially because they are used to create the map. Later changes are ignored.
-
-Example:
-
+Example leafletOptions object:
 ```js
 options = {
 	layers: [
 		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
 	],
 	zoom: 5,
-	center: L.latLng({ lat: 38.991709, lng: -76.886109 })
+	center: L.latLng([ 46.879966, -121.726909 ])
 };
 ```
 
-See the API section below for details regarding how to bind additional options, dynamically bind baselayers, layers, overlays, and layer controls.
+Changes to leafletOptions are ignored after they are initially set.
+Make sure the object exists before the map is created.
+In other words, you'll want to create the object in ngOnInit or hide the map DOM element with ngIf until you can create the options object.
+
+
+### Add a Layers Control
+The ```leafletLayersControl``` input bindings give you the ability to add the layers control to the map.
+This is pretty common when you want to add multiple baselayers or custom layers and want to let the user toggle them on/off.
+
+Template:
+```html
+<div style="height: 300px;"
+     leaflet 
+     [leafletOptions]="options"
+     [leafletLayersControl]="layersControl">
+</div>
+```
+
+Example layersControl object:
+```js
+layersControl = {
+	baseLayers: {
+		'Open Street Map': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+		'Open Cycle Map': L.tileLayer('http://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+	},
+	overlays: {
+		'Big Circle': L.circle([ 46.95, -122 ], { radius: 5000 }),
+		'Big Square': L.polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
+	}
+}
+```
+
+You can add any kind of Leaflet layer you want to the ```overlays``` map.
+This includes markers, shapes, geojson, custom layers from other libraries, etc.
+
+
+### Add Custom Layers
+You can add layers (baselayers, markers, or custom layers) to the map without showing them in the layer control using the ```leafletLayers``` directive.
+
+Template:
+```html
+<div style="height: 300px;"
+     leaflet
+     [leafletOptions]="options"
+     [leafletLayers]="layers">
+</div>
+```
+
+Layers array:
+```js
+layers = [
+    L.circle([ 46.95, -122 ], { radius: 5000 }),
+    L.polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
+    L.marker([ 46.879966, -121.726909 ])
+];
+```
+
+
+### Dynamically Changing Layers
+
+> **Layer inputs are immutable**
+> Most of the examples above deal with layer objects and arrays that are created but don't change.
+> Both ```leafletLayers``` and ```leafletLayersControl``` will track and apply changes.
+> However, it is important to note that each of these inputs assume that the bound object or array is immutable.
+> While inconvenient, immutability makes change detection much more efficient.
+> By forcing immutability, the library only has to deep compare the array/object instances when the instance equality check shows that the instance has changed.
+> I spent a long time debating this design decision, but I opted to go with the immutable approach for the performance benefit.
+
+You can change layers by modifying the input bound objects/arrays. Here are a few examples:
+
+Template:
+```html
+<div style="height: 300px;"
+     leaflet
+     [leafletOptions]="options"
+     [leafletLayers]="layers"
+     [leafletLayersControl]="layersControl">
+</div>
+```
+
+```js
+// Create the layers array
+layers = [
+    L.circle([ 46.95, -122 ], { radius: 5000 }),
+    L.polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]])
+];
+
+// Create the layers control with a single base layer
+layersControl = {
+	baseLayers: {
+		'Open Street Map': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+	}
+}
+
+
+// After initialization, the map would have a circle and a polygon on it and a single base layer
+
+// Adds a new layerto the map by creating a new array with the new marker layer
+addMarker(marker: L.Marker) {
+    
+    // Treat the layers array as an immutable data structure
+    this.layers = this.layers.concat([ marker ]);
+    
+    // Another option here would be:
+    // this.layers.push(marker);
+    // this.layers = this.layers.slice();
+
+}
+
+// Removes a layer from the map by filtering it out of the layers array
+removeLayer(layer: L.Layer) {
+    
+    // Treat the layers array as an immutable data structure
+    this.layers = this.layers.filter((l: L.Layer) => { return layer !== l; });
+
+}
+
+// Adds a baselayer to the layers control
+addBaseLayer(name: string, layer: L.Layer) {
+	
+    this.layersControl.baseLayers[name] = layer;
+    this.layersControl = Object.assign({}, this.layersControl);
+}
+
+
+```
+
 
 
 ## API
+This section includes more detailed documentation of the functionality of the directives included in this library.
 
 ### Advanced Map Configuration
 There are several input bindings available for configuring the map.
@@ -265,12 +396,17 @@ If it finds a baselayer that is still added to the map, it will assume that is s
 If none of the baselayers can be found on the map, it will add the first layer it finds in the ```L.control.LayersObject``` and use that as the new baselayer.
 Layers are compared using instance equality.
 
+> **The ```baseLayers``` input assumes the bound object is immutable.**
+> Mutation changes will not be detected.
+> For changes to be detected and applied, make sure to set the bound variable to a new instance. 
+> This is a performance-related design decision to avoid excessively deep-comparing the contents of the baseLayers object.
+
 If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
-This directive will interfere with the ```leafletLayersControl``` directive.
-However, because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
+This directive internally uses the layers control, so if you add both, they'll interfere with each other.
+Because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
 
 
-### leafletLayersControlOptions
+#### leafletLayersControlOptions
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the layers control constructor on creation.
 
@@ -280,6 +416,12 @@ The ```leafletLayers``` and ```leafletLayersControl``` input bindings give you d
 When the array bound to ```leafletLayers``` is changed, the directive will synchronize the layers on the map to the layers in the array.
 This includes tile layers and any added shapes.
 
+> **Important Note About Immutability:**
+> The ```leafletLayers```, ```leafletBaseLayers```, ```leafletLayersControl``` inputs assume the bound objects/arrays are immutable.
+> This means that mutation changes will not be detected (e.g., directly changing the value of a property in the object, pushing a Layer onto the array, etc.).
+> For changes to be detected and applied, make sure to set the bound variable to a new instance.
+> This is a performance-related design decision to avoid excessively deep-comparing the contents of these things.
+ 
 The ```leafletLayersControl``` input binding allows you to provide a set of base layers and overlay layers that can be managed within leaflet using the layers control.
 When the user manipulates the control via Leaflet, Leaflet will automatically manage the layers, but the input bound layer array isn't going to get updated to reflect those changes.
 
@@ -323,7 +465,7 @@ layersControl: {
 }
 ```
 
-### leafletLayersControlOptions
+#### leafletLayersControlOptions
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the constructor on creation.
 
@@ -412,7 +554,7 @@ But, here is a rough overview of the steps taken to get them working.
 1. Determine the correct URL for the marker and marker-shadow images. If you're using a file hasher, you should be able to check Webpack's output for the generated images. If you are serving them directly without chunk hashing just figure out how to resolve the images on your server.
 1. Configure Leaflet to use the correct URLs as customer marker images
 
-		let layer= L.marker([ 46.879966, -121.726909 ], {
+		let layer = L.marker([ 46.879966, -121.726909 ], {
 			icon: L.icon({
 				iconSize: [ 25, 41 ],
 				iconAnchor: [ 13, 0 ],
@@ -452,13 +594,6 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
 1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
 
 ## Changelog
-
-### Version 2.2.x
-
-#### Iterable and Key-Value Change Detection
-Changed directives to use Angular 4 iterable and key-value differs for change detection on layer and overlay bindings.
-This has the benefit of reducing the code size by reusing Angular change detection, while also adding support for array and object mutation detection.
-I decided to make this a minor version change as it it backwards compatible.
 
 
 ## Contribute

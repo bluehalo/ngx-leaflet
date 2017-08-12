@@ -155,6 +155,21 @@ var LeafletDirectiveWrapper = (function () {
     return LeafletDirectiveWrapper;
 }());
 
+/**
+ * Layers directive
+ *
+ * This directive is used to directly control map layers. As changed are made to the input array of
+ * layers, the map is synched to the array. As layers are added or removed from the input array, they
+ * are also added or removed from the map. The input array is treated as immutable. To detect changes,
+ * you must change the array instance.
+ *
+ * Important Note: The input layers array is assumed to be immutable. This means you need to use an
+ * immutable array implementation or create a new copy of your array when you make changes, otherwise
+ * this directive won't detect the change. This is by design. It's for performance reasons. Change
+ * detection of mutable arrays requires diffing the state of the array on every DoCheck cycle, which
+ * is extremely expensive from a time complexity perspective.
+ *
+ */
 var LeafletLayersDirective = (function () {
     function LeafletLayersDirective(leafletDirective, differs) {
         this.differs = differs;
@@ -174,7 +189,7 @@ var LeafletLayersDirective = (function () {
         enumerable: true,
         configurable: true
     });
-    LeafletLayersDirective.prototype.ngDoCheck = function () {
+    LeafletLayersDirective.prototype.ngOnChanges = function () {
         this.updateLayers();
     };
     LeafletLayersDirective.prototype.ngOnInit = function () {
@@ -288,6 +303,17 @@ var LeafletControlLayersConfig = (function () {
     return LeafletControlLayersConfig;
 }());
 
+/**
+ * Layers Control
+ *
+ * This directive is used to configure the layers control. The input accepts an object with two
+ * key-value maps of layer name -> layer. The input object is treated as immutable, so changes are
+ * only detected when the instance changes. On changes, a differ is used to determine what
+ * changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive.
+ */
 var LeafletLayersControlDirective = (function () {
     function LeafletLayersControlDirective(leafletDirective, differs) {
         this.differs = differs;
@@ -329,8 +355,10 @@ var LeafletLayersControlDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
-    LeafletLayersControlDirective.prototype.ngDoCheck = function () {
-        this.updateLayers();
+    LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
+        if (changes['layersControlConfig']) {
+            this.updateLayers();
+        }
     };
     LeafletLayersControlDirective.prototype.updateLayers = function () {
         var map$$1 = this.leafletDirective.getMap();
@@ -380,6 +408,17 @@ var LeafletUtil = (function () {
     return LeafletUtil;
 }());
 
+/**
+ * Baselayers directive
+ *
+ * This directive is provided as a convenient way to add baselayers to the map. The input accepts
+ * a key-value map of layer name -> layer. The input map is treated as immutable, so changes are
+ * only detected when the map instance changes. On changes, a differ is used to determine what
+ * changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive.
+ */
 var LeafletBaseLayersDirective = (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs) {
         this.differs = differs;
@@ -408,8 +447,11 @@ var LeafletBaseLayersDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateBaseLayers();
     };
-    LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
-        this.updateBaseLayers();
+    LeafletBaseLayersDirective.prototype.ngOnChanges = function (changes) {
+        // Trigger a change detection based on an instance change
+        if (changes['baseLayers']) {
+            this.updateBaseLayers();
+        }
     };
     LeafletBaseLayersDirective.prototype.updateBaseLayers = function () {
         var map$$1 = this.leafletDirective.getMap();

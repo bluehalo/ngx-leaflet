@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { Directive, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnInit, SimpleChange } from '@angular/core';
 
 import * as L from 'leaflet';
 
@@ -8,11 +8,22 @@ import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.wrapper';
 
 
+/**
+ * Baselayers directive
+ *
+ * This directive is provided as a convenient way to add baselayers to the map. The input accepts
+ * a key-value map of layer name -> layer. The input map is treated as immutable, so changes are
+ * only detected when the map instance changes. On changes, a differ is used to determine what
+ * changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive.
+ */
 @Directive({
 	selector: '[leafletBaseLayers]'
 })
 export class LeafletBaseLayersDirective
-	implements DoCheck, OnInit {
+	implements OnChanges,  OnInit {
 
 	// Base Layers
 	baseLayersValue: { [name: string]: L.Layer };
@@ -60,8 +71,13 @@ export class LeafletBaseLayersDirective
 
 	}
 
-	ngDoCheck() {
-		this.updateBaseLayers();
+	ngOnChanges(changes: { [key: string]: SimpleChange }) {
+
+		// Trigger a change detection based on an instance change
+		if (changes['baseLayers']) {
+			this.updateBaseLayers();
+		}
+
 	}
 
 	protected updateBaseLayers() {
