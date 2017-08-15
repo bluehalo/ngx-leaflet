@@ -1,5 +1,5 @@
 /// <reference types="leaflet" />
-import { IterableDiffer, IterableDiffers, OnChanges, OnInit } from '@angular/core';
+import { DoCheck, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 /**
@@ -17,14 +17,14 @@ import { LeafletDirective } from '../core/leaflet.directive';
  * is extremely expensive from a time complexity perspective.
  *
  */
-export declare class LeafletLayersDirective implements OnInit, OnChanges {
+export declare class LeafletLayersDirective implements DoCheck, OnInit {
     private differs;
     layersValue: L.Layer[];
     layersDiffer: IterableDiffer<L.Layer>;
     layers: L.Layer[];
     private leafletDirective;
     constructor(leafletDirective: LeafletDirective, differs: IterableDiffers);
-    ngOnChanges(): void;
+    ngDoCheck(): void;
     ngOnInit(): void;
     /**
      * Update the state of the layers.

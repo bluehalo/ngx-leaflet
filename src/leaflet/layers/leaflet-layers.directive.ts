@@ -1,4 +1,4 @@
-import { Directive, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
 
 import * as L from 'leaflet';
 
@@ -25,7 +25,7 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 	selector: '[leafletLayers]'
 })
 export class LeafletLayersDirective
-	implements OnInit, OnChanges {
+	implements DoCheck, OnInit {
 
 	// Array of configured layers
 	layersValue: L.Layer[];
@@ -53,7 +53,7 @@ export class LeafletLayersDirective
 		this.layersDiffer = this.differs.find([]).create<L.Layer>();
 	}
 
-	ngOnChanges() {
+	ngDoCheck() {
 		this.updateLayers();
 	}
 

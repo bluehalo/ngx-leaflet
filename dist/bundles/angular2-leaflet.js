@@ -189,7 +189,7 @@ var LeafletLayersDirective = (function () {
         enumerable: true,
         configurable: true
     });
-    LeafletLayersDirective.prototype.ngOnChanges = function () {
+    LeafletLayersDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
     };
     LeafletLayersDirective.prototype.ngOnInit = function () {
@@ -355,10 +355,8 @@ var LeafletLayersControlDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
-    LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
-        if (changes['layersControlConfig']) {
-            this.updateLayers();
-        }
+    LeafletLayersControlDirective.prototype.ngDoCheck = function () {
+        this.updateLayers();
     };
     LeafletLayersControlDirective.prototype.updateLayers = function () {
         var map$$1 = this.leafletDirective.getMap();
@@ -447,11 +445,8 @@ var LeafletBaseLayersDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateBaseLayers();
     };
-    LeafletBaseLayersDirective.prototype.ngOnChanges = function (changes) {
-        // Trigger a change detection based on an instance change
-        if (changes['baseLayers']) {
-            this.updateBaseLayers();
-        }
+    LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
+        this.updateBaseLayers();
     };
     LeafletBaseLayersDirective.prototype.updateBaseLayers = function () {
         var map$$1 = this.leafletDirective.getMap();

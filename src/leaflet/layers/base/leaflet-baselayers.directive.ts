@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
 
 import * as L from 'leaflet';
 
@@ -23,7 +23,7 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
 	selector: '[leafletBaseLayers]'
 })
 export class LeafletBaseLayersDirective
-	implements OnChanges,  OnInit {
+	implements DoCheck,  OnInit {
 
 	// Base Layers
 	baseLayersValue: { [name: string]: L.Layer };
@@ -71,13 +71,8 @@ export class LeafletBaseLayersDirective
 
 	}
 
-	ngOnChanges(changes: { [key: string]: SimpleChange }) {
-
-		// Trigger a change detection based on an instance change
-		if (changes['baseLayers']) {
-			this.updateBaseLayers();
-		}
-
+	ngDoCheck() {
+		this.updateBaseLayers();
 	}
 
 	protected updateBaseLayers() {

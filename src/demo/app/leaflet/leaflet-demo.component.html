@@ -4,6 +4,10 @@
 		<div class="col-md-12">
 
 			<h1>Core - Using options</h1>
+			<p>
+				Demonstration of setting up a basic map with base layers, an initial zoom level, and a center position.
+				Zoom and center position are also bound as inputs, so changes are reflected when you hit apply.
+			</p>
 			<leafletCoreDemo></leafletCoreDemo>
 
 		</div>
@@ -14,6 +18,10 @@
 		<div class="col-md-12">
 
 			<h1>Simple Base Layers</h1>
+			<p>
+				Simple map setup with multiple base layers.
+				This approach will automatically show the layers control so you can switch between base layers.
+			</p>
 			<leafletBaselayersDemo></leafletBaselayersDemo>
 
 		</div>
@@ -24,10 +32,45 @@
 		<div class="col-md-12">
 
 			<h1>Layers and Layer Controls</h1>
+			<p>
+				Advanced example showing how to add/remove arbitrary layers to the map using the layers input binding and the layers control.
+			</p>
 			<leafletLayersDemo></leafletLayersDemo>
 
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<h1>Markers</h1>
+			<p>
+				Markers are just like any other layer.
+				You can add them to a map by creating them and adding them to an array bound to the layers input.
+			</p>
+			<leafletMarkersDemo></leafletMarkersDemo>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<h1>Efficient Change Detection</h1>
+			<p>
+				We currently use iterable and key/value differs to track changes to allow mutable changes to the bound objects/arrays.
+				This can become inefficient for large layer arrays.
+				There are several strategies for mitigating this performance impact.
+				First, you can wrap the directive in a compoment that uses the OnPush change detection strategy.
+				Second, you can wrap large sets of layers (e.g., markers) in layer groups to keep the bound array size small.
+				This example shows how to use OnPush to improve change detection efficiency. See the README for more details.
+			</p>
+			<leafletPerformanceDemo></leafletPerformanceDemo>
+
+		</div>
+	</div>
+
+	<br/><br/>
 
 </div>
 

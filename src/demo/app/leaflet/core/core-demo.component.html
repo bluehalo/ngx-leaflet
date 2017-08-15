@@ -4,64 +4,69 @@
 
 		<!-- Control Form -->
 		<div class="col-sm-12 col-md-6 col-lg-4">
+			<div class="row">
+				<div class="col-md-12">
 
-			<form class="form-horizontal">
+					<form class="form-horizontal">
 
-				<div class="form-group">
-					<label class="control-label">
-						Options:
-					</label>
-					{{ optionsSpec | json }}
+						<div class="form-group">
+							<label class="control-label">
+								Options:
+							</label>
+							{{ optionsSpec | json }}
+						</div>
+
+						<!-- Zoom Levels -->
+						<div class="form-group">
+							<label class="control-label col-sm-4 col-lg-4">
+								Zoom Level
+							</label>
+							<div class="col-sm-8 col-lg-8">
+								<select class="form-control" name="zoom" [(ngModel)]="model.zoom" required>
+									<option *ngFor="let z of model.zoomLevels" [value]="z">{{z}}</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- Lat/Long -->
+						<div class="form-group">
+							<label class="control-label col-sm-4 col-lg-4">
+								Latitude
+							</label>
+							<div class="col-sm-8 col-lg-8">
+								<input class="control-label" type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-4 col-lg-4">
+								Longitude
+							</label>
+							<div class="col-sm-8 col-lg-8">
+								<input class="control-label" type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude" required>
+							</div>
+						</div>
+
+						<button type="button"
+								class="pull-left btn btn-default col-sm-offset-4 col-lg-offset-4"
+								(click)="onApply()">Apply</button>
+
+					</form>
+
 				</div>
-
-				<!-- Zoom Levels -->
-				<div class="form-group">
-					<label class="control-label col-sm-4 col-lg-4">
-						Zoom Level
-					</label>
-					<div class="col-sm-8 col-lg-8">
-						<select class="form-control" name="zoom" [(ngModel)]="model.zoom" required>
-							<option *ngFor="let z of model.zoomLevels" [value]="z">{{z}}</option>
-						</select>
-					</div>
-				</div>
-
-				<!-- Lat/Long -->
-				<div class="form-group">
-					<label class="control-label col-sm-4 col-lg-4">
-						Latitude
-					</label>
-					<div class="col-sm-8 col-lg-8">
-						<input class="control-label" type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude" required>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-4 col-lg-4">
-						Longitude
-					</label>
-					<div class="col-sm-8 col-lg-8">
-						<input class="control-label" type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude" required>
-					</div>
-				</div>
-
-				<button type="button"
-				        class="pull-left btn btn-default col-sm-offset-4 col-lg-offset-4"
-				        (click)="onApply()">Apply</button>
-
-			</form>
+			</div>
 		</div>
 
 		<!-- Map -->
 		<div class="col-sm-12 col-md-6 col-lg-8">
 
-			<div leaflet style="height: 300px;"
-			     [leafletOptions]="options"
-			     [leafletPanOptions]="panOptions"
-			     [leafletZoomOptions]="zoomOptions"
-			     [leafletZoomPanOptions]="zoomPanOptions"
-			     [leafletFitBoundsOptions]="fitBoundsOptions"
-			     [leafletZoom]="zoom"
-			     [leafletCenter]="center">
+			<div leaflet style="height: 300px; margin: 16px 0;"
+				 [leafletOptions]="options"
+				 [leafletPanOptions]="panOptions"
+				 [leafletZoomOptions]="zoomOptions"
+				 [leafletZoomPanOptions]="zoomPanOptions"
+				 [leafletFitBoundsOptions]="fitBoundsOptions"
+				 [leafletZoom]="zoom"
+				 [leafletCenter]="center">
 			</div>
 
 		</div>

@@ -55,10 +55,8 @@ var LeafletLayersControlDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
-    LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
-        if (changes['layersControlConfig']) {
-            this.updateLayers();
-        }
+    LeafletLayersControlDirective.prototype.ngDoCheck = function () {
+        this.updateLayers();
     };
     LeafletLayersControlDirective.prototype.updateLayers = function () {
         var map = this.leafletDirective.getMap();

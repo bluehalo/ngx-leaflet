@@ -42,11 +42,8 @@ var LeafletBaseLayersDirective = (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateBaseLayers();
     };
-    LeafletBaseLayersDirective.prototype.ngOnChanges = function (changes) {
-        // Trigger a change detection based on an instance change
-        if (changes['baseLayers']) {
-            this.updateBaseLayers();
-        }
+    LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
+        this.updateBaseLayers();
     };
     LeafletBaseLayersDirective.prototype.updateBaseLayers = function () {
         var map = this.leafletDirective.getMap();

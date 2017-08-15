@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffer, KeyValueDiffers, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
 
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
@@ -20,7 +20,7 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
 	selector: '[leafletLayersControl]'
 })
 export class LeafletLayersControlDirective
-	implements OnChanges, OnInit {
+	implements DoCheck, OnInit {
 
 	// Control Layers Configuration
 	layersControlConfigValue: LeafletControlLayersConfig;
@@ -76,10 +76,8 @@ export class LeafletLayersControlDirective
 
 	}
 
-	ngOnChanges(changes: { [key: string]: SimpleChange }) {
-		if (changes['layersControlConfig']) {
-			this.updateLayers();
-		}
+	ngDoCheck() {
+		this.updateLayers();
 	}
 
 	protected updateLayers() {

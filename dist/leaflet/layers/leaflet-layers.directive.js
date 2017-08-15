@@ -35,7 +35,7 @@ var LeafletLayersDirective = (function () {
         enumerable: true,
         configurable: true
     });
-    LeafletLayersDirective.prototype.ngOnChanges = function () {
+    LeafletLayersDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
     };
     LeafletLayersDirective.prototype.ngOnInit = function () {

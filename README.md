@@ -42,7 +42,7 @@ Generally, the steps are:
 * Install Leaflet, this library, and potentially the Leaflet typings (see above).
 * Import the Leaflet stylesheet
 * Import the Leaflet module into your Angular project
-* Create and configure a map
+* Create and configure a map (see docs below and/or demo)
 
 
 ### Import the Leaflet Stylesheet
@@ -61,7 +61,7 @@ If you are just building a webpage and not using a bundler for your css, you'll 
 </head>
 ```
 
-#### Webpack
+#### Configuring Webpack Style Loaders
 If you are using Webpack, you will need to import the css file and have a style-loader configured.
 You can use the demo included in this application as a reference.
 
@@ -86,7 +86,7 @@ And then in your webpack config file:
 ```
 
 
-#### Angular CLI
+#### Adding Styles in Angular CLI
 If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular-cli.json```
 
 ```js
@@ -107,12 +107,10 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 ```
 
 ### Import Code Dependencies and Module
+This project is exported using UMD and it includes typings.
+So, you shouldn't have to do anything special to use it if you're building your project in Typescript.
 
-#### Direct Import
-The code is exported using UMD (bundles are in the ./dist dir) so you should be able to import is using whatever module system/builder you're using.
-Typings are included alongside the bundles.
-
-#### Typescript and Angular 2+ Module Import
+#### Typescript Angular 2+ Module Import
 Before you can use the module in your Angular 2+ app, you'll need to import it in your application.
 
 For example, in your ```app.module.ts```, add:
@@ -128,6 +126,10 @@ imports: [
 ...
 
 ```
+
+#### Not Using Typescript?
+You brave soul.
+The code is exported using UMD (bundles are in the ./dist dir) so you should be able to import is using whatever module system/builder you're using, even if you aren't using Typescript.
 
 
 ### Create and Configure a Map
@@ -158,13 +160,14 @@ options = {
 ```
 
 Changes to leafletOptions are ignored after they are initially set.
-Make sure the object exists before the map is created.
-In other words, you'll want to create the object in ngOnInit or hide the map DOM element with ngIf until you can create the options object.
+This is because these options are passed into the map constructor, so they couldn't be updated easily regardless.
+So, make sure the object exists before the map is created.
+You'll want to create the object in ngOnInit or hide the map DOM element with ngIf until you can create the options object.
 
 
 ### Add a Layers Control
 The ```leafletLayersControl``` input bindings give you the ability to add the layers control to the map.
-This is pretty common when you want to add multiple baselayers or custom layers and want to let the user toggle them on/off.
+The layers control lets the user toggle layers and overlays on and off.
 
 Template:
 ```html
@@ -193,7 +196,7 @@ You can add any kind of Leaflet layer you want to the ```overlays``` map.
 This includes markers, shapes, geojson, custom layers from other libraries, etc.
 
 
-### Add Custom Layers
+### Add Custom Layers (base layers, markers, shapes, etc.)
 You can add layers (baselayers, markers, or custom layers) to the map without showing them in the layer control using the ```leafletLayers``` directive.
 
 Template:
@@ -215,74 +218,22 @@ layers = [
 ```
 
 
-### Dynamically Changing Layers
+### Dynamically Change Map Layers
 
-> **Layer inputs are immutable**
-> Most of the examples above deal with layer objects and arrays that are created but don't change.
-> Both ```leafletLayers``` and ```leafletLayersControl``` will track and apply changes.
-> However, it is important to note that each of these inputs assume that the bound object or array is immutable.
-> While inconvenient, immutability makes change detection much more efficient.
-> By forcing immutability, the library only has to deep compare the array/object instances when the instance equality check shows that the instance has changed.
-> I spent a long time debating this design decision, but I opted to go with the immutable approach for the performance benefit.
+> **Layer inputs (arrays and maps) are mutable**
+> Previous versions of this plugin treated layers arrays and layer control objects as immutable data structures.
+> We've changed that behavior.
+> Now, mutable changes to the ```leafletLayers```, ```leafletBaseLayers```, and ```leafletLayersControl``` inputs are detected.
 
-You can change layers by modifying the input bound objects/arrays. Here are a few examples:
+The plugin is now using internal ngx iterable and key/value differs to detect and track changes to mutable data structures.
+This approach requires a deep compare of the contents of the data structure (which can be slow when the contents are really big).
+For immutable data structures, all that is needed is a top-level instance equality check (which is way faster).
+This change is backwards compatible and was motivated by feedback and confusion.
+While there is a performance impact for some use cases, this approach is more intuitive.
 
-Template:
-```html
-<div style="height: 300px;"
-     leaflet
-     [leafletOptions]="options"
-     [leafletLayers]="layers"
-     [leafletLayersControl]="layersControl">
-</div>
-```
-
-```js
-// Create the layers array
-layers = [
-    L.circle([ 46.95, -122 ], { radius: 5000 }),
-    L.polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]])
-];
-
-// Create the layers control with a single base layer
-layersControl = {
-	baseLayers: {
-		'Open Street Map': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
-	}
-}
-
-
-// After initialization, the map would have a circle and a polygon on it and a single base layer
-
-// Adds a new layerto the map by creating a new array with the new marker layer
-addMarker(marker: L.Marker) {
-    
-    // Treat the layers array as an immutable data structure
-    this.layers = this.layers.concat([ marker ]);
-    
-    // Another option here would be:
-    // this.layers.push(marker);
-    // this.layers = this.layers.slice();
-
-}
-
-// Removes a layer from the map by filtering it out of the layers array
-removeLayer(layer: L.Layer) {
-    
-    // Treat the layers array as an immutable data structure
-    this.layers = this.layers.filter((l: L.Layer) => { return layer !== l; });
-
-}
-
-// Adds a baselayer to the layers control
-addBaseLayer(name: string, layer: L.Layer) {
-	
-    this.layersControl.baseLayers[name] = layer;
-    this.layersControl = Object.assign({}, this.layersControl);
-}
-
-
-```
+There are at least two good approaches to improving performance when there are a lot of layers bound to the map.
+First, you can use the OnPush change detection strategy. There's an example of this in the demo.
+Second, you can wrap a large number of layers into a Leaflet layer group, which will reduce the number of layers the plugin actually has to track during diffs.
 
 
 
@@ -396,11 +347,6 @@ If it finds a baselayer that is still added to the map, it will assume that is s
 If none of the baselayers can be found on the map, it will add the first layer it finds in the ```L.control.LayersObject``` and use that as the new baselayer.
 Layers are compared using instance equality.
 
-> **The ```baseLayers``` input assumes the bound object is immutable.**
-> Mutation changes will not be detected.
-> For changes to be detected and applied, make sure to set the bound variable to a new instance. 
-> This is a performance-related design decision to avoid excessively deep-comparing the contents of the baseLayers object.
-
 If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
 This directive internally uses the layers control, so if you add both, they'll interfere with each other.
 Because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
@@ -416,17 +362,11 @@ The ```leafletLayers``` and ```leafletLayersControl``` input bindings give you d
 When the array bound to ```leafletLayers``` is changed, the directive will synchronize the layers on the map to the layers in the array.
 This includes tile layers and any added shapes.
 
-> **Important Note About Immutability:**
-> The ```leafletLayers```, ```leafletBaseLayers```, ```leafletLayersControl``` inputs assume the bound objects/arrays are immutable.
-> This means that mutation changes will not be detected (e.g., directly changing the value of a property in the object, pushing a Layer onto the array, etc.).
-> For changes to be detected and applied, make sure to set the bound variable to a new instance.
-> This is a performance-related design decision to avoid excessively deep-comparing the contents of these things.
- 
 The ```leafletLayersControl``` input binding allows you to provide a set of base layers and overlay layers that can be managed within leaflet using the layers control.
 When the user manipulates the control via Leaflet, Leaflet will automatically manage the layers, but the input bound layer array isn't going to get updated to reflect those changes.
 
 So, basically, you use ```leafletLayers``` to assert what should be added to/removed from the map.
-Use ```leafletLayersControl``` to tell Leaflet what layers the user can optionally turn on and off.
+Use ```leafletLayersContro``` to tell Leaflet what layers the user can optionally turn on and off.
 
 For an example of using the layers controls, you should check out the *Layers and Layer Controls* demo.
 
