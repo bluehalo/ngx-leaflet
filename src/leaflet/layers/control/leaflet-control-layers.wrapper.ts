@@ -1,8 +1,8 @@
+import { KeyValueChanges } from '@angular/core';
+
 import * as L from 'leaflet';
 
-import { LeafletUtil } from '../../core/leaflet.util';
-import { LeafletControlLayersConfig } from './leaflet-control-layers-config.model';
-import { LeafletLayersObjectDiff } from './leaflet-layers-object-diff.model';
+import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 
 export class LeafletControlLayersWrapper {
 
@@ -23,48 +23,48 @@ export class LeafletControlLayersWrapper {
 		return this.layersControl;
 	}
 
-	setLayersControlConfig( newConfig: LeafletControlLayersConfig, prevConfig: LeafletControlLayersConfig): LeafletLayersObjectDiff {
+	applyBaseLayerChanges(changes: KeyValueChanges<string, L.Layer>): LeafletControlLayersChanges {
+		let results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
 
-		if (null == this.layersControl) {
-			return new LeafletLayersObjectDiff({}, {});
+		if (null != this.layersControl) {
+			results =  this.applyChanges(changes, this.layersControl.addBaseLayer);
 		}
 
-		let toRemove: L.Control.LayersObject;
-		let baseLayers: L.Control.LayersObject;
-		let overlays: L.Control.LayersObject;
+		return results;
+	}
 
-		// Figure out which layers need to be removed (prev - new)
-		toRemove = LeafletUtil.mergeMaps(
-			LeafletUtil.mapSubtract(prevConfig.baseLayers, newConfig.baseLayers),
-			LeafletUtil.mapSubtract(prevConfig.overlays, newConfig.overlays));
+	applyOverlayChanges(changes: KeyValueChanges<string, L.Layer>): LeafletControlLayersChanges {
+		let results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
 
-		// Figure out which layers need to be added (new - prev)
-		baseLayers = LeafletUtil.mapSubtract(newConfig.baseLayers, prevConfig.baseLayers);
-		overlays = LeafletUtil.mapSubtract(newConfig.overlays, prevConfig.overlays);
-
-		// Do the actual removal and addition
-		for (let k in toRemove) {
-			if (toRemove.hasOwnProperty(k)) {
-				let l: L.Layer = toRemove[k];
-				this.layersControl.removeLayer(l);
-			}
+		if (null != this.layersControl) {
+			results =  this.applyChanges(changes, this.layersControl.addOverlay);
 		}
 
-		for (let k in baseLayers) {
-			if (baseLayers.hasOwnProperty(k)) {
-				let l: L.Layer = baseLayers[k];
-				this.layersControl.addBaseLayer(l, k);
-			}
+		return results;
+	}
+
+	private applyChanges(changes: KeyValueChanges<string, L.Layer>, addFn: (layer: L.Layer, name: string) => void): LeafletControlLayersChanges {
+		let results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
+
+		if (null != changes) {
+
+			changes.forEachChangedItem((c) => {
+				this.layersControl.removeLayer(c.previousValue);
+				addFn.call(this.layersControl, c.currentValue, c.key);
+				results.layersChanged++;
+			});
+			changes.forEachRemovedItem((c) => {
+				this.layersControl.removeLayer(c.currentValue);
+				results.layersRemoved++;
+			});
+			changes.forEachAddedItem((c) => {
+				addFn.call(this.layersControl, c.currentValue, c.key);
+				results.layersAdded++;
+			});
+
 		}
 
-		for (let k in overlays) {
-			if (overlays.hasOwnProperty(k)) {
-				let l: L.Layer = overlays[k];
-				this.layersControl.addOverlay(l, k);
-			}
-		}
-
-		return new LeafletLayersObjectDiff(toRemove, LeafletUtil.mergeMaps(baseLayers, overlays));
+		return results;
 	}
 
 }

@@ -14,13 +14,14 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
+- [Changelog](#changelog)
 - [Contribute](#contribute)
 - [License](#license)
 - [Credits](#credits)
 
 
 ## Install
-Install the package and its peer dependencies via npm:
+Install the package and its peer dependencies via npm (or yarn):
 ```
 npm install leaflet
 npm install @asymmetrik/angular2-leaflet
@@ -35,6 +36,14 @@ If you want to run the demo, clone the repository, perform an ```npm install```,
 
 
 ## Usage
+To use this library, there are a handful of setup steps to go through that vary based on your app environment (e.g., Webpack, ngCli, SystemJS, etc.).
+Generally, the steps are:
+
+* Install Leaflet, this library, and potentially the Leaflet typings (see above).
+* Import the Leaflet stylesheet
+* Import the Leaflet module into your Angular project
+* Create and configure a map (see docs below and/or demo)
+
 
 ### Import the Leaflet Stylesheet
 For leaflet to work, you need to have the leaflet stylesheets loaded into your application.
@@ -52,7 +61,7 @@ If you are just building a webpage and not using a bundler for your css, you'll 
 </head>
 ```
 
-#### Webpack
+#### Configuring Webpack Style Loaders
 If you are using Webpack, you will need to import the css file and have a style-loader configured.
 You can use the demo included in this application as a reference.
 
@@ -77,7 +86,7 @@ And then in your webpack config file:
 ```
 
 
-#### Angular CLI
+#### Adding Styles in Angular CLI
 If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular-cli.json```
 
 ```js
@@ -97,8 +106,14 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 }
 ```
 
-#### Typescript and Angular 2+ Module Import
-In your ```app.module.ts```, add:
+### Import Code Dependencies and Module
+This project is exported using UMD and it includes typings.
+So, you shouldn't have to do anything special to use it if you're building your project in Typescript.
+
+#### Typescript Angular 2+ Module Import
+Before you can use the module in your Angular 2+ app, you'll need to import it in your application.
+
+For example, in your ```app.module.ts```, add:
  
 ```js
 import { LeafletModule } from '@asymmetrik/angular2-leaflet';
@@ -106,46 +121,124 @@ import { LeafletModule } from '@asymmetrik/angular2-leaflet';
 ...
 imports: [
     ...
-    LeafletModule
+    LeafletModule.forRoot()
 ]
 ...
 
 ```
 
+#### Not Using Typescript?
+You brave soul.
+The code is exported using UMD (bundles are in the ./dist dir) so you should be able to import is using whatever module system/builder you're using, even if you aren't using Typescript.
 
-### Basic Map Setup
-To create a map, use the ```leaflet``` attribute directive.
-You must specify an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
-For an example of the basic map setup, you should check out the *Core* demo.
 
+### Create and Configure a Map
+Once the dependencies are installed and you have imported the ```LeafletModule```, you're ready to add a map to your page.
+To get a basic map to work, you have to:
+
+* Apply the ```leaflet``` attribute directive (see the example below) to an existing DOM element.
+* Style the map DOM element with a height. Otherwise, it'll render with a 0 pixel height.
+* Provide an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
+
+Template:
 ```html
-<div leaflet style="height: 300px;"
+<div style="height: 300px;"
+     leaflet 
      [leafletOptions]="options">
 </div>
 ```
-#### leaflet
-This is the attribute directive that activates the plugin and creates the map.
 
-#### leafletOptions
-Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com) docs).
-These options can only be set initially because they are used to create the map. Later changes are ignored.`
-
-Example:
-
+Example leafletOptions object:
 ```js
 options = {
 	layers: [
 		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
 	],
 	zoom: 5,
-	center: L.latLng({ lat: 38.991709, lng: -76.886109 })
+	center: L.latLng([ 46.879966, -121.726909 ])
 };
 ```
 
-See the API section below for details regarding how to bind additional options, dynamically bind baselayers, layers, overlays, and layer controls.
+Changes to leafletOptions are ignored after they are initially set.
+This is because these options are passed into the map constructor, so they couldn't be updated easily regardless.
+So, make sure the object exists before the map is created.
+You'll want to create the object in ngOnInit or hide the map DOM element with ngIf until you can create the options object.
+
+
+### Add a Layers Control
+The ```leafletLayersControl``` input bindings give you the ability to add the layers control to the map.
+The layers control lets the user toggle layers and overlays on and off.
+
+Template:
+```html
+<div style="height: 300px;"
+     leaflet 
+     [leafletOptions]="options"
+     [leafletLayersControl]="layersControl">
+</div>
+```
+
+Example layersControl object:
+```js
+layersControl = {
+	baseLayers: {
+		'Open Street Map': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+		'Open Cycle Map': L.tileLayer('http://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+	},
+	overlays: {
+		'Big Circle': L.circle([ 46.95, -122 ], { radius: 5000 }),
+		'Big Square': L.polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
+	}
+}
+```
+
+You can add any kind of Leaflet layer you want to the ```overlays``` map.
+This includes markers, shapes, geojson, custom layers from other libraries, etc.
+
+
+### Add Custom Layers (base layers, markers, shapes, etc.)
+You can add layers (baselayers, markers, or custom layers) to the map without showing them in the layer control using the ```leafletLayers``` directive.
+
+Template:
+```html
+<div style="height: 300px;"
+     leaflet
+     [leafletOptions]="options"
+     [leafletLayers]="layers">
+</div>
+```
+
+Layers array:
+```js
+layers = [
+    L.circle([ 46.95, -122 ], { radius: 5000 }),
+    L.polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
+    L.marker([ 46.879966, -121.726909 ])
+];
+```
+
+
+### Dynamically Change Map Layers
+
+> **Layer inputs (arrays and maps) are mutable**
+> Previous versions of this plugin treated layers arrays and layer control objects as immutable data structures.
+> We've changed that behavior.
+> Now, mutable changes to the ```leafletLayers```, ```leafletBaseLayers```, and ```leafletLayersControl``` inputs are detected.
+
+The plugin is now using internal ngx iterable and key/value differs to detect and track changes to mutable data structures.
+This approach requires a deep compare of the contents of the data structure (which can be slow when the contents are really big).
+For immutable data structures, all that is needed is a top-level instance equality check (which is way faster).
+This change is backwards compatible and was motivated by feedback and confusion.
+While there is a performance impact for some use cases, this approach is more intuitive.
+
+There are at least two good approaches to improving performance when there are a lot of layers bound to the map.
+First, you can use the OnPush change detection strategy. There's an example of this in the demo.
+Second, you can wrap a large number of layers into a Leaflet layer group, which will reduce the number of layers the plugin actually has to track during diffs.
+
 
 
 ## API
+This section includes more detailed documentation of the functionality of the directives included in this library.
 
 ### Advanced Map Configuration
 There are several input bindings available for configuring the map.
@@ -214,7 +307,7 @@ If both changes are picked up at the same time, they will be applied as a map.se
 
 
 #### leafletFitBounds
-Input bind a fitBound operation to the map.
+Input bind a fitBounds operation to the map.
 
 ```js
 fitBounds: L.LatLngBounds
@@ -255,11 +348,11 @@ If none of the baselayers can be found on the map, it will add the first layer i
 Layers are compared using instance equality.
 
 If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
-This directive will interfere with the ```leafletLayersControl``` directive.
-However, because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
+This directive internally uses the layers control, so if you add both, they'll interfere with each other.
+Because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
 
 
-### leafletLayersControlOptions
+#### leafletLayersControlOptions
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the layers control constructor on creation.
 
@@ -312,7 +405,7 @@ layersControl: {
 }
 ```
 
-### leafletLayersControlOptions
+#### leafletLayersControlOptions
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the constructor on creation.
 
@@ -365,7 +458,7 @@ This will only work if your custom component/directive exists on the same DOM el
 	selector: '[myCustomDirective]'
 })
 export class MyCustomDirective {
-	leafletDriective: LeafletDirective;
+	leafletDirective: LeafletDirective;
 	
 	constructor(leafletDirective: LeafletDirective) {
     	this.leafletDirective = leafletDirective;
@@ -401,7 +494,7 @@ But, here is a rough overview of the steps taken to get them working.
 1. Determine the correct URL for the marker and marker-shadow images. If you're using a file hasher, you should be able to check Webpack's output for the generated images. If you are serving them directly without chunk hashing just figure out how to resolve the images on your server.
 1. Configure Leaflet to use the correct URLs as customer marker images
 
-		let layer= L.marker([ 46.879966, -121.726909 ], {
+		let layer = L.marker([ 46.879966, -121.726909 ], {
 			icon: L.icon({
 				iconSize: [ 25, 41 ],
 				iconAnchor: [ 13, 0 ],
@@ -439,6 +532,9 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
     ```
 
 1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
+
+## Changelog
+
 
 ## Contribute
 PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.

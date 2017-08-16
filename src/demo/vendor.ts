@@ -39,6 +39,7 @@ import 'leaflet/dist/images/marker-icon.png';
 // Angular2 Imports
 import '@angular/common';
 import '@angular/core';
+import '@angular/forms';
 import '@angular/platform-browser';
 import '@angular/platform-browser-dynamic';
 

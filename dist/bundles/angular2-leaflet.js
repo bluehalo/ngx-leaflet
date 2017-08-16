@@ -1,4 +1,4 @@
-/*! @asymmetrik/angular2-leaflet - 2.1.5 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/angular2-leaflet - 2.2.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -155,71 +155,67 @@ var LeafletDirectiveWrapper = (function () {
     return LeafletDirectiveWrapper;
 }());
 
-var LeafletLayerDiff = (function () {
-    function LeafletLayerDiff(remove, add) {
-        this.remove = remove;
-        this.add = add;
-    }
-    return LeafletLayerDiff;
-}());
-
-var LeafletLayersUtil = (function () {
-    function LeafletLayersUtil() {
-    }
-    LeafletLayersUtil.diffLayers = function (newLayers, prevLayers) {
-        var toRemove;
-        var toAdd;
-        if (null == newLayers) {
-            newLayers = [];
-        }
-        if (null == prevLayers) {
-            prevLayers = [];
-        }
-        // Figure out which layers need to be removed (prev - new)
-        toRemove = prevLayers
-            .filter(function (pl) {
-            return !(newLayers.find(function (nl) { return (pl === nl); }));
-        });
-        // Figure out which layers need to be added (new - prev)
-        toAdd = newLayers
-            .filter(function (pl) {
-            return !(prevLayers.find(function (nl) { return (pl === nl); }));
-        });
-        return new LeafletLayerDiff(toRemove, toAdd);
-    };
-    return LeafletLayersUtil;
-}());
-
+/**
+ * Layers directive
+ *
+ * This directive is used to directly control map layers. As changed are made to the input array of
+ * layers, the map is synched to the array. As layers are added or removed from the input array, they
+ * are also added or removed from the map. The input array is treated as immutable. To detect changes,
+ * you must change the array instance.
+ *
+ * Important Note: The input layers array is assumed to be immutable. This means you need to use an
+ * immutable array implementation or create a new copy of your array when you make changes, otherwise
+ * this directive won't detect the change. This is by design. It's for performance reasons. Change
+ * detection of mutable arrays requires diffing the state of the array on every DoCheck cycle, which
+ * is extremely expensive from a time complexity perspective.
+ *
+ */
 var LeafletLayersDirective = (function () {
-    function LeafletLayersDirective(leafletDirective) {
+    function LeafletLayersDirective(leafletDirective, differs) {
+        this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+        this.layersDiffer = this.differs.find([]).create();
     }
+    Object.defineProperty(LeafletLayersDirective.prototype, "layers", {
+        get: function () {
+            return this.layersValue;
+        },
+        // Set/get the layers
+        set: function (v) {
+            this.layersValue = v;
+            // Now that we have a differ, do an immediate layer update
+            this.updateLayers();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    LeafletLayersDirective.prototype.ngDoCheck = function () {
+        this.updateLayers();
+    };
     LeafletLayersDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();
-        // The way we've set this up, map isn't set until after the first round of changes has gone through
-        this.setLayers(this.layers, []);
-    };
-    LeafletLayersDirective.prototype.ngOnChanges = function (changes) {
-        // Set the layers
-        if (changes['layers']) {
-            var c = changes['layers'].currentValue;
-            var p = (changes['layers'].isFirstChange()) ? [] : changes['layers'].previousValue;
-            this.setLayers(c, p);
-        }
+        // Update layers once the map is ready
+        this.updateLayers();
     };
     /**
-     * Replace the current layers in the map with the provided array
-     * @param layers The new complete array of layers for the map
+     * Update the state of the layers.
+     * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+     * This is important because it allows us to react to changes to the contents of the array as well
+     * as changes to the actual array instance.
      */
-    LeafletLayersDirective.prototype.setLayers = function (newLayers, prevLayers) {
+    LeafletLayersDirective.prototype.updateLayers = function () {
         var map$$1 = this.leafletDirective.getMap();
-        if (null != map$$1) {
-            var diff = LeafletLayersUtil.diffLayers(newLayers, prevLayers);
-            // Remove the layers
-            diff.remove.forEach(function (l) { map$$1.removeLayer(l); });
-            // Add the new layers
-            diff.add.forEach(function (l) { map$$1.addLayer(l); });
+        if (null != map$$1 && null != this.layersDiffer) {
+            var changes = this.layersDiffer.diff(this.layersValue);
+            if (null != changes) {
+                changes.forEachRemovedItem(function (c) {
+                    map$$1.removeLayer(c.item);
+                });
+                changes.forEachAddedItem(function (c) {
+                    map$$1.addLayer(c.item);
+                });
+            }
         }
     };
     return LeafletLayersDirective;
@@ -232,87 +228,22 @@ LeafletLayersDirective.decorators = [
 /** @nocollapse */
 LeafletLayersDirective.ctorParameters = function () { return [
     { type: LeafletDirective, },
+    { type: _angular_core.IterableDiffers, },
 ]; };
 LeafletLayersDirective.propDecorators = {
     'layers': [{ type: _angular_core.Input, args: ['leafletLayers',] },],
 };
 
-var LeafletUtil = (function () {
-    function LeafletUtil() {
+var LeafletControlLayersChanges = (function () {
+    function LeafletControlLayersChanges() {
+        this.layersRemoved = 0;
+        this.layersChanged = 0;
+        this.layersAdded = 0;
     }
-    /**
-     * Combine two associative arrays in a shallow manner. Where there are duplicate properties,
-     * the value in the second object will overwrite the value of the first object
-     *
-     * @param aMap The first object
-     * @param bMap The second object
-     * @returns {{}} The aggregate of both objects
-     */
-    LeafletUtil.mergeMaps = function (aMap, bMap) {
-        var toReturn = {};
-        if (null != aMap) {
-            for (var k in aMap) {
-                if (aMap.hasOwnProperty(k)) {
-                    toReturn[k] = aMap[k];
-                }
-            }
-        }
-        if (null != bMap) {
-            for (var k in bMap) {
-                if (bMap.hasOwnProperty(k)) {
-                    toReturn[k] = bMap[k];
-                }
-            }
-        }
-        return toReturn;
+    LeafletControlLayersChanges.prototype.changed = function () {
+        return !(this.layersRemoved === 0 && this.layersChanged === 0 && this.layersAdded === 0);
     };
-    /**
-     * Subtracts the properties of an associative array in a shallow manner.
-     * Where there are duplicate properties, the properties will be removed
-     * from the first object.
-     *
-     * @param aMap The object from which to subtract properties
-     * @param bMap The object containing properties to subtract
-     * @returns {{}}
-     */
-    LeafletUtil.mapSubtract = function (aMap, bMap) {
-        var toReturn = {};
-        if (null != aMap) {
-            // Copy all of aMap into toReturn
-            for (var k in aMap) {
-                if (aMap.hasOwnProperty(k)) {
-                    toReturn[k] = aMap[k];
-                }
-            }
-            // If there's a bMap, delete all bMap keys from aMap
-            if (null != bMap) {
-                for (var k in bMap) {
-                    if (bMap.hasOwnProperty(k)) {
-                        delete toReturn[k];
-                    }
-                }
-            }
-        }
-        return toReturn;
-    };
-    LeafletUtil.mapToArray = function (map$$1) {
-        var toReturn = [];
-        for (var k in map$$1) {
-            if (map$$1.hasOwnProperty(k)) {
-                toReturn.push(map$$1[k]);
-            }
-        }
-        return toReturn;
-    };
-    return LeafletUtil;
-}());
-
-var LeafletLayersObjectDiff = (function () {
-    function LeafletLayersObjectDiff(remove, add) {
-        this.remove = remove;
-        this.add = add;
-    }
-    return LeafletLayersObjectDiff;
+    return LeafletControlLayersChanges;
 }());
 
 var LeafletControlLayersWrapper = (function () {
@@ -327,59 +258,119 @@ var LeafletControlLayersWrapper = (function () {
         this.layersControl = L$1.control.layers(baseLayers, overlays, controlOptions);
         return this.layersControl;
     };
-    LeafletControlLayersWrapper.prototype.setLayersControlConfig = function (newConfig, prevConfig) {
-        if (null == this.layersControl) {
-            return new LeafletLayersObjectDiff({}, {});
+    LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {
+        var results = new LeafletControlLayersChanges();
+        if (null != this.layersControl) {
+            results = this.applyChanges(changes, this.layersControl.addBaseLayer);
         }
-        var toRemove;
-        var baseLayers;
-        var overlays;
-        // Figure out which layers need to be removed (prev - new)
-        toRemove = LeafletUtil.mergeMaps(LeafletUtil.mapSubtract(prevConfig.baseLayers, newConfig.baseLayers), LeafletUtil.mapSubtract(prevConfig.overlays, newConfig.overlays));
-        // Figure out which layers need to be added (new - prev)
-        baseLayers = LeafletUtil.mapSubtract(newConfig.baseLayers, prevConfig.baseLayers);
-        overlays = LeafletUtil.mapSubtract(newConfig.overlays, prevConfig.overlays);
-        // Do the actual removal and addition
-        for (var k in toRemove) {
-            if (toRemove.hasOwnProperty(k)) {
-                var l = toRemove[k];
-                this.layersControl.removeLayer(l);
-            }
+        return results;
+    };
+    LeafletControlLayersWrapper.prototype.applyOverlayChanges = function (changes) {
+        var results = new LeafletControlLayersChanges();
+        if (null != this.layersControl) {
+            results = this.applyChanges(changes, this.layersControl.addOverlay);
         }
-        for (var k in baseLayers) {
-            if (baseLayers.hasOwnProperty(k)) {
-                var l = baseLayers[k];
-                this.layersControl.addBaseLayer(l, k);
-            }
+        return results;
+    };
+    LeafletControlLayersWrapper.prototype.applyChanges = function (changes, addFn) {
+        var _this = this;
+        var results = new LeafletControlLayersChanges();
+        if (null != changes) {
+            changes.forEachChangedItem(function (c) {
+                _this.layersControl.removeLayer(c.previousValue);
+                addFn.call(_this.layersControl, c.currentValue, c.key);
+                results.layersChanged++;
+            });
+            changes.forEachRemovedItem(function (c) {
+                _this.layersControl.removeLayer(c.currentValue);
+                results.layersRemoved++;
+            });
+            changes.forEachAddedItem(function (c) {
+                addFn.call(_this.layersControl, c.currentValue, c.key);
+                results.layersAdded++;
+            });
         }
-        for (var k in overlays) {
-            if (overlays.hasOwnProperty(k)) {
-                var l = overlays[k];
-                this.layersControl.addOverlay(l, k);
-            }
-        }
-        return new LeafletLayersObjectDiff(toRemove, LeafletUtil.mergeMaps(baseLayers, overlays));
+        return results;
     };
     return LeafletControlLayersWrapper;
 }());
 
+var LeafletControlLayersConfig = (function () {
+    function LeafletControlLayersConfig() {
+        this.baseLayers = {};
+        this.overlays = {};
+    }
+    return LeafletControlLayersConfig;
+}());
+
+/**
+ * Layers Control
+ *
+ * This directive is used to configure the layers control. The input accepts an object with two
+ * key-value maps of layer name -> layer. Mutable changes are detected. On changes, a differ is
+ * used to determine what changed so that layers are appropriately added or removed.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive. Otherwise, the last one it sees will be used.
+ */
 var LeafletLayersControlDirective = (function () {
-    function LeafletLayersControlDirective(leafletDirective) {
+    function LeafletLayersControlDirective(leafletDirective, differs) {
+        this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.controlLayers = new LeafletControlLayersWrapper();
+        // Generate differs
+        this.baseLayersDiffer = this.differs.find({}).create();
+        this.overlaysDiffer = this.differs.find({}).create();
     }
+    Object.defineProperty(LeafletLayersControlDirective.prototype, "layersControlConfig", {
+        get: function () {
+            return this.layersControlConfigValue;
+        },
+        set: function (v) {
+            // Validation/init stuff
+            if (null == v) {
+                v = new LeafletControlLayersConfig();
+            }
+            if (null == v.baseLayers) {
+                v.baseLayers = {};
+            }
+            if (null == v.overlays) {
+                v.overlays = {};
+            }
+            // Store the value
+            this.layersControlConfigValue = v;
+            // Update the map
+            this.updateLayers();
+        },
+        enumerable: true,
+        configurable: true
+    });
     LeafletLayersControlDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();
         // Set up all the initial settings
         this.controlLayers
-            .init(this.layersControlConfig, this.layersControlOptions)
+            .init({}, this.layersControlOptions)
             .addTo(this.leafletDirective.getMap());
+        this.updateLayers();
     };
-    LeafletLayersControlDirective.prototype.ngOnChanges = function (changes) {
-        // Set the layers
-        if (changes['layersControlCfg']) {
-            this.controlLayers.setLayersControlConfig(changes['layersControlCfg'].currentValue, changes['layersControlCfg'].previousValue);
+    LeafletLayersControlDirective.prototype.ngDoCheck = function () {
+        this.updateLayers();
+    };
+    LeafletLayersControlDirective.prototype.updateLayers = function () {
+        var map$$1 = this.leafletDirective.getMap();
+        var layersControl = this.controlLayers.getLayersControl();
+        if (null != map$$1 && null != layersControl) {
+            // Run the baselayers differ
+            if (null != this.baseLayersDiffer && null != this.layersControlConfigValue.baseLayers) {
+                var changes = this.baseLayersDiffer.diff(this.layersControlConfigValue.baseLayers);
+                this.controlLayers.applyBaseLayerChanges(changes);
+            }
+            // Run the overlays differ
+            if (null != this.overlaysDiffer && null != this.layersControlConfigValue.overlays) {
+                var changes = this.overlaysDiffer.diff(this.layersControlConfigValue.overlays);
+                this.controlLayers.applyOverlayChanges(changes);
+            }
         }
     };
     return LeafletLayersControlDirective;
@@ -392,46 +383,80 @@ LeafletLayersControlDirective.decorators = [
 /** @nocollapse */
 LeafletLayersControlDirective.ctorParameters = function () { return [
     { type: LeafletDirective, },
+    { type: _angular_core.KeyValueDiffers, },
 ]; };
 LeafletLayersControlDirective.propDecorators = {
     'layersControlConfig': [{ type: _angular_core.Input, args: ['leafletLayersControl',] },],
     'layersControlOptions': [{ type: _angular_core.Input, args: ['leafletLayersControlOptions',] },],
 };
 
-var LeafletControlLayersConfig = (function () {
-    function LeafletControlLayersConfig(baseLayers, overlays) {
-        this.baseLayers = baseLayers;
-        this.overlays = overlays;
+var LeafletUtil = (function () {
+    function LeafletUtil() {
     }
-    return LeafletControlLayersConfig;
+    LeafletUtil.mapToArray = function (map$$1) {
+        var toReturn = [];
+        for (var k in map$$1) {
+            if (map$$1.hasOwnProperty(k)) {
+                toReturn.push(map$$1[k]);
+            }
+        }
+        return toReturn;
+    };
+    return LeafletUtil;
 }());
 
+/**
+ * Baselayers directive
+ *
+ * This directive is provided as a convenient way to add baselayers to the map. The input accepts
+ * a key-value map of layer name -> layer. Mutable changed are detected. On changes, a differ is
+ * used to determine what changed so that layers are appropriately added or removed. This directive
+ * will also add the layers control so users can switch between available base layers.
+ *
+ * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
+ * using the layers directive. Otherwise, the plugin will use the last one it sees.
+ */
 var LeafletBaseLayersDirective = (function () {
-    function LeafletBaseLayersDirective(leafletDirective) {
+    function LeafletBaseLayersDirective(leafletDirective, differs) {
+        this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.controlLayers = new LeafletControlLayersWrapper();
+        this.baseLayersDiffer = this.differs.find({}).create();
     }
+    Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
+        get: function () {
+            return this.baseLayersValue;
+        },
+        // Set/get baseLayers
+        set: function (v) {
+            this.baseLayersValue = v;
+            this.updateBaseLayers();
+        },
+        enumerable: true,
+        configurable: true
+    });
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();
         // Initially configure the controlLayers
         this.controlLayers
-            .init({ baseLayers: this.baseLayers }, this.layersControlOptions)
+            .init({}, this.layersControlOptions)
             .addTo(this.leafletDirective.getMap());
-        // Sync the baselayer (will default to the first layer in the map)
-        this.syncBaseLayer();
+        this.updateBaseLayers();
     };
-    LeafletBaseLayersDirective.prototype.ngOnChanges = function (changes) {
-        // Set the new baseLayers
-        if (changes['baseLayers']) {
-            this.setBaseLayers(changes['baseLayers'].currentValue, changes['baseLayers'].previousValue);
+    LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
+        this.updateBaseLayers();
+    };
+    LeafletBaseLayersDirective.prototype.updateBaseLayers = function () {
+        var map$$1 = this.leafletDirective.getMap();
+        var layersControl = this.controlLayers.getLayersControl();
+        if (null != map$$1 && null != layersControl && null != this.baseLayersDiffer) {
+            var changes = this.baseLayersDiffer.diff(this.baseLayersValue);
+            var results = this.controlLayers.applyBaseLayerChanges(changes);
+            if (results.changed()) {
+                this.syncBaseLayer();
+            }
         }
-    };
-    LeafletBaseLayersDirective.prototype.setBaseLayers = function (newBaseLayers, prevBaseLayers) {
-        // Update the layers control
-        this.controlLayers.setLayersControlConfig(new LeafletControlLayersConfig(newBaseLayers), new LeafletControlLayersConfig(prevBaseLayers));
-        // Sync the new baseLayer
-        this.syncBaseLayer();
     };
     /**
      * Check the current base layer and change it to the new one if necessary
@@ -467,6 +492,7 @@ LeafletBaseLayersDirective.decorators = [
 /** @nocollapse */
 LeafletBaseLayersDirective.ctorParameters = function () { return [
     { type: LeafletDirective, },
+    { type: _angular_core.KeyValueDiffers, },
 ]; };
 LeafletBaseLayersDirective.propDecorators = {
     'baseLayers': [{ type: _angular_core.Input, args: ['leafletBaseLayers',] },],
@@ -499,21 +525,6 @@ LeafletModule.decorators = [
 ];
 /** @nocollapse */
 LeafletModule.ctorParameters = function () { return []; };
-
-var LeafletControlLayersUtil = (function () {
-    function LeafletControlLayersUtil() {
-    }
-    LeafletControlLayersUtil.prototype.diffLayers = function (newLayers, prevLayers) {
-        var toRemove;
-        var toAdd;
-        // Figure out which layers need to be removed (prev - new)
-        toRemove = LeafletUtil.mapSubtract(prevLayers, newLayers);
-        // Figure out which layers need to be added (new - prev)
-        toAdd = LeafletUtil.mapSubtract(newLayers, prevLayers);
-        return new LeafletLayersObjectDiff(toRemove, toAdd);
-    };
-    return LeafletControlLayersUtil;
-}());
 
 var LeafletTileLayerDefinition = (function () {
     function LeafletTileLayerDefinition(type, url, options) {
@@ -571,8 +582,6 @@ var LeafletTileLayerDefinition = (function () {
 exports.LeafletModule = LeafletModule;
 exports.LeafletDirective = LeafletDirective;
 exports.LeafletDirectiveWrapper = LeafletDirectiveWrapper;
-exports.LeafletControlLayersUtil = LeafletControlLayersUtil;
-exports.LeafletLayersUtil = LeafletLayersUtil;
 exports.LeafletTileLayerDefinition = LeafletTileLayerDefinition;
 
 Object.defineProperty(exports, '__esModule', { value: true });
