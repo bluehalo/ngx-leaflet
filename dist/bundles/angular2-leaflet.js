@@ -307,12 +307,11 @@ var LeafletControlLayersConfig = (function () {
  * Layers Control
  *
  * This directive is used to configure the layers control. The input accepts an object with two
- * key-value maps of layer name -> layer. The input object is treated as immutable, so changes are
- * only detected when the instance changes. On changes, a differ is used to determine what
- * changed so that layers are appropriately added or removed.
+ * key-value maps of layer name -> layer. Mutable changes are detected. On changes, a differ is
+ * used to determine what changed so that layers are appropriately added or removed.
  *
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
- * using the layers directive.
+ * using the layers directive. Otherwise, the last one it sees will be used.
  */
 var LeafletLayersControlDirective = (function () {
     function LeafletLayersControlDirective(leafletDirective, differs) {
@@ -410,12 +409,12 @@ var LeafletUtil = (function () {
  * Baselayers directive
  *
  * This directive is provided as a convenient way to add baselayers to the map. The input accepts
- * a key-value map of layer name -> layer. The input map is treated as immutable, so changes are
- * only detected when the map instance changes. On changes, a differ is used to determine what
- * changed so that layers are appropriately added or removed.
+ * a key-value map of layer name -> layer. Mutable changed are detected. On changes, a differ is
+ * used to determine what changed so that layers are appropriately added or removed. This directive
+ * will also add the layers control so users can switch between available base layers.
  *
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
- * using the layers directive.
+ * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
 var LeafletBaseLayersDirective = (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs) {

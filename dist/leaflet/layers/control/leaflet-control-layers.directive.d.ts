@@ -6,12 +6,11 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
  * Layers Control
  *
  * This directive is used to configure the layers control. The input accepts an object with two
- * key-value maps of layer name -> layer. The input object is treated as immutable, so changes are
- * only detected when the instance changes. On changes, a differ is used to determine what
- * changed so that layers are appropriately added or removed.
+ * key-value maps of layer name -> layer. Mutable changes are detected. On changes, a differ is
+ * used to determine what changed so that layers are appropriately added or removed.
  *
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
- * using the layers directive.
+ * using the layers directive. Otherwise, the last one it sees will be used.
  */
 export declare class LeafletLayersControlDirective implements DoCheck, OnInit {
     private differs;
