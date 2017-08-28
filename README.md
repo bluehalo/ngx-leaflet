@@ -5,10 +5,12 @@
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
 
+*IMPORTANT NOTE: We have renamed this project from ```angular2-leaflet``` to ```ngx-leaflet```.*
 
-> Leaflet packages for Angular 2+. Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2+ projects.
+> Leaflet packages for Angular 2+.
+> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2+ projects.
+> Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
-> Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects
 
 ## Table of Contents
 - [Install](#install)
@@ -534,6 +536,9 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
 1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
 
 ## Changelog
+
+### 2.3.0
+Renamed the package to ```ngx-leaflet```
 
 
 ## Contribute
