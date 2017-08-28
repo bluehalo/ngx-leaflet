@@ -1,8 +1,8 @@
-/*! @asymmetrik/angular2-leaflet - 2.2.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 2.3.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
-	(factory((global.angular2Leaflet = global.angular2Leaflet || {}),global.ng.core,global.L));
+	(factory((global.ngxLeaflet = global.ngxLeaflet || {}),global.ng.core,global.L));
 }(this, (function (exports,_angular_core,L$1) { 'use strict';
 
 var LeafletDirective = (function () {
@@ -587,4 +587,4 @@ exports.LeafletTileLayerDefinition = LeafletTileLayerDefinition;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=angular2-leaflet.js.map
+//# sourceMappingURL=ngx-leaflet.js.map

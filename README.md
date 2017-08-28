@@ -1,14 +1,16 @@
-# @asymmetrik/angular2-leaflet
+# @asymmetrik/ngx-leaflet
 
 [![Build Status][travis-image]][travis-url]
 
-[travis-url]: https://travis-ci.org/Asymmetrik/angular2-leaflet/
-[travis-image]: https://travis-ci.org/Asymmetrik/angular2-leaflet.svg
+[travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
+[travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
 
+*IMPORTANT NOTE: We have renamed this project from ```angular2-leaflet``` to ```ngx-leaflet```.*
 
-> Leaflet packages for Angular 2. Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2 projects.
+> Leaflet packages for Angular 2+.
+> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2+ projects.
+> Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
-> Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects
 
 ## Table of Contents
 - [Install](#install)
@@ -24,7 +26,7 @@
 Install the package and its peer dependencies via npm (or yarn):
 ```
 npm install leaflet
-npm install @asymmetrik/angular2-leaflet
+npm install @asymmetrik/ngx-leaflet
 ```
 
 If you intend to use this library in a typescript project (utilizing the typings), you will need to also install the leaflet typings via npm:
@@ -116,7 +118,7 @@ Before you can use the module in your Angular 2+ app, you'll need to import it i
 For example, in your ```app.module.ts```, add:
  
 ```js
-import { LeafletModule } from '@asymmetrik/angular2-leaflet';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet.module';
 
 ...
 imports: [
@@ -534,6 +536,9 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
 1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
 
 ## Changelog
+
+### 2.3.0
+Renamed the package to ```ngx-leaflet```
 
 
 ## Contribute
