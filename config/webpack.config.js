@@ -97,7 +97,7 @@ module.exports = () => {
 			// Font file loader (mostly for bootstrap/font-awesome)
 			{ test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/, loader: 'file-loader' },
 
-			// HTML file loader (for angular2 templates)
+			// HTML file loader (for ngx templates)
 			{ test: /\.html$/, loader: 'html-loader' }
 		]
 

@@ -1,21 +1,21 @@
 {
-	"name": "@asymmetrik/angular2-leaflet",
-	"artifactName": "angular2-leaflet",
-	"moduleName": "angular2Leaflet",
-	"description": "Angular 2 components for Leaflet",
-	"version": "2.2.0",
+	"name": "@asymmetrik/ngx-leaflet",
+	"artifactName": "ngx-leaflet",
+	"moduleName": "ngxLeaflet",
+	"description": "Angular 2+ components for Leaflet",
+	"version": "2.3.0",
 
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
 
-	"main": "dist/bundles/angular2-leaflet.js",
+	"main": "dist/bundles/ngx-leaflet.js",
 	"module": "dist/index.js",
 	"typings": "dist/index.d.ts",
 
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Asymmetrik/angular2-leaflet.git"
+		"url": "https://github.com/Asymmetrik/ngx-leaflet.git"
 	},
 
 	"peerDependencies": {
