@@ -1,8 +1,12 @@
-# @asymmetrik/angular2-template
+# @asymmetrik/ngx-template
 
 [![Build Status][travis-image]][travis-url]
 
-> Template project for an Angular2 Component.
+[travis-url]: https://travis-ci.org/Asymmetrik/ngx-template/
+[travis-image]: https://travis-ci.org/Asymmetrik/ngx-template.svg
+
+
+> Template project for an Angular 2+ Component.
 > Provides a template project structure, Gulp build, and Webpack dev server configuration for packaging an Angular 2 component and for running a local demo of that component. 
 
 ## Table of Contents
@@ -69,7 +73,7 @@ Once you've got your own copy of the template, you will need to adapt the templa
 Modify all of the metadata about the package to be specific to your module.
 
 * dependencies - These should generally be empty. These dependencies will get packaged with your module in NPM, which is probably not what you intend.
-* peerDependencies - Specify all of the runtime dependencies of the module that someone using it will need. This would include any Angular2 dependencies referenced from within your code and any third party dependencies on which you depend.
+* peerDependencies - Specify all of the runtime dependencies of the module that someone using it will need. This would include any Angular 2+ dependencies referenced from within your code and any third party dependencies on which you depend.
 * devDependencies - You can specify all of the dependencies needed to build, run, and test your code in this project.
 
 #### ./LICENSE
@@ -141,7 +145,7 @@ The build generates files in here.
 All the application source code including your component and the demo application for the component
 
 **./src/index.ts**
-This file should export everything you wish to publish as part of your Angular2 package 
+This file should export everything you wish to publish as part of your Angular 2+ package 
 
 **./src/demo**
 Contains a lightweight Angular 2 application that is built and run using Webpack. Use the demo to embed examples directly in the project for the purposes of development, testing, and demonstration.
@@ -154,6 +158,3 @@ PRs accepted. If you are part of Asymmetrik, please make contributions on featur
 
 ## License
 See LICENSE in repository for details.
-
-[travis-url]: https://travis-ci.org/Asymmetrik/angular2-template/
-[travis-image]: https://travis-ci.org/Asymmetrik/angular2-template.svg
