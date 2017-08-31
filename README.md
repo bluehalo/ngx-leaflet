@@ -118,7 +118,7 @@ Before you can use the module in your Angular 2+ app, you'll need to import it i
 For example, in your ```app.module.ts```, add:
  
 ```js
-import { LeafletModule } from '@asymmetrik/ngx-leaflet.module';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 ...
 imports: [
