@@ -1,3 +1,5 @@
+import * as L from 'leaflet';
+
 export class LeafletTileLayerDefinition {
 
 	constructor(
@@ -37,9 +39,9 @@ export class LeafletTileLayerDefinition {
 	 * @returns {{[p: string]: L.TileLayer}} A new map of key to TileLayer
 	 */
 	static createTileLayers(layerDefs: { [ key: string ]: LeafletTileLayerDefinition }): { [ key: string ]: L.TileLayer } {
-		let layers: { [ key: string ]: L.TileLayer } = {};
+		const layers: { [ key: string ]: L.TileLayer } = {};
 
-		for (let k in layerDefs) {
+		for (const k in layerDefs) {
 			if (layerDefs.hasOwnProperty(k)) {
 				layers[k] = (LeafletTileLayerDefinition.createTileLayer(layerDefs[k]));
 			}

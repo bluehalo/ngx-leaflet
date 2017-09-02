@@ -8,7 +8,7 @@
 *IMPORTANT NOTE: We have renamed this project from ```angular2-leaflet``` to ```ngx-leaflet```.*
 
 > Leaflet packages for Angular 2+.
-> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.0.x into Angular 2+ projects.
+> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular 2+ projects.
 > Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
 

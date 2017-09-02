@@ -81,6 +81,13 @@ module.exports = () => {
 				exclude: [/\.(spec|e2e)\.ts$/]
 			},
 
+			// Add source maps for dependencies
+			{
+				test: /node_modules\/*\.js$/,
+				loader: 'source-map-loader',
+				enforce: 'pre'
+			},
+
 			// CSS loader
 			{ test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
 

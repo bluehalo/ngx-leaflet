@@ -81,8 +81,8 @@ export class LeafletLayersControlDirective
 
 	protected updateLayers() {
 
-		let map = this.leafletDirective.getMap();
-		let layersControl = this.controlLayers.getLayersControl();
+		const map = this.leafletDirective.getMap();
+		const layersControl = this.controlLayers.getLayersControl();
 
 		if (null != map && null != layersControl) {
 			// Run the baselayers differ

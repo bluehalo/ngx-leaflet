@@ -15,8 +15,8 @@ export class LeafletControlLayersWrapper {
 
 	init(controlConfig: any, controlOptions: any): L.Control.Layers {
 
-		let baseLayers = controlConfig.baseLayers || {};
-		let overlays = controlConfig.overlays || {};
+		const baseLayers = controlConfig.baseLayers || {};
+		const overlays = controlConfig.overlays || {};
 
 		this.layersControl = L.control.layers(baseLayers, overlays, controlOptions);
 
@@ -44,7 +44,7 @@ export class LeafletControlLayersWrapper {
 	}
 
 	private applyChanges(changes: KeyValueChanges<string, L.Layer>, addFn: (layer: L.Layer, name: string) => void): LeafletControlLayersChanges {
-		let results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
+		const results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
 
 		if (null != changes) {
 

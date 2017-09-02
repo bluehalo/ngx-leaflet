@@ -75,7 +75,7 @@ export class LeafletLayersDemoComponent {
 					[ -121.6, 46.87 ]
 				]]
 			}) as any,
-			{ style: () => { return { color: '#ff7800' }; } })
+			{ style: () => ({ color: '#ff7800' })})
 	};
 
 	// Form model object
@@ -113,12 +113,12 @@ export class LeafletLayersDemoComponent {
 	onApply() {
 
 		// Get the active base layer
-		let baseLayer = this.model.baseLayers.find((l) => { return l.id === this.model.baseLayer; });
+		const baseLayer = this.model.baseLayers.find((l: any) => (l.id === this.model.baseLayer));
 
 		// Get all the active overlay layers
-		let newLayers = this.model.overlayLayers
-			.filter((l) => { return l.enabled; })
-			.map((l) => { return l.layer; });
+		const newLayers = this.model.overlayLayers
+			.filter((l: any) => l.enabled)
+			.map((l: any) => l.layer);
 		newLayers.unshift(baseLayer.layer);
 
 		this.layers = newLayers;

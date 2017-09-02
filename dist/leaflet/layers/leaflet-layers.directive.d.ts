@@ -1,4 +1,3 @@
-/// <reference types="leaflet" />
 import { DoCheck, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';

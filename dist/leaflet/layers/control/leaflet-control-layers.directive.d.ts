@@ -1,4 +1,3 @@
-/// <reference types="leaflet" />
 import { DoCheck, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletControlLayersConfig } from './leaflet-control-layers-config.model';
