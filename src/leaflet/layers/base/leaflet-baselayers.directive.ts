@@ -77,8 +77,8 @@ export class LeafletBaseLayersDirective
 
 	protected updateBaseLayers() {
 
-		let map = this.leafletDirective.getMap();
-		let layersControl = this.controlLayers.getLayersControl();
+		const map = this.leafletDirective.getMap();
+		const layersControl = this.controlLayers.getLayersControl();
 
 		if (null != map && null != layersControl && null != this.baseLayersDiffer) {
 			const changes = this.baseLayersDiffer.diff(this.baseLayersValue);
@@ -96,13 +96,13 @@ export class LeafletBaseLayersDirective
 	 */
 	protected syncBaseLayer() {
 
-		let map = this.leafletDirective.getMap();
-		let layers = LeafletUtil.mapToArray(this.baseLayers);
+		const map = this.leafletDirective.getMap();
+		const layers = LeafletUtil.mapToArray(this.baseLayers);
 		let foundLayer: L.Layer;
 
 		// Search all the layers in the map to see if we can find them in the baselayer array
 		map.eachLayer((l: L.Layer) => {
-			foundLayer = layers.find((bl) => { return l === bl; });
+			foundLayer = layers.find((bl) => (l === bl));
 		});
 
 		// Did we find the layer?

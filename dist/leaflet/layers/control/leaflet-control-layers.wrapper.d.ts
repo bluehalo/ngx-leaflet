@@ -1,4 +1,3 @@
-/// <reference types="leaflet" />
 import { KeyValueChanges } from '@angular/core';
 import * as L from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';

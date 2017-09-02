@@ -75,7 +75,7 @@ export class LeafletLayersDirective
 	 */
 	private updateLayers() {
 
-		let map = this.leafletDirective.getMap();
+		const map = this.leafletDirective.getMap();
 
 		if (null != map && null != this.layersDiffer) {
 

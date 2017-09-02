@@ -21,7 +21,7 @@ export class LeafletMarkersDemoComponent {
 	markers: L.Layer[] = [];
 
 	addMarker() {
-		let marker = L.marker(
+		const marker = L.marker(
 			[ 46.879966 + 0.1 * (Math.random() - 0.5), -121.726909 + 0.1 * (Math.random() - 0.5) ],
 			{
 				icon: L.icon({

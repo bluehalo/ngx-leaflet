@@ -1,4 +1,3 @@
-/// <reference types="leaflet" />
 import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import * as L from 'leaflet';
 export declare class LeafletDirective implements OnChanges, OnInit {

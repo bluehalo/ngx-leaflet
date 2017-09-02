@@ -14,7 +14,7 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
  * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
-var LeafletBaseLayersDirective = (function () {
+var LeafletBaseLayersDirective = /** @class */ (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs) {
         this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
@@ -65,7 +65,7 @@ var LeafletBaseLayersDirective = (function () {
         var foundLayer;
         // Search all the layers in the map to see if we can find them in the baselayer array
         map.eachLayer(function (l) {
-            foundLayer = layers.find(function (bl) { return l === bl; });
+            foundLayer = layers.find(function (bl) { return (l === bl); });
         });
         // Did we find the layer?
         if (null != foundLayer) {
@@ -80,21 +80,21 @@ var LeafletBaseLayersDirective = (function () {
             }
         }
     };
+    LeafletBaseLayersDirective.decorators = [
+        { type: Directive, args: [{
+                    selector: '[leafletBaseLayers]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletBaseLayersDirective.ctorParameters = function () { return [
+        { type: LeafletDirective, },
+        { type: KeyValueDiffers, },
+    ]; };
+    LeafletBaseLayersDirective.propDecorators = {
+        'baseLayers': [{ type: Input, args: ['leafletBaseLayers',] },],
+        'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
+    };
     return LeafletBaseLayersDirective;
 }());
 export { LeafletBaseLayersDirective };
-LeafletBaseLayersDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[leafletBaseLayers]'
-            },] },
-];
-/** @nocollapse */
-LeafletBaseLayersDirective.ctorParameters = function () { return [
-    { type: LeafletDirective, },
-    { type: KeyValueDiffers, },
-]; };
-LeafletBaseLayersDirective.propDecorators = {
-    'baseLayers': [{ type: Input, args: ['leafletBaseLayers',] },],
-    'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
-};
 //# sourceMappingURL=leaflet-baselayers.directive.js.map
