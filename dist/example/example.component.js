@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-var ExampleComponent = (function () {
+var ExampleComponent = /** @class */ (function () {
     function ExampleComponent() {
         this.message = 'Hello';
     }
@@ -9,15 +9,15 @@ var ExampleComponent = (function () {
             _this.message += ' World';
         }, 1000);
     };
+    ExampleComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'example-component',
+                    template: '{{message}}'
+                },] },
+    ];
+    /** @nocollapse */
+    ExampleComponent.ctorParameters = function () { return []; };
     return ExampleComponent;
 }());
 export { ExampleComponent };
-ExampleComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'example-component',
-                template: '{{message}}'
-            },] },
-];
-/** @nocollapse */
-ExampleComponent.ctorParameters = function () { return []; };
 //# sourceMappingURL=example.component.js.map

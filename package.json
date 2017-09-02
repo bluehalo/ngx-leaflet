@@ -3,7 +3,7 @@
 	"artifactName": "ngx-template",
 	"moduleName": "ngxTemplate",
 	"description": "Angular 2 components template project",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -42,7 +42,7 @@
 		"merge2": "1.1",
 		"rollup": "0.49",
 
-		"typescript": "2.3",
+		"typescript": "2.5",
 		"tslint": "5.7",
 		"tslint-stylish": "2.1",
 
