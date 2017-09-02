@@ -1,4 +1,4 @@
-var LeafletUtil = /** @class */ (function () {
+var LeafletUtil = (function () {
     function LeafletUtil() {
     }
     LeafletUtil.mapToArray = function (map) {

@@ -13,7 +13,7 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
  * using the layers directive. Otherwise, the last one it sees will be used.
  */
-var LeafletLayersControlDirective = /** @class */ (function () {
+var LeafletLayersControlDirective = (function () {
     function LeafletLayersControlDirective(leafletDirective, differs) {
         this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
@@ -73,21 +73,21 @@ var LeafletLayersControlDirective = /** @class */ (function () {
             }
         }
     };
-    LeafletLayersControlDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[leafletLayersControl]'
-                },] },
-    ];
-    /** @nocollapse */
-    LeafletLayersControlDirective.ctorParameters = function () { return [
-        { type: LeafletDirective, },
-        { type: KeyValueDiffers, },
-    ]; };
-    LeafletLayersControlDirective.propDecorators = {
-        'layersControlConfig': [{ type: Input, args: ['leafletLayersControl',] },],
-        'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
-    };
     return LeafletLayersControlDirective;
 }());
 export { LeafletLayersControlDirective };
+LeafletLayersControlDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[leafletLayersControl]'
+            },] },
+];
+/** @nocollapse */
+LeafletLayersControlDirective.ctorParameters = function () { return [
+    { type: LeafletDirective, },
+    { type: KeyValueDiffers, },
+]; };
+LeafletLayersControlDirective.propDecorators = {
+    'layersControlConfig': [{ type: Input, args: ['leafletLayersControl',] },],
+    'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
+};
 //# sourceMappingURL=leaflet-control-layers.directive.js.map

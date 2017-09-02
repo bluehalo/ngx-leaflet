@@ -1,4 +1,4 @@
-var LeafletControlLayersChanges = /** @class */ (function () {
+var LeafletControlLayersChanges = (function () {
     function LeafletControlLayersChanges() {
         this.layersRemoved = 0;
         this.layersChanged = 0;

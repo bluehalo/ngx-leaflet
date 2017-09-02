@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-var LeafletTileLayerDefinition = /** @class */ (function () {
+var LeafletTileLayerDefinition = (function () {
     function LeafletTileLayerDefinition(type, url, options) {
         this.type = type;
         this.url = url;

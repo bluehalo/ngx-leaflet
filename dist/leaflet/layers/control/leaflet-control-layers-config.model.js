@@ -1,4 +1,4 @@
-var LeafletControlLayersConfig = /** @class */ (function () {
+var LeafletControlLayersConfig = (function () {
     function LeafletControlLayersConfig() {
         this.baseLayers = {};
         this.overlays = {};

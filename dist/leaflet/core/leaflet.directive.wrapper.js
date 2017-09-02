@@ -1,4 +1,4 @@
-var LeafletDirectiveWrapper = /** @class */ (function () {
+var LeafletDirectiveWrapper = (function () {
     function LeafletDirectiveWrapper(leafletDirective) {
         this.leafletDirective = leafletDirective;
     }

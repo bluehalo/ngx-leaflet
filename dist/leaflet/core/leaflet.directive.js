@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import * as L from 'leaflet';
-var LeafletDirective = /** @class */ (function () {
+var LeafletDirective = (function () {
     function LeafletDirective(el) {
         this.DEFAULT_ZOOM = 1;
         this.DEFAULT_CENTER = L.latLng([38.907192, -77.036871]);
@@ -113,28 +113,28 @@ var LeafletDirective = /** @class */ (function () {
             this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
         }
     };
-    LeafletDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[leaflet]'
-                },] },
-    ];
-    /** @nocollapse */
-    LeafletDirective.ctorParameters = function () { return [
-        { type: ElementRef, },
-    ]; };
-    LeafletDirective.propDecorators = {
-        'fitBoundsOptions': [{ type: Input, args: ['leafletFitBoundsOptions',] },],
-        'panOptions': [{ type: Input, args: ['leafletPanOptions',] },],
-        'zoomOptions': [{ type: Input, args: ['leafletZoomOptions',] },],
-        'zoomPanOptions': [{ type: Input, args: ['leafletZoomPanOptions',] },],
-        'options': [{ type: Input, args: ['leafletOptions',] },],
-        'mapReady': [{ type: Output, args: ['leafletMapReady',] },],
-        'zoom': [{ type: Input, args: ['leafletZoom',] },],
-        'center': [{ type: Input, args: ['leafletCenter',] },],
-        'fitBounds': [{ type: Input, args: ['leafletFitBounds',] },],
-        'onResize': [{ type: HostListener, args: ['window:resize', [],] },],
-    };
     return LeafletDirective;
 }());
 export { LeafletDirective };
+LeafletDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[leaflet]'
+            },] },
+];
+/** @nocollapse */
+LeafletDirective.ctorParameters = function () { return [
+    { type: ElementRef, },
+]; };
+LeafletDirective.propDecorators = {
+    'fitBoundsOptions': [{ type: Input, args: ['leafletFitBoundsOptions',] },],
+    'panOptions': [{ type: Input, args: ['leafletPanOptions',] },],
+    'zoomOptions': [{ type: Input, args: ['leafletZoomOptions',] },],
+    'zoomPanOptions': [{ type: Input, args: ['leafletZoomPanOptions',] },],
+    'options': [{ type: Input, args: ['leafletOptions',] },],
+    'mapReady': [{ type: Output, args: ['leafletMapReady',] },],
+    'zoom': [{ type: Input, args: ['leafletZoom',] },],
+    'center': [{ type: Input, args: ['leafletCenter',] },],
+    'fitBounds': [{ type: Input, args: ['leafletFitBounds',] },],
+    'onResize': [{ type: HostListener, args: ['window:resize', [],] },],
+};
 //# sourceMappingURL=leaflet.directive.js.map

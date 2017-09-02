@@ -16,7 +16,7 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
  * is extremely expensive from a time complexity perspective.
  *
  */
-var LeafletLayersDirective = /** @class */ (function () {
+var LeafletLayersDirective = (function () {
     function LeafletLayersDirective(leafletDirective, differs) {
         this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
@@ -64,20 +64,20 @@ var LeafletLayersDirective = /** @class */ (function () {
             }
         }
     };
-    LeafletLayersDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[leafletLayers]'
-                },] },
-    ];
-    /** @nocollapse */
-    LeafletLayersDirective.ctorParameters = function () { return [
-        { type: LeafletDirective, },
-        { type: IterableDiffers, },
-    ]; };
-    LeafletLayersDirective.propDecorators = {
-        'layers': [{ type: Input, args: ['leafletLayers',] },],
-    };
     return LeafletLayersDirective;
 }());
 export { LeafletLayersDirective };
+LeafletLayersDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[leafletLayers]'
+            },] },
+];
+/** @nocollapse */
+LeafletLayersDirective.ctorParameters = function () { return [
+    { type: LeafletDirective, },
+    { type: IterableDiffers, },
+]; };
+LeafletLayersDirective.propDecorators = {
+    'layers': [{ type: Input, args: ['leafletLayers',] },],
+};
 //# sourceMappingURL=leaflet-layers.directive.js.map
