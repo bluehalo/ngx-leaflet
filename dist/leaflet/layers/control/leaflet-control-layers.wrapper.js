@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
-var LeafletControlLayersWrapper = (function () {
+var LeafletControlLayersWrapper = /** @class */ (function () {
     function LeafletControlLayersWrapper() {
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {

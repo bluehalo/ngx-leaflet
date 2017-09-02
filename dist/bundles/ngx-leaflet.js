@@ -5,7 +5,7 @@
 	(factory((global.ngxLeaflet = {}),global.ng.core,global.L));
 }(this, (function (exports,core,L) { 'use strict';
 
-var LeafletDirective = (function () {
+var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(el) {
         this.DEFAULT_ZOOM = 1;
         this.DEFAULT_CENTER = L.latLng([38.907192, -77.036871]);
@@ -118,31 +118,31 @@ var LeafletDirective = (function () {
             this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
         }
     };
+    LeafletDirective.decorators = [
+        { type: core.Directive, args: [{
+                    selector: '[leaflet]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletDirective.ctorParameters = function () { return [
+        { type: core.ElementRef, },
+    ]; };
+    LeafletDirective.propDecorators = {
+        'fitBoundsOptions': [{ type: core.Input, args: ['leafletFitBoundsOptions',] },],
+        'panOptions': [{ type: core.Input, args: ['leafletPanOptions',] },],
+        'zoomOptions': [{ type: core.Input, args: ['leafletZoomOptions',] },],
+        'zoomPanOptions': [{ type: core.Input, args: ['leafletZoomPanOptions',] },],
+        'options': [{ type: core.Input, args: ['leafletOptions',] },],
+        'mapReady': [{ type: core.Output, args: ['leafletMapReady',] },],
+        'zoom': [{ type: core.Input, args: ['leafletZoom',] },],
+        'center': [{ type: core.Input, args: ['leafletCenter',] },],
+        'fitBounds': [{ type: core.Input, args: ['leafletFitBounds',] },],
+        'onResize': [{ type: core.HostListener, args: ['window:resize', [],] },],
+    };
     return LeafletDirective;
 }());
-LeafletDirective.decorators = [
-    { type: core.Directive, args: [{
-                selector: '[leaflet]'
-            },] },
-];
-/** @nocollapse */
-LeafletDirective.ctorParameters = function () { return [
-    { type: core.ElementRef, },
-]; };
-LeafletDirective.propDecorators = {
-    'fitBoundsOptions': [{ type: core.Input, args: ['leafletFitBoundsOptions',] },],
-    'panOptions': [{ type: core.Input, args: ['leafletPanOptions',] },],
-    'zoomOptions': [{ type: core.Input, args: ['leafletZoomOptions',] },],
-    'zoomPanOptions': [{ type: core.Input, args: ['leafletZoomPanOptions',] },],
-    'options': [{ type: core.Input, args: ['leafletOptions',] },],
-    'mapReady': [{ type: core.Output, args: ['leafletMapReady',] },],
-    'zoom': [{ type: core.Input, args: ['leafletZoom',] },],
-    'center': [{ type: core.Input, args: ['leafletCenter',] },],
-    'fitBounds': [{ type: core.Input, args: ['leafletFitBounds',] },],
-    'onResize': [{ type: core.HostListener, args: ['window:resize', [],] },],
-};
 
-var LeafletDirectiveWrapper = (function () {
+var LeafletDirectiveWrapper = /** @class */ (function () {
     function LeafletDirectiveWrapper(leafletDirective) {
         this.leafletDirective = leafletDirective;
     }
@@ -170,7 +170,7 @@ var LeafletDirectiveWrapper = (function () {
  * is extremely expensive from a time complexity perspective.
  *
  */
-var LeafletLayersDirective = (function () {
+var LeafletLayersDirective = /** @class */ (function () {
     function LeafletLayersDirective(leafletDirective, differs) {
         this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
@@ -218,23 +218,23 @@ var LeafletLayersDirective = (function () {
             }
         }
     };
+    LeafletLayersDirective.decorators = [
+        { type: core.Directive, args: [{
+                    selector: '[leafletLayers]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletLayersDirective.ctorParameters = function () { return [
+        { type: LeafletDirective, },
+        { type: core.IterableDiffers, },
+    ]; };
+    LeafletLayersDirective.propDecorators = {
+        'layers': [{ type: core.Input, args: ['leafletLayers',] },],
+    };
     return LeafletLayersDirective;
 }());
-LeafletLayersDirective.decorators = [
-    { type: core.Directive, args: [{
-                selector: '[leafletLayers]'
-            },] },
-];
-/** @nocollapse */
-LeafletLayersDirective.ctorParameters = function () { return [
-    { type: LeafletDirective, },
-    { type: core.IterableDiffers, },
-]; };
-LeafletLayersDirective.propDecorators = {
-    'layers': [{ type: core.Input, args: ['leafletLayers',] },],
-};
 
-var LeafletControlLayersChanges = (function () {
+var LeafletControlLayersChanges = /** @class */ (function () {
     function LeafletControlLayersChanges() {
         this.layersRemoved = 0;
         this.layersChanged = 0;
@@ -246,7 +246,7 @@ var LeafletControlLayersChanges = (function () {
     return LeafletControlLayersChanges;
 }());
 
-var LeafletControlLayersWrapper = (function () {
+var LeafletControlLayersWrapper = /** @class */ (function () {
     function LeafletControlLayersWrapper() {
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {
@@ -295,7 +295,7 @@ var LeafletControlLayersWrapper = (function () {
     return LeafletControlLayersWrapper;
 }());
 
-var LeafletControlLayersConfig = (function () {
+var LeafletControlLayersConfig = /** @class */ (function () {
     function LeafletControlLayersConfig() {
         this.baseLayers = {};
         this.overlays = {};
@@ -313,7 +313,7 @@ var LeafletControlLayersConfig = (function () {
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
  * using the layers directive. Otherwise, the last one it sees will be used.
  */
-var LeafletLayersControlDirective = (function () {
+var LeafletLayersControlDirective = /** @class */ (function () {
     function LeafletLayersControlDirective(leafletDirective, differs) {
         this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
@@ -373,24 +373,24 @@ var LeafletLayersControlDirective = (function () {
             }
         }
     };
+    LeafletLayersControlDirective.decorators = [
+        { type: core.Directive, args: [{
+                    selector: '[leafletLayersControl]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletLayersControlDirective.ctorParameters = function () { return [
+        { type: LeafletDirective, },
+        { type: core.KeyValueDiffers, },
+    ]; };
+    LeafletLayersControlDirective.propDecorators = {
+        'layersControlConfig': [{ type: core.Input, args: ['leafletLayersControl',] },],
+        'layersControlOptions': [{ type: core.Input, args: ['leafletLayersControlOptions',] },],
+    };
     return LeafletLayersControlDirective;
 }());
-LeafletLayersControlDirective.decorators = [
-    { type: core.Directive, args: [{
-                selector: '[leafletLayersControl]'
-            },] },
-];
-/** @nocollapse */
-LeafletLayersControlDirective.ctorParameters = function () { return [
-    { type: LeafletDirective, },
-    { type: core.KeyValueDiffers, },
-]; };
-LeafletLayersControlDirective.propDecorators = {
-    'layersControlConfig': [{ type: core.Input, args: ['leafletLayersControl',] },],
-    'layersControlOptions': [{ type: core.Input, args: ['leafletLayersControlOptions',] },],
-};
 
-var LeafletUtil = (function () {
+var LeafletUtil = /** @class */ (function () {
     function LeafletUtil() {
     }
     LeafletUtil.mapToArray = function (map$$1) {
@@ -416,7 +416,7 @@ var LeafletUtil = (function () {
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
  * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
-var LeafletBaseLayersDirective = (function () {
+var LeafletBaseLayersDirective = /** @class */ (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs) {
         this.differs = differs;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
@@ -482,51 +482,51 @@ var LeafletBaseLayersDirective = (function () {
             }
         }
     };
+    LeafletBaseLayersDirective.decorators = [
+        { type: core.Directive, args: [{
+                    selector: '[leafletBaseLayers]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletBaseLayersDirective.ctorParameters = function () { return [
+        { type: LeafletDirective, },
+        { type: core.KeyValueDiffers, },
+    ]; };
+    LeafletBaseLayersDirective.propDecorators = {
+        'baseLayers': [{ type: core.Input, args: ['leafletBaseLayers',] },],
+        'layersControlOptions': [{ type: core.Input, args: ['leafletLayersControlOptions',] },],
+    };
     return LeafletBaseLayersDirective;
 }());
-LeafletBaseLayersDirective.decorators = [
-    { type: core.Directive, args: [{
-                selector: '[leafletBaseLayers]'
-            },] },
-];
-/** @nocollapse */
-LeafletBaseLayersDirective.ctorParameters = function () { return [
-    { type: LeafletDirective, },
-    { type: core.KeyValueDiffers, },
-]; };
-LeafletBaseLayersDirective.propDecorators = {
-    'baseLayers': [{ type: core.Input, args: ['leafletBaseLayers',] },],
-    'layersControlOptions': [{ type: core.Input, args: ['leafletLayersControlOptions',] },],
-};
 
-var LeafletModule = (function () {
+var LeafletModule = /** @class */ (function () {
     function LeafletModule() {
     }
     LeafletModule.forRoot = function () {
         return { ngModule: LeafletModule, providers: [] };
     };
+    LeafletModule.decorators = [
+        { type: core.NgModule, args: [{
+                    exports: [
+                        LeafletDirective,
+                        LeafletLayersDirective,
+                        LeafletLayersControlDirective,
+                        LeafletBaseLayersDirective
+                    ],
+                    declarations: [
+                        LeafletDirective,
+                        LeafletLayersDirective,
+                        LeafletLayersControlDirective,
+                        LeafletBaseLayersDirective
+                    ]
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletModule.ctorParameters = function () { return []; };
     return LeafletModule;
 }());
-LeafletModule.decorators = [
-    { type: core.NgModule, args: [{
-                exports: [
-                    LeafletDirective,
-                    LeafletLayersDirective,
-                    LeafletLayersControlDirective,
-                    LeafletBaseLayersDirective
-                ],
-                declarations: [
-                    LeafletDirective,
-                    LeafletLayersDirective,
-                    LeafletLayersControlDirective,
-                    LeafletBaseLayersDirective
-                ]
-            },] },
-];
-/** @nocollapse */
-LeafletModule.ctorParameters = function () { return []; };
 
-var LeafletTileLayerDefinition = (function () {
+var LeafletTileLayerDefinition = /** @class */ (function () {
     function LeafletTileLayerDefinition(type, url, options) {
         this.type = type;
         this.url = url;
