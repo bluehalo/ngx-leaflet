@@ -1,3 +1,5 @@
+import * as L from 'leaflet';
+
 import { LeafletDirective } from './leaflet.directive';
 
 export class LeafletDirectiveWrapper {
@@ -13,7 +15,7 @@ export class LeafletDirectiveWrapper {
 		// Nothing for now
 	}
 
-	getMap() {
+	getMap(): L.Map {
 		return this.leafletDirective.getMap();
 	}
 
