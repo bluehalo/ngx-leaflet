@@ -1,4 +1,4 @@
-import * as L from 'leaflet';
+import { Layer } from 'leaflet';
 
 export class LeafletLayersDemoModel {
 
@@ -7,14 +7,14 @@ export class LeafletLayersDemoModel {
 			id: string,
 			name: string,
 			enabled: boolean,
-			layer: L.Layer
+			layer: Layer
 		}[],
 		public baseLayer: string,
 		public overlayLayers: {
 			id: string,
 			name: string,
 			enabled: boolean,
-			layer: L.Layer
+			layer: Layer
 		}[] = []
 	) { }
 

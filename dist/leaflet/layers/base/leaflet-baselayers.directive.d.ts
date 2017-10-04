@@ -1,5 +1,5 @@
 import { DoCheck, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
-import * as L from 'leaflet';
+import { Control, Layer } from 'leaflet';
 import { LeafletDirective } from '../../core/leaflet.directive';
 /**
  * Baselayers directive
@@ -15,14 +15,14 @@ import { LeafletDirective } from '../../core/leaflet.directive';
 export declare class LeafletBaseLayersDirective implements DoCheck, OnInit {
     private differs;
     baseLayersValue: {
-        [name: string]: L.Layer;
+        [name: string]: Layer;
     };
-    baseLayersDiffer: KeyValueDiffer<string, L.Layer>;
+    baseLayersDiffer: KeyValueDiffer<string, Layer>;
     baseLayers: {
-        [name: string]: L.Layer;
+        [name: string]: Layer;
     };
-    layersControlOptions: L.Control.LayersOptions;
-    baseLayer: L.Layer;
+    layersControlOptions: Control.LayersOptions;
+    baseLayer: Layer;
     private leafletDirective;
     private controlLayers;
     constructor(leafletDirective: LeafletDirective, differs: KeyValueDiffers);

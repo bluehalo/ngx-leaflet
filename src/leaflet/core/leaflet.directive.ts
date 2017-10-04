@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChange } from '@angular/core';
 
-import * as L from 'leaflet';
+import { latLng, LatLng, LatLngBounds, map, Map, MapOptions} from 'leaflet';
 
 @Directive({
 	selector: '[leaflet]'
@@ -9,14 +9,14 @@ export class LeafletDirective
 	implements OnChanges, OnInit {
 
 	readonly DEFAULT_ZOOM = 1;
-	readonly DEFAULT_CENTER = L.latLng([ 38.907192, -77.036871 ]);
+	readonly DEFAULT_CENTER = latLng(38.907192, -77.036871);
 	readonly DEFAULT_FPZ_OPTIONS = {};
 
 	element: ElementRef;
 	resizeTimer: any;
 
 	// Reference to the primary map object
-	map: L.Map;
+	map: Map;
 
 	@Input('leafletFitBoundsOptions') fitBoundsOptions = this.DEFAULT_FPZ_OPTIONS;
 	@Input('leafletPanOptions') panOptions = this.DEFAULT_FPZ_OPTIONS;
@@ -25,19 +25,19 @@ export class LeafletDirective
 
 
 	// Default configuration
-	@Input('leafletOptions') options: L.MapOptions = {};
+	@Input('leafletOptions') options: MapOptions = {};
 
 	// Configure callback function for the map
-	@Output('leafletMapReady') mapReady = new EventEmitter<L.Map>();
+	@Output('leafletMapReady') mapReady = new EventEmitter<Map>();
 
 	// Zoom level for the map
 	@Input('leafletZoom') zoom: number;
 
 	// Center the map
-	@Input('leafletCenter') center: L.LatLng;
+	@Input('leafletCenter') center: LatLng;
 
 	// Set fit bounds for map
-	@Input('leafletFitBounds') fitBounds: L.LatLngBounds;
+	@Input('leafletFitBounds') fitBounds: LatLngBounds;
 
 
 	constructor(el: ElementRef) {
@@ -47,7 +47,7 @@ export class LeafletDirective
 	ngOnInit() {
 
 		// Create the map with some reasonable defaults
-		this.map = L.map(this.element.nativeElement, this.options);
+		this.map = map(this.element.nativeElement, this.options);
 
 		// Only setView if there is a center/zoom
 		if (null != this.center && null != this.zoom) {
@@ -133,7 +133,7 @@ export class LeafletDirective
 	 * @param center The new center
 	 * @param zoom The new zoom level
 	 */
-	private setView(center: L.LatLng, zoom: number) {
+	private setView(center: LatLng, zoom: number) {
 
 		if (this.map && null != center && null != zoom) {
 			this.map.setView(center, zoom, this.zoomPanOptions);
@@ -157,7 +157,7 @@ export class LeafletDirective
 	 * Set the center of the map
 	 * @param center the center point
 	 */
-	private setCenter(center: L.LatLng) {
+	private setCenter(center: LatLng) {
 
 		if (this.map && null != center) {
 			this.map.panTo(center, this.panOptions);
@@ -169,7 +169,7 @@ export class LeafletDirective
 	 * Fit the map to the bounds
 	 * @param center the center point
 	 */
-	private setFitBounds(latLngBounds: L.LatLngBounds) {
+	private setFitBounds(latLngBounds: LatLngBounds) {
 
 		if (this.map && null != latLngBounds) {
 			this.map.fitBounds(latLngBounds, this.fitBoundsOptions);

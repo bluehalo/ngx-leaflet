@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import * as L from 'leaflet';
+import { latLng, Layer, tileLayer } from 'leaflet';
 
 @Component({
 	selector: 'leafletWrapper',
@@ -10,15 +10,15 @@ import * as L from 'leaflet';
 export class LeafletWrapperComponent {
 
 	@Input('leafletMarkers')
-	markers: L.Layer[] = [];
+	markers: Layer[] = [];
 
 	// Open Street Map definitions
-	LAYER_OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' });
+	LAYER_OSM = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' });
 
 	// Values to bind to Leaflet Directive
 	options = {
 		layers: [ this.LAYER_OSM ],
 		zoom: 10,
-		center: L.latLng([ 46.879966, -121.726909 ])
+		center: latLng(46.879966, -121.726909)
 	};
 }

@@ -1,4 +1,4 @@
-import * as L from 'leaflet';
+import { control } from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 var LeafletControlLayersWrapper = /** @class */ (function () {
     function LeafletControlLayersWrapper() {
@@ -9,7 +9,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
     LeafletControlLayersWrapper.prototype.init = function (controlConfig, controlOptions) {
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
-        this.layersControl = L.control.layers(baseLayers, overlays, controlOptions);
+        this.layersControl = control.layers(baseLayers, overlays, controlOptions);
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {

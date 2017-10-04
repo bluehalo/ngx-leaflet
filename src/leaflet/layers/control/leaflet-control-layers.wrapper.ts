@@ -1,29 +1,29 @@
 import { KeyValueChanges } from '@angular/core';
 
-import * as L from 'leaflet';
+import { control, Control, Layer } from 'leaflet';
 
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 
 export class LeafletControlLayersWrapper {
 
 	// The layers control object
-	protected layersControl: L.Control.Layers;
+	protected layersControl: Control.Layers;
 
 	getLayersControl() {
 		return this.layersControl;
 	}
 
-	init(controlConfig: any, controlOptions: any): L.Control.Layers {
+	init(controlConfig: any, controlOptions: any): Control.Layers {
 
 		const baseLayers = controlConfig.baseLayers || {};
 		const overlays = controlConfig.overlays || {};
 
-		this.layersControl = L.control.layers(baseLayers, overlays, controlOptions);
+		this.layersControl = control.layers(baseLayers, overlays, controlOptions);
 
 		return this.layersControl;
 	}
 
-	applyBaseLayerChanges(changes: KeyValueChanges<string, L.Layer>): LeafletControlLayersChanges {
+	applyBaseLayerChanges(changes: KeyValueChanges<string, Layer>): LeafletControlLayersChanges {
 		let results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
 
 		if (null != this.layersControl) {
@@ -33,7 +33,7 @@ export class LeafletControlLayersWrapper {
 		return results;
 	}
 
-	applyOverlayChanges(changes: KeyValueChanges<string, L.Layer>): LeafletControlLayersChanges {
+	applyOverlayChanges(changes: KeyValueChanges<string, Layer>): LeafletControlLayersChanges {
 		let results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
 
 		if (null != this.layersControl) {
@@ -43,7 +43,7 @@ export class LeafletControlLayersWrapper {
 		return results;
 	}
 
-	private applyChanges(changes: KeyValueChanges<string, L.Layer>, addFn: (layer: L.Layer, name: string) => void): LeafletControlLayersChanges {
+	private applyChanges(changes: KeyValueChanges<string, Layer>, addFn: (layer: Layer, name: string) => void): LeafletControlLayersChanges {
 		const results: LeafletControlLayersChanges = new LeafletControlLayersChanges();
 
 		if (null != changes) {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import * as L from 'leaflet';
+import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
 
 @Component({
 	selector: 'leafletMarkersDemo',
@@ -9,22 +9,22 @@ import * as L from 'leaflet';
 export class LeafletMarkersDemoComponent {
 
 	// Open Street Map definitions
-	LAYER_OSM = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' });
+	LAYER_OSM = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' });
 
 	// Values to bind to Leaflet Directive
 	options = {
 		layers: [ this.LAYER_OSM ],
 		zoom: 10,
-		center: L.latLng([ 46.879966, -121.726909 ])
+		center: latLng(46.879966, -121.726909)
 	};
 
-	markers: L.Layer[] = [];
+	markers: Layer[] = [];
 
 	addMarker() {
-		const marker = L.marker(
+		const newMarker = marker(
 			[ 46.879966 + 0.1 * (Math.random() - 0.5), -121.726909 + 0.1 * (Math.random() - 0.5) ],
 			{
-				icon: L.icon({
+				icon: icon({
 					iconSize: [ 25, 41 ],
 					iconAnchor: [ 13, 41 ],
 					iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
@@ -33,6 +33,6 @@ export class LeafletMarkersDemoComponent {
 			}
 		);
 
-		this.markers.push(marker);
+		this.markers.push(newMarker);
 	}
 }

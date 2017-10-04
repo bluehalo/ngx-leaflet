@@ -1,5 +1,5 @@
 import { DoCheck, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
-import * as L from 'leaflet';
+import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 /**
  * Layers directive
@@ -18,9 +18,9 @@ import { LeafletDirective } from '../core/leaflet.directive';
  */
 export declare class LeafletLayersDirective implements DoCheck, OnInit {
     private differs;
-    layersValue: L.Layer[];
-    layersDiffer: IterableDiffer<L.Layer>;
-    layers: L.Layer[];
+    layersValue: Layer[];
+    layersDiffer: IterableDiffer<Layer>;
+    layers: Layer[];
     private leafletDirective;
     constructor(leafletDirective: LeafletDirective, differs: IterableDiffers);
     ngDoCheck(): void;

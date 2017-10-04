@@ -1,6 +1,6 @@
 import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
 
-import * as L from 'leaflet';
+import { Layer} from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
@@ -28,20 +28,20 @@ export class LeafletLayersDirective
 	implements DoCheck, OnInit {
 
 	// Array of configured layers
-	layersValue: L.Layer[];
+	layersValue: Layer[];
 
 	// Differ to do change detection on the array
-	layersDiffer: IterableDiffer<L.Layer>;
+	layersDiffer: IterableDiffer<Layer>;
 
 	// Set/get the layers
 	@Input('leafletLayers')
-	set layers(v: L.Layer[]) {
+	set layers(v: Layer[]) {
 		this.layersValue = v;
 
 		// Now that we have a differ, do an immediate layer update
 		this.updateLayers();
 	}
-	get layers(): L.Layer[] {
+	get layers(): Layer[] {
 		return this.layersValue;
 	}
 
@@ -50,7 +50,7 @@ export class LeafletLayersDirective
 
 	constructor(leafletDirective: LeafletDirective, private differs: IterableDiffers) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-		this.layersDiffer = this.differs.find([]).create<L.Layer>();
+		this.layersDiffer = this.differs.find([]).create<Layer>();
 	}
 
 	ngDoCheck() {

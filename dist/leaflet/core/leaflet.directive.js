@@ -1,9 +1,9 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import * as L from 'leaflet';
+import { latLng, map } from 'leaflet';
 var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(el) {
         this.DEFAULT_ZOOM = 1;
-        this.DEFAULT_CENTER = L.latLng([38.907192, -77.036871]);
+        this.DEFAULT_CENTER = latLng(38.907192, -77.036871);
         this.DEFAULT_FPZ_OPTIONS = {};
         this.fitBoundsOptions = this.DEFAULT_FPZ_OPTIONS;
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
@@ -17,7 +17,7 @@ var LeafletDirective = /** @class */ (function () {
     }
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
-        this.map = L.map(this.element.nativeElement, this.options);
+        this.map = map(this.element.nativeElement, this.options);
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
             this.setView(this.center, this.zoom);

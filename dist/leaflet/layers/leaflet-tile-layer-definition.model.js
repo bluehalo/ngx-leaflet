@@ -1,4 +1,4 @@
-import * as L from 'leaflet';
+import { tileLayer } from 'leaflet';
 var LeafletTileLayerDefinition = /** @class */ (function () {
     function LeafletTileLayerDefinition(type, url, options) {
         this.type = type;
@@ -10,17 +10,17 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * to help with generating layers from objects.
      *
      * @param layerDef The layer to create
-     * @returns {L.TileLayer} The TileLayer that has been created
+     * @returns {TileLayer} The TileLayer that has been created
      */
     LeafletTileLayerDefinition.createTileLayer = function (layerDef) {
         var layer;
         switch (layerDef.type) {
             case 'xyz':
-                layer = L.tileLayer(layerDef.url, layerDef.options);
+                layer = tileLayer(layerDef.url, layerDef.options);
                 break;
             case 'wms':
             default:
-                layer = L.tileLayer.wms(layerDef.url, layerDef.options);
+                layer = tileLayer.wms(layerDef.url, layerDef.options);
                 break;
         }
         return layer;
@@ -30,7 +30,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * for generating an associative array of layers from an associative array of objects
      *
      * @param layerDefs A map of key to tile layer definition
-     * @returns {{[p: string]: L.TileLayer}} A new map of key to TileLayer
+     * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
      */
     LeafletTileLayerDefinition.createTileLayers = function (layerDefs) {
         var layers = {};
@@ -44,7 +44,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
     /**
      * Create a Tile Layer from the current state of this object
      *
-     * @returns {L.TileLayer} A new TileLayer
+     * @returns {TileLayer} A new TileLayer
      */
     LeafletTileLayerDefinition.prototype.createTileLayer = function () {
         return LeafletTileLayerDefinition.createTileLayer(this);

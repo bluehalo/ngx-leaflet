@@ -1,27 +1,27 @@
 import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import * as L from 'leaflet';
+import { LatLng, LatLngBounds, Map, MapOptions } from 'leaflet';
 export declare class LeafletDirective implements OnChanges, OnInit {
     readonly DEFAULT_ZOOM: number;
-    readonly DEFAULT_CENTER: L.LatLng;
+    readonly DEFAULT_CENTER: LatLng;
     readonly DEFAULT_FPZ_OPTIONS: {};
     element: ElementRef;
     resizeTimer: any;
-    map: L.Map;
+    map: Map;
     fitBoundsOptions: {};
     panOptions: {};
     zoomOptions: {};
     zoomPanOptions: {};
-    options: L.MapOptions;
-    mapReady: EventEmitter<L.Map>;
+    options: MapOptions;
+    mapReady: EventEmitter<Map>;
     zoom: number;
-    center: L.LatLng;
-    fitBounds: L.LatLngBounds;
+    center: LatLng;
+    fitBounds: LatLngBounds;
     constructor(el: ElementRef);
     ngOnInit(): void;
     ngOnChanges(changes: {
         [key: string]: SimpleChange;
     }): void;
-    getMap(): L.Map;
+    getMap(): Map;
     onResize(): void;
     /**
      * Resize the map to fit it's parent container

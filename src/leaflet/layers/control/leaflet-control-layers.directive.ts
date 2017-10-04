@@ -1,9 +1,12 @@
 import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
 
+import { Layer } from 'leaflet';
+
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
 import { LeafletControlLayersConfig } from './leaflet-control-layers-config.model';
+
 
 /**
  * Layers Control
@@ -24,8 +27,8 @@ export class LeafletLayersControlDirective
 	// Control Layers Configuration
 	layersControlConfigValue: LeafletControlLayersConfig;
 
-	baseLayersDiffer: KeyValueDiffer<string, L.Layer>;
-	overlaysDiffer: KeyValueDiffer<string, L.Layer>;
+	baseLayersDiffer: KeyValueDiffer<string, Layer>;
+	overlaysDiffer: KeyValueDiffer<string, Layer>;
 
 	@Input('leafletLayersControl')
 	set layersControlConfig(v: LeafletControlLayersConfig) {
@@ -56,8 +59,8 @@ export class LeafletLayersControlDirective
 		this.controlLayers = new LeafletControlLayersWrapper();
 
 		// Generate differs
-		this.baseLayersDiffer = this.differs.find({}).create<string, L.Layer>();
-		this.overlaysDiffer = this.differs.find({}).create<string, L.Layer>();
+		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
+		this.overlaysDiffer = this.differs.find({}).create<string, Layer>();
 
 	}
 

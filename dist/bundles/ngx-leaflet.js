@@ -1,14 +1,14 @@
-/*! @asymmetrik/ngx-leaflet - 2.4.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 2.4.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
 	(factory((global.ngxLeaflet = {}),global.ng.core,global.L));
-}(this, (function (exports,core,L) { 'use strict';
+}(this, (function (exports,core,leaflet) { 'use strict';
 
 var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(el) {
         this.DEFAULT_ZOOM = 1;
-        this.DEFAULT_CENTER = L.latLng([38.907192, -77.036871]);
+        this.DEFAULT_CENTER = leaflet.latLng(38.907192, -77.036871);
         this.DEFAULT_FPZ_OPTIONS = {};
         this.fitBoundsOptions = this.DEFAULT_FPZ_OPTIONS;
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
@@ -22,7 +22,7 @@ var LeafletDirective = /** @class */ (function () {
     }
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
-        this.map = L.map(this.element.nativeElement, this.options);
+        this.map = leaflet.map(this.element.nativeElement, this.options);
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
             this.setView(this.center, this.zoom);
@@ -255,7 +255,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
     LeafletControlLayersWrapper.prototype.init = function (controlConfig, controlOptions) {
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
-        this.layersControl = L.control.layers(baseLayers, overlays, controlOptions);
+        this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {
@@ -537,17 +537,17 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * to help with generating layers from objects.
      *
      * @param layerDef The layer to create
-     * @returns {L.TileLayer} The TileLayer that has been created
+     * @returns {TileLayer} The TileLayer that has been created
      */
     LeafletTileLayerDefinition.createTileLayer = function (layerDef) {
         var layer;
         switch (layerDef.type) {
             case 'xyz':
-                layer = L.tileLayer(layerDef.url, layerDef.options);
+                layer = leaflet.tileLayer(layerDef.url, layerDef.options);
                 break;
             case 'wms':
             default:
-                layer = L.tileLayer.wms(layerDef.url, layerDef.options);
+                layer = leaflet.tileLayer.wms(layerDef.url, layerDef.options);
                 break;
         }
         return layer;
@@ -557,7 +557,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * for generating an associative array of layers from an associative array of objects
      *
      * @param layerDefs A map of key to tile layer definition
-     * @returns {{[p: string]: L.TileLayer}} A new map of key to TileLayer
+     * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
      */
     LeafletTileLayerDefinition.createTileLayers = function (layerDefs) {
         var layers = {};
@@ -571,7 +571,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
     /**
      * Create a Tile Layer from the current state of this object
      *
-     * @returns {L.TileLayer} A new TileLayer
+     * @returns {TileLayer} A new TileLayer
      */
     LeafletTileLayerDefinition.prototype.createTileLayer = function () {
         return LeafletTileLayerDefinition.createTileLayer(this);

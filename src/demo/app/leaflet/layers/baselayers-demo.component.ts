@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import * as L from 'leaflet';
+import { latLng, tileLayer } from 'leaflet';
 
 @Component({
 	selector: 'leafletBaselayersDemo',
@@ -13,7 +13,7 @@ export class LeafletBaseLayersDemoComponent {
 		id: 'opencyclemap',
 		name: 'Open Cycle Map',
 		enabled: true,
-		layer: L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
+		layer: tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Open Cycle Map'
 		})
@@ -22,7 +22,7 @@ export class LeafletBaseLayersDemoComponent {
 		id: 'openstreetmap',
 		name: 'Open Street Map',
 		enabled: false,
-		layer: L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		layer: tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Open Street Map'
 		})
@@ -36,7 +36,7 @@ export class LeafletBaseLayersDemoComponent {
 	};
 	options = {
 		zoom: 10,
-		center: L.latLng([ 46.879966, -121.726909 ])
+		center: latLng(46.879966, -121.726909)
 	};
 
 }
