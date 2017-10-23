@@ -9,8 +9,14 @@
 			There are several strategies for mitigating this performance impact if it becomes an issue:
 		</p>
 		<ul>
-			<li>First, you can wrap the directive in a compoment that uses the <a href="https://angular.io/api/core/ChangeDetectionStrategy">OnPush change detection strategy</a>.</li>
-			<li>Second, you can wrap large sets of layers (e.g., markers) in Leaflet <code>LayerGroup</code> layers to keep the bound array size small.</li>
+			<li>
+				First, you can wrap the directive in a compoment that uses the <a href="https://angular.io/api/core/ChangeDetectionStrategy">OnPush change detection strategy</a>.
+				That way, you can ensure that change detection is only applied when you want.
+			</li>
+			<li>
+				Second, you can wrap large sets of layers (e.g., markers) in Leaflet <code>LayerGroup</code> layers to keep the bound array size small.
+				But, this will be difficult to manage
+			</li>
 		</ul>
 		<p>
 			This example shows how to use OnPush to improve change detection efficiency. See the README for more details.

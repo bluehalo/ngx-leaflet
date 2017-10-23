@@ -33,7 +33,7 @@
 		"@angular/platform-browser": "4",
 		"@angular/platform-browser-dynamic": "4",
 
-		"bootstrap": "4",
+		"bootstrap": "4.0.0-beta.2",
 
 		"leaflet": "1",
 		"@types/leaflet": "1",
