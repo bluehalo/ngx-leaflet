@@ -1,0 +1,54 @@
+<div class="card">
+	<div class="card-body">
+
+		<h1 class="card-title">Layers and *ngFor</h1>
+		<p>
+			You can also use *ngFor or *ngIf to show/hide individual layers by nesting them inside the map element.
+			In this case, you can use [leafletLayer] to bind an individual layer.
+		</p>
+
+		<div class="card bg-light">
+			<div class="card-body">
+
+<pre>
+&lt;div leaflet style="height: 300px;" [leafletOptions]="options"&gt;
+	&lt;div *ngFor="let m of markers" [leafletLayer]="m"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="card-body">
+
+		<div class="row">
+			<form class="col">
+
+				<button type="button"
+					class="btn btn-primary"
+					(click)="addMarker()">Add Marker</button>
+
+				<button type="button"
+					class="btn btn-primary"
+					(click)="removeMarker()">Remove Marker</button>
+
+			</form>
+		</div>
+		<div class="row">
+			<label class="col col-form-label">{{markers?.length}} Markers</label>
+		</div>
+
+		<!-- Map -->
+		<div leaflet style="height: 300px;" [leafletOptions]="options">
+			<div *ngFor="let m of markers" [leafletLayer]="m"></div>
+		</div>
+
+
+	</div>
+
+</div>
+
+
+
+

@@ -27,6 +27,10 @@ export class LeafletPerformanceDemoComponent {
 		this.markers.push(newMarker);
 	}
 
+	mutableRemove() {
+		this.markers.pop();
+	}
+
 	newArray() {
 		this.markers = this.markers.slice();
 	}

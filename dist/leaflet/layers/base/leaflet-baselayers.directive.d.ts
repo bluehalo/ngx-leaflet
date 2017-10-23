@@ -1,4 +1,4 @@
-import { DoCheck, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { DoCheck, KeyValueDiffer, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { Control, Layer } from 'leaflet';
 import { LeafletDirective } from '../../core/leaflet.directive';
 /**
@@ -12,7 +12,7 @@ import { LeafletDirective } from '../../core/leaflet.directive';
  * To specify which layer to show as the 'active' baselayer, you will want to add it to the map
  * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
-export declare class LeafletBaseLayersDirective implements DoCheck, OnInit {
+export declare class LeafletBaseLayersDirective implements DoCheck, OnDestroy, OnInit {
     private differs;
     baseLayersValue: {
         [name: string]: Layer;
@@ -26,6 +26,7 @@ export declare class LeafletBaseLayersDirective implements DoCheck, OnInit {
     private leafletDirective;
     private controlLayers;
     constructor(leafletDirective: LeafletDirective, differs: KeyValueDiffers);
+    ngOnDestroy(): void;
     ngOnInit(): void;
     ngDoCheck(): void;
     protected updateBaseLayers(): void;

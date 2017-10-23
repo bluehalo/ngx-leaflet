@@ -44,6 +44,9 @@ var LeafletLayersDirective = /** @class */ (function () {
         // Update layers once the map is ready
         this.updateLayers();
     };
+    LeafletLayersDirective.prototype.ngOnDestroy = function () {
+        this.layers = [];
+    };
     /**
      * Update the state of the layers.
      * We use an iterable differ to synchronize the map layers with the state of the bound layers array.

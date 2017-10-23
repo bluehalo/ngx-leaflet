@@ -1,4 +1,4 @@
-import { DoCheck, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
+import { DoCheck, IterableDiffer, IterableDiffers, OnDestroy, OnInit } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 /**
@@ -16,7 +16,7 @@ import { LeafletDirective } from '../core/leaflet.directive';
  * is extremely expensive from a time complexity perspective.
  *
  */
-export declare class LeafletLayersDirective implements DoCheck, OnInit {
+export declare class LeafletLayersDirective implements DoCheck, OnDestroy, OnInit {
     private differs;
     layersValue: Layer[];
     layersDiffer: IterableDiffer<Layer>;
@@ -25,6 +25,7 @@ export declare class LeafletLayersDirective implements DoCheck, OnInit {
     constructor(leafletDirective: LeafletDirective, differs: IterableDiffers);
     ngDoCheck(): void;
     ngOnInit(): void;
+    ngOnDestroy(): void;
     /**
      * Update the state of the layers.
      * We use an iterable differ to synchronize the map layers with the state of the bound layers array.

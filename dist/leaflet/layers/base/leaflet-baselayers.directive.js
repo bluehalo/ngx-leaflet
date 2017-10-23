@@ -33,6 +33,10 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    LeafletBaseLayersDirective.prototype.ngOnDestroy = function () {
+        this.baseLayers = {};
+        this.controlLayers.getLayersControl().remove();
+    };
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();

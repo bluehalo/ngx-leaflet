@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 
 import { Control, Layer } from 'leaflet';
 
@@ -23,7 +23,7 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
 	selector: '[leafletBaseLayers]'
 })
 export class LeafletBaseLayersDirective
-	implements DoCheck,  OnInit {
+	implements DoCheck, OnDestroy, OnInit {
 
 	// Base Layers
 	baseLayersValue: { [name: string]: Layer };
@@ -55,6 +55,11 @@ export class LeafletBaseLayersDirective
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
 		this.controlLayers = new LeafletControlLayersWrapper();
 		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
+	}
+
+	ngOnDestroy() {
+		this.baseLayers = {};
+		this.controlLayers.getLayersControl().remove();
 	}
 
 	ngOnInit() {

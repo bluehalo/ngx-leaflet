@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnDestroy, OnInit } from '@angular/core';
 
 import { Layer} from 'leaflet';
 
@@ -9,7 +9,7 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 /**
  * Layers directive
  *
- * This directive is used to directly control map layers. As changed are made to the input array of
+ * This directive is used to directly control map layers. As changes are made to the input array of
  * layers, the map is synched to the array. As layers are added or removed from the input array, they
  * are also added or removed from the map. The input array is treated as immutable. To detect changes,
  * you must change the array instance.
@@ -25,7 +25,7 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 	selector: '[leafletLayers]'
 })
 export class LeafletLayersDirective
-	implements DoCheck, OnInit {
+	implements DoCheck, OnDestroy, OnInit {
 
 	// Array of configured layers
 	layersValue: Layer[];
@@ -65,6 +65,10 @@ export class LeafletLayersDirective
 		// Update layers once the map is ready
 		this.updateLayers();
 
+	}
+
+	ngOnDestroy() {
+		this.layers = [];
 	}
 
 	/**

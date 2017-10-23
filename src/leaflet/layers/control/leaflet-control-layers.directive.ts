@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 
 import { Layer } from 'leaflet';
 
@@ -22,7 +22,7 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
 	selector: '[leafletLayersControl]'
 })
 export class LeafletLayersControlDirective
-	implements DoCheck, OnInit {
+	implements DoCheck, OnDestroy, OnInit {
 
 	// Control Layers Configuration
 	layersControlConfigValue: LeafletControlLayersConfig;
@@ -75,6 +75,13 @@ export class LeafletLayersControlDirective
 			.addTo(this.leafletDirective.getMap());
 
 		this.updateLayers();
+
+	}
+
+	ngOnDestroy() {
+
+		this.layersControlConfig = { baseLayers: {}, overlays: {} };
+		this.controlLayers.getLayersControl().remove();
 
 	}
 

@@ -1,4 +1,4 @@
-/*! @asymmetrik/ngx-leaflet - 2.4.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 2.5.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -198,6 +198,9 @@ var LeafletLayersDirective = /** @class */ (function () {
         // Update layers once the map is ready
         this.updateLayers();
     };
+    LeafletLayersDirective.prototype.ngOnDestroy = function () {
+        this.layers = [];
+    };
     /**
      * Update the state of the layers.
      * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
@@ -354,6 +357,10 @@ var LeafletLayersControlDirective = /** @class */ (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
+    LeafletLayersControlDirective.prototype.ngOnDestroy = function () {
+        this.layersControlConfig = { baseLayers: {}, overlays: {} };
+        this.controlLayers.getLayersControl().remove();
+    };
     LeafletLayersControlDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
     };
@@ -435,6 +442,10 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    LeafletBaseLayersDirective.prototype.ngOnDestroy = function () {
+        this.baseLayers = {};
+        this.controlLayers.getLayersControl().remove();
+    };
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();

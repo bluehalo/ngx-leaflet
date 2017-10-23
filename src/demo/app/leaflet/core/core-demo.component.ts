@@ -51,28 +51,6 @@ export class LeafletCoreDemoComponent {
 		center: latLng(this.optionsSpec.center[0], this.optionsSpec.center[1])
 	};
 
-	fitBoundsOptions = {
-		padding: 100,
-		maxZoom: 10,
-		animate: true,
-		duration: 1
-	};
-
-	panOptions = {
-		animate: true,
-		duration: 1
-	};
-
-	zoomOptions = {
-		animate: true,
-		duration: 1
-	};
-
-	zoomPanOptions = {
-		animate: true,
-		duration: 1
-	};
-
 	onApply() {
 		this.zoom = this.model.zoom;
 		this.center = latLng(this.model.latitude, this.model.longitude);

@@ -107,10 +107,10 @@ export class LeafletLayersDemoComponent {
 	};
 
 	constructor() {
-		this.onApply();
+		this.apply();
 	}
 
-	onApply() {
+	apply() {
 
 		// Get the active base layer
 		const baseLayer = this.model.baseLayers.find((l: any) => (l.id === this.model.baseLayer));
