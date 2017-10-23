@@ -156,9 +156,55 @@ var LeafletDirectiveWrapper = /** @class */ (function () {
 }());
 
 /**
+ * Layer directive
+ *
+ * This directive is used to directly control a single map layer. The purpose of this directive is to
+ * be used as part of a child structural directive of the map element.
+ *
+ */
+var LeafletLayerDirective = /** @class */ (function () {
+    function LeafletLayerDirective(leafletDirective) {
+        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+    }
+    LeafletLayerDirective.prototype.ngOnInit = function () {
+        // Init the map
+        this.leafletDirective.init();
+    };
+    LeafletLayerDirective.prototype.ngOnDestroy = function () {
+        this.layer.remove();
+    };
+    LeafletLayerDirective.prototype.ngOnChanges = function (changes) {
+        if (changes['layer']) {
+            // Update the layer
+            var p = changes['layer'].previousValue;
+            var n = changes['layer'].currentValue;
+            if (null != p) {
+                p.remove();
+            }
+            if (null != n) {
+                this.leafletDirective.getMap().addLayer(n);
+            }
+        }
+    };
+    LeafletLayerDirective.decorators = [
+        { type: core.Directive, args: [{
+                    selector: '[leafletLayer]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletLayerDirective.ctorParameters = function () { return [
+        { type: LeafletDirective, },
+    ]; };
+    LeafletLayerDirective.propDecorators = {
+        'layer': [{ type: core.Input, args: ['leafletLayer',] },],
+    };
+    return LeafletLayerDirective;
+}());
+
+/**
  * Layers directive
  *
- * This directive is used to directly control map layers. As changed are made to the input array of
+ * This directive is used to directly control map layers. As changes are made to the input array of
  * layers, the map is synched to the array. As layers are added or removed from the input array, they
  * are also added or removed from the map. The input array is treated as immutable. To detect changes,
  * you must change the array instance.
@@ -520,12 +566,14 @@ var LeafletModule = /** @class */ (function () {
         { type: core.NgModule, args: [{
                     exports: [
                         LeafletDirective,
+                        LeafletLayerDirective,
                         LeafletLayersDirective,
                         LeafletLayersControlDirective,
                         LeafletBaseLayersDirective
                     ],
                     declarations: [
                         LeafletDirective,
+                        LeafletLayerDirective,
                         LeafletLayersDirective,
                         LeafletLayersControlDirective,
                         LeafletBaseLayersDirective

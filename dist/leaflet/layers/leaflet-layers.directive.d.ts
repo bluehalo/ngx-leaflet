@@ -4,7 +4,7 @@ import { LeafletDirective } from '../core/leaflet.directive';
 /**
  * Layers directive
  *
- * This directive is used to directly control map layers. As changed are made to the input array of
+ * This directive is used to directly control map layers. As changes are made to the input array of
  * layers, the map is synched to the array. As layers are added or removed from the input array, they
  * are also added or removed from the map. The input array is treated as immutable. To detect changes,
  * you must change the array instance.
