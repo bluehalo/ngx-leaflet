@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import * as L from 'leaflet';
+import { latLng, LatLng, tileLayer } from 'leaflet';
 
 import { LeafletCoreDemoModel } from './core-demo.model';
 
@@ -37,7 +37,7 @@ export class LeafletCoreDemoComponent {
 		this.optionsSpec.zoom
 	);
 	zoom: number;
-	center: L.LatLng;
+	center: LatLng;
 
 	/*
 	 * This are the leaflet map options that we're going to use for input binding
@@ -45,37 +45,15 @@ export class LeafletCoreDemoComponent {
 
 	options = {
 		layers: this.optionsSpec.layers.map((l) => {
-			return L.tileLayer(l.url, { maxZoom: l.maxZoom, attribution: l.attribution });
+			return tileLayer(l.url, { maxZoom: l.maxZoom, attribution: l.attribution });
 		}),
 		zoom: this.optionsSpec.zoom,
-		center: L.latLng({ lat: this.optionsSpec.center[0], lng: this.optionsSpec.center[1] })
-	};
-
-	fitBoundsOptions = {
-		padding: 100,
-		maxZoom: 10,
-		animate: true,
-		duration: 1
-	};
-
-	panOptions = {
-		animate: true,
-		duration: 1
-	};
-
-	zoomOptions = {
-		animate: true,
-		duration: 1
-	};
-
-	zoomPanOptions = {
-		animate: true,
-		duration: 1
+		center: latLng(this.optionsSpec.center[0], this.optionsSpec.center[1])
 	};
 
 	onApply() {
 		this.zoom = this.model.zoom;
-		this.center = L.latLng([ this.model.latitude, this.model.longitude]);
+		this.center = latLng(this.model.latitude, this.model.longitude);
 
 		return false;
 	}

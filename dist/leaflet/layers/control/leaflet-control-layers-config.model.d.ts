@@ -1,9 +1,9 @@
-import * as L from 'leaflet';
+import { Layer } from 'leaflet';
 export declare class LeafletControlLayersConfig {
     baseLayers: {
-        [name: string]: L.Layer;
+        [name: string]: Layer;
     };
     overlays: {
-        [name: string]: L.Layer;
+        [name: string]: Layer;
     };
 }

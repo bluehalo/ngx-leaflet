@@ -54,6 +54,10 @@ var LeafletLayersControlDirective = /** @class */ (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
+    LeafletLayersControlDirective.prototype.ngOnDestroy = function () {
+        this.layersControlConfig = { baseLayers: {}, overlays: {} };
+        this.controlLayers.getLayersControl().remove();
+    };
     LeafletLayersControlDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
     };

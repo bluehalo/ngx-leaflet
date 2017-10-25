@@ -1,14 +1,14 @@
-/*! @asymmetrik/ngx-leaflet - 2.4.1 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 2.5.0 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
 	(factory((global.ngxLeaflet = {}),global.ng.core,global.L));
-}(this, (function (exports,core,L) { 'use strict';
+}(this, (function (exports,core,leaflet) { 'use strict';
 
 var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(el) {
         this.DEFAULT_ZOOM = 1;
-        this.DEFAULT_CENTER = L.latLng([38.907192, -77.036871]);
+        this.DEFAULT_CENTER = leaflet.latLng(38.907192, -77.036871);
         this.DEFAULT_FPZ_OPTIONS = {};
         this.fitBoundsOptions = this.DEFAULT_FPZ_OPTIONS;
         this.panOptions = this.DEFAULT_FPZ_OPTIONS;
@@ -22,7 +22,7 @@ var LeafletDirective = /** @class */ (function () {
     }
     LeafletDirective.prototype.ngOnInit = function () {
         // Create the map with some reasonable defaults
-        this.map = L.map(this.element.nativeElement, this.options);
+        this.map = leaflet.map(this.element.nativeElement, this.options);
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
             this.setView(this.center, this.zoom);
@@ -156,9 +156,55 @@ var LeafletDirectiveWrapper = /** @class */ (function () {
 }());
 
 /**
+ * Layer directive
+ *
+ * This directive is used to directly control a single map layer. The purpose of this directive is to
+ * be used as part of a child structural directive of the map element.
+ *
+ */
+var LeafletLayerDirective = /** @class */ (function () {
+    function LeafletLayerDirective(leafletDirective) {
+        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+    }
+    LeafletLayerDirective.prototype.ngOnInit = function () {
+        // Init the map
+        this.leafletDirective.init();
+    };
+    LeafletLayerDirective.prototype.ngOnDestroy = function () {
+        this.layer.remove();
+    };
+    LeafletLayerDirective.prototype.ngOnChanges = function (changes) {
+        if (changes['layer']) {
+            // Update the layer
+            var p = changes['layer'].previousValue;
+            var n = changes['layer'].currentValue;
+            if (null != p) {
+                p.remove();
+            }
+            if (null != n) {
+                this.leafletDirective.getMap().addLayer(n);
+            }
+        }
+    };
+    LeafletLayerDirective.decorators = [
+        { type: core.Directive, args: [{
+                    selector: '[leafletLayer]'
+                },] },
+    ];
+    /** @nocollapse */
+    LeafletLayerDirective.ctorParameters = function () { return [
+        { type: LeafletDirective, },
+    ]; };
+    LeafletLayerDirective.propDecorators = {
+        'layer': [{ type: core.Input, args: ['leafletLayer',] },],
+    };
+    return LeafletLayerDirective;
+}());
+
+/**
  * Layers directive
  *
- * This directive is used to directly control map layers. As changed are made to the input array of
+ * This directive is used to directly control map layers. As changes are made to the input array of
  * layers, the map is synched to the array. As layers are added or removed from the input array, they
  * are also added or removed from the map. The input array is treated as immutable. To detect changes,
  * you must change the array instance.
@@ -197,6 +243,9 @@ var LeafletLayersDirective = /** @class */ (function () {
         this.leafletDirective.init();
         // Update layers once the map is ready
         this.updateLayers();
+    };
+    LeafletLayersDirective.prototype.ngOnDestroy = function () {
+        this.layers = [];
     };
     /**
      * Update the state of the layers.
@@ -255,7 +304,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
     LeafletControlLayersWrapper.prototype.init = function (controlConfig, controlOptions) {
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
-        this.layersControl = L.control.layers(baseLayers, overlays, controlOptions);
+        this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {
@@ -354,6 +403,10 @@ var LeafletLayersControlDirective = /** @class */ (function () {
             .addTo(this.leafletDirective.getMap());
         this.updateLayers();
     };
+    LeafletLayersControlDirective.prototype.ngOnDestroy = function () {
+        this.layersControlConfig = { baseLayers: {}, overlays: {} };
+        this.controlLayers.getLayersControl().remove();
+    };
     LeafletLayersControlDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
     };
@@ -435,6 +488,10 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    LeafletBaseLayersDirective.prototype.ngOnDestroy = function () {
+        this.baseLayers = {};
+        this.controlLayers.getLayersControl().remove();
+    };
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         // Init the map
         this.leafletDirective.init();
@@ -509,12 +566,14 @@ var LeafletModule = /** @class */ (function () {
         { type: core.NgModule, args: [{
                     exports: [
                         LeafletDirective,
+                        LeafletLayerDirective,
                         LeafletLayersDirective,
                         LeafletLayersControlDirective,
                         LeafletBaseLayersDirective
                     ],
                     declarations: [
                         LeafletDirective,
+                        LeafletLayerDirective,
                         LeafletLayersDirective,
                         LeafletLayersControlDirective,
                         LeafletBaseLayersDirective
@@ -537,17 +596,17 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * to help with generating layers from objects.
      *
      * @param layerDef The layer to create
-     * @returns {L.TileLayer} The TileLayer that has been created
+     * @returns {TileLayer} The TileLayer that has been created
      */
     LeafletTileLayerDefinition.createTileLayer = function (layerDef) {
         var layer;
         switch (layerDef.type) {
             case 'xyz':
-                layer = L.tileLayer(layerDef.url, layerDef.options);
+                layer = leaflet.tileLayer(layerDef.url, layerDef.options);
                 break;
             case 'wms':
             default:
-                layer = L.tileLayer.wms(layerDef.url, layerDef.options);
+                layer = leaflet.tileLayer.wms(layerDef.url, layerDef.options);
                 break;
         }
         return layer;
@@ -557,7 +616,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * for generating an associative array of layers from an associative array of objects
      *
      * @param layerDefs A map of key to tile layer definition
-     * @returns {{[p: string]: L.TileLayer}} A new map of key to TileLayer
+     * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
      */
     LeafletTileLayerDefinition.createTileLayers = function (layerDefs) {
         var layers = {};
@@ -571,7 +630,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
     /**
      * Create a Tile Layer from the current state of this object
      *
-     * @returns {L.TileLayer} A new TileLayer
+     * @returns {TileLayer} A new TileLayer
      */
     LeafletTileLayerDefinition.prototype.createTileLayer = function () {
         return LeafletTileLayerDefinition.createTileLayer(this);

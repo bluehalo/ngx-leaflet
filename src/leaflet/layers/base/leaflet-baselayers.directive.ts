@@ -1,6 +1,6 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 
-import * as L from 'leaflet';
+import { Control, Layer } from 'leaflet';
 
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
@@ -23,30 +23,30 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
 	selector: '[leafletBaseLayers]'
 })
 export class LeafletBaseLayersDirective
-	implements DoCheck,  OnInit {
+	implements DoCheck, OnDestroy, OnInit {
 
 	// Base Layers
-	baseLayersValue: { [name: string]: L.Layer };
+	baseLayersValue: { [name: string]: Layer };
 
 	// Base Layers Map Differ
-	baseLayersDiffer: KeyValueDiffer<string, L.Layer>;
+	baseLayersDiffer: KeyValueDiffer<string, Layer>;
 
 	// Set/get baseLayers
 	@Input('leafletBaseLayers')
-	set baseLayers(v: { [name: string]: L.Layer }) {
+	set baseLayers(v: { [name: string]: Layer }) {
 		this.baseLayersValue = v;
 
 		this.updateBaseLayers();
 	}
-	get baseLayers(): { [name: string]: L.Layer } {
+	get baseLayers(): { [name: string]: Layer } {
 		return this.baseLayersValue;
 	}
 
 	// Control Options
-	@Input('leafletLayersControlOptions') layersControlOptions: L.Control.LayersOptions;
+	@Input('leafletLayersControlOptions') layersControlOptions: Control.LayersOptions;
 
 	// Active Base Layer
-	baseLayer: L.Layer;
+	baseLayer: Layer;
 
 	private leafletDirective: LeafletDirectiveWrapper;
 	private controlLayers: LeafletControlLayersWrapper;
@@ -54,7 +54,12 @@ export class LeafletBaseLayersDirective
 	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
 		this.controlLayers = new LeafletControlLayersWrapper();
-		this.baseLayersDiffer = this.differs.find({}).create<string, L.Layer>();
+		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
+	}
+
+	ngOnDestroy() {
+		this.baseLayers = {};
+		this.controlLayers.getLayersControl().remove();
 	}
 
 	ngOnInit() {
@@ -98,10 +103,10 @@ export class LeafletBaseLayersDirective
 
 		const map = this.leafletDirective.getMap();
 		const layers = LeafletUtil.mapToArray(this.baseLayers);
-		let foundLayer: L.Layer;
+		let foundLayer: Layer;
 
 		// Search all the layers in the map to see if we can find them in the baselayer array
-		map.eachLayer((l: L.Layer) => {
+		map.eachLayer((l: Layer) => {
 			foundLayer = layers.find((bl) => (l === bl));
 		});
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import * as L from 'leaflet';
+import { icon, Layer, marker } from 'leaflet';
 
 @Component({
 	selector: 'leafletPerformanceDemo',
@@ -9,13 +9,13 @@ import * as L from 'leaflet';
 })
 export class LeafletPerformanceDemoComponent {
 
-	markers: L.Layer[] = [];
+	markers: Layer[] = [];
 
 	mutableAdd() {
-		const marker = L.marker(
+		const newMarker = marker(
 			[ 46.879966 + 0.1 * (Math.random() - 0.5), -121.726909 + 0.1 * (Math.random() - 0.5) ],
 			{
-				icon: L.icon({
+				icon: icon({
 					iconSize: [ 25, 41 ],
 					iconAnchor: [ 13, 41 ],
 					iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
@@ -24,7 +24,11 @@ export class LeafletPerformanceDemoComponent {
 			}
 		);
 
-		this.markers.push(marker);
+		this.markers.push(newMarker);
+	}
+
+	mutableRemove() {
+		this.markers.pop();
 	}
 
 	newArray() {

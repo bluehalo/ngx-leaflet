@@ -3,6 +3,7 @@
 let
 	path = require('path'),
 	webpack = require('webpack'),
+	StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin,
 
 	pkg = require(path.posix.resolve('./package.json')),
 	assets = require(path.posix.resolve('./config/assets.js'));
@@ -121,7 +122,12 @@ module.exports = () => {
 		new webpack.ProvidePlugin({
 			// Declare global libraries here (eg. D3, JQuery, etc)
 			// d3: 'd3'
-			leaflet: 'leaflet'
+		}),
+		// Stats writer generates a file with webpack stats that can be analyzed at https://chrisbateman.github.io/webpack-visualizer/
+		new StatsWriterPlugin({
+			chunkModules: true,
+			filename: 'webpack-stats.json',
+			fields: null
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',

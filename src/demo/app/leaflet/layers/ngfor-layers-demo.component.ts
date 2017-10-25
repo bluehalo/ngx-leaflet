@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
-import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
+import { icon, latLng, marker, Marker, tileLayer } from 'leaflet';
 
 @Component({
-	selector: 'leafletMarkersDemo',
-	templateUrl: './markers-demo.component.html'
+	selector: 'leafletNgForLayersDemo',
+	templateUrl: './ngfor-layers-demo.component.html'
 })
-export class LeafletMarkersDemoComponent {
+export class LeafletNgForLayersDemoComponent {
 
 	// Open Street Map definitions
 	LAYER_OSM = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Open Street Map' });
@@ -18,7 +18,7 @@ export class LeafletMarkersDemoComponent {
 		center: latLng(46.879966, -121.726909)
 	};
 
-	markers: Layer[] = [];
+	markers: Marker[] = [];
 
 	addMarker() {
 		const newMarker = marker(

@@ -1,4 +1,4 @@
-import * as L from 'leaflet';
+import { tileLayer, TileLayer } from 'leaflet';
 
 export class LeafletTileLayerDefinition {
 
@@ -13,18 +13,18 @@ export class LeafletTileLayerDefinition {
 	 * to help with generating layers from objects.
 	 *
 	 * @param layerDef The layer to create
-	 * @returns {L.TileLayer} The TileLayer that has been created
+	 * @returns {TileLayer} The TileLayer that has been created
 	 */
-	static createTileLayer(layerDef: LeafletTileLayerDefinition): L.TileLayer {
-		let layer: L.TileLayer;
+	static createTileLayer(layerDef: LeafletTileLayerDefinition): TileLayer {
+		let layer: TileLayer;
 
 		switch (layerDef.type) {
 			case 'xyz':
-				layer = L.tileLayer(layerDef.url,  layerDef.options);
+				layer = tileLayer(layerDef.url,  layerDef.options);
 				break;
 			case 'wms':
 			default:
-				layer = L.tileLayer.wms(layerDef.url,  layerDef.options);
+				layer = tileLayer.wms(layerDef.url,  layerDef.options);
 				break;
 		}
 
@@ -36,10 +36,10 @@ export class LeafletTileLayerDefinition {
 	 * for generating an associative array of layers from an associative array of objects
 	 *
 	 * @param layerDefs A map of key to tile layer definition
-	 * @returns {{[p: string]: L.TileLayer}} A new map of key to TileLayer
+	 * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
 	 */
-	static createTileLayers(layerDefs: { [ key: string ]: LeafletTileLayerDefinition }): { [ key: string ]: L.TileLayer } {
-		const layers: { [ key: string ]: L.TileLayer } = {};
+	static createTileLayers(layerDefs: { [ key: string ]: LeafletTileLayerDefinition }): { [ key: string ]: TileLayer } {
+		const layers: { [ key: string ]: TileLayer } = {};
 
 		for (const k in layerDefs) {
 			if (layerDefs.hasOwnProperty(k)) {
@@ -53,9 +53,9 @@ export class LeafletTileLayerDefinition {
 	/**
 	 * Create a Tile Layer from the current state of this object
 	 *
-	 * @returns {L.TileLayer} A new TileLayer
+	 * @returns {TileLayer} A new TileLayer
 	 */
-	createTileLayer(): L.TileLayer {
+	createTileLayer(): TileLayer {
 		return LeafletTileLayerDefinition.createTileLayer(this);
 	}
 }
