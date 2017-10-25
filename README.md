@@ -154,10 +154,10 @@ Example leafletOptions object:
 ```js
 options = {
 	layers: [
-		L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+		tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
 	],
 	zoom: 5,
-	center: L.latLng([ 46.879966, -121.726909 ])
+	center: latLng(46.879966, -121.726909)
 };
 ```
 
@@ -184,12 +184,12 @@ Example layersControl object:
 ```js
 layersControl = {
 	baseLayers: {
-		'Open Street Map': L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-		'Open Cycle Map': L.tileLayer('http://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+		'Open Street Map': tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+		'Open Cycle Map': tileLayer('http://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
 	},
 	overlays: {
-		'Big Circle': L.circle([ 46.95, -122 ], { radius: 5000 }),
-		'Big Square': L.polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
+		'Big Circle': circle([ 46.95, -122 ], { radius: 5000 }),
+		'Big Square': polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
 	}
 }
 ```
@@ -213,9 +213,9 @@ Template:
 Layers array:
 ```js
 layers = [
-    L.circle([ 46.95, -122 ], { radius: 5000 }),
-    L.polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
-    L.marker([ 46.879966, -121.726909 ])
+    circle([ 46.95, -122 ], { radius: 5000 }),
+    polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
+    marker([ 46.879966, -121.726909 ])
 ];
 ```
 
@@ -296,7 +296,7 @@ There is no output binding or events emitted for map zoom level changes made usi
 Input bind a center position to the map.
 
 ```js
-center: L.LatLng
+center: LatLng
 ```
 
 On changes, the component re-centers the map on the center point.
@@ -312,7 +312,7 @@ If both changes are picked up at the same time, they will be applied as a map.se
 Input bind a fitBounds operation to the map.
 
 ```js
-fitBounds: L.LatLngBounds
+fitBounds: LatLngBounds
 ```
 
 On changes, the component calls map.fitBounds using the bound parameter.
@@ -334,24 +334,24 @@ For an example of the basic map setup, you should check out the *Simple Base Lay
 ```
 
 #### leafletBaseLayers
-Input bind an ```L.control.LayersObject``` to be synced to the map.
+Input bind an ```Control.LayersObject``` to be synced to the map.
 
 ```js
 baseLayers: {
-	'layer1': L.Layer,
-	'layer2': L.Layer
+	'layer1': Layer,
+	'layer2': Layer
 }
 ```
 
 On changes, the component syncs the baseLayers on the map with the layers in this object.
 Syncing is performed by tracking the current baselayer and on changes, searching the map to see if any of the current baselayers is added to the map.
 If it finds a baselayer that is still added to the map, it will assume that is still the baselayer and leave it.
-If none of the baselayers can be found on the map, it will add the first layer it finds in the ```L.control.LayersObject``` and use that as the new baselayer.
+If none of the baselayers can be found on the map, it will add the first layer it finds in the ```Control.LayersObject``` and use that as the new baselayer.
 Layers are compared using instance equality.
 
 If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
 This directive internally uses the layers control, so if you add both, they'll interfere with each other.
-Because it uses ```L.control.Layers``` under the hood, you can still provide options for the layers control.   
+Because it uses ```control.layers``` under the hood, you can still provide options for the layers control.   
 
 
 #### leafletLayersControlOptions
@@ -385,7 +385,7 @@ For an example of using the layers controls, you should check out the *Layers an
 Input bind an array of all layers to be synced (and made visible) in the map.
 
 ```js
-layers: L.Layer[]
+layers: Layer[]
 ```
 
 On changes, the component syncs the layers on the map with the layers in this array.
@@ -399,10 +399,10 @@ Input bind a Control.Layers specification. The object contains properties for ea
 ```js
 layersControl: {
 	baseLayers: {
-		'layerName': L.Layer
+		'layerName': Layer
 	},
 	overlays: {
-		'overlayName': L.Layer
+		'overlayName': Layer
 	}
 }
 ```
@@ -412,16 +412,35 @@ Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) 
 These options are passed into the constructor on creation.
 
 
+### Advanced Layer Management: Layers and *ngFor / *ngIf
+The ```leafletLayer``` input bindings gives you the ability to add a single layer to the map.
+While this may seem limiting, you can nest elements inside the map element, each with a ```leafletLayer``` input. 
+The result of this is that each layer will be added to the map.
+If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get some added flexibiltiy when controlling layers.  
+
+```html
+<div leaflet style="height: 300px;"
+     [leafletOptions]="options">
+     <div *ngFor="let l of layers" [leafletLayer]="l"></div>
+</div>
+```
+
+In this example, each layer in the ```layers``` array will create a new child ```div``` element.
+Each element will have a ```leafletLayer``` input binding, which will result in the layer being added to the map.
+
+For more details, you should check out the *Layers and ngFor* demo.
+
+
 ### Getting a Reference to the Map
 Occasionally, you may need to directly access the Leaflet map instance.
 For example, to call ```invalidateSize()``` when the map div changes size or is shown/hidden.
 There are a couple of different ways to achieve this depending on what you're trying to do.
 
 The easiest and most flexible way is to use the output binding ```leafletMapReady```.
-This output is invoked after the map is created, the argument of the event being the ```L.Map``` instance.
+This output is invoked after the map is created, the argument of the event being the ```Map``` instance.
 
 The second is to get a reference to the leaflet directive itself - and there are a couple of ways to do this.
-With a reference to the directive, you can invoke the ```getMap()``` function to get a reference to the ```L.Map``` instance.
+With a reference to the directive, you can invoke the ```getMap()``` function to get a reference to the ```Map``` instance.
 
 
 #### leafletMapReady
@@ -436,7 +455,7 @@ The event will only fire when the map exists and is ready for manipulation.
 ```
 
 ```js
-onMapReady(map: L.Map) {
+onMapReady(map: Map) {
 	// Do stuff with map
 }
 ```
@@ -496,8 +515,8 @@ But, here is a rough overview of the steps taken to get them working.
 1. Determine the correct URL for the marker and marker-shadow images. If you're using a file hasher, you should be able to check Webpack's output for the generated images. If you are serving them directly without chunk hashing just figure out how to resolve the images on your server.
 1. Configure Leaflet to use the correct URLs as customer marker images
 
-		let layer = L.marker([ 46.879966, -121.726909 ], {
-			icon: L.icon({
+		let layer = marker([ 46.879966, -121.726909 ], {
+			icon: icon({
 				iconSize: [ 25, 41 ],
 				iconAnchor: [ 13, 0 ],
 				iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
@@ -533,9 +552,12 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
     }
     ```
 
-1. When using markers in your code, you can now use references like : ```L.icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
+1. When using markers in your code, you can now use references like : ```icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
 
 ## Changelog
+
+### 2.5.0
+Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
 ### 2.3.0
 Renamed the package to ```ngx-leaflet```
