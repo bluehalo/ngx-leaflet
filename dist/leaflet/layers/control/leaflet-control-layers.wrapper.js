@@ -36,7 +36,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
                 results.layersChanged++;
             });
             changes.forEachRemovedItem(function (c) {
-                _this.layersControl.removeLayer(c.currentValue);
+                _this.layersControl.removeLayer(c.previousValue);
                 results.layersRemoved++;
             });
             changes.forEachAddedItem(function (c) {
