@@ -54,7 +54,7 @@ export class LeafletControlLayersWrapper {
 				results.layersChanged++;
 			});
 			changes.forEachRemovedItem((c) => {
-				this.layersControl.removeLayer(c.currentValue);
+				this.layersControl.removeLayer(c.previousValue);
 				results.layersRemoved++;
 			});
 			changes.forEachAddedItem((c) => {
