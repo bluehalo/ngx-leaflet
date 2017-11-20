@@ -5,11 +5,9 @@
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
 
-*IMPORTANT NOTE: We have renamed this project from ```angular2-leaflet``` to ```ngx-leaflet```.*
-
-> Leaflet packages for Angular 2+.
-> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular 2+ projects.
-> Now supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
+> Leaflet packages for Angular.io (Angular 2+).
+> Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
+> Supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
 
 ## Table of Contents
@@ -18,6 +16,7 @@
 - [API](#api)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
+- [Getting Help](#help)
 - [License](#license)
 - [Credits](#credits)
 
@@ -449,14 +448,14 @@ The event will only fire when the map exists and is ready for manipulation.
 
 ```html
 <div leaflet
-	[leafletOptions]="options"
-	(leafletMapReady)="onMapReady($event)">
+     [leafletOptions]="options"
+     (leafletMapReady)="onMapReady($event)">
 </div>
 ```
 
 ```js
 onMapReady(map: Map) {
-	// Do stuff with map
+   // Do stuff with map
 }
 ```
 
@@ -476,20 +475,20 @@ This will only work if your custom component/directive exists on the same DOM el
 
 ```js
 @Directive({
-	selector: '[myCustomDirective]'
+   selector: '[myCustomDirective]'
 })
 export class MyCustomDirective {
-	leafletDirective: LeafletDirective;
+   leafletDirective: LeafletDirective;
 	
-	constructor(leafletDirective: LeafletDirective) {
-    	this.leafletDirective = leafletDirective;
-    }
+   constructor(leafletDirective: LeafletDirective) {
+      this.leafletDirective = leafletDirective;
+   }
 
-	someFunction() {
-	    if (null != this.leafletDirective.getMap()) {
-	        // Do stuff with the map
-	    }
-	}
+   someFunction() {
+      if (null != this.leafletDirective.getMap()) {
+         // Do stuff with the map
+      }
+   }
 }
 ```
 
@@ -508,21 +507,25 @@ But, here is a rough overview of the steps taken to get them working.
 
 1. Import the marker images in your vendor file to get Webpack to process the images in the asset pipeline
 
-		import 'leaflet/dist/images/marker-shadow.png';
-		import 'leaflet/dist/images/marker-icon.png';
+   ```js
+   import 'leaflet/dist/images/marker-shadow.png';
+   import 'leaflet/dist/images/marker-icon.png';
+   ```
 
 1. Either host the images statically or use the file-loader Webpack plugin to generate the images.
 1. Determine the correct URL for the marker and marker-shadow images. If you're using a file hasher, you should be able to check Webpack's output for the generated images. If you are serving them directly without chunk hashing just figure out how to resolve the images on your server.
 1. Configure Leaflet to use the correct URLs as customer marker images
 
-		let layer = marker([ 46.879966, -121.726909 ], {
-			icon: icon({
-				iconSize: [ 25, 41 ],
-				iconAnchor: [ 13, 0 ],
-				iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
-				shadowUrl: '44a526eed258222515aa21eaffd14a96.png'
-			})
-		});
+   ```js
+   let layer = marker([ 46.879966, -121.726909 ], {
+      icon: icon({
+         iconSize: [ 25, 41 ],
+         iconAnchor: [ 13, 41 ],
+         iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
+         shadowUrl: '44a526eed258222515aa21eaffd14a96.png'
+      })
+   });
+   ```
 
 #### Angular CLI Marker Workaround
 
@@ -552,7 +555,26 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
     }
     ```
 
-1. When using markers in your code, you can now use references like : ```icon( { iconUrl: 'assets/marker-icon.png', shadowUrl: 'assets/marker-shadow.png' } )```
+1. Configure Leaflet to use the correct URLs as customer marker images
+
+   ```js
+   let layer = marker([ 46.879966, -121.726909 ], {
+      icon: icon({
+         iconSize: [ 25, 41 ],
+         iconAnchor: [ 13, 41 ],
+         iconUrl: 'assets/marker-icon.png',
+         shadowUrl: 'assets/marker-shadow.png'
+      })
+   });
+   ```
+
+
+## <a name="help">Getting Help</a>
+Here's a list of articles, tutorials, guides, and help resources:
+   * [Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
+   * [High-level intro to @asymmetrik/ngx-leaflet](https://www.asymmetrik.com/introducing-ngx-leaflet)
+   * [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://www.asymmetrik.com/ngx-leaflet-tutorial-angular-cli)
+   
 
 ## Changelog
 
