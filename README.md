@@ -30,7 +30,7 @@ npm install @asymmetrik/ngx-leaflet
 
 If you intend to use this library in a typescript project (utilizing the typings), you will need to also install the leaflet typings via npm:
 ```
-npm install @types/leaflet
+npm install --save-dev @types/leaflet
 ```
 
 If you want to run the demo, clone the repository, perform an ```npm install```, ```gulp dev``` and then go to http://localhost:9000/src/demo/index.html
