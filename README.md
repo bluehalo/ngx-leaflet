@@ -111,8 +111,8 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 This project is exported using UMD and it includes typings.
 So, you shouldn't have to do anything special to use it if you're building your project in Typescript.
 
-#### Typescript Angular 2+ Module Import
-Before you can use the module in your Angular 2+ app, you'll need to import it in your application.
+#### Typescript Angular.io Module Import
+Before you can use the module in your Angular.io app, you'll need to import it in your application.
 
 For example, in your ```app.module.ts```, add:
  
@@ -464,12 +464,18 @@ and just need to add some limited functionality or register some event handlers.
 
 
 #### Inject LeafletDirective into your Component
-In Angular 2, directives are injectable the same way that Services are.
+In Angular.io, directives are injectable the same way that Services are.
 This means that you can create your own component or directive and inject the ```LeafletDirective``` into it.
-This will only work if your custom component/directive exists on the same DOM element and is ordered after the injected LeafletDirective.
+This will only work if your custom component/directive exists on the same DOM element and is ordered after the injected LeafletDirective, or if it is on a child DOM element.
 
 ```html
+<!-- On the same DOM element -->
 <div leaflet myCustomDirective>
+</div>
+
+<!-- On a child DOM element -->
+<div leaflet>
+   <div myCustomDirective></div>
 </div>
 ```
 
@@ -493,11 +499,11 @@ export class MyCustomDirective {
 ```
 
 The benefit of this approach is it's a bit cleaner if you're interested in adding some reusable capability to the existing leaflet map directive.
-This is how the ```@asymmetrik/angualr2-leaflet-draw``` and ```@asymmetrik/angualr2-leaflet-d3``` packages work, so you can use them as references.
+This is how the ```@asymmetrik/ngx-leaflet-draw``` and ```@asymmetrik/ngx-leaflet-d3``` packages work, so you can use them as references.
 
 
 ### A Note About Markers
-If you use this component in an Angular 2 project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
+If you use this component in an Angular.io project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
 The issue is related to how Leaflet manipulates the image URLs used to render markers when you are using the default marker images.
 The url manipulation is done at runtime and it alters the URLs in a way that breaks their format (this happens regardless of if you're using a file-loader or a url-loader).
 The demo contained in this project demonstrates how to get around this problem (at least in a Webpack environment).
@@ -529,7 +535,7 @@ But, here is a rough overview of the steps taken to get them working.
 
 #### Angular CLI Marker Workaround
 
-If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), as of angular-cli release 1.0.0-rc.1 you can make the default leaflet marker assets available by doing the following:
+If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), you can make the default leaflet marker assets available by doing the following:
 
 1. Edit `.angular-cli` (formerly `angular-cli.json`)
 1. Configure the CLI to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
