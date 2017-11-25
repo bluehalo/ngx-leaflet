@@ -14,6 +14,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
+- [Extensions](#extensions)
 - [Getting Help](#help)
 - [Changelog](#changelog)
 - [Contribute](#contribute)
@@ -28,7 +29,7 @@ npm install leaflet
 npm install @asymmetrik/ngx-leaflet
 ```
 
-If you intend to use this library in a typescript project (utilizing the typings), you will need to also install the leaflet typings via npm:
+If you intend to use this library in a typescript project (utilizing the typings), you'll need to install the leaflet typings:
 ```
 npm install --save-dev @types/leaflet
 ```
@@ -574,12 +575,19 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
    });
    ```
 
+## Extensions
+There are several libraries that extend the core functionality of ngx-leaflet:
+   * [Leaflet Draw](https://github.com/Asymmetrik/ngx-leaflet-draw)
+   * [Leaflet Markercluster](https://github.com/Asymmetrik/ngx-leaflet-markercluster)
+   * [Leaflet D3 (Hexbins)](https://github.com/Asymmetrik/ngx-leaflet-d3)
+
 
 ## <a name="help">Getting Help</a>
 Here's a list of articles, tutorials, guides, and help resources:
-   * [Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
+   * [ngx-leaflet on Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
    * [High-level intro to @asymmetrik/ngx-leaflet](https://www.asymmetrik.com/introducing-ngx-leaflet)
    * [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://www.asymmetrik.com/ngx-leaflet-tutorial-angular-cli)
+   * [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet-tutorial-3rd-party-libs)
    
 
 ## Changelog
