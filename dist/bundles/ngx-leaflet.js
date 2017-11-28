@@ -18,11 +18,16 @@ var LeafletDirective = /** @class */ (function () {
         this.options = {};
         // Configure callback function for the map
         this.mapReady = new core.EventEmitter();
+        this.onClicked = new core.EventEmitter();
         this.element = el;
     }
     LeafletDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Create the map with some reasonable defaults
         this.map = leaflet.map(this.element.nativeElement, this.options);
+        this.map.addEventListener('click', function (e) {
+            _this.onClicked.emit(e);
+        }, this);
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
             this.setView(this.center, this.zoom);
@@ -137,6 +142,7 @@ var LeafletDirective = /** @class */ (function () {
         'zoom': [{ type: core.Input, args: ['leafletZoom',] },],
         'center': [{ type: core.Input, args: ['leafletCenter',] },],
         'fitBounds': [{ type: core.Input, args: ['leafletFitBounds',] },],
+        'onClicked': [{ type: core.Output, args: ['onClicked',] },],
         'onResize': [{ type: core.HostListener, args: ['window:resize', [],] },],
     };
     return LeafletDirective;

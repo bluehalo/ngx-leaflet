@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import { LatLng, LatLngBounds, Map, MapOptions } from 'leaflet';
+import { LatLng, LatLngBounds, LeafletMouseEvent, Map, MapOptions } from 'leaflet';
 export declare class LeafletDirective implements OnChanges, OnInit {
     readonly DEFAULT_ZOOM: number;
     readonly DEFAULT_CENTER: LatLng;
@@ -16,6 +16,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     zoom: number;
     center: LatLng;
     fitBounds: LatLngBounds;
+    onClicked: EventEmitter<LeafletMouseEvent>;
     constructor(el: ElementRef);
     ngOnInit(): void;
     ngOnChanges(changes: {

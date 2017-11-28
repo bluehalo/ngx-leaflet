@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChange } from '@angular/core';
 
-import { latLng, LatLng, LatLngBounds, map, Map, MapOptions} from 'leaflet';
+import { latLng, LatLng, LatLngBounds, LeafletMouseEvent, map, Map, MapOptions} from 'leaflet';
 
 @Directive({
 	selector: '[leaflet]'
@@ -39,6 +39,7 @@ export class LeafletDirective
 	// Set fit bounds for map
 	@Input('leafletFitBounds') fitBounds: LatLngBounds;
 
+	@Output('onClicked') onClicked: EventEmitter<LeafletMouseEvent> = new EventEmitter<LeafletMouseEvent>();
 
 	constructor(el: ElementRef) {
 		this.element = el;
@@ -48,6 +49,10 @@ export class LeafletDirective
 
 		// Create the map with some reasonable defaults
 		this.map = map(this.element.nativeElement, this.options);
+
+		this.map.addEventListener('click', (e: LeafletMouseEvent) => {
+			this.onClicked.emit(e);
+		}, this);
 
 		// Only setView if there is a center/zoom
 		if (null != this.center && null != this.zoom) {
