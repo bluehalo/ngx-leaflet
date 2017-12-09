@@ -113,7 +113,7 @@ This project is exported using UMD and it includes typings.
 So, you shouldn't have to do anything special to use it if you're building your project in Typescript.
 
 #### Typescript Angular.io Module Import
-Before you can use the module in your Angular.io app, you'll need to import it in your application.
+Before you can use the module in your Angular.io app, you'll need to import it in your application (and potentially the module that's using it).
 
 For example, in your ```app.module.ts```, add:
  
@@ -128,6 +128,22 @@ imports: [
 ...
 
 ```
+
+Potentially, you'll also need to import it into the module of the component that is going to actually use the ngx-leaflet directives.
+See Angular.io docs of modules for more details (https://angular.io/guide/ngmodule). In this case, in ```my-module.module.ts```, add:
+ 
+```js
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
+...
+imports: [
+    ...
+    LeafletModule
+]
+...
+
+```
+
 
 #### Not Using Typescript?
 You brave soul.
