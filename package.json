@@ -2,8 +2,8 @@
 	"name": "@asymmetrik/ngx-template",
 	"artifactName": "ngx-template",
 	"moduleName": "ngxTemplate",
-	"description": "Angular 2 components template project",
-	"version": "1.5.0",
+	"description": "Angular.io components template project",
+	"version": "1.6.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -13,6 +13,7 @@
 
 	"main": "dist/bundles/ngx-template.js",
 	"module": "dist/index.js",
+	"jsnext:main": "dist/index.js",
 	"typings": "dist/index.d.ts",
 
 	"repository": {
@@ -49,6 +50,7 @@
 		"webpack": "3.10",
 		"webpack-dev-server": "2.9",
 		"angular2-template-loader": "0.6",
+		"awesome-typescript-loader": "3.4",
 		"css-loader": "0.28",
 		"file-loader": "1.1",
 		"html-loader": "0.5",
@@ -58,6 +60,8 @@
 		"awesome-typescript-loader": "3.4",
 		"url-loader": "0.6",
 		"source-map-loader": "0.2",
+		"style-loader": "0.19",
+		"url-loader": "0.6",
 
 		"gulp": "3.9",
 		"gulp-filter": "5.0",
