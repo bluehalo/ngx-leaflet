@@ -6,8 +6,8 @@
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-template.svg
 
 
-> Template project for an Angular 2+ Component.
-> Provides a template project structure, Gulp build, and Webpack dev server configuration for packaging an Angular 2 component and for running a local demo of that component. 
+> Template project for an Angular.io (v2+) Component.
+> Provides a template project structure, Gulp build, and Webpack dev server configuration for packaging an Angular.io component and for running a local demo of that component. 
 
 ## Table of Contents
 - [Install](#install)
@@ -73,7 +73,7 @@ Once you've got your own copy of the template, you will need to adapt the templa
 Modify all of the metadata about the package to be specific to your module.
 
 * dependencies - These should generally be empty. These dependencies will get packaged with your module in NPM, which is probably not what you intend.
-* peerDependencies - Specify all of the runtime dependencies of the module that someone using it will need. This would include any Angular 2+ dependencies referenced from within your code and any third party dependencies on which you depend.
+* peerDependencies - Specify all of the runtime dependencies of the module that someone using it will need. This would include any Angular.io dependencies referenced from within your code and any third party dependencies on which you depend.
 * devDependencies - You can specify all of the dependencies needed to build, run, and test your code in this project.
 
 #### ./LICENSE
@@ -83,7 +83,7 @@ If you want the license to be something other than MIT, modify this file. You sh
 You can modify this README.md file by removing this section and updating the other relevant content.
 
 #### ./src/index.ts
-This file should export your Angular 2 module(s). The build treats this as the primary library entry point. 
+This file should export your Angular.io module(s). The build treats this as the primary library entry point. 
 
 #### ./src
 Obviously. Change stuff here.
@@ -145,10 +145,10 @@ The build generates files in here.
 All the application source code including your component and the demo application for the component
 
 **./src/index.ts**
-This file should export everything you wish to publish as part of your Angular 2+ package 
+This file should export everything you wish to publish as part of your Angular.io package 
 
 **./src/demo**
-Contains a lightweight Angular 2 application that is built and run using Webpack. Use the demo to embed examples directly in the project for the purposes of development, testing, and demonstration.
+Contains a lightweight Angular.io application that is built and run using Webpack. Use the demo to embed examples directly in the project for the purposes of development, testing, and demonstration.
 
 **./src/!(demo)**
 This is up to you. A good basic convention is to package modules into directories. You can use the example component as a basic guideline.
