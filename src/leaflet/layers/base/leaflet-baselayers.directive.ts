@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { Control, Layer } from 'leaflet';
 
@@ -51,15 +51,18 @@ export class LeafletBaseLayersDirective
 	private leafletDirective: LeafletDirectiveWrapper;
 	private controlLayers: LeafletControlLayersWrapper;
 
-	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers) {
+	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-		this.controlLayers = new LeafletControlLayersWrapper();
+		this.controlLayers = new LeafletControlLayersWrapper(zone);
 		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
 	}
 
 	ngOnDestroy() {
 		this.baseLayers = {};
-		this.controlLayers.getLayersControl().remove();
+
+		this.zone.runOutsideAngular(() => {
+			this.controlLayers.getLayersControl().remove();
+		});
 	}
 
 	ngOnInit() {
@@ -68,9 +71,11 @@ export class LeafletBaseLayersDirective
 		this.leafletDirective.init();
 
 		// Initially configure the controlLayers
-		this.controlLayers
-			.init({}, this.layersControlOptions)
-			.addTo(this.leafletDirective.getMap());
+		this.zone.runOutsideAngular(() => {
+			this.controlLayers
+				.init({}, this.layersControlOptions)
+				.addTo(this.leafletDirective.getMap());
+		});
 
 		this.updateBaseLayers();
 
@@ -119,7 +124,10 @@ export class LeafletBaseLayersDirective
 			// No - set the baselayer to the first in the array and add it to the map
 			if (layers.length > 0) {
 				this.baseLayer = layers[0];
-				this.baseLayer.addTo(map);
+
+				this.zone.runOutsideAngular(() => {
+					this.baseLayer.addTo(map);
+				});
 			}
 		}
 
