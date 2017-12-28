@@ -1,4 +1,4 @@
-import { KeyValueChanges } from '@angular/core';
+import { KeyValueChanges, NgZone } from '@angular/core';
 
 import { control, Control, Layer } from 'leaflet';
 
@@ -6,8 +6,14 @@ import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.mo
 
 export class LeafletControlLayersWrapper {
 
+	protected zone: NgZone;
+
 	// The layers control object
 	protected layersControl: Control.Layers;
+
+	constructor(zone: NgZone) {
+		this.zone = zone;
+	}
 
 	getLayersControl() {
 		return this.layersControl;
@@ -18,7 +24,9 @@ export class LeafletControlLayersWrapper {
 		const baseLayers = controlConfig.baseLayers || {};
 		const overlays = controlConfig.overlays || {};
 
-		this.layersControl = control.layers(baseLayers, overlays, controlOptions);
+		this.zone.runOutsideAngular(() => {
+			this.layersControl = control.layers(baseLayers, overlays, controlOptions);
+		});
 
 		return this.layersControl;
 	}

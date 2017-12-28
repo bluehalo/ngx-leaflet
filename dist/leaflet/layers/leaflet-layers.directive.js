@@ -1,4 +1,5 @@
-import { Directive, Input, IterableDiffers } from '@angular/core';
+import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 /**
@@ -17,8 +18,9 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
  *
  */
 var LeafletLayersDirective = /** @class */ (function () {
-    function LeafletLayersDirective(leafletDirective, differs) {
+    function LeafletLayersDirective(leafletDirective, differs, zone) {
         this.differs = differs;
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.layersDiffer = this.differs.find([]).create();
     }
@@ -26,8 +28,9 @@ var LeafletLayersDirective = /** @class */ (function () {
         get: function () {
             return this.layersValue;
         },
+        set: 
         // Set/get the layers
-        set: function (v) {
+        function (v) {
             this.layersValue = v;
             // Now that we have a differ, do an immediate layer update
             this.updateLayers();
@@ -53,16 +56,30 @@ var LeafletLayersDirective = /** @class */ (function () {
      * This is important because it allows us to react to changes to the contents of the array as well
      * as changes to the actual array instance.
      */
-    LeafletLayersDirective.prototype.updateLayers = function () {
+    /**
+         * Update the state of the layers.
+         * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+         * This is important because it allows us to react to changes to the contents of the array as well
+         * as changes to the actual array instance.
+         */
+    LeafletLayersDirective.prototype.updateLayers = /**
+         * Update the state of the layers.
+         * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+         * This is important because it allows us to react to changes to the contents of the array as well
+         * as changes to the actual array instance.
+         */
+    function () {
         var map = this.leafletDirective.getMap();
         if (null != map && null != this.layersDiffer) {
-            var changes = this.layersDiffer.diff(this.layersValue);
-            if (null != changes) {
-                changes.forEachRemovedItem(function (c) {
-                    map.removeLayer(c.item);
-                });
-                changes.forEachAddedItem(function (c) {
-                    map.addLayer(c.item);
+            var changes_1 = this.layersDiffer.diff(this.layersValue);
+            if (null != changes_1) {
+                this.zone.runOutsideAngular(function () {
+                    changes_1.forEachRemovedItem(function (c) {
+                        map.removeLayer(c.item);
+                    });
+                    changes_1.forEachAddedItem(function (c) {
+                        map.addLayer(c.item);
+                    });
                 });
             }
         }
@@ -76,9 +93,10 @@ var LeafletLayersDirective = /** @class */ (function () {
     LeafletLayersDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: IterableDiffers, },
+        { type: NgZone, },
     ]; };
     LeafletLayersDirective.propDecorators = {
-        'layers': [{ type: Input, args: ['leafletLayers',] },],
+        "layers": [{ type: Input, args: ['leafletLayers',] },],
     };
     return LeafletLayersDirective;
 }());

@@ -5,10 +5,9 @@
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
 
-> Leaflet packages for Angular.io (Angular 2+).
+> Leaflet packages for Angular.io (v2+).
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
 > Supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
-
 
 ## Table of Contents
 - [Install](#install)
@@ -113,7 +112,7 @@ This project is exported using UMD and it includes typings.
 So, you shouldn't have to do anything special to use it if you're building your project in Typescript.
 
 #### Typescript Angular.io Module Import
-Before you can use the module in your Angular.io app, you'll need to import it in your application.
+Before you can use the module in your Angular.io app, you'll need to import it in your application (and potentially the module that's using it).
 
 For example, in your ```app.module.ts```, add:
  
@@ -128,6 +127,22 @@ imports: [
 ...
 
 ```
+
+Potentially, you'll also need to import it into the module of the component that is going to actually use the ngx-leaflet directives.
+See Angular.io docs of modules for more details (https://angular.io/guide/ngmodule). In this case, in ```my-module.module.ts```, add:
+ 
+```js
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
+...
+imports: [
+    ...
+    LeafletModule
+]
+...
+
+```
+
 
 #### Not Using Typescript?
 You brave soul.
@@ -236,7 +251,6 @@ While there is a performance impact for some use cases, this approach is more in
 There are at least two good approaches to improving performance when there are a lot of layers bound to the map.
 First, you can use the OnPush change detection strategy. There's an example of this in the demo.
 Second, you can wrap a large number of layers into a Leaflet layer group, which will reduce the number of layers the plugin actually has to track during diffs.
-
 
 
 ## API
@@ -591,6 +605,10 @@ Here's a list of articles, tutorials, guides, and help resources:
    
 
 ## Changelog
+
+### 2.6.0 
+Wrapping several map operations in ```NgZone.runOutsideAngular``` in order to prevent excessive dirty checking.
+If you encounter an unexpected issue due to this change, please file an issue.
 
 ### 2.5.0
 Added the ```[leafletLayer]``` directive for adding/removing individual layers.

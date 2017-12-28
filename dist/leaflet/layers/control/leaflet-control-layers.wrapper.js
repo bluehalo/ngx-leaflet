@@ -1,15 +1,20 @@
-import { control } from 'leaflet';
+import { KeyValueChanges, NgZone } from '@angular/core';
+import { control, Control, Layer } from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 var LeafletControlLayersWrapper = /** @class */ (function () {
-    function LeafletControlLayersWrapper() {
+    function LeafletControlLayersWrapper(zone) {
+        this.zone = zone;
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.init = function (controlConfig, controlOptions) {
+        var _this = this;
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
-        this.layersControl = control.layers(baseLayers, overlays, controlOptions);
+        this.zone.runOutsideAngular(function () {
+            _this.layersControl = control.layers(baseLayers, overlays, controlOptions);
+        });
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {

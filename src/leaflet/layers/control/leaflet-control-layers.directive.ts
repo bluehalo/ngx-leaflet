@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { Layer } from 'leaflet';
 
@@ -54,9 +54,9 @@ export class LeafletLayersControlDirective
 	private controlLayers: LeafletControlLayersWrapper;
 	private leafletDirective: LeafletDirectiveWrapper;
 
-	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers) {
+	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-		this.controlLayers = new LeafletControlLayersWrapper();
+		this.controlLayers = new LeafletControlLayersWrapper(zone);
 
 		// Generate differs
 		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
@@ -70,9 +70,11 @@ export class LeafletLayersControlDirective
 		this.leafletDirective.init();
 
 		// Set up all the initial settings
-		this.controlLayers
-			.init({}, this.layersControlOptions)
-			.addTo(this.leafletDirective.getMap());
+		this.zone.runOutsideAngular(() => {
+			this.controlLayers
+				.init({}, this.layersControlOptions)
+				.addTo(this.leafletDirective.getMap());
+		});
 
 		this.updateLayers();
 
@@ -81,7 +83,10 @@ export class LeafletLayersControlDirective
 	ngOnDestroy() {
 
 		this.layersControlConfig = { baseLayers: {}, overlays: {} };
-		this.controlLayers.getLayersControl().remove();
+
+		this.zone.runOutsideAngular(() => {
+			this.controlLayers.getLayersControl().remove();
+		});
 
 	}
 

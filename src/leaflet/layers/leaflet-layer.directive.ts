@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import { Directive, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
 
 import { Layer } from 'leaflet';
 
@@ -24,7 +24,7 @@ export class LeafletLayerDirective
 	// Wrapper for the leaflet directive (manages the parent directive)
 	private leafletDirective: LeafletDirectiveWrapper;
 
-	constructor(leafletDirective: LeafletDirective) {
+	constructor(leafletDirective: LeafletDirective, private zone: NgZone) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
 	}
 
@@ -36,7 +36,11 @@ export class LeafletLayerDirective
 	}
 
 	ngOnDestroy() {
-		this.layer.remove();
+
+		this.zone.runOutsideAngular(() => {
+			this.layer.remove();
+		});
+
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
@@ -47,8 +51,14 @@ export class LeafletLayerDirective
 			const p: Layer = changes['layer'].previousValue;
 			const n = changes['layer'].currentValue;
 
-			if (null != p) { p.remove(); }
-			if (null != n) { this.leafletDirective.getMap().addLayer(n); }
+			this.zone.runOutsideAngular(() => {
+				if (null != p) {
+					p.remove();
+				}
+				if (null != n) {
+					this.leafletDirective.getMap().addLayer(n);
+				}
+			});
 		}
 
 	}
