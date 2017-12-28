@@ -5,10 +5,9 @@
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
 
-> Leaflet packages for Angular.io (Angular 2+).
+> Leaflet packages for Angular.io (v2+).
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
 > Supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
-
 
 ## Table of Contents
 - [Install](#install)
@@ -252,7 +251,6 @@ While there is a performance impact for some use cases, this approach is more in
 There are at least two good approaches to improving performance when there are a lot of layers bound to the map.
 First, you can use the OnPush change detection strategy. There's an example of this in the demo.
 Second, you can wrap a large number of layers into a Leaflet layer group, which will reduce the number of layers the plugin actually has to track during diffs.
-
 
 
 ## API

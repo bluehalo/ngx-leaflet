@@ -1,4 +1,5 @@
-import { Directive, Input, NgZone } from '@angular/core';
+import { Directive, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 /**
@@ -50,7 +51,7 @@ var LeafletLayerDirective = /** @class */ (function () {
         { type: NgZone, },
     ]; };
     LeafletLayerDirective.propDecorators = {
-        'layer': [{ type: Input, args: ['leafletLayer',] },],
+        "layer": [{ type: Input, args: ['leafletLayer',] },],
     };
     return LeafletLayerDirective;
 }());

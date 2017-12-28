@@ -1,4 +1,5 @@
-import { Directive, Input, IterableDiffers, NgZone } from '@angular/core';
+import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 /**
@@ -27,8 +28,9 @@ var LeafletLayersDirective = /** @class */ (function () {
         get: function () {
             return this.layersValue;
         },
+        set: 
         // Set/get the layers
-        set: function (v) {
+        function (v) {
             this.layersValue = v;
             // Now that we have a differ, do an immediate layer update
             this.updateLayers();
@@ -54,7 +56,19 @@ var LeafletLayersDirective = /** @class */ (function () {
      * This is important because it allows us to react to changes to the contents of the array as well
      * as changes to the actual array instance.
      */
-    LeafletLayersDirective.prototype.updateLayers = function () {
+    /**
+         * Update the state of the layers.
+         * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+         * This is important because it allows us to react to changes to the contents of the array as well
+         * as changes to the actual array instance.
+         */
+    LeafletLayersDirective.prototype.updateLayers = /**
+         * Update the state of the layers.
+         * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+         * This is important because it allows us to react to changes to the contents of the array as well
+         * as changes to the actual array instance.
+         */
+    function () {
         var map = this.leafletDirective.getMap();
         if (null != map && null != this.layersDiffer) {
             var changes_1 = this.layersDiffer.diff(this.layersValue);
@@ -82,7 +96,7 @@ var LeafletLayersDirective = /** @class */ (function () {
         { type: NgZone, },
     ]; };
     LeafletLayersDirective.propDecorators = {
-        'layers': [{ type: Input, args: ['leafletLayers',] },],
+        "layers": [{ type: Input, args: ['leafletLayers',] },],
     };
     return LeafletLayersDirective;
 }());

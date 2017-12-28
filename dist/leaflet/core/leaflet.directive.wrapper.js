@@ -1,3 +1,5 @@
+import { LeafletDirective } from './leaflet.directive';
+import { Map } from 'leaflet';
 var LeafletDirectiveWrapper = /** @class */ (function () {
     function LeafletDirectiveWrapper(leafletDirective) {
         this.leafletDirective = leafletDirective;

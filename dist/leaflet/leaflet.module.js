@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { LeafletDirective } from './core/leaflet.directive';
 import { LeafletLayerDirective } from './layers/leaflet-layer.directive';
 import { LeafletLayersDirective } from './layers/leaflet-layers.directive';

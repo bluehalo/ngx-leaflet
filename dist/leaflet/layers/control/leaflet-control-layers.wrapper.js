@@ -1,4 +1,5 @@
-import { control } from 'leaflet';
+import { KeyValueChanges, NgZone } from '@angular/core';
+import { control, Control, Layer } from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 var LeafletControlLayersWrapper = /** @class */ (function () {
     function LeafletControlLayersWrapper(zone) {
