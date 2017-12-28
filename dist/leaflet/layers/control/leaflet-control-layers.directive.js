@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffers } from '@angular/core';
+import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
@@ -14,10 +14,11 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
  * using the layers directive. Otherwise, the last one it sees will be used.
  */
 var LeafletLayersControlDirective = /** @class */ (function () {
-    function LeafletLayersControlDirective(leafletDirective, differs) {
+    function LeafletLayersControlDirective(leafletDirective, differs, zone) {
         this.differs = differs;
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper();
+        this.controlLayers = new LeafletControlLayersWrapper(zone);
         // Generate differs
         this.baseLayersDiffer = this.differs.find({}).create();
         this.overlaysDiffer = this.differs.find({}).create();
@@ -46,17 +47,23 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         configurable: true
     });
     LeafletLayersControlDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Init the map
         this.leafletDirective.init();
         // Set up all the initial settings
-        this.controlLayers
-            .init({}, this.layersControlOptions)
-            .addTo(this.leafletDirective.getMap());
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers
+                .init({}, _this.layersControlOptions)
+                .addTo(_this.leafletDirective.getMap());
+        });
         this.updateLayers();
     };
     LeafletLayersControlDirective.prototype.ngOnDestroy = function () {
+        var _this = this;
         this.layersControlConfig = { baseLayers: {}, overlays: {} };
-        this.controlLayers.getLayersControl().remove();
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers.getLayersControl().remove();
+        });
     };
     LeafletLayersControlDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
@@ -86,6 +93,7 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     LeafletLayersControlDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: KeyValueDiffers, },
+        { type: NgZone, },
     ]; };
     LeafletLayersControlDirective.propDecorators = {
         'layersControlConfig': [{ type: Input, args: ['leafletLayersControl',] },],

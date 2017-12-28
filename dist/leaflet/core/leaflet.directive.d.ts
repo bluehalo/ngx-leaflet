@@ -1,10 +1,11 @@
-import { ElementRef, EventEmitter, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { ElementRef, EventEmitter, NgZone, OnChanges, OnInit, SimpleChange } from '@angular/core';
 import { LatLng, LatLngBounds, Map, MapOptions } from 'leaflet';
 export declare class LeafletDirective implements OnChanges, OnInit {
+    private element;
+    private zone;
     readonly DEFAULT_ZOOM: number;
     readonly DEFAULT_CENTER: LatLng;
     readonly DEFAULT_FPZ_OPTIONS: {};
-    element: ElementRef;
     resizeTimer: any;
     map: Map;
     fitBoundsOptions: {};
@@ -16,7 +17,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     zoom: number;
     center: LatLng;
     fitBounds: LatLngBounds;
-    constructor(el: ElementRef);
+    constructor(element: ElementRef, zone: NgZone);
     ngOnInit(): void;
     ngOnChanges(changes: {
         [key: string]: SimpleChange;

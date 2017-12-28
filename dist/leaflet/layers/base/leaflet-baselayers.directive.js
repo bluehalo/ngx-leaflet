@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffers } from '@angular/core';
+import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
@@ -15,10 +15,11 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
  * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
 var LeafletBaseLayersDirective = /** @class */ (function () {
-    function LeafletBaseLayersDirective(leafletDirective, differs) {
+    function LeafletBaseLayersDirective(leafletDirective, differs, zone) {
         this.differs = differs;
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper();
+        this.controlLayers = new LeafletControlLayersWrapper(zone);
         this.baseLayersDiffer = this.differs.find({}).create();
     }
     Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
@@ -34,16 +35,22 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         configurable: true
     });
     LeafletBaseLayersDirective.prototype.ngOnDestroy = function () {
+        var _this = this;
         this.baseLayers = {};
-        this.controlLayers.getLayersControl().remove();
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers.getLayersControl().remove();
+        });
     };
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Init the map
         this.leafletDirective.init();
         // Initially configure the controlLayers
-        this.controlLayers
-            .init({}, this.layersControlOptions)
-            .addTo(this.leafletDirective.getMap());
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers
+                .init({}, _this.layersControlOptions)
+                .addTo(_this.leafletDirective.getMap());
+        });
         this.updateBaseLayers();
     };
     LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
@@ -64,6 +71,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
      * Check the current base layer and change it to the new one if necessary
      */
     LeafletBaseLayersDirective.prototype.syncBaseLayer = function () {
+        var _this = this;
         var map = this.leafletDirective.getMap();
         var layers = LeafletUtil.mapToArray(this.baseLayers);
         var foundLayer;
@@ -80,7 +88,9 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
             // No - set the baselayer to the first in the array and add it to the map
             if (layers.length > 0) {
                 this.baseLayer = layers[0];
-                this.baseLayer.addTo(map);
+                this.zone.runOutsideAngular(function () {
+                    _this.baseLayer.addTo(map);
+                });
             }
         }
     };
@@ -93,6 +103,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     LeafletBaseLayersDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: KeyValueDiffers, },
+        { type: NgZone, },
     ]; };
     LeafletBaseLayersDirective.propDecorators = {
         'baseLayers': [{ type: Input, args: ['leafletBaseLayers',] },],

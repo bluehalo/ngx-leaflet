@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, NgZone } from '@angular/core';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 /**
@@ -9,7 +9,8 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
  *
  */
 var LeafletLayerDirective = /** @class */ (function () {
-    function LeafletLayerDirective(leafletDirective) {
+    function LeafletLayerDirective(leafletDirective, zone) {
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
     }
     LeafletLayerDirective.prototype.ngOnInit = function () {
@@ -17,19 +18,25 @@ var LeafletLayerDirective = /** @class */ (function () {
         this.leafletDirective.init();
     };
     LeafletLayerDirective.prototype.ngOnDestroy = function () {
-        this.layer.remove();
+        var _this = this;
+        this.zone.runOutsideAngular(function () {
+            _this.layer.remove();
+        });
     };
     LeafletLayerDirective.prototype.ngOnChanges = function (changes) {
+        var _this = this;
         if (changes['layer']) {
             // Update the layer
-            var p = changes['layer'].previousValue;
-            var n = changes['layer'].currentValue;
-            if (null != p) {
-                p.remove();
-            }
-            if (null != n) {
-                this.leafletDirective.getMap().addLayer(n);
-            }
+            var p_1 = changes['layer'].previousValue;
+            var n_1 = changes['layer'].currentValue;
+            this.zone.runOutsideAngular(function () {
+                if (null != p_1) {
+                    p_1.remove();
+                }
+                if (null != n_1) {
+                    _this.leafletDirective.getMap().addLayer(n_1);
+                }
+            });
         }
     };
     LeafletLayerDirective.decorators = [
@@ -40,6 +47,7 @@ var LeafletLayerDirective = /** @class */ (function () {
     /** @nocollapse */
     LeafletLayerDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
+        { type: NgZone, },
     ]; };
     LeafletLayerDirective.propDecorators = {
         'layer': [{ type: Input, args: ['leafletLayer',] },],

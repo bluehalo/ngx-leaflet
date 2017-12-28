@@ -1,4 +1,4 @@
-/*! @asymmetrik/ngx-leaflet - 2.5.3 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 2.5.4 - Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -6,7 +6,9 @@
 }(this, (function (exports,core,leaflet) { 'use strict';
 
 var LeafletDirective = /** @class */ (function () {
-    function LeafletDirective(el) {
+    function LeafletDirective(element, zone) {
+        this.element = element;
+        this.zone = zone;
         this.DEFAULT_ZOOM = 1;
         this.DEFAULT_CENTER = leaflet.latLng(38.907192, -77.036871);
         this.DEFAULT_FPZ_OPTIONS = {};
@@ -18,11 +20,14 @@ var LeafletDirective = /** @class */ (function () {
         this.options = {};
         // Configure callback function for the map
         this.mapReady = new core.EventEmitter();
-        this.element = el;
+        // Nothing here
     }
     LeafletDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Create the map with some reasonable defaults
-        this.map = leaflet.map(this.element.nativeElement, this.options);
+        this.zone.runOutsideAngular(function () {
+            _this.map = leaflet.map(_this.element.nativeElement, _this.options);
+        });
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
             this.setView(this.center, this.zoom);
@@ -69,8 +74,11 @@ var LeafletDirective = /** @class */ (function () {
      * Resize the map to fit it's parent container
      */
     LeafletDirective.prototype.doResize = function () {
+        var _this = this;
         // Invalidate the map size to trigger it to update itself
-        this.map.invalidateSize({});
+        this.zone.runOutsideAngular(function () {
+            _this.map.invalidateSize({});
+        });
     };
     /**
      * Manage a delayed resize of the component
@@ -87,8 +95,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param zoom The new zoom level
      */
     LeafletDirective.prototype.setView = function (center, zoom) {
+        var _this = this;
         if (this.map && null != center && null != zoom) {
-            this.map.setView(center, zoom, this.zoomPanOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.setView(center, zoom, _this.zoomPanOptions);
+            });
         }
     };
     /**
@@ -96,8 +107,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param zoom the new zoom level for the map
      */
     LeafletDirective.prototype.setZoom = function (zoom) {
+        var _this = this;
         if (this.map && null != zoom) {
-            this.map.setZoom(zoom, this.zoomOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.setZoom(zoom, _this.zoomOptions);
+            });
         }
     };
     /**
@@ -105,8 +119,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param center the center point
      */
     LeafletDirective.prototype.setCenter = function (center) {
+        var _this = this;
         if (this.map && null != center) {
-            this.map.panTo(center, this.panOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.panTo(center, _this.panOptions);
+            });
         }
     };
     /**
@@ -114,8 +131,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param center the center point
      */
     LeafletDirective.prototype.setFitBounds = function (latLngBounds) {
+        var _this = this;
         if (this.map && null != latLngBounds) {
-            this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.fitBounds(latLngBounds, _this.fitBoundsOptions);
+            });
         }
     };
     LeafletDirective.decorators = [
@@ -126,6 +146,7 @@ var LeafletDirective = /** @class */ (function () {
     /** @nocollapse */
     LeafletDirective.ctorParameters = function () { return [
         { type: core.ElementRef, },
+        { type: core.NgZone, },
     ]; };
     LeafletDirective.propDecorators = {
         'fitBoundsOptions': [{ type: core.Input, args: ['leafletFitBoundsOptions',] },],
@@ -163,7 +184,8 @@ var LeafletDirectiveWrapper = /** @class */ (function () {
  *
  */
 var LeafletLayerDirective = /** @class */ (function () {
-    function LeafletLayerDirective(leafletDirective) {
+    function LeafletLayerDirective(leafletDirective, zone) {
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
     }
     LeafletLayerDirective.prototype.ngOnInit = function () {
@@ -171,19 +193,25 @@ var LeafletLayerDirective = /** @class */ (function () {
         this.leafletDirective.init();
     };
     LeafletLayerDirective.prototype.ngOnDestroy = function () {
-        this.layer.remove();
+        var _this = this;
+        this.zone.runOutsideAngular(function () {
+            _this.layer.remove();
+        });
     };
     LeafletLayerDirective.prototype.ngOnChanges = function (changes) {
+        var _this = this;
         if (changes['layer']) {
             // Update the layer
-            var p = changes['layer'].previousValue;
-            var n = changes['layer'].currentValue;
-            if (null != p) {
-                p.remove();
-            }
-            if (null != n) {
-                this.leafletDirective.getMap().addLayer(n);
-            }
+            var p_1 = changes['layer'].previousValue;
+            var n_1 = changes['layer'].currentValue;
+            this.zone.runOutsideAngular(function () {
+                if (null != p_1) {
+                    p_1.remove();
+                }
+                if (null != n_1) {
+                    _this.leafletDirective.getMap().addLayer(n_1);
+                }
+            });
         }
     };
     LeafletLayerDirective.decorators = [
@@ -194,6 +222,7 @@ var LeafletLayerDirective = /** @class */ (function () {
     /** @nocollapse */
     LeafletLayerDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
+        { type: core.NgZone, },
     ]; };
     LeafletLayerDirective.propDecorators = {
         'layer': [{ type: core.Input, args: ['leafletLayer',] },],
@@ -217,8 +246,9 @@ var LeafletLayerDirective = /** @class */ (function () {
  *
  */
 var LeafletLayersDirective = /** @class */ (function () {
-    function LeafletLayersDirective(leafletDirective, differs) {
+    function LeafletLayersDirective(leafletDirective, differs, zone) {
         this.differs = differs;
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.layersDiffer = this.differs.find([]).create();
     }
@@ -256,13 +286,15 @@ var LeafletLayersDirective = /** @class */ (function () {
     LeafletLayersDirective.prototype.updateLayers = function () {
         var map$$1 = this.leafletDirective.getMap();
         if (null != map$$1 && null != this.layersDiffer) {
-            var changes = this.layersDiffer.diff(this.layersValue);
-            if (null != changes) {
-                changes.forEachRemovedItem(function (c) {
-                    map$$1.removeLayer(c.item);
-                });
-                changes.forEachAddedItem(function (c) {
-                    map$$1.addLayer(c.item);
+            var changes_1 = this.layersDiffer.diff(this.layersValue);
+            if (null != changes_1) {
+                this.zone.runOutsideAngular(function () {
+                    changes_1.forEachRemovedItem(function (c) {
+                        map$$1.removeLayer(c.item);
+                    });
+                    changes_1.forEachAddedItem(function (c) {
+                        map$$1.addLayer(c.item);
+                    });
                 });
             }
         }
@@ -276,6 +308,7 @@ var LeafletLayersDirective = /** @class */ (function () {
     LeafletLayersDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: core.IterableDiffers, },
+        { type: core.NgZone, },
     ]; };
     LeafletLayersDirective.propDecorators = {
         'layers': [{ type: core.Input, args: ['leafletLayers',] },],
@@ -296,15 +329,19 @@ var LeafletControlLayersChanges = /** @class */ (function () {
 }());
 
 var LeafletControlLayersWrapper = /** @class */ (function () {
-    function LeafletControlLayersWrapper() {
+    function LeafletControlLayersWrapper(zone) {
+        this.zone = zone;
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.init = function (controlConfig, controlOptions) {
+        var _this = this;
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
-        this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
+        this.zone.runOutsideAngular(function () {
+            _this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
+        });
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {
@@ -363,10 +400,11 @@ var LeafletControlLayersConfig = /** @class */ (function () {
  * using the layers directive. Otherwise, the last one it sees will be used.
  */
 var LeafletLayersControlDirective = /** @class */ (function () {
-    function LeafletLayersControlDirective(leafletDirective, differs) {
+    function LeafletLayersControlDirective(leafletDirective, differs, zone) {
         this.differs = differs;
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper();
+        this.controlLayers = new LeafletControlLayersWrapper(zone);
         // Generate differs
         this.baseLayersDiffer = this.differs.find({}).create();
         this.overlaysDiffer = this.differs.find({}).create();
@@ -395,17 +433,23 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         configurable: true
     });
     LeafletLayersControlDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Init the map
         this.leafletDirective.init();
         // Set up all the initial settings
-        this.controlLayers
-            .init({}, this.layersControlOptions)
-            .addTo(this.leafletDirective.getMap());
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers
+                .init({}, _this.layersControlOptions)
+                .addTo(_this.leafletDirective.getMap());
+        });
         this.updateLayers();
     };
     LeafletLayersControlDirective.prototype.ngOnDestroy = function () {
+        var _this = this;
         this.layersControlConfig = { baseLayers: {}, overlays: {} };
-        this.controlLayers.getLayersControl().remove();
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers.getLayersControl().remove();
+        });
     };
     LeafletLayersControlDirective.prototype.ngDoCheck = function () {
         this.updateLayers();
@@ -435,6 +479,7 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     LeafletLayersControlDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: core.KeyValueDiffers, },
+        { type: core.NgZone, },
     ]; };
     LeafletLayersControlDirective.propDecorators = {
         'layersControlConfig': [{ type: core.Input, args: ['leafletLayersControl',] },],
@@ -470,10 +515,11 @@ var LeafletUtil = /** @class */ (function () {
  * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
 var LeafletBaseLayersDirective = /** @class */ (function () {
-    function LeafletBaseLayersDirective(leafletDirective, differs) {
+    function LeafletBaseLayersDirective(leafletDirective, differs, zone) {
         this.differs = differs;
+        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper();
+        this.controlLayers = new LeafletControlLayersWrapper(zone);
         this.baseLayersDiffer = this.differs.find({}).create();
     }
     Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
@@ -489,16 +535,22 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         configurable: true
     });
     LeafletBaseLayersDirective.prototype.ngOnDestroy = function () {
+        var _this = this;
         this.baseLayers = {};
-        this.controlLayers.getLayersControl().remove();
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers.getLayersControl().remove();
+        });
     };
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Init the map
         this.leafletDirective.init();
         // Initially configure the controlLayers
-        this.controlLayers
-            .init({}, this.layersControlOptions)
-            .addTo(this.leafletDirective.getMap());
+        this.zone.runOutsideAngular(function () {
+            _this.controlLayers
+                .init({}, _this.layersControlOptions)
+                .addTo(_this.leafletDirective.getMap());
+        });
         this.updateBaseLayers();
     };
     LeafletBaseLayersDirective.prototype.ngDoCheck = function () {
@@ -519,6 +571,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
      * Check the current base layer and change it to the new one if necessary
      */
     LeafletBaseLayersDirective.prototype.syncBaseLayer = function () {
+        var _this = this;
         var map$$1 = this.leafletDirective.getMap();
         var layers = LeafletUtil.mapToArray(this.baseLayers);
         var foundLayer;
@@ -535,7 +588,9 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
             // No - set the baselayer to the first in the array and add it to the map
             if (layers.length > 0) {
                 this.baseLayer = layers[0];
-                this.baseLayer.addTo(map$$1);
+                this.zone.runOutsideAngular(function () {
+                    _this.baseLayer.addTo(map$$1);
+                });
             }
         }
     };
@@ -548,6 +603,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     LeafletBaseLayersDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: core.KeyValueDiffers, },
+        { type: core.NgZone, },
     ]; };
     LeafletBaseLayersDirective.propDecorators = {
         'baseLayers': [{ type: core.Input, args: ['leafletBaseLayers',] },],

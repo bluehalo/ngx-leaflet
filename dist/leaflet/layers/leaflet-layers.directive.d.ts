@@ -1,4 +1,4 @@
-import { DoCheck, IterableDiffer, IterableDiffers, OnDestroy, OnInit } from '@angular/core';
+import { DoCheck, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 /**
@@ -18,11 +18,12 @@ import { LeafletDirective } from '../core/leaflet.directive';
  */
 export declare class LeafletLayersDirective implements DoCheck, OnDestroy, OnInit {
     private differs;
+    private zone;
     layersValue: Layer[];
     layersDiffer: IterableDiffer<Layer>;
     layers: Layer[];
     private leafletDirective;
-    constructor(leafletDirective: LeafletDirective, differs: IterableDiffers);
+    constructor(leafletDirective: LeafletDirective, differs: IterableDiffers, zone: NgZone);
     ngDoCheck(): void;
     ngOnInit(): void;
     ngOnDestroy(): void;

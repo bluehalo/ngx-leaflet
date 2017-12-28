@@ -1,4 +1,4 @@
-import { OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import { NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 /**
@@ -9,9 +9,10 @@ import { LeafletDirective } from '../core/leaflet.directive';
  *
  */
 export declare class LeafletLayerDirective implements OnChanges, OnDestroy, OnInit {
+    private zone;
     layer: Layer;
     private leafletDirective;
-    constructor(leafletDirective: LeafletDirective);
+    constructor(leafletDirective: LeafletDirective, zone: NgZone);
     ngOnInit(): void;
     ngOnDestroy(): void;
     ngOnChanges(changes: {

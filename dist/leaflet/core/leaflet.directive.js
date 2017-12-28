@@ -1,7 +1,9 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Output } from '@angular/core';
 import { latLng, map } from 'leaflet';
 var LeafletDirective = /** @class */ (function () {
-    function LeafletDirective(el) {
+    function LeafletDirective(element, zone) {
+        this.element = element;
+        this.zone = zone;
         this.DEFAULT_ZOOM = 1;
         this.DEFAULT_CENTER = latLng(38.907192, -77.036871);
         this.DEFAULT_FPZ_OPTIONS = {};
@@ -13,11 +15,14 @@ var LeafletDirective = /** @class */ (function () {
         this.options = {};
         // Configure callback function for the map
         this.mapReady = new EventEmitter();
-        this.element = el;
+        // Nothing here
     }
     LeafletDirective.prototype.ngOnInit = function () {
+        var _this = this;
         // Create the map with some reasonable defaults
-        this.map = map(this.element.nativeElement, this.options);
+        this.zone.runOutsideAngular(function () {
+            _this.map = map(_this.element.nativeElement, _this.options);
+        });
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
             this.setView(this.center, this.zoom);
@@ -64,8 +69,11 @@ var LeafletDirective = /** @class */ (function () {
      * Resize the map to fit it's parent container
      */
     LeafletDirective.prototype.doResize = function () {
+        var _this = this;
         // Invalidate the map size to trigger it to update itself
-        this.map.invalidateSize({});
+        this.zone.runOutsideAngular(function () {
+            _this.map.invalidateSize({});
+        });
     };
     /**
      * Manage a delayed resize of the component
@@ -82,8 +90,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param zoom The new zoom level
      */
     LeafletDirective.prototype.setView = function (center, zoom) {
+        var _this = this;
         if (this.map && null != center && null != zoom) {
-            this.map.setView(center, zoom, this.zoomPanOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.setView(center, zoom, _this.zoomPanOptions);
+            });
         }
     };
     /**
@@ -91,8 +102,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param zoom the new zoom level for the map
      */
     LeafletDirective.prototype.setZoom = function (zoom) {
+        var _this = this;
         if (this.map && null != zoom) {
-            this.map.setZoom(zoom, this.zoomOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.setZoom(zoom, _this.zoomOptions);
+            });
         }
     };
     /**
@@ -100,8 +114,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param center the center point
      */
     LeafletDirective.prototype.setCenter = function (center) {
+        var _this = this;
         if (this.map && null != center) {
-            this.map.panTo(center, this.panOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.panTo(center, _this.panOptions);
+            });
         }
     };
     /**
@@ -109,8 +126,11 @@ var LeafletDirective = /** @class */ (function () {
      * @param center the center point
      */
     LeafletDirective.prototype.setFitBounds = function (latLngBounds) {
+        var _this = this;
         if (this.map && null != latLngBounds) {
-            this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
+            this.zone.runOutsideAngular(function () {
+                _this.map.fitBounds(latLngBounds, _this.fitBoundsOptions);
+            });
         }
     };
     LeafletDirective.decorators = [
@@ -121,6 +141,7 @@ var LeafletDirective = /** @class */ (function () {
     /** @nocollapse */
     LeafletDirective.ctorParameters = function () { return [
         { type: ElementRef, },
+        { type: NgZone, },
     ]; };
     LeafletDirective.propDecorators = {
         'fitBoundsOptions': [{ type: Input, args: ['leafletFitBoundsOptions',] },],
