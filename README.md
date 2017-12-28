@@ -606,6 +606,10 @@ Here's a list of articles, tutorials, guides, and help resources:
 
 ## Changelog
 
+### 2.6.0 
+Wrapping several map operations in ```NgZone.runOutsideAngular``` in order to prevent excessive dirty checking.
+If you encounter an unexpected issue due to this change, please file an issue.
+
 ### 2.5.0
 Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
