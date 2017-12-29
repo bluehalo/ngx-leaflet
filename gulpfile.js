@@ -55,22 +55,20 @@ gulp.task('validate-ts', () => {
  */
 
 // Build JS from the TS source
-gulp.task('build-ts', () => {
+gulp.task('build-ts', (done) => {
 	let configPath = './tsconfig-aot.json';
 
-	return gulp.src(configPath)
-		.pipe(through.obj((file, encoding, callback) => {
-			ngc([ '-p', configPath ], (error) => {
-				let err = (null == error)
-					? null
-					: new plugins.util.PluginError(
-						'ngc',
-						`${plugins.util.colors.red('Compilation error.')}\nSee details in the ngc output`,
-						{fileName: file.path});
+	let err = null;
+	let result = ngc([ '-p', configPath ], (error) => {
+		err = error;
+	});
 
-				callback(err, file);
-			});
-		}));
+	if (0 !== result || null != err) {
+		err = new plugins.util.PluginError(
+			'ngc', `${plugins.util.colors.red('Compilation error, see details in ngc output.')}`, {});
+	}
+	done(err);
+
 });
 
 // Bundle the generated JS (rollup and then uglify)
@@ -94,7 +92,7 @@ gulp.task('rollup-js', () => {
 				'@angular/core'
 			],
 			onwarn: (warning) => {
-				if ('THIS_IS_UNDEFINED' === warning.code) {
+				if ('THIS_IS_UNDEFINED' === warning.code || 'UNUSED_EXTERNAL_IMPORT' === warning.code) {
 					return;
 				}
 				plugins.util.log(warning.message);

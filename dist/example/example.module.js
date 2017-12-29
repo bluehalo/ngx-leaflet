@@ -6,6 +6,14 @@ var ExampleModule = /** @class */ (function () {
     ExampleModule.forRoot = function () {
         return { ngModule: ExampleModule, providers: [] };
     };
+    ExampleModule.decorators = [
+        { type: NgModule, args: [{
+                    exports: [ExampleComponent],
+                    declarations: [ExampleComponent]
+                },] },
+    ];
+    /** @nocollapse */
+    ExampleModule.ctorParameters = function () { return []; };
     return ExampleModule;
 }());
 export { ExampleModule };
