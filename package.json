@@ -3,7 +3,7 @@
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "2.6.0",
+	"version": "2.6.1",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -26,13 +26,13 @@
 	},
 
 	"devDependencies": {
-		"@angular/common": "5",
-		"@angular/compiler": "5",
-		"@angular/compiler-cli": "5",
-		"@angular/core": "5",
-		"@angular/forms": "5",
-		"@angular/platform-browser": "5",
-		"@angular/platform-browser-dynamic": "5",
+		"@angular/common": "4",
+		"@angular/compiler": "4",
+		"@angular/compiler-cli": "4",
+		"@angular/core": "4",
+		"@angular/forms": "4",
+		"@angular/platform-browser": "4",
+		"@angular/platform-browser-dynamic": "4",
 
 		"bootstrap": "4.0.0-beta.3",
 
