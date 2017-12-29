@@ -19,8 +19,8 @@
 	},
 
 	"peerDependencies": {
-		"@angular/core": "5",
-		"@angular/common": "5",
+		"@angular/core": ">=5",
+		"@angular/common": ">=5",
 
 		"leaflet": "1"
 	},
