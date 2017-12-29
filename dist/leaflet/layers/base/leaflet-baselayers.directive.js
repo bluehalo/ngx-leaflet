@@ -1,5 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Control, Layer } from 'leaflet';
+import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
@@ -27,9 +26,8 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         get: function () {
             return this.baseLayersValue;
         },
-        set: 
         // Set/get baseLayers
-        function (v) {
+        set: function (v) {
             this.baseLayersValue = v;
             this.updateBaseLayers();
         },
@@ -72,13 +70,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     /**
      * Check the current base layer and change it to the new one if necessary
      */
-    /**
-         * Check the current base layer and change it to the new one if necessary
-         */
-    LeafletBaseLayersDirective.prototype.syncBaseLayer = /**
-         * Check the current base layer and change it to the new one if necessary
-         */
-    function () {
+    LeafletBaseLayersDirective.prototype.syncBaseLayer = function () {
         var _this = this;
         var map = this.leafletDirective.getMap();
         var layers = LeafletUtil.mapToArray(this.baseLayers);
@@ -114,8 +106,8 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         { type: NgZone, },
     ]; };
     LeafletBaseLayersDirective.propDecorators = {
-        "baseLayers": [{ type: Input, args: ['leafletBaseLayers',] },],
-        "layersControlOptions": [{ type: Input, args: ['leafletLayersControlOptions',] },],
+        'baseLayers': [{ type: Input, args: ['leafletBaseLayers',] },],
+        'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
     };
     return LeafletBaseLayersDirective;
 }());

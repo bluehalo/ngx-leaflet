@@ -1,8 +1,7 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnInit, Output, SimpleChange } from '@angular/core';
-import { latLng, LatLng, LatLngBounds, map, Map, MapOptions } from 'leaflet';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Output } from '@angular/core';
+import { latLng, map } from 'leaflet';
 var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(element, zone) {
-        // Nothing here
         this.element = element;
         this.zone = zone;
         this.DEFAULT_ZOOM = 1;
@@ -16,6 +15,7 @@ var LeafletDirective = /** @class */ (function () {
         this.options = {};
         // Configure callback function for the map
         this.mapReady = new EventEmitter();
+        // Nothing here
     }
     LeafletDirective.prototype.ngOnInit = function () {
         var _this = this;
@@ -37,13 +37,13 @@ var LeafletDirective = /** @class */ (function () {
     };
     LeafletDirective.prototype.ngOnChanges = function (changes) {
         /*
-                 * The following code is to address an issue with our (basic) implementation of
-                 * zooming and panning. From our testing, it seems that a pan operation followed
-                 * by a zoom operation in the same thread will interfere with eachother. The zoom
-                 * operation interrupts/cancels the pan, resulting in a final center point that is
-                 * inaccurate. The solution seems to be to either separate them with a timeout or
-                  * to collapse them into a setView call.
-                 */
+         * The following code is to address an issue with our (basic) implementation of
+         * zooming and panning. From our testing, it seems that a pan operation followed
+         * by a zoom operation in the same thread will interfere with eachother. The zoom
+         * operation interrupts/cancels the pan, resulting in a final center point that is
+         * inaccurate. The solution seems to be to either separate them with a timeout or
+          * to collapse them into a setView call.
+         */
         // Zooming and Panning
         if (changes['zoom'] && changes['center'] && null != this.zoom && null != this.center) {
             this.setView(changes['center'].currentValue, changes['zoom'].currentValue);
@@ -68,13 +68,7 @@ var LeafletDirective = /** @class */ (function () {
     /**
      * Resize the map to fit it's parent container
      */
-    /**
-         * Resize the map to fit it's parent container
-         */
-    LeafletDirective.prototype.doResize = /**
-         * Resize the map to fit it's parent container
-         */
-    function () {
+    LeafletDirective.prototype.doResize = function () {
         var _this = this;
         // Invalidate the map size to trigger it to update itself
         this.zone.runOutsideAngular(function () {
@@ -84,13 +78,7 @@ var LeafletDirective = /** @class */ (function () {
     /**
      * Manage a delayed resize of the component
      */
-    /**
-         * Manage a delayed resize of the component
-         */
-    LeafletDirective.prototype.delayResize = /**
-         * Manage a delayed resize of the component
-         */
-    function () {
+    LeafletDirective.prototype.delayResize = function () {
         if (null != this.resizeTimer) {
             clearTimeout(this.resizeTimer);
         }
@@ -101,17 +89,7 @@ var LeafletDirective = /** @class */ (function () {
      * @param center The new center
      * @param zoom The new zoom level
      */
-    /**
-         * Set the view (center/zoom) all at once
-         * @param center The new center
-         * @param zoom The new zoom level
-         */
-    LeafletDirective.prototype.setView = /**
-         * Set the view (center/zoom) all at once
-         * @param center The new center
-         * @param zoom The new zoom level
-         */
-    function (center, zoom) {
+    LeafletDirective.prototype.setView = function (center, zoom) {
         var _this = this;
         if (this.map && null != center && null != zoom) {
             this.zone.runOutsideAngular(function () {
@@ -123,15 +101,7 @@ var LeafletDirective = /** @class */ (function () {
      * Set the map zoom level
      * @param zoom the new zoom level for the map
      */
-    /**
-         * Set the map zoom level
-         * @param zoom the new zoom level for the map
-         */
-    LeafletDirective.prototype.setZoom = /**
-         * Set the map zoom level
-         * @param zoom the new zoom level for the map
-         */
-    function (zoom) {
+    LeafletDirective.prototype.setZoom = function (zoom) {
         var _this = this;
         if (this.map && null != zoom) {
             this.zone.runOutsideAngular(function () {
@@ -143,15 +113,7 @@ var LeafletDirective = /** @class */ (function () {
      * Set the center of the map
      * @param center the center point
      */
-    /**
-         * Set the center of the map
-         * @param center the center point
-         */
-    LeafletDirective.prototype.setCenter = /**
-         * Set the center of the map
-         * @param center the center point
-         */
-    function (center) {
+    LeafletDirective.prototype.setCenter = function (center) {
         var _this = this;
         if (this.map && null != center) {
             this.zone.runOutsideAngular(function () {
@@ -163,15 +125,7 @@ var LeafletDirective = /** @class */ (function () {
      * Fit the map to the bounds
      * @param center the center point
      */
-    /**
-         * Fit the map to the bounds
-         * @param center the center point
-         */
-    LeafletDirective.prototype.setFitBounds = /**
-         * Fit the map to the bounds
-         * @param center the center point
-         */
-    function (latLngBounds) {
+    LeafletDirective.prototype.setFitBounds = function (latLngBounds) {
         var _this = this;
         if (this.map && null != latLngBounds) {
             this.zone.runOutsideAngular(function () {
@@ -190,16 +144,16 @@ var LeafletDirective = /** @class */ (function () {
         { type: NgZone, },
     ]; };
     LeafletDirective.propDecorators = {
-        "fitBoundsOptions": [{ type: Input, args: ['leafletFitBoundsOptions',] },],
-        "panOptions": [{ type: Input, args: ['leafletPanOptions',] },],
-        "zoomOptions": [{ type: Input, args: ['leafletZoomOptions',] },],
-        "zoomPanOptions": [{ type: Input, args: ['leafletZoomPanOptions',] },],
-        "options": [{ type: Input, args: ['leafletOptions',] },],
-        "mapReady": [{ type: Output, args: ['leafletMapReady',] },],
-        "zoom": [{ type: Input, args: ['leafletZoom',] },],
-        "center": [{ type: Input, args: ['leafletCenter',] },],
-        "fitBounds": [{ type: Input, args: ['leafletFitBounds',] },],
-        "onResize": [{ type: HostListener, args: ['window:resize', [],] },],
+        'fitBoundsOptions': [{ type: Input, args: ['leafletFitBoundsOptions',] },],
+        'panOptions': [{ type: Input, args: ['leafletPanOptions',] },],
+        'zoomOptions': [{ type: Input, args: ['leafletZoomOptions',] },],
+        'zoomPanOptions': [{ type: Input, args: ['leafletZoomPanOptions',] },],
+        'options': [{ type: Input, args: ['leafletOptions',] },],
+        'mapReady': [{ type: Output, args: ['leafletMapReady',] },],
+        'zoom': [{ type: Input, args: ['leafletZoom',] },],
+        'center': [{ type: Input, args: ['leafletCenter',] },],
+        'fitBounds': [{ type: Input, args: ['leafletFitBounds',] },],
+        'onResize': [{ type: HostListener, args: ['window:resize', [],] },],
     };
     return LeafletDirective;
 }());

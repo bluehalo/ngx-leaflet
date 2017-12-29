@@ -60,16 +60,17 @@ gulp.task('build-ts', () => {
 
 	return gulp.src(configPath)
 		.pipe(through.obj((file, encoding, callback) => {
-			ngc([ '-p', configPath ], (error) => {
-				let err = (null == error)
-					? null
-					: new plugins.util.PluginError(
-						'ngc',
-						`${plugins.util.colors.red('Compilation error.')}\nSee details in the ngc output`,
-						{fileName: file.path});
+			ngc({ _: [], p: configPath })
+				.then((code) => {
+					let err = code === 0
+						? null
+						: new plugins.util.PluginError(
+							'ngc',
+							`${plugins.util.colors.red('Compilation error.')}\nSee details in the ngc output`,
+							{fileName: file.path});
 
-				callback(err, file);
-			});
+					callback(err, file);
+				});
 		}));
 });
 

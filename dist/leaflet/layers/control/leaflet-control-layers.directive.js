@@ -1,5 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Layer } from 'leaflet';
+import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
@@ -97,8 +96,8 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         { type: NgZone, },
     ]; };
     LeafletLayersControlDirective.propDecorators = {
-        "layersControlConfig": [{ type: Input, args: ['leafletLayersControl',] },],
-        "layersControlOptions": [{ type: Input, args: ['leafletLayersControlOptions',] },],
+        'layersControlConfig': [{ type: Input, args: ['leafletLayersControl',] },],
+        'layersControlOptions': [{ type: Input, args: ['leafletLayersControlOptions',] },],
     };
     return LeafletLayersControlDirective;
 }());

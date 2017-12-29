@@ -1,4 +1,4 @@
-import { tileLayer, TileLayer } from 'leaflet';
+import { tileLayer } from 'leaflet';
 var LeafletTileLayerDefinition = /** @class */ (function () {
     function LeafletTileLayerDefinition(type, url, options) {
         this.type = type;
@@ -12,21 +12,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * @param layerDef The layer to create
      * @returns {TileLayer} The TileLayer that has been created
      */
-    /**
-         * Creates a TileLayer from the provided definition. This is a convenience function
-         * to help with generating layers from objects.
-         *
-         * @param layerDef The layer to create
-         * @returns {TileLayer} The TileLayer that has been created
-         */
-    LeafletTileLayerDefinition.createTileLayer = /**
-         * Creates a TileLayer from the provided definition. This is a convenience function
-         * to help with generating layers from objects.
-         *
-         * @param layerDef The layer to create
-         * @returns {TileLayer} The TileLayer that has been created
-         */
-    function (layerDef) {
+    LeafletTileLayerDefinition.createTileLayer = function (layerDef) {
         var layer;
         switch (layerDef.type) {
             case 'xyz':
@@ -46,21 +32,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      * @param layerDefs A map of key to tile layer definition
      * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
      */
-    /**
-         * Creates a TileLayer for each key in the incoming map. This is a convenience function
-         * for generating an associative array of layers from an associative array of objects
-         *
-         * @param layerDefs A map of key to tile layer definition
-         * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
-         */
-    LeafletTileLayerDefinition.createTileLayers = /**
-         * Creates a TileLayer for each key in the incoming map. This is a convenience function
-         * for generating an associative array of layers from an associative array of objects
-         *
-         * @param layerDefs A map of key to tile layer definition
-         * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
-         */
-    function (layerDefs) {
+    LeafletTileLayerDefinition.createTileLayers = function (layerDefs) {
         var layers = {};
         for (var k in layerDefs) {
             if (layerDefs.hasOwnProperty(k)) {
@@ -74,17 +46,7 @@ var LeafletTileLayerDefinition = /** @class */ (function () {
      *
      * @returns {TileLayer} A new TileLayer
      */
-    /**
-         * Create a Tile Layer from the current state of this object
-         *
-         * @returns {TileLayer} A new TileLayer
-         */
-    LeafletTileLayerDefinition.prototype.createTileLayer = /**
-         * Create a Tile Layer from the current state of this object
-         *
-         * @returns {TileLayer} A new TileLayer
-         */
-    function () {
+    LeafletTileLayerDefinition.prototype.createTileLayer = function () {
         return LeafletTileLayerDefinition.createTileLayer(this);
     };
     return LeafletTileLayerDefinition;
