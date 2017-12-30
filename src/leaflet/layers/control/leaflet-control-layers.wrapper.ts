@@ -23,7 +23,10 @@ export class LeafletControlLayersWrapper {
 		const baseLayers = controlConfig.baseLayers || {};
 		const overlays = controlConfig.overlays || {};
 
-		this.layersControl = control.layers(baseLayers, overlays, controlOptions);
+		// Create the control outside of angular to ensure events don't trigger change detection
+		this.zone.runOutsideAngular(() => {
+			this.layersControl = control.layers(baseLayers, overlays, controlOptions);
+		});
 
 		return this.layersControl;
 	}
@@ -53,7 +56,9 @@ export class LeafletControlLayersWrapper {
 
 		if (null != changes) {
 
+			// All layer management is outside angular to avoid layer events from triggering change detection
 			this.zone.runOutsideAngular(() => {
+
 				changes.forEachChangedItem((c) => {
 					this.layersControl.removeLayer(c.previousValue);
 					addFn.call(this.layersControl, c.currentValue, c.key);
@@ -67,6 +72,7 @@ export class LeafletControlLayersWrapper {
 					addFn.call(this.layersControl, c.currentValue, c.key);
 					results.layersAdded++;
 				});
+
 			});
 
 		}

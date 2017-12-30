@@ -381,9 +381,13 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.init = function (controlConfig, controlOptions) {
+        var _this = this;
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
-        this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
+        // Create the control outside of angular to ensure events don't trigger change detection
+        this.zone.runOutsideAngular(function () {
+            _this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
+        });
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {
@@ -404,6 +408,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
         var _this = this;
         var results = new LeafletControlLayersChanges();
         if (null != changes) {
+            // All layer management is outside angular to avoid layer events from triggering change detection
             this.zone.runOutsideAngular(function () {
                 changes.forEachChangedItem(function (c) {
                     _this.layersControl.removeLayer(c.previousValue);
