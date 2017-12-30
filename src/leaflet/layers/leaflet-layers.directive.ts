@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnDestroy, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { Layer} from 'leaflet';
 
@@ -48,7 +48,7 @@ export class LeafletLayersDirective
 	// Wrapper for the leaflet directive (manages the parent directive)
 	private leafletDirective: LeafletDirectiveWrapper;
 
-	constructor(leafletDirective: LeafletDirective, private differs: IterableDiffers) {
+	constructor(leafletDirective: LeafletDirective, private differs: IterableDiffers, private zone: NgZone) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
 		this.layersDiffer = this.differs.find([]).create<Layer>();
 	}
@@ -86,11 +86,16 @@ export class LeafletLayersDirective
 			const changes = this.layersDiffer.diff(this.layersValue);
 			if (null != changes) {
 
-				changes.forEachRemovedItem((c) => {
-					map.removeLayer(c.item);
-				});
-				changes.forEachAddedItem((c) => {
-					map.addLayer(c.item);
+				// Run outside angular to ensure layer events don't trigger change detection
+				this.zone.runOutsideAngular(() => {
+
+					changes.forEachRemovedItem((c) => {
+						map.removeLayer(c.item);
+					});
+					changes.forEachAddedItem((c) => {
+						map.addLayer(c.item);
+					});
+
 				});
 
 			}
