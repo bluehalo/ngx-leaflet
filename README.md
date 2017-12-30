@@ -554,7 +554,6 @@ ngOnInit() {
 
 
 
-
 ### A Note About Markers
 If you use this component in an Angular.io project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
 The issue is related to how Leaflet manipulates the image URLs used to render markers when you are using the default marker images.

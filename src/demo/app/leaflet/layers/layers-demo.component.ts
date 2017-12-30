@@ -10,8 +10,6 @@ import { LeafletLayersDemoModel } from './layers-demo.model';
 })
 export class LeafletLayersDemoComponent {
 
-	fitBounds: any = null;
-
 	// Open Street Map and Open Cycle Map definitions
 	LAYER_OCM = {
 		id: 'opencyclemap',
