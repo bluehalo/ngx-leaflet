@@ -1,4 +1,4 @@
-import {Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit} from '@angular/core';
+import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { Layer } from 'leaflet';
 
