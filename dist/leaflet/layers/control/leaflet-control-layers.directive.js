@@ -19,7 +19,7 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         this.differs = differs;
         this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(zone);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone);
         // Generate differs
         this.baseLayersDiffer = this.differs.find({}).create();
         this.overlaysDiffer = this.differs.find({}).create();
@@ -51,8 +51,10 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         var _this = this;
         // Init the map
         this.leafletDirective.init();
-        // Set up all the initial settings
+        // Set up control outside of angular to avoid change detection when using the control
         this.zone.runOutsideAngular(function () {
+            // Set up all the initial settings
+            // Set up all the initial settings
             _this.controlLayers
                 .init({}, _this.layersControlOptions)
                 .addTo(_this.leafletDirective.getMap());
@@ -60,11 +62,8 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         this.updateLayers();
     };
     LeafletLayersControlDirective.prototype.ngOnDestroy = function () {
-        var _this = this;
         this.layersControlConfig = { baseLayers: {}, overlays: {} };
-        this.zone.runOutsideAngular(function () {
-            _this.controlLayers.getLayersControl().remove();
-        });
+        this.controlLayers.getLayersControl().remove();
     };
     LeafletLayersControlDirective.prototype.ngDoCheck = function () {
         this.updateLayers();

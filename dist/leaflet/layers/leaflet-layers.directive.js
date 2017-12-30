@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, OnDestroy, OnInit } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
@@ -18,9 +18,8 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
  *
  */
 var LeafletLayersDirective = /** @class */ (function () {
-    function LeafletLayersDirective(leafletDirective, differs, zone) {
+    function LeafletLayersDirective(leafletDirective, differs) {
         this.differs = differs;
-        this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.layersDiffer = this.differs.find([]).create();
     }
@@ -71,15 +70,13 @@ var LeafletLayersDirective = /** @class */ (function () {
     function () {
         var map = this.leafletDirective.getMap();
         if (null != map && null != this.layersDiffer) {
-            var changes_1 = this.layersDiffer.diff(this.layersValue);
-            if (null != changes_1) {
-                this.zone.runOutsideAngular(function () {
-                    changes_1.forEachRemovedItem(function (c) {
-                        map.removeLayer(c.item);
-                    });
-                    changes_1.forEachAddedItem(function (c) {
-                        map.addLayer(c.item);
-                    });
+            var changes = this.layersDiffer.diff(this.layersValue);
+            if (null != changes) {
+                changes.forEachRemovedItem(function (c) {
+                    map.removeLayer(c.item);
+                });
+                changes.forEachAddedItem(function (c) {
+                    map.addLayer(c.item);
                 });
             }
         }
@@ -93,7 +90,6 @@ var LeafletLayersDirective = /** @class */ (function () {
     LeafletLayersDirective.ctorParameters = function () { return [
         { type: LeafletDirective, },
         { type: IterableDiffers, },
-        { type: NgZone, },
     ]; };
     LeafletLayersDirective.propDecorators = {
         "layers": [{ type: Input, args: ['leafletLayers',] },],

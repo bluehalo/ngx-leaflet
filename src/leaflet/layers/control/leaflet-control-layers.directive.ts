@@ -1,4 +1,4 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit} from '@angular/core';
 
 import { Layer } from 'leaflet';
 
@@ -56,7 +56,7 @@ export class LeafletLayersControlDirective
 
 	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-		this.controlLayers = new LeafletControlLayersWrapper(zone);
+		this.controlLayers = new LeafletControlLayersWrapper(this.zone);
 
 		// Generate differs
 		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
@@ -69,11 +69,14 @@ export class LeafletLayersControlDirective
 		// Init the map
 		this.leafletDirective.init();
 
-		// Set up all the initial settings
+		// Set up control outside of angular to avoid change detection when using the control
 		this.zone.runOutsideAngular(() => {
+
+			// Set up all the initial settings
 			this.controlLayers
 				.init({}, this.layersControlOptions)
 				.addTo(this.leafletDirective.getMap());
+
 		});
 
 		this.updateLayers();
@@ -81,13 +84,8 @@ export class LeafletLayersControlDirective
 	}
 
 	ngOnDestroy() {
-
 		this.layersControlConfig = { baseLayers: {}, overlays: {} };
-
-		this.zone.runOutsideAngular(() => {
-			this.controlLayers.getLayersControl().remove();
-		});
-
+		this.controlLayers.getLayersControl().remove();
 	}
 
 	ngDoCheck() {
@@ -100,6 +98,7 @@ export class LeafletLayersControlDirective
 		const layersControl = this.controlLayers.getLayersControl();
 
 		if (null != map && null != layersControl) {
+
 			// Run the baselayers differ
 			if (null != this.baseLayersDiffer && null != this.layersControlConfigValue.baseLayers) {
 				const changes = this.baseLayersDiffer.diff(this.layersControlConfigValue.baseLayers);
@@ -111,6 +110,7 @@ export class LeafletLayersControlDirective
 				const changes = this.overlaysDiffer.diff(this.layersControlConfigValue.overlays);
 				this.controlLayers.applyOverlayChanges(changes);
 			}
+
 		}
 
 	}

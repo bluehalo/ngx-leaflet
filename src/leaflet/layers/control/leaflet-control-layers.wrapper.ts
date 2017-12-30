@@ -1,4 +1,4 @@
-import { KeyValueChanges, NgZone } from '@angular/core';
+import {KeyValueChanges, NgZone} from '@angular/core';
 
 import { control, Control, Layer } from 'leaflet';
 
@@ -6,13 +6,12 @@ import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.mo
 
 export class LeafletControlLayersWrapper {
 
-	protected zone: NgZone;
 
 	// The layers control object
 	protected layersControl: Control.Layers;
 
-	constructor(zone: NgZone) {
-		this.zone = zone;
+	constructor(private zone: NgZone) {
+		// Nothing here
 	}
 
 	getLayersControl() {
@@ -24,9 +23,7 @@ export class LeafletControlLayersWrapper {
 		const baseLayers = controlConfig.baseLayers || {};
 		const overlays = controlConfig.overlays || {};
 
-		this.zone.runOutsideAngular(() => {
-			this.layersControl = control.layers(baseLayers, overlays, controlOptions);
-		});
+		this.layersControl = control.layers(baseLayers, overlays, controlOptions);
 
 		return this.layersControl;
 	}
@@ -56,18 +53,20 @@ export class LeafletControlLayersWrapper {
 
 		if (null != changes) {
 
-			changes.forEachChangedItem((c) => {
-				this.layersControl.removeLayer(c.previousValue);
-				addFn.call(this.layersControl, c.currentValue, c.key);
-				results.layersChanged++;
-			});
-			changes.forEachRemovedItem((c) => {
-				this.layersControl.removeLayer(c.previousValue);
-				results.layersRemoved++;
-			});
-			changes.forEachAddedItem((c) => {
-				addFn.call(this.layersControl, c.currentValue, c.key);
-				results.layersAdded++;
+			this.zone.runOutsideAngular(() => {
+				changes.forEachChangedItem((c) => {
+					this.layersControl.removeLayer(c.previousValue);
+					addFn.call(this.layersControl, c.currentValue, c.key);
+					results.layersChanged++;
+				});
+				changes.forEachRemovedItem((c) => {
+					this.layersControl.removeLayer(c.previousValue);
+					results.layersRemoved++;
+				});
+				changes.forEachAddedItem((c) => {
+					addFn.call(this.layersControl, c.currentValue, c.key);
+					results.layersAdded++;
+				});
 			});
 
 		}

@@ -19,10 +19,7 @@ var LeafletLayerDirective = /** @class */ (function () {
         this.leafletDirective.init();
     };
     LeafletLayerDirective.prototype.ngOnDestroy = function () {
-        var _this = this;
-        this.zone.runOutsideAngular(function () {
-            _this.layer.remove();
-        });
+        this.layer.remove();
     };
     LeafletLayerDirective.prototype.ngOnChanges = function (changes) {
         var _this = this;
