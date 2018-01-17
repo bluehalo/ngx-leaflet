@@ -36,11 +36,7 @@ export class LeafletLayerDirective
 	}
 
 	ngOnDestroy() {
-
-		this.zone.runOutsideAngular(() => {
-			this.layer.remove();
-		});
-
+		this.layer.remove();
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
@@ -59,6 +55,7 @@ export class LeafletLayerDirective
 					this.leafletDirective.getMap().addLayer(n);
 				}
 			});
+
 		}
 
 	}

@@ -3,6 +3,7 @@ import { control, Control, Layer } from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 var LeafletControlLayersWrapper = /** @class */ (function () {
     function LeafletControlLayersWrapper(zone) {
+        // Nothing here
         this.zone = zone;
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {
@@ -12,6 +13,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
         var _this = this;
         var baseLayers = controlConfig.baseLayers || {};
         var overlays = controlConfig.overlays || {};
+        // Create the control outside of angular to ensure events don't trigger change detection
         this.zone.runOutsideAngular(function () {
             _this.layersControl = control.layers(baseLayers, overlays, controlOptions);
         });
@@ -35,18 +37,21 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
         var _this = this;
         var results = new LeafletControlLayersChanges();
         if (null != changes) {
-            changes.forEachChangedItem(function (c) {
-                _this.layersControl.removeLayer(c.previousValue);
-                addFn.call(_this.layersControl, c.currentValue, c.key);
-                results.layersChanged++;
-            });
-            changes.forEachRemovedItem(function (c) {
-                _this.layersControl.removeLayer(c.previousValue);
-                results.layersRemoved++;
-            });
-            changes.forEachAddedItem(function (c) {
-                addFn.call(_this.layersControl, c.currentValue, c.key);
-                results.layersAdded++;
+            // All layer management is outside angular to avoid layer events from triggering change detection
+            this.zone.runOutsideAngular(function () {
+                changes.forEachChangedItem(function (c) {
+                    _this.layersControl.removeLayer(c.previousValue);
+                    addFn.call(_this.layersControl, c.currentValue, c.key);
+                    results.layersChanged++;
+                });
+                changes.forEachRemovedItem(function (c) {
+                    _this.layersControl.removeLayer(c.previousValue);
+                    results.layersRemoved++;
+                });
+                changes.forEachAddedItem(function (c) {
+                    addFn.call(_this.layersControl, c.currentValue, c.key);
+                    results.layersAdded++;
+                });
             });
         }
         return results;

@@ -19,8 +19,10 @@ var LeafletDirective = /** @class */ (function () {
     }
     LeafletDirective.prototype.ngOnInit = function () {
         var _this = this;
-        // Create the map with some reasonable defaults
+        // Create the map outside of angular so the various map events don't trigger change detection
         this.zone.runOutsideAngular(function () {
+            // Create the map with some reasonable defaults
+            // Create the map with some reasonable defaults
             _this.map = map(_this.element.nativeElement, _this.options);
         });
         // Only setView if there is a center/zoom
@@ -76,8 +78,10 @@ var LeafletDirective = /** @class */ (function () {
          */
     function () {
         var _this = this;
-        // Invalidate the map size to trigger it to update itself
+        // Run this outside of angular so the map events stay outside of angular
         this.zone.runOutsideAngular(function () {
+            // Invalidate the map size to trigger it to update itself
+            // Invalidate the map size to trigger it to update itself
             _this.map.invalidateSize({});
         });
     };
@@ -112,11 +116,8 @@ var LeafletDirective = /** @class */ (function () {
          * @param zoom The new zoom level
          */
     function (center, zoom) {
-        var _this = this;
         if (this.map && null != center && null != zoom) {
-            this.zone.runOutsideAngular(function () {
-                _this.map.setView(center, zoom, _this.zoomPanOptions);
-            });
+            this.map.setView(center, zoom, this.zoomPanOptions);
         }
     };
     /**
@@ -132,11 +133,8 @@ var LeafletDirective = /** @class */ (function () {
          * @param zoom the new zoom level for the map
          */
     function (zoom) {
-        var _this = this;
         if (this.map && null != zoom) {
-            this.zone.runOutsideAngular(function () {
-                _this.map.setZoom(zoom, _this.zoomOptions);
-            });
+            this.map.setZoom(zoom, this.zoomOptions);
         }
     };
     /**
@@ -152,11 +150,8 @@ var LeafletDirective = /** @class */ (function () {
          * @param center the center point
          */
     function (center) {
-        var _this = this;
         if (this.map && null != center) {
-            this.zone.runOutsideAngular(function () {
-                _this.map.panTo(center, _this.panOptions);
-            });
+            this.map.panTo(center, this.panOptions);
         }
     };
     /**
@@ -172,11 +167,8 @@ var LeafletDirective = /** @class */ (function () {
          * @param center the center point
          */
     function (latLngBounds) {
-        var _this = this;
         if (this.map && null != latLngBounds) {
-            this.zone.runOutsideAngular(function () {
-                _this.map.fitBounds(latLngBounds, _this.fitBoundsOptions);
-            });
+            this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
         }
     };
     LeafletDirective.decorators = [

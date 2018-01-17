@@ -20,7 +20,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         this.differs = differs;
         this.zone = zone;
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(zone);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone);
         this.baseLayersDiffer = this.differs.find({}).create();
     }
     Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
@@ -37,18 +37,17 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         configurable: true
     });
     LeafletBaseLayersDirective.prototype.ngOnDestroy = function () {
-        var _this = this;
         this.baseLayers = {};
-        this.zone.runOutsideAngular(function () {
-            _this.controlLayers.getLayersControl().remove();
-        });
+        this.controlLayers.getLayersControl().remove();
     };
     LeafletBaseLayersDirective.prototype.ngOnInit = function () {
         var _this = this;
         // Init the map
         this.leafletDirective.init();
-        // Initially configure the controlLayers
+        // Create the control outside angular to prevent events from triggering chnage detection
         this.zone.runOutsideAngular(function () {
+            // Initially configure the controlLayers
+            // Initially configure the controlLayers
             _this.controlLayers
                 .init({}, _this.layersControlOptions)
                 .addTo(_this.leafletDirective.getMap());
@@ -96,6 +95,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
             // No - set the baselayer to the first in the array and add it to the map
             if (layers.length > 0) {
                 this.baseLayer = layers[0];
+                // Add layers outside of angular to prevent events from triggering change detection
                 this.zone.runOutsideAngular(function () {
                     _this.baseLayer.addTo(map);
                 });

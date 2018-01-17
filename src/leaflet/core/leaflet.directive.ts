@@ -48,9 +48,12 @@ export class LeafletDirective
 
 	ngOnInit() {
 
-		// Create the map with some reasonable defaults
+		// Create the map outside of angular so the various map events don't trigger change detection
 		this.zone.runOutsideAngular(() => {
+
+			// Create the map with some reasonable defaults
 			this.map = map(this.element.nativeElement, this.options);
+
 		});
 
 		// Only setView if there is a center/zoom
@@ -116,9 +119,12 @@ export class LeafletDirective
 	 */
 	private doResize() {
 
-		// Invalidate the map size to trigger it to update itself
+		// Run this outside of angular so the map events stay outside of angular
 		this.zone.runOutsideAngular(() => {
+
+			// Invalidate the map size to trigger it to update itself
 			this.map.invalidateSize({});
+
 		});
 
 	}
@@ -142,9 +148,7 @@ export class LeafletDirective
 	private setView(center: LatLng, zoom: number) {
 
 		if (this.map && null != center && null != zoom) {
-			this.zone.runOutsideAngular(() => {
-				this.map.setView(center, zoom, this.zoomPanOptions);
-			});
+			this.map.setView(center, zoom, this.zoomPanOptions);
 		}
 
 	}
@@ -156,9 +160,7 @@ export class LeafletDirective
 	private setZoom(zoom: number) {
 
 		if (this.map && null != zoom) {
-			this.zone.runOutsideAngular(() => {
-				this.map.setZoom(zoom, this.zoomOptions);
-			});
+			this.map.setZoom(zoom, this.zoomOptions);
 		}
 
 	}
@@ -170,9 +172,7 @@ export class LeafletDirective
 	private setCenter(center: LatLng) {
 
 		if (this.map && null != center) {
-			this.zone.runOutsideAngular(() => {
-				this.map.panTo(center, this.panOptions);
-			});
+			this.map.panTo(center, this.panOptions);
 		}
 
 	}
@@ -184,9 +184,7 @@ export class LeafletDirective
 	private setFitBounds(latLngBounds: LatLngBounds) {
 
 		if (this.map && null != latLngBounds) {
-			this.zone.runOutsideAngular(() => {
-				this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
-			});
+			this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
 		}
 
 	}

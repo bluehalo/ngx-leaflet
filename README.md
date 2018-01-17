@@ -517,6 +517,43 @@ The benefit of this approach is it's a bit cleaner if you're interested in addin
 This is how the ```@asymmetrik/ngx-leaflet-draw``` and ```@asymmetrik/ngx-leaflet-d3``` packages work, so you can use them as references.
 
 
+### A Note About Change Detection
+Change detection is at the core of how Angular works.
+Angular.io uses Zone.js to scope how and when (events, actions, etc.) to trigger change detection.
+It's important to scope it carefully because change detection can be fairly expensive, so you don't want it to happen constantly.
+
+Libraries like ngx-leaflet have to decide what to do inside and outside of the Angular zone, balancing convenience and performance.
+Leaflet registers handlers for a lot of mouse events. 
+To mitigate the performance impact of constantly running change detection on all mouse events (including mousemove), ngx-leaflet runs most of the Leaflet code outside of the Angular zone.
+The impact of this is that Angular won't automatically detect changes that you make inside of a Leaflet event callback.
+The solution is to manually tell Angular to detect changes.
+
+Consider the following example:
+
+```js
+fitBounds: any = null;
+circle = circle([ 46.95, -122 ], { radius: 5000 });
+
+// Inject the Change Detector into your component
+constructor(private changeDetector: ChangeDetectorRef) {}
+
+ngOnInit() {
+	
+	// The 'add' event callback happens outside of the Angular zone
+	this.circle.on('add', () => {
+		
+		// Because we're outside of Angular's zone, this change won't be detected
+		this.fitBounds = this.circle.getBounds();
+		
+		// But, it will if we tell Angular to detect changes 
+		this.changeDetector.detectChanges();
+		
+	});
+}
+``` 
+
+
+
 ### A Note About Markers
 If you use this component in an Angular.io project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
 The issue is related to how Leaflet manipulates the image URLs used to render markers when you are using the default marker images.
@@ -605,6 +642,10 @@ Here's a list of articles, tutorials, guides, and help resources:
    
 
 ## Changelog
+
+### 3.0
+Migrated to Angular 5. Also cleaned up some of the functionality related to Angular zone management.
+Added documentation to README on Zone management.
 
 ### 2.6.0 
 Wrapping several map operations in ```NgZone.runOutsideAngular``` in order to prevent excessive dirty checking.

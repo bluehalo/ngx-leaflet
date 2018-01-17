@@ -73,6 +73,7 @@ var LeafletLayersDirective = /** @class */ (function () {
         if (null != map && null != this.layersDiffer) {
             var changes_1 = this.layersDiffer.diff(this.layersValue);
             if (null != changes_1) {
+                // Run outside angular to ensure layer events don't trigger change detection
                 this.zone.runOutsideAngular(function () {
                     changes_1.forEachRemovedItem(function (c) {
                         map.removeLayer(c.item);

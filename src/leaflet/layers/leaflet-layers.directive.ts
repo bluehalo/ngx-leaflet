@@ -86,13 +86,16 @@ export class LeafletLayersDirective
 			const changes = this.layersDiffer.diff(this.layersValue);
 			if (null != changes) {
 
+				// Run outside angular to ensure layer events don't trigger change detection
 				this.zone.runOutsideAngular(() => {
+
 					changes.forEachRemovedItem((c) => {
 						map.removeLayer(c.item);
 					});
 					changes.forEachAddedItem((c) => {
 						map.addLayer(c.item);
 					});
+
 				});
 
 			}
