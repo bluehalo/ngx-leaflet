@@ -1,5 +1,5 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Control, Layer } from 'leaflet';
+import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
+import { Control } from 'leaflet';
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';

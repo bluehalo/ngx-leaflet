@@ -1,5 +1,5 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnInit, Output, SimpleChange } from '@angular/core';
-import { latLng, LatLng, LatLngBounds, map, Map, MapOptions } from 'leaflet';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Output } from '@angular/core';
+import { latLng, LatLng, LatLngBounds, map } from 'leaflet';
 var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(element, zone) {
         // Nothing here

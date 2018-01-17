@@ -1,4 +1,4 @@
-import { tileLayer, TileLayer } from 'leaflet';
+import { tileLayer } from 'leaflet';
 var LeafletTileLayerDefinition = /** @class */ (function () {
     function LeafletTileLayerDefinition(type, url, options) {
         this.type = type;

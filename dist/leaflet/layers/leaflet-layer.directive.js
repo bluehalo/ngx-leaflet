@@ -1,4 +1,4 @@
-import { Directive, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import { Directive, Input, NgZone } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';

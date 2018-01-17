@@ -1,5 +1,4 @@
-import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Layer } from 'leaflet';
+import { Directive, Input, IterableDiffers, NgZone } from '@angular/core';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 /**

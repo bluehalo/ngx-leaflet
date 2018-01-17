@@ -1,4 +1,3 @@
-import { Layer } from 'leaflet';
 var LeafletControlLayersConfig = /** @class */ (function () {
     function LeafletControlLayersConfig() {
         this.baseLayers = {};

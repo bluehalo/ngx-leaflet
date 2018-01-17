@@ -7,7 +7,7 @@
 
 > Leaflet packages for Angular.io (v2+).
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
-> Supports Angular v4, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
+> Supports Angular v5, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
 ## Table of Contents
 - [Install](#install)
@@ -644,17 +644,20 @@ Here's a list of articles, tutorials, guides, and help resources:
 ## Changelog
 
 ### 3.0
-Migrated to Angular 5. Also cleaned up some of the functionality related to Angular zone management.
+Support for Angular 5. Also cleaned up some of the functionality related to Angular zone management.
 Added documentation to README on Zone management.
 
-### 2.6.0 
+### 2.0
+Support for Angular 4.
+
+#### 2.6.0 
 Wrapping several map operations in ```NgZone.runOutsideAngular``` in order to prevent excessive dirty checking.
 If you encounter an unexpected issue due to this change, please file an issue.
 
-### 2.5.0
+#### 2.5.0
 Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
-### 2.3.0
+#### 2.3.0
 Renamed the package to ```ngx-leaflet```
 
 
