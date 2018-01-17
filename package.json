@@ -46,14 +46,14 @@
 		"@types/node": "8",
 
 		"merge2": "1.2",
-		"rollup": "0.53",
+		"rollup": "0.54",
 
 		"typescript": "2.6",
-		"tslint": "5.8",
+		"tslint": "5.9",
 		"tslint-stylish": "2.1",
 
 		"webpack": "3.10",
-		"webpack-dev-server": "2.9",
+		"webpack-dev-server": "2.11",
 		"webpack-stats-plugin": "0.1",
 		"angular2-template-loader": "0.6",
 		"awesome-typescript-loader": "3.4",
@@ -67,7 +67,7 @@
 		"url-loader": "0.6",
 
 		"gulp": "3.9",
-		"gulp-filter": "5.0",
+		"gulp-filter": "5.1",
 		"gulp-insert": "0.5",
 		"gulp-load-plugins": "1.5",
 		"gulp-rename": "1.2",
