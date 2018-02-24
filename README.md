@@ -445,8 +445,9 @@ Each element will have a ```leafletLayer``` input binding, which will result in 
 For more details, you should check out the *Layers and ngFor* demo.
 
 ### Working with Leaflet Events
-Often, you'll want to make changes based on a map click or other interaction.
+Often, you'll want to make changes based on a map click or other Leaflet interaction.
 As described in [A Note About Change Detection](#A Note About Change Detection), you'll probably need to ensure change detection happens as expected.
+This is by design and a common thing to deal with when using third party libraries and Angular.
 
 
 ### Getting a Reference to the Map
