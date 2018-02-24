@@ -253,6 +253,12 @@ First, you can use the OnPush change detection strategy. There's an example of t
 Second, you can wrap a large number of layers into a Leaflet layer group, which will reduce the number of layers the plugin actually has to track during diffs.
 
 
+### Working with Leaflet Events
+Often, you'll want to make changes based on a map click or other Leaflet interaction.
+As described in [A Note About Change Detection](#a-note-about-change-detection), you'll probably need to ensure change detection happens as expected.
+This is by design and a common thing to deal with when using third party libraries and Angular.
+
+
 ## API
 This section includes more detailed documentation of the functionality of the directives included in this library.
 
@@ -443,11 +449,6 @@ In this example, each layer in the ```layers``` array will create a new child ``
 Each element will have a ```leafletLayer``` input binding, which will result in the layer being added to the map.
 
 For more details, you should check out the *Layers and ngFor* demo.
-
-### Working with Leaflet Events
-Often, you'll want to make changes based on a map click or other Leaflet interaction.
-As described in [A Note About Change Detection](#A Note About Change Detection), you'll probably need to ensure change detection happens as expected.
-This is by design and a common thing to deal with when using third party libraries and Angular.
 
 
 ### Getting a Reference to the Map
