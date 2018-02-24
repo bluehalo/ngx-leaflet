@@ -444,6 +444,10 @@ Each element will have a ```leafletLayer``` input binding, which will result in 
 
 For more details, you should check out the *Layers and ngFor* demo.
 
+### Working with Leaflet Events
+Often, you'll want to make changes based on a map click or other interaction.
+As described in [A Note About Change Detection](#A Note About Change Detection), you'll probably need to ensure change detection happens as expected.
+
 
 ### Getting a Reference to the Map
 Occasionally, you may need to directly access the Leaflet map instance.
@@ -526,9 +530,40 @@ Libraries like ngx-leaflet have to decide what to do inside and outside of the A
 Leaflet registers handlers for a lot of mouse events. 
 To mitigate the performance impact of constantly running change detection on all mouse events (including mousemove), ngx-leaflet runs most of the Leaflet code outside of the Angular zone.
 The impact of this is that Angular won't automatically detect changes that you make inside of a Leaflet event callback.
-The solution is to manually tell Angular to detect changes.
 
-Consider the following example:
+The solution is to either make sure that Angular relevant changes are made inside of Angular's zone or to manually tell Angular to detect changes.
+
+#### Running Inside of Angular's Zone
+Leaflet event handlers run outside of Angular's zone, where changes to input bound fields will not be detected automatically.
+To ensure your changes are detected and applied, you need to make those changed inside of Angular's zone.
+Fortunately, this is extremely easy.
+
+```js
+fitBounds: any = null;
+circle = circle([ 46.95, -122 ], { radius: 5000 });
+
+// Inject the Change Detector into your component
+constructor(private zone: NgZone) {}
+
+ngOnInit() {
+	
+	// The 'add' event callback handler happens outside of the Angular zone
+	this.circle.on('add', () => {
+		
+		// But, we can run stuff inside of Angular's zone by calling NgZone.run()
+		// everything inside the arrow function body happens inside of Angular's zone, where changes will be detected
+		this.zone.run(() => {
+        	this.fitBounds = this.circle.getBounds();
+		});
+		
+	});
+}
+``` 
+
+#### Manually Triggering Change Detection
+Another option is to manually tell the change detector to detect changes.
+The drawback to this option is that it is less precise.
+This will trigger change detection for this component and all of its children.
 
 ```js
 fitBounds: any = null;
