@@ -555,7 +555,7 @@ ngOnInit() {
 		// But, we can run stuff inside of Angular's zone by calling NgZone.run()
 		// everything inside the arrow function body happens inside of Angular's zone, where changes will be detected
 		this.zone.run(() => {
-        	this.fitBounds = this.circle.getBounds();
+			this.fitBounds = this.circle.getBounds();
 		});
 		
 	});
