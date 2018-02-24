@@ -253,6 +253,12 @@ First, you can use the OnPush change detection strategy. There's an example of t
 Second, you can wrap a large number of layers into a Leaflet layer group, which will reduce the number of layers the plugin actually has to track during diffs.
 
 
+### Working with Leaflet Events
+Often, you'll want to make changes based on a map click or other Leaflet interaction.
+As described in [A Note About Change Detection](#a-note-about-change-detection), you'll probably need to ensure change detection happens as expected.
+This is by design and a common thing to deal with when using third party libraries and Angular.
+
+
 ## API
 This section includes more detailed documentation of the functionality of the directives included in this library.
 
@@ -270,19 +276,19 @@ There are several input bindings available for configuring the map.
 ```
 
 #### leafletOptions
-Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com) docs). These options can only be set initially because they are used to create the map. Later changes are ignored.
+Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#map-option) docs). These options can only be set initially because they are used to create the map. Later changes are ignored.
 
 #### leafletPanOptions
-Input binding for pan options (see [Leaflet's](http://leafletjs.com) docs). These options are stored and used whenever pan operations are invoked.
+Input binding for pan options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#pan-options) docs). These options are stored and used whenever pan operations are invoked.
 
 #### leafletZoomOptions
-Input binding for zoom options (see [Leaflet's](http://leafletjs.com) docs). These options are stored and used whenever zoom operations are invoked.
+Input binding for zoom options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#zoom-options) docs). These options are stored and used whenever zoom operations are invoked.
 
 #### leafletZoomPanOptions
-Input binding for zoom/pan options (see [Leaflet's](http://leafletjs.com) docs). These options are stored and used whenever zoom/pan operations are invoked.
+Input binding for zoom/pan options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#zoom/pan-options) docs). These options are stored and used whenever zoom/pan operations are invoked.
 
 #### leafletFitBoundsOptions
-Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com) docs). These options are stored and used whenever FitBounds operations are invoked.
+Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#fitbounds-options) docs). These options are stored and used whenever FitBounds operations are invoked.
 
 
 ### Dynamically changing zoom level, center, and fitBounds
@@ -526,9 +532,40 @@ Libraries like ngx-leaflet have to decide what to do inside and outside of the A
 Leaflet registers handlers for a lot of mouse events. 
 To mitigate the performance impact of constantly running change detection on all mouse events (including mousemove), ngx-leaflet runs most of the Leaflet code outside of the Angular zone.
 The impact of this is that Angular won't automatically detect changes that you make inside of a Leaflet event callback.
-The solution is to manually tell Angular to detect changes.
 
-Consider the following example:
+The solution is to either make sure that Angular relevant changes are made inside of Angular's zone or to manually tell Angular to detect changes.
+
+#### Running Inside of Angular's Zone
+Leaflet event handlers run outside of Angular's zone, where changes to input bound fields will not be detected automatically.
+To ensure your changes are detected and applied, you need to make those changed inside of Angular's zone.
+Fortunately, this is extremely easy.
+
+```js
+fitBounds: any = null;
+circle = circle([ 46.95, -122 ], { radius: 5000 });
+
+// Inject the Change Detector into your component
+constructor(private zone: NgZone) {}
+
+ngOnInit() {
+	
+	// The 'add' event callback handler happens outside of the Angular zone
+	this.circle.on('add', () => {
+		
+		// But, we can run stuff inside of Angular's zone by calling NgZone.run()
+		// everything inside the arrow function body happens inside of Angular's zone, where changes will be detected
+		this.zone.run(() => {
+			this.fitBounds = this.circle.getBounds();
+		});
+		
+	});
+}
+``` 
+
+#### Manually Triggering Change Detection
+Another option is to manually tell the change detector to detect changes.
+The drawback to this option is that it is less precise.
+This will trigger change detection for this component and all of its children.
 
 ```js
 fitBounds: any = null;
