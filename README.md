@@ -3,7 +3,7 @@
 [![Build Status][travis-image]][travis-url]
 
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
-[travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
+[travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg?branch=master
 
 > Leaflet packages for Angular.io (v2+).
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
