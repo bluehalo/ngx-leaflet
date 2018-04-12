@@ -388,7 +388,7 @@ The ```leafletLayersControl``` input binding allows you to provide a set of base
 When the user manipulates the control via Leaflet, Leaflet will automatically manage the layers, but the input bound layer array isn't going to get updated to reflect those changes.
 
 So, basically, you use ```leafletLayers``` to assert what should be added to/removed from the map.
-Use ```leafletLayersContro``` to tell Leaflet what layers the user can optionally turn on and off.
+Use ```leafletLayersControl``` to tell Leaflet what layers the user can optionally turn on and off.
 
 For an example of using the layers controls, you should check out the *Layers and Layer Controls* demo.
 
