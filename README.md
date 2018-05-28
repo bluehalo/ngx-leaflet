@@ -33,7 +33,7 @@ If you intend to use this library in a typescript project (utilizing the typings
 npm install --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```npm install```, ```gulp dev``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```npm install```, ```npm start``` and then go to http://localhost:9000/src/demo/index.html
 
 
 ## Usage
