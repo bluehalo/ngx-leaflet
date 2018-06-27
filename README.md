@@ -3,7 +3,7 @@
 [![Build Status][travis-image]][travis-url]
 
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
-[travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg
+[travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg?branch=master
 
 > Leaflet packages for Angular.io (v2+).
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
@@ -33,7 +33,7 @@ If you intend to use this library in a typescript project (utilizing the typings
 npm install --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```npm install```, ```gulp dev``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```npm install```, ```npm demo``` and then go to http://localhost:9000/src/demo/index.html
 
 
 ## Usage
@@ -397,7 +397,7 @@ The ```[leafletLayersControl]``` input binding allows you to provide a set of ba
 When the user manipulates the control via Leaflet, Leaflet will automatically manage the layers, but the input bound layer array isn't going to get updated to reflect those changes.
 
 So, use ```[leafletLayers]``` to add a collection of layers to the map. 
-And, use ```[leafletLayersContro]``` to allow users to optionally turn layers/overlays on and off.
+And, use ```[leafletLayersControl]``` to allow users to optionally turn layers/overlays on and off.
 
 For an example of using the layers controls, you should check out the *Layers and Layer Controls* demo.
 
