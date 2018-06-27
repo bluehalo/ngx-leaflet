@@ -3,7 +3,7 @@ import {
 	SimpleChange
 } from '@angular/core';
 
-import { latLng, LatLng, LatLngBounds, map, Map, MapOptions} from 'leaflet';
+import { latLng, LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, map, Map, MapOptions } from 'leaflet';
 
 @Directive({
 	selector: '[leaflet]'
@@ -34,12 +34,42 @@ export class LeafletDirective
 
 	// Zoom level for the map
 	@Input('leafletZoom') zoom: number;
+	@Output('leafletZoomChange') zoomChange = new EventEmitter<number>();
 
-	// Center the map
+	// Center of the map
 	@Input('leafletCenter') center: LatLng;
+	@Output('leafletCenterChange') centerChange = new EventEmitter<LatLng>();
 
 	// Set fit bounds for map
 	@Input('leafletFitBounds') fitBounds: LatLngBounds;
+
+	// Set the max bounds for the map
+	@Input('leafletMaxBounds') maxBounds: LatLngBounds;
+
+	// Set the min zoom for the map
+	@Input('leafletMinZoom') minZoom: number;
+
+	// Set the max zoom for the map
+	@Input('leafletMaxZoom') maxZoom: number;
+
+
+	// Mouse Map Events
+	@Output('leafletClick') onClick = new EventEmitter<LeafletMouseEvent>();
+	@Output('leafletDoubleClick') onDoubleClick = new EventEmitter<LeafletMouseEvent>();
+	@Output('leafletMouseDown') onMouseDown = new EventEmitter<LeafletMouseEvent>();
+	@Output('leafletMouseUp') onMouseUp = new EventEmitter<LeafletMouseEvent>();
+	@Output('leafletMouseMove') onMouseMove = new EventEmitter<LeafletMouseEvent>();
+	@Output('leafletMouseOver') onMouseOver = new EventEmitter<LeafletMouseEvent>();
+
+	// Map Move Events
+	@Output('leafletMapMove') onMapMove = new EventEmitter<LeafletEvent>();
+	@Output('leafletMapMoveStart') onMapMoveStart = new EventEmitter<LeafletEvent>();
+	@Output('leafletMapMoveEnd') onMapMoveEnd = new EventEmitter<LeafletEvent>();
+
+	// Map Zoom Events
+	@Output('leafletMapZoom') onMapZoom = new EventEmitter<LeafletEvent>();
+	@Output('leafletMapZoomStart') onMapZoomStart = new EventEmitter<LeafletEvent>();
+	@Output('leafletMapZoomEnd') onMapZoomEnd = new EventEmitter<LeafletEvent>();
 
 
 	constructor(private element: ElementRef, private zone: NgZone) {
@@ -53,6 +83,7 @@ export class LeafletDirective
 
 			// Create the map with some reasonable defaults
 			this.map = map(this.element.nativeElement, this.options);
+			this.addMapEventListeners();
 
 		});
 
@@ -64,6 +95,18 @@ export class LeafletDirective
 		// Set up all the initial settings
 		if (null != this.fitBounds) {
 			this.setFitBounds(this.fitBounds);
+		}
+
+		if (null != this.maxBounds) {
+			this.setMaxBounds(this.maxBounds);
+		}
+
+		if (null != this.minZoom) {
+			this.setMinZoom(this.minZoom);
+		}
+
+		if (null != this.maxZoom) {
+			this.setMaxZoom(this.maxZoom);
 		}
 
 		this.doResize();
@@ -97,9 +140,21 @@ export class LeafletDirective
 			this.setCenter(changes['center'].currentValue);
 		}
 
-		// Fit bounds
+		// Other options
 		if (changes['fitBounds']) {
 			this.setFitBounds(changes['fitBounds'].currentValue);
+		}
+
+		if (changes['maxBounds']) {
+			this.setMaxBounds(changes['maxBounds'].currentValue);
+		}
+
+		if (changes['minZoom']) {
+			this.setMinZoom(changes['minZoom'].currentValue);
+		}
+
+		if (changes['maxZoom']) {
+			this.setMaxZoom(changes['maxZoom'].currentValue);
 		}
 
 	}
@@ -113,6 +168,58 @@ export class LeafletDirective
 	onResize() {
 		this.delayResize();
 	}
+
+	handleEvent(eventEmitter: EventEmitter<any>, event: any) {
+
+		// Don't want to emit if there are no observers
+		if (0 < eventEmitter.observers.length) {
+			this.zone.run(() => {
+				eventEmitter.emit(event);
+			});
+		}
+
+	}
+
+	private addMapEventListeners() {
+
+		// Add all the pass-through mouse event handlers
+		this.map.on('click', (e: LeafletMouseEvent) => this.handleEvent(this.onClick, e));
+		this.map.on('dblclick', (e: LeafletMouseEvent) => this.handleEvent(this.onDoubleClick, e));
+		this.map.on('mousedown', (e: LeafletMouseEvent) => this.handleEvent(this.onMouseDown, e));
+		this.map.on('mouseup', (e: LeafletMouseEvent) => this.handleEvent(this.onMouseUp, e));
+		this.map.on('mouseover', (e: LeafletMouseEvent) => this.handleEvent(this.onMouseOver, e));
+		this.map.on('mousemove', (e: LeafletMouseEvent) => this.handleEvent(this.onMouseMove, e));
+
+		this.map.on('zoomstart', (e: LeafletEvent) => this.handleEvent(this.onMapZoomStart, e));
+		this.map.on('zoom', (e: LeafletEvent) => this.handleEvent(this.onMapZoom, e));
+		this.map.on('zoomend', (e: LeafletEvent) => this.handleEvent(this.onMapZoomEnd, e));
+		this.map.on('movestart', (e: LeafletEvent) => this.handleEvent(this.onMapMoveStart, e));
+		this.map.on('move', (e: LeafletEvent) => this.handleEvent(this.onMapMove, e));
+		this.map.on('moveend', (e: LeafletEvent) => this.handleEvent(this.onMapMoveEnd, e));
+
+
+		// Update any things for which we provide output bindings
+		this.map.on('zoomend moveend', () => {
+			const zoom = this.map.getZoom();
+			if (zoom !== this.zoom) {
+				this.zoom = zoom;
+				this.handleEvent(this.zoomChange, zoom);
+			}
+
+			const center = this.map.getCenter();
+			if (null != center || null != this.center) {
+
+				if (((null == center || null == this.center) && center !== this.center)
+					|| (center.lat !== this.center.lat || center.lng !== this.center.lng)) {
+
+					this.center = center;
+					this.handleEvent(this.centerChange, center);
+
+				}
+			}
+		});
+	}
+
 
 	/**
 	 * Resize the map to fit it's parent container
@@ -179,7 +286,7 @@ export class LeafletDirective
 
 	/**
 	 * Fit the map to the bounds
-	 * @param center the center point
+	 * @param latLngBounds the boundary to set
 	 */
 	private setFitBounds(latLngBounds: LatLngBounds) {
 
@@ -188,4 +295,41 @@ export class LeafletDirective
 		}
 
 	}
+
+	/**
+	 * Set the map's max bounds
+	 * @param latLngBounds the boundary to set
+	 */
+	private setMaxBounds(latLngBounds: LatLngBounds) {
+
+		if (this.map && null != latLngBounds) {
+			this.map.setMaxBounds(latLngBounds);
+		}
+
+	}
+
+	/**
+	 * Set the map's min zoom
+	 * @param number the new min zoom
+	 */
+	private setMinZoom(zoom: number) {
+
+		if (this.map && null != zoom) {
+			this.map.setMinZoom(zoom);
+		}
+
+	}
+
+	/**
+	 * Set the map's min zoom
+	 * @param number the new min zoom
+	 */
+	private setMaxZoom(zoom: number) {
+
+		if (this.map && null != zoom) {
+			this.map.setMaxZoom(zoom);
+		}
+
+	}
+
 }

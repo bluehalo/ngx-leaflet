@@ -28,8 +28,6 @@ var LeafletModule = /** @class */ (function () {
                     ]
                 },] },
     ];
-    /** @nocollapse */
-    LeafletModule.ctorParameters = function () { return []; };
     return LeafletModule;
 }());
 export { LeafletModule };
