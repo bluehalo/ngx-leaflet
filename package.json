@@ -12,9 +12,6 @@
 	"module": "dist/index.js",
 	"jsnext:main": "dist/index.js",
 	"typings": "dist/index.d.ts",
-	"scripts": {
-		"start": "gulp dev"
-	},
 
 	"repository": {
 		"type": "git",
