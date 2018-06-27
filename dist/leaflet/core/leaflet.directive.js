@@ -16,6 +16,23 @@ var LeafletDirective = /** @class */ (function () {
         this.options = {};
         // Configure callback function for the map
         this.mapReady = new EventEmitter();
+        this.zoomChange = new EventEmitter();
+        this.centerChange = new EventEmitter();
+        // Mouse Map Events
+        this.onClick = new EventEmitter();
+        this.onDoubleClick = new EventEmitter();
+        this.onMouseDown = new EventEmitter();
+        this.onMouseUp = new EventEmitter();
+        this.onMouseMove = new EventEmitter();
+        this.onMouseOver = new EventEmitter();
+        // Map Move Events
+        this.onMapMove = new EventEmitter();
+        this.onMapMoveStart = new EventEmitter();
+        this.onMapMoveEnd = new EventEmitter();
+        // Map Zoom Events
+        this.onMapZoom = new EventEmitter();
+        this.onMapZoomStart = new EventEmitter();
+        this.onMapZoomEnd = new EventEmitter();
     }
     LeafletDirective.prototype.ngOnInit = function () {
         var _this = this;
@@ -24,6 +41,7 @@ var LeafletDirective = /** @class */ (function () {
             // Create the map with some reasonable defaults
             // Create the map with some reasonable defaults
             _this.map = map(_this.element.nativeElement, _this.options);
+            _this.addMapEventListeners();
         });
         // Only setView if there is a center/zoom
         if (null != this.center && null != this.zoom) {
@@ -32,6 +50,15 @@ var LeafletDirective = /** @class */ (function () {
         // Set up all the initial settings
         if (null != this.fitBounds) {
             this.setFitBounds(this.fitBounds);
+        }
+        if (null != this.maxBounds) {
+            this.setMaxBounds(this.maxBounds);
+        }
+        if (null != this.minZoom) {
+            this.setMinZoom(this.minZoom);
+        }
+        if (null != this.maxZoom) {
+            this.setMaxZoom(this.maxZoom);
         }
         this.doResize();
         // Fire map ready event
@@ -56,9 +83,18 @@ var LeafletDirective = /** @class */ (function () {
         else if (changes['center']) {
             this.setCenter(changes['center'].currentValue);
         }
-        // Fit bounds
+        // Other options
         if (changes['fitBounds']) {
             this.setFitBounds(changes['fitBounds'].currentValue);
+        }
+        if (changes['maxBounds']) {
+            this.setMaxBounds(changes['maxBounds'].currentValue);
+        }
+        if (changes['minZoom']) {
+            this.setMinZoom(changes['minZoom'].currentValue);
+        }
+        if (changes['maxZoom']) {
+            this.setMaxZoom(changes['maxZoom'].currentValue);
         }
     };
     LeafletDirective.prototype.getMap = function () {
@@ -66,6 +102,46 @@ var LeafletDirective = /** @class */ (function () {
     };
     LeafletDirective.prototype.onResize = function () {
         this.delayResize();
+    };
+    LeafletDirective.prototype.handleEvent = function (eventEmitter, event) {
+        // Don't want to emit if there are no observers
+        if (0 < eventEmitter.observers.length) {
+            this.zone.run(function () {
+                eventEmitter.emit(event);
+            });
+        }
+    };
+    LeafletDirective.prototype.addMapEventListeners = function () {
+        var _this = this;
+        // Add all the pass-through mouse event handlers
+        this.map.on('click', function (e) { return _this.handleEvent(_this.onClick, e); });
+        this.map.on('dblclick', function (e) { return _this.handleEvent(_this.onDoubleClick, e); });
+        this.map.on('mousedown', function (e) { return _this.handleEvent(_this.onMouseDown, e); });
+        this.map.on('mouseup', function (e) { return _this.handleEvent(_this.onMouseUp, e); });
+        this.map.on('mouseover', function (e) { return _this.handleEvent(_this.onMouseOver, e); });
+        this.map.on('mousemove', function (e) { return _this.handleEvent(_this.onMouseMove, e); });
+        this.map.on('zoomstart', function (e) { return _this.handleEvent(_this.onMapZoomStart, e); });
+        this.map.on('zoom', function (e) { return _this.handleEvent(_this.onMapZoom, e); });
+        this.map.on('zoomend', function (e) { return _this.handleEvent(_this.onMapZoomEnd, e); });
+        this.map.on('movestart', function (e) { return _this.handleEvent(_this.onMapMoveStart, e); });
+        this.map.on('move', function (e) { return _this.handleEvent(_this.onMapMove, e); });
+        this.map.on('moveend', function (e) { return _this.handleEvent(_this.onMapMoveEnd, e); });
+        // Update any things for which we provide output bindings
+        this.map.on('zoomend moveend', function () {
+            var zoom = _this.map.getZoom();
+            if (zoom !== _this.zoom) {
+                _this.zoom = zoom;
+                _this.handleEvent(_this.zoomChange, zoom);
+            }
+            var center = _this.map.getCenter();
+            if (null != center || null != _this.center) {
+                if (((null == center || null == _this.center) && center !== _this.center)
+                    || (center.lat !== _this.center.lat || center.lng !== _this.center.lng)) {
+                    _this.center = center;
+                    _this.handleEvent(_this.centerChange, center);
+                }
+            }
+        });
     };
     /**
      * Resize the map to fit it's parent container
@@ -156,19 +232,70 @@ var LeafletDirective = /** @class */ (function () {
     };
     /**
      * Fit the map to the bounds
-     * @param center the center point
+     * @param latLngBounds the boundary to set
      */
     /**
          * Fit the map to the bounds
-         * @param center the center point
+         * @param latLngBounds the boundary to set
          */
     LeafletDirective.prototype.setFitBounds = /**
          * Fit the map to the bounds
-         * @param center the center point
+         * @param latLngBounds the boundary to set
          */
     function (latLngBounds) {
         if (this.map && null != latLngBounds) {
             this.map.fitBounds(latLngBounds, this.fitBoundsOptions);
+        }
+    };
+    /**
+     * Set the map's max bounds
+     * @param latLngBounds the boundary to set
+     */
+    /**
+         * Set the map's max bounds
+         * @param latLngBounds the boundary to set
+         */
+    LeafletDirective.prototype.setMaxBounds = /**
+         * Set the map's max bounds
+         * @param latLngBounds the boundary to set
+         */
+    function (latLngBounds) {
+        if (this.map && null != latLngBounds) {
+            this.map.setMaxBounds(latLngBounds);
+        }
+    };
+    /**
+     * Set the map's min zoom
+     * @param number the new min zoom
+     */
+    /**
+         * Set the map's min zoom
+         * @param number the new min zoom
+         */
+    LeafletDirective.prototype.setMinZoom = /**
+         * Set the map's min zoom
+         * @param number the new min zoom
+         */
+    function (zoom) {
+        if (this.map && null != zoom) {
+            this.map.setMinZoom(zoom);
+        }
+    };
+    /**
+     * Set the map's min zoom
+     * @param number the new min zoom
+     */
+    /**
+         * Set the map's min zoom
+         * @param number the new min zoom
+         */
+    LeafletDirective.prototype.setMaxZoom = /**
+         * Set the map's min zoom
+         * @param number the new min zoom
+         */
+    function (zoom) {
+        if (this.map && null != zoom) {
+            this.map.setMaxZoom(zoom);
         }
     };
     LeafletDirective.decorators = [
@@ -189,8 +316,25 @@ var LeafletDirective = /** @class */ (function () {
         "options": [{ type: Input, args: ['leafletOptions',] },],
         "mapReady": [{ type: Output, args: ['leafletMapReady',] },],
         "zoom": [{ type: Input, args: ['leafletZoom',] },],
+        "zoomChange": [{ type: Output, args: ['leafletZoomChange',] },],
         "center": [{ type: Input, args: ['leafletCenter',] },],
+        "centerChange": [{ type: Output, args: ['leafletCenterChange',] },],
         "fitBounds": [{ type: Input, args: ['leafletFitBounds',] },],
+        "maxBounds": [{ type: Input, args: ['leafletMaxBounds',] },],
+        "minZoom": [{ type: Input, args: ['leafletMinZoom',] },],
+        "maxZoom": [{ type: Input, args: ['leafletMaxZoom',] },],
+        "onClick": [{ type: Output, args: ['leafletClick',] },],
+        "onDoubleClick": [{ type: Output, args: ['leafletDoubleClick',] },],
+        "onMouseDown": [{ type: Output, args: ['leafletMouseDown',] },],
+        "onMouseUp": [{ type: Output, args: ['leafletMouseUp',] },],
+        "onMouseMove": [{ type: Output, args: ['leafletMouseMove',] },],
+        "onMouseOver": [{ type: Output, args: ['leafletMouseOver',] },],
+        "onMapMove": [{ type: Output, args: ['leafletMapMove',] },],
+        "onMapMoveStart": [{ type: Output, args: ['leafletMapMoveStart',] },],
+        "onMapMoveEnd": [{ type: Output, args: ['leafletMapMoveEnd',] },],
+        "onMapZoom": [{ type: Output, args: ['leafletMapZoom',] },],
+        "onMapZoomStart": [{ type: Output, args: ['leafletMapZoomStart',] },],
+        "onMapZoomEnd": [{ type: Output, args: ['leafletMapZoomEnd',] },],
         "onResize": [{ type: HostListener, args: ['window:resize', [],] },],
     };
     return LeafletDirective;

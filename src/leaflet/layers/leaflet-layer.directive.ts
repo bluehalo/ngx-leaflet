@@ -1,6 +1,9 @@
-import { Directive, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import {
+	Directive, EventEmitter, Input, NgZone, OnChanges, OnDestroy, OnInit, Output,
+	SimpleChange
+} from '@angular/core';
 
-import { Layer } from 'leaflet';
+import {Layer, LeafletEvent } from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
@@ -20,6 +23,10 @@ export class LeafletLayerDirective
 	implements OnChanges, OnDestroy, OnInit {
 
 	@Input('leafletLayer') layer: Layer;
+
+	// Layer Events
+	@Output('leafletLayerAdd') onAdd = new EventEmitter<LeafletEvent>();
+	@Output('leafletLayerRemove') onRemove = new EventEmitter<LeafletEvent>();
 
 	// Wrapper for the leaflet directive (manages the parent directive)
 	private leafletDirective: LeafletDirectiveWrapper;
@@ -52,11 +59,30 @@ export class LeafletLayerDirective
 					p.remove();
 				}
 				if (null != n) {
+					this.addLayerEventListeners(n);
 					this.leafletDirective.getMap().addLayer(n);
 				}
 			});
 
 		}
+
+	}
+
+	private handleEvent(eventEmitter: EventEmitter<any>, event: any) {
+
+		// Don't want to emit if there are no observers
+		if (0 < eventEmitter.observers.length) {
+			this.zone.run(() => {
+				eventEmitter.emit(event);
+			});
+		}
+
+	}
+
+	private addLayerEventListeners(l: Layer) {
+
+		l.on('add', (e: LeafletEvent) => this.handleEvent(this.onAdd, e));
+		l.on('remove', (e: LeafletEvent) => this.handleEvent(this.onRemove, e));
 
 	}
 

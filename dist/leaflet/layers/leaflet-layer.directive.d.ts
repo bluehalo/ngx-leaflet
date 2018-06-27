@@ -1,5 +1,5 @@
-import { NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
-import { Layer } from 'leaflet';
+import { EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
+import { Layer, LeafletEvent } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 /**
  * Layer directive
@@ -11,6 +11,8 @@ import { LeafletDirective } from '../core/leaflet.directive';
 export declare class LeafletLayerDirective implements OnChanges, OnDestroy, OnInit {
     private zone;
     layer: Layer;
+    onAdd: EventEmitter<LeafletEvent>;
+    onRemove: EventEmitter<LeafletEvent>;
     private leafletDirective;
     constructor(leafletDirective: LeafletDirective, zone: NgZone);
     ngOnInit(): void;
@@ -18,4 +20,6 @@ export declare class LeafletLayerDirective implements OnChanges, OnDestroy, OnIn
     ngOnChanges(changes: {
         [key: string]: SimpleChange;
     }): void;
+    private handleEvent(eventEmitter, event);
+    private addLayerEventListeners(l);
 }

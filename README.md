@@ -33,7 +33,7 @@ If you intend to use this library in a typescript project (utilizing the typings
 npm install --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```npm install```, ```npm start``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```npm install```, ```npm demo``` and then go to http://localhost:9000/src/demo/index.html
 
 
 ## Usage
@@ -177,9 +177,9 @@ options = {
 ```
 
 Changes to leafletOptions are ignored after they are initially set.
-This is because these options are passed into the map constructor, so they couldn't be updated easily regardless.
+This is because these options are passed into the map constructor, so they can't be changed anyways.
 So, make sure the object exists before the map is created.
-You'll want to create the object in ngOnInit or hide the map DOM element with ngIf until you can create the options object.
+You'll want to create the object in ```ngOnInit``` or hide the map DOM element with ```ngIf``` until you can create the options object.
 
 
 ### Add a Layers Control
@@ -214,7 +214,8 @@ This includes markers, shapes, geojson, custom layers from other libraries, etc.
 
 
 ### Add Custom Layers (base layers, markers, shapes, etc.)
-You can add layers (baselayers, markers, or custom layers) to the map without showing them in the layer control using the ```leafletLayers``` directive.
+There are several different ways to add layers to the map.
+You can add layers (baselayers, markers, or custom layers) to the map without showing them in the layer control using the ```[leafletLayers]``` directive.
 
 Template:
 ```html
@@ -234,8 +235,25 @@ layers = [
 ];
 ```
 
+You can also add an individual layer to the map using the ```[leafletLayer]``` directive.
+Using this approach allows you to use ```*ngFor``` and ```*ngIf``` to control whether individual layers are added to or removed from the map.
 
-### Dynamically Change Map Layers
+Template:
+```html
+<div style="height: 300px;"
+     leaflet
+     [leafletOptions]="options">
+     <div *ngIf="showLayer" [leafletLayer]="layer"></div>
+</div>
+```
+
+Layer:
+```js
+layer = circle([ 46.95, -122 ], { radius: 5000 });
+```
+
+
+### Dynamically Change Map Layers using [leafletLayers]
 
 > **Layer inputs (arrays and maps) are mutable**
 > Previous versions of this plugin treated layers arrays and layer control objects as immutable data structures.
@@ -255,7 +273,10 @@ Second, you can wrap a large number of layers into a Leaflet layer group, which 
 
 ### Working with Leaflet Events
 Often, you'll want to make changes based on a map click or other Leaflet interaction.
-As described in [A Note About Change Detection](#a-note-about-change-detection), you'll probably need to ensure change detection happens as expected.
+The ngx-leaflet plugin supports several [map events](#map-events) and [layer events](#layer-events) as documented in the API section.
+You may occasionally need to handle events that aren't exposed through the plugin, however.
+When that happens, you will need to be aware of how Zones and change detection work to ensure your event handling works as expected.
+Take a look at [A Note About Change Detection](#a-note-about-change-detection) for more details.
 This is by design and a common thing to deal with when using third party libraries and Angular.
 
 
@@ -275,72 +296,60 @@ There are several input bindings available for configuring the map.
 </div>
 ```
 
-#### leafletOptions
+#### [leafletOptions]
 Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#map-option) docs). These options can only be set initially because they are used to create the map. Later changes are ignored.
 
-#### leafletPanOptions
+#### [leafletPanOptions]
 Input binding for pan options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#pan-options) docs). These options are stored and used whenever pan operations are invoked.
 
-#### leafletZoomOptions
+#### [leafletZoomOptions]
 Input binding for zoom options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#zoom-options) docs). These options are stored and used whenever zoom operations are invoked.
 
-#### leafletZoomPanOptions
+#### [leafletZoomPanOptions]
 Input binding for zoom/pan options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#zoom/pan-options) docs). These options are stored and used whenever zoom/pan operations are invoked.
 
-#### leafletFitBoundsOptions
+#### [leafletFitBoundsOptions]
 Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#fitbounds-options) docs). These options are stored and used whenever FitBounds operations are invoked.
 
 
-### Dynamically changing zoom level, center, and fitBounds
+### Dynamically changing zoom level, center, fitBounds, etc.
 ```html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"
-     [leafletZoom]="zoom"
-     [leafletCenter]="center"
+     [(leafletZoom)]="zoom"
+     [(leafletCenter)]="center"
      [leafletFitBounds]="fitBounds">
 </div>
 ```
 
-#### leafletZoom
-Input bind a zoom level to the map.
+#### [(leafletZoom)]: number
+Input and Output binding for the map zoom level.
 
-```js
-zoom: number
-```
+#### [leafletMaxZoom]: number
+Input bind a maximum zoom level for the map.
 
-On changes, the component applies the new zoom level to the map.
-There is no output binding or events emitted for map zoom level changes made using the map controls.
+#### [leafletMinZoon]: number
+Input bind a minimum zoom level for the map.
 
+#### [(leafletCenter)]: LatLng
+Input and Output binding for the map center position.
 
-#### leafletCenter
-Input bind a center position to the map.
+#### Note: center/zoom operations may interfere with each other
+Zoom/Center operations that are applied in rapid succession may interfere with or cancel each other.
+If both changes are picked up at the same time, the component applies the changes as a map.setView() operation to ensure both are processed.
+Additionally, if a zoom level or center is applied that is not allowed (e.g., beyond max zoom level or outside of max bounds), Leaflet will determine the new value.
 
-```js
-center: LatLng
-```
+#### [leafletFitBounds]: LatLngBounds
+Input bind a ```LatLngBounds``` value that will be applied to the map using ```Map.setFitBounds()```.
+This operation has no output binding because the input fitBounds usually results in a slightly different map bounds.
 
-On changes, the component re-centers the map on the center point.
-There is no output binding or events emitted for map pan changes made using map controls.
-
-
-#### Note: center/zoom operations may cancel each other
-Zoom/Center operations cancel each other.
-If both changes are picked up at the same time, they will be applied as a map.setView() operation so both are processed.
-
-
-#### leafletFitBounds
-Input bind a fitBounds operation to the map.
-
-```js
-fitBounds: LatLngBounds
-```
-
-On changes, the component calls map.fitBounds using the bound parameter.
+#### [leafletMaxBounds]: LatLngBounds
+Input bind a ```LatLngBounds``` value that will be applied to the map using ```Map.setMaxBounds()```.
 
 
 ### Simple Layer Management: Setting Baselayers
-There is a convenience input binding for setting the baselayers on the map called ```leafletBaseLayers```.
-You can also provide ```leafletLayersControlOptions``` if you want to show the control on the map that allows you to switch between baselayers.
+There is a convenience input binding for setting the baselayers on the map called ```[leafletBaseLayers]```.
+You can also provide ```[leafletLayersControlOptions]``` if you want to show the control on the map that allows you to switch between baselayers.
 If you plan to show more than just baselayers, you should use the more advanced layers controls described in *Advanced Layer Management* below.
 
 For an example of the basic map setup, you should check out the *Simple Base Layers* demo.
@@ -353,7 +362,7 @@ For an example of the basic map setup, you should check out the *Simple Base Lay
 </div>
 ```
 
-#### leafletBaseLayers
+#### [leafletBaseLayers]: Control.LayersObject
 Input bind an ```Control.LayersObject``` to be synced to the map.
 
 ```js
@@ -369,26 +378,26 @@ If it finds a baselayer that is still added to the map, it will assume that is s
 If none of the baselayers can be found on the map, it will add the first layer it finds in the ```Control.LayersObject``` and use that as the new baselayer.
 Layers are compared using instance equality.
 
-If you use this directive, you can still manually use the ```leafletLayers``` directive, but you will not be able to use the ```leafletLayersControl``` directive.
+If you use this directive, you can still manually use the ```[leafletLayers]``` directive, but you will not be able to use the ```[leafletLayersControl]``` directive.
 This directive internally uses the layers control, so if you add both, they'll interfere with each other.
 Because it uses ```control.layers``` under the hood, you can still provide options for the layers control.   
 
 
-#### leafletLayersControlOptions
+#### [leafletLayersControlOptions]
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the layers control constructor on creation.
 
 
 ### Advanced Layer Management: Layers, and Layers Control
-The ```leafletLayers``` and ```leafletLayersControl``` input bindings give you direct access to manipulate layers and the layers control.
-When the array bound to ```leafletLayers``` is changed, the directive will synchronize the layers on the map to the layers in the array.
-This includes tile layers and any added shapes.
+The ```[leafletLayers]``` and ```[leafletLayersControl]``` input bindings give you direct access to manipulate layers and the layers control.
+When the array bound to ```[leafletLayers]``` is changed, the directive will synchronize the layers on the map to the layers in the array.
+This includes tile layers and any added shapes. 
 
-The ```leafletLayersControl``` input binding allows you to provide a set of base layers and overlay layers that can be managed within leaflet using the layers control.
+The ```[leafletLayersControl]``` input binding allows you to provide a set of base layers and overlay layers that can be managed within leaflet using the layers control.
 When the user manipulates the control via Leaflet, Leaflet will automatically manage the layers, but the input bound layer array isn't going to get updated to reflect those changes.
 
-So, basically, you use ```leafletLayers``` to assert what should be added to/removed from the map.
-Use ```leafletLayersControl``` to tell Leaflet what layers the user can optionally turn on and off.
+So, use ```[leafletLayers]``` to add a collection of layers to the map. 
+And, use ```[leafletLayersControl]``` to allow users to optionally turn layers/overlays on and off.
 
 For an example of using the layers controls, you should check out the *Layers and Layer Controls* demo.
 
@@ -401,19 +410,16 @@ For an example of using the layers controls, you should check out the *Layers an
 </div>
 ```
 
-#### leafletLayers
+#### [leafletLayers]: Layer[]
 Input bind an array of all layers to be synced (and made visible) in the map.
 
-```js
-layers: Layer[]
-```
-
 On changes, the component syncs the layers on the map with the layers in this array.
-Syncing is performed by selectively adding or removing layers. Layers are compared using instance equality.
+Syncing is performed by selectively adding or removing layers.
+Layers are compared using instance equality.
 As a result of how the map is synced, the order of layers is not guaranteed to be consistent as changes are made.
 
 
-#### leafletLayersControl
+#### [leafletLayersControl]: Control.Layers
 Input bind a Control.Layers specification. The object contains properties for each of the two constructor arguments for the Control.Layers constructor.
 
 ```js
@@ -427,16 +433,16 @@ layersControl: {
 }
 ```
 
-#### leafletLayersControlOptions
+#### [leafletLayersControlOptions]
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the constructor on creation.
 
 
-### Advanced Layer Management: Layers and *ngFor / *ngIf
-The ```leafletLayer``` input bindings gives you the ability to add a single layer to the map.
-While this may seem limiting, you can nest elements inside the map element, each with a ```leafletLayer``` input. 
+### Advanced Layer Management: Individual Layers and *ngFor / *ngIf
+The ```[leafletLayer]``` input bindings gives you the ability to add a single layer to the map.
+While this may seem limiting, you can nest elements inside the map element, each with a ```[leafletLayer]``` input. 
 The result of this is that each layer will be added to the map.
-If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get some added flexibiltiy when controlling layers.  
+If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get some added flexibility when controlling layers.  
 
 ```html
 <div leaflet style="height: 300px;"
@@ -446,9 +452,41 @@ If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get so
 ```
 
 In this example, each layer in the ```layers``` array will create a new child ```div``` element.
-Each element will have a ```leafletLayer``` input binding, which will result in the layer being added to the map.
-
+Each element will have a ```[leafletLayer]``` input binding, which will result in the layer being added to the map.
 For more details, you should check out the *Layers and ngFor* demo.
+
+There are several layer events that are available when you are using this approach to controlling layers.
+
+### Layer Events
+When you are using the ```[leafletLayer]``` directive to add a layer, you can also access output bindings for layer events.
+Two events that are currently exposed include: ```(leafletLayerAdd)``` and ```(leafletLayerRemove)```.
+Each of these emits a ```LeafletEvent``` object.
+
+
+### Map Events
+Leaflet exposes a lot of map events including map zoom, map move, and mouse interactions.
+The plugin exposes several of the most common events.
+For each of these events, the event is emitted in the Angular Zone, so you shouldn't have to do anything extra to get change detection to work.
+For a working example, check out the events section of the demo.
+
+#### Mouse Interactions: LeafletMouseEvent
+The following events are provided:
+* ```(leafletClick)```
+* ```(leafletDoubleClick)```
+* ```(leafletMouseDown)```
+* ```(leafletMouseUp)```
+* ```(leafletMouseMove)```
+* ```(leafletMouseOver)``` 
+
+#### Map Zoom and Move: LeafletEvent
+The following events are provided:
+* ```(leafletMapMove)```
+* ```(leafletMapMoveStart)```
+* ```(leafletMapMoveEnd)```
+* ```(leafletMapZoom)```
+* ```(leafletMapZoomStart)```
+* ```(leafletMapZoomEnd)```
+
 
 
 ### Getting a Reference to the Map
@@ -463,7 +501,7 @@ The second is to get a reference to the leaflet directive itself - and there are
 With a reference to the directive, you can invoke the ```getMap()``` function to get a reference to the ```Map``` instance.
 
 
-#### leafletMapReady
+#### (leafletMapReady): Map
 This output is emitted when once when the map is initially created inside of the Leaflet directive.
 The event will only fire when the map exists and is ready for manipulation.
 
@@ -679,6 +717,11 @@ Here's a list of articles, tutorials, guides, and help resources:
    
 
 ## Changelog
+
+#### 3.1.0
+Added [map events](#map-events), [layer events](#layer-events).
+Added several input bound map options including ```[leafletMaxBounds]```, ```[leafletMaxZoom]```, and ```[leafletMinZoom]```.
+Added output binding for map center - ```(leafletMapCenter)``` and map zoom - ```(leafletMapZoom)```.
 
 ### 3.0
 Support for Angular 5. Also cleaned up some of the functionality related to Angular zone management.
