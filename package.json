@@ -3,7 +3,7 @@
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "3.1",
+	"version": "3.1.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2018 - All Rights Reserved.",
 	"license": "MIT",
@@ -16,6 +16,11 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Asymmetrik/ngx-leaflet.git"
+	},
+
+	"scripts": {
+		"demo": "gulp dev",
+		"build": "gulp build"
 	},
 
 	"peerDependencies": {

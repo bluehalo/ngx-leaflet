@@ -1,4 +1,4 @@
-/*! @asymmetrik/ngx-leaflet - 3.1 - Copyright Asymmetrik, Ltd. 2007-2018 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 3.1.0 - Copyright Asymmetrik, Ltd. 2007-2018 - All Rights Reserved. + */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
