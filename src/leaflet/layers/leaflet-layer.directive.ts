@@ -7,6 +7,7 @@ import {Layer, LeafletEvent } from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
+import { LeafletUtil } from '../core/leaflet.util';
 
 
 /**
@@ -68,21 +69,10 @@ export class LeafletLayerDirective
 
 	}
 
-	private handleEvent(eventEmitter: EventEmitter<any>, event: any) {
-
-		// Don't want to emit if there are no observers
-		if (0 < eventEmitter.observers.length) {
-			this.zone.run(() => {
-				eventEmitter.emit(event);
-			});
-		}
-
-	}
-
 	private addLayerEventListeners(l: Layer) {
 
-		l.on('add', (e: LeafletEvent) => this.handleEvent(this.onAdd, e));
-		l.on('remove', (e: LeafletEvent) => this.handleEvent(this.onRemove, e));
+		l.on('add', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onAdd, e));
+		l.on('remove', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onRemove, e));
 
 	}
 

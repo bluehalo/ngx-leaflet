@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Output } from '@angular/core';
 import { latLng, LatLng, LatLngBounds, map } from 'leaflet';
+import { LeafletUtil } from './leaflet.util';
 var LeafletDirective = /** @class */ (function () {
     function LeafletDirective(element, zone) {
         // Nothing here
@@ -103,42 +104,34 @@ var LeafletDirective = /** @class */ (function () {
     LeafletDirective.prototype.onResize = function () {
         this.delayResize();
     };
-    LeafletDirective.prototype.handleEvent = function (eventEmitter, event) {
-        // Don't want to emit if there are no observers
-        if (0 < eventEmitter.observers.length) {
-            this.zone.run(function () {
-                eventEmitter.emit(event);
-            });
-        }
-    };
     LeafletDirective.prototype.addMapEventListeners = function () {
         var _this = this;
         // Add all the pass-through mouse event handlers
-        this.map.on('click', function (e) { return _this.handleEvent(_this.onClick, e); });
-        this.map.on('dblclick', function (e) { return _this.handleEvent(_this.onDoubleClick, e); });
-        this.map.on('mousedown', function (e) { return _this.handleEvent(_this.onMouseDown, e); });
-        this.map.on('mouseup', function (e) { return _this.handleEvent(_this.onMouseUp, e); });
-        this.map.on('mouseover', function (e) { return _this.handleEvent(_this.onMouseOver, e); });
-        this.map.on('mousemove', function (e) { return _this.handleEvent(_this.onMouseMove, e); });
-        this.map.on('zoomstart', function (e) { return _this.handleEvent(_this.onMapZoomStart, e); });
-        this.map.on('zoom', function (e) { return _this.handleEvent(_this.onMapZoom, e); });
-        this.map.on('zoomend', function (e) { return _this.handleEvent(_this.onMapZoomEnd, e); });
-        this.map.on('movestart', function (e) { return _this.handleEvent(_this.onMapMoveStart, e); });
-        this.map.on('move', function (e) { return _this.handleEvent(_this.onMapMove, e); });
-        this.map.on('moveend', function (e) { return _this.handleEvent(_this.onMapMoveEnd, e); });
+        this.map.on('click', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onClick, e); });
+        this.map.on('dblclick', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onDoubleClick, e); });
+        this.map.on('mousedown', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMouseDown, e); });
+        this.map.on('mouseup', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMouseUp, e); });
+        this.map.on('mouseover', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMouseOver, e); });
+        this.map.on('mousemove', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMouseMove, e); });
+        this.map.on('zoomstart', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMapZoomStart, e); });
+        this.map.on('zoom', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMapZoom, e); });
+        this.map.on('zoomend', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMapZoomEnd, e); });
+        this.map.on('movestart', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMapMoveStart, e); });
+        this.map.on('move', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMapMove, e); });
+        this.map.on('moveend', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onMapMoveEnd, e); });
         // Update any things for which we provide output bindings
         this.map.on('zoomend moveend', function () {
             var zoom = _this.map.getZoom();
             if (zoom !== _this.zoom) {
                 _this.zoom = zoom;
-                _this.handleEvent(_this.zoomChange, zoom);
+                LeafletUtil.handleEvent(_this.zone, _this.zoomChange, zoom);
             }
             var center = _this.map.getCenter();
             if (null != center || null != _this.center) {
                 if (((null == center || null == _this.center) && center !== _this.center)
                     || (center.lat !== _this.center.lat || center.lng !== _this.center.lng)) {
                     _this.center = center;
-                    _this.handleEvent(_this.centerChange, center);
+                    LeafletUtil.handleEvent(_this.zone, _this.centerChange, center);
                 }
             }
         });

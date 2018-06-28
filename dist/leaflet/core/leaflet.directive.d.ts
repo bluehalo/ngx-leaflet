@@ -41,7 +41,6 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     }): void;
     getMap(): Map;
     onResize(): void;
-    handleEvent(eventEmitter: EventEmitter<any>, event: any): void;
     private addMapEventListeners();
     /**
      * Resize the map to fit it's parent container

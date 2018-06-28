@@ -2,6 +2,7 @@ import { Directive, EventEmitter, Input, NgZone, Output } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
+import { LeafletUtil } from '../core/leaflet.util';
 /**
  * Layer directive
  *
@@ -41,18 +42,10 @@ var LeafletLayerDirective = /** @class */ (function () {
             });
         }
     };
-    LeafletLayerDirective.prototype.handleEvent = function (eventEmitter, event) {
-        // Don't want to emit if there are no observers
-        if (0 < eventEmitter.observers.length) {
-            this.zone.run(function () {
-                eventEmitter.emit(event);
-            });
-        }
-    };
     LeafletLayerDirective.prototype.addLayerEventListeners = function (l) {
         var _this = this;
-        l.on('add', function (e) { return _this.handleEvent(_this.onAdd, e); });
-        l.on('remove', function (e) { return _this.handleEvent(_this.onRemove, e); });
+        l.on('add', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onAdd, e); });
+        l.on('remove', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onRemove, e); });
     };
     LeafletLayerDirective.decorators = [
         { type: Directive, args: [{
