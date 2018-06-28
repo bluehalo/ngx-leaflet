@@ -1,4 +1,4 @@
-import { DoCheck, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { DoCheck, EventEmitter, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Control, Layer } from 'leaflet';
 import { LeafletDirective } from '../../core/leaflet.directive';
 /**
@@ -23,7 +23,8 @@ export declare class LeafletBaseLayersDirective implements DoCheck, OnDestroy, O
         [name: string]: Layer;
     };
     layersControlOptions: Control.LayersOptions;
-    baseLayer: Layer;
+    layersControlReady: EventEmitter<Control.Layers>;
+    private baseLayer;
     private leafletDirective;
     private controlLayers;
     constructor(leafletDirective: LeafletDirective, differs: KeyValueDiffers, zone: NgZone);

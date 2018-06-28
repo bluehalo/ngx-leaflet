@@ -541,9 +541,9 @@ var LeafletControlLayersChanges = /** @class */ (function () {
 }());
 
 var LeafletControlLayersWrapper = /** @class */ (function () {
-    function LeafletControlLayersWrapper(zone) {
-        // Nothing here
+    function LeafletControlLayersWrapper(zone, layersControlReady) {
         this.zone = zone;
+        this.layersControlReady = layersControlReady;
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {
         return this.layersControl;
@@ -556,6 +556,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
         this.zone.runOutsideAngular(function () {
             _this.layersControl = leaflet.control.layers(baseLayers, overlays, controlOptions);
         });
+        this.layersControlReady.emit(this.layersControl);
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {
@@ -620,8 +621,9 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     function LeafletLayersControlDirective(leafletDirective, differs, zone) {
         this.differs = differs;
         this.zone = zone;
+        this.layersControlReady = new core.EventEmitter();
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(this.zone);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
         // Generate differs
         this.baseLayersDiffer = this.differs.find({}).create();
         this.overlaysDiffer = this.differs.find({}).create();
@@ -700,6 +702,7 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     LeafletLayersControlDirective.propDecorators = {
         "layersControlConfig": [{ type: core.Input, args: ['leafletLayersControl',] },],
         "layersControlOptions": [{ type: core.Input, args: ['leafletLayersControlOptions',] },],
+        "layersControlReady": [{ type: core.Output, args: ['leafletLayersControlReady',] },],
     };
     return LeafletLayersControlDirective;
 }());
@@ -734,8 +737,10 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs, zone) {
         this.differs = differs;
         this.zone = zone;
+        // Output for once the layers control is ready
+        this.layersControlReady = new core.EventEmitter();
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(this.zone);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
         this.baseLayersDiffer = this.differs.find({}).create();
     }
     Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
@@ -831,6 +836,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     LeafletBaseLayersDirective.propDecorators = {
         "baseLayers": [{ type: core.Input, args: ['leafletBaseLayers',] },],
         "layersControlOptions": [{ type: core.Input, args: ['leafletLayersControlOptions',] },],
+        "layersControlReady": [{ type: core.Output, args: ['leafletLayersControlReady',] },],
     };
     return LeafletBaseLayersDirective;
 }());

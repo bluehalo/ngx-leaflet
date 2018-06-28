@@ -1,4 +1,7 @@
-import { Directive, DoCheck, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {
+	Directive, DoCheck, EventEmitter, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy,
+	OnInit, Output
+} from '@angular/core';
 
 import { Control, Layer } from 'leaflet';
 
@@ -45,15 +48,18 @@ export class LeafletBaseLayersDirective
 	// Control Options
 	@Input('leafletLayersControlOptions') layersControlOptions: Control.LayersOptions;
 
+	// Output for once the layers control is ready
+	@Output('leafletLayersControlReady') layersControlReady = new EventEmitter<Control.Layers>();
+
 	// Active Base Layer
-	baseLayer: Layer;
+	private baseLayer: Layer;
 
 	private leafletDirective: LeafletDirectiveWrapper;
 	private controlLayers: LeafletControlLayersWrapper;
 
 	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
 		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-		this.controlLayers = new LeafletControlLayersWrapper(this.zone);
+		this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
 		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
 	}
 

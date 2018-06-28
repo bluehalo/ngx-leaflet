@@ -1,4 +1,4 @@
-import {KeyValueChanges, NgZone} from '@angular/core';
+import { EventEmitter, KeyValueChanges, NgZone } from '@angular/core';
 
 import { control, Control, Layer } from 'leaflet';
 
@@ -6,12 +6,14 @@ import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.mo
 
 export class LeafletControlLayersWrapper {
 
-
 	// The layers control object
 	protected layersControl: Control.Layers;
 
-	constructor(private zone: NgZone) {
-		// Nothing here
+	// Event Emitter for when the control is ready
+	protected layersControlReady: EventEmitter<Control.Layers>;
+
+	constructor(private zone: NgZone, layersControlReady: EventEmitter<Control.Layers>) {
+		this.layersControlReady = layersControlReady;
 	}
 
 	getLayersControl() {
@@ -27,6 +29,9 @@ export class LeafletControlLayersWrapper {
 		this.zone.runOutsideAngular(() => {
 			this.layersControl = control.layers(baseLayers, overlays, controlOptions);
 		});
+
+
+		this.layersControlReady.emit(this.layersControl);
 
 		return this.layersControl;
 	}

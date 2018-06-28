@@ -33,7 +33,7 @@ If you intend to use this library in a typescript project (utilizing the typings
 npm install --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```npm install```, ```npm demo``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```npm install```, ```npm run demo``` and then go to http://localhost:9000/src/demo/index.html
 
 
 ## Usage
@@ -179,11 +179,11 @@ options = {
 Changes to leafletOptions are ignored after they are initially set.
 This is because these options are passed into the map constructor, so they can't be changed anyways.
 So, make sure the object exists before the map is created.
-You'll want to create the object in ```ngOnInit``` or hide the map DOM element with ```ngIf``` until you can create the options object.
+You'll want to create the object in ```ngOnInit``` or hide the map DOM element with ```*ngIf``` until you can create the options object.
 
 
 ### Add a Layers Control
-The ```leafletLayersControl``` input bindings give you the ability to add the layers control to the map.
+The ```[leafletLayersControl]``` input bindings give you the ability to add the layers control to the map.
 The layers control lets the user toggle layers and overlays on and off.
 
 Template:
@@ -274,6 +274,7 @@ Second, you can wrap a large number of layers into a Leaflet layer group, which 
 ### Working with Leaflet Events
 Often, you'll want to make changes based on a map click or other Leaflet interaction.
 The ngx-leaflet plugin supports several [map events](#map-events) and [layer events](#layer-events) as documented in the API section.
+
 You may occasionally need to handle events that aren't exposed through the plugin, however.
 When that happens, you will need to be aware of how Zones and change detection work to ensure your event handling works as expected.
 Take a look at [A Note About Change Detection](#a-note-about-change-detection) for more details.
@@ -326,10 +327,10 @@ Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com/refere
 Input and Output binding for the map zoom level.
 
 #### [leafletMaxZoom]: number
-Input bind a maximum zoom level for the map.
+Input binding for the maximum zoom level for the map.
 
 #### [leafletMinZoon]: number
-Input bind a minimum zoom level for the map.
+Input binding for the minimum zoom level for the map.
 
 #### [(leafletCenter)]: LatLng
 Input and Output binding for the map center position.
