@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ExampleComponent } from './example.component';
 var ExampleModule = /** @class */ (function () {
     function ExampleModule() {
@@ -12,8 +12,6 @@ var ExampleModule = /** @class */ (function () {
                     declarations: [ExampleComponent]
                 },] },
     ];
-    /** @nocollapse */
-    ExampleModule.ctorParameters = function () { return []; };
     return ExampleModule;
 }());
 export { ExampleModule };

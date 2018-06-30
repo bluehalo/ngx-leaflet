@@ -1,7 +1,5 @@
 language: node_js
 node_js:
-  - "6.9"
-before_script:
-  - npm install -g gulp
-script: gulp
+  - "8.9"
+script: npm run build
 sudo: false
