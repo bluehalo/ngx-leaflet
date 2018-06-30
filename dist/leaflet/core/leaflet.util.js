@@ -10,6 +10,14 @@ var LeafletUtil = /** @class */ (function () {
         }
         return toReturn;
     };
+    LeafletUtil.handleEvent = function (zone, eventEmitter, event) {
+        // Don't want to emit if there are no observers
+        if (0 < eventEmitter.observers.length) {
+            zone.run(function () {
+                eventEmitter.emit(event);
+            });
+        }
+    };
     return LeafletUtil;
 }());
 export { LeafletUtil };

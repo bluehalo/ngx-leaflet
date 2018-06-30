@@ -5,6 +5,7 @@
 		<p>
 			This is a demonstration of setting up a basic map with initial options, including a base layer, an initial zoom level, and a center LatLng position.
 			The zoom level and center position are bound as inputs - <code>[leafletZoom]</code> and <code>[leafletCenter]</code> respectively - so changes are automatically applied to the map.
+			There are also outputs for <code>(leafletZoomChange)</code> and <code>(leafletCenterChange)</code> as well, so changes to the map are communicated to the component.
 			The map is initialized with the options bound to <code>[leafletOptions]</code>.
 			After initialization, changes to the options are ignored.
 		</p>
@@ -16,7 +17,9 @@
 &lt;div leaflet style="height: 300px;"
         [leafletOptions]="options"
         [leafletZoom]="zoom"
-        [leafletCenter]="center"&gt;
+        (leafletZoomChange)="onZoomChange($event)"
+        [leafletCenter]="center"
+        (leafletCenterChange)="onCenterChange($event)"&gt;
 &lt;/div&gt;
 </pre>
 
@@ -46,8 +49,8 @@
 							</label>
 						</div>
 						<div class="col">
-							<select class="form-control" name="zoom" [(ngModel)]="model.zoom" required>
-								<option *ngFor="let z of model.zoomLevels" [value]="z">{{z}}</option>
+							<select class="form-control" name="zoom" [(ngModel)]="formZoom" required>
+								<option *ngFor="let z of zoomLevels" [value]="z">{{z}}</option>
 							</select>
 						</div>
 					</div>
@@ -55,12 +58,10 @@
 					<!-- Lat/Long -->
 					<div class="form-group row">
 						<div class="col-4">
-							<label class="col-form-label float-right">
-								Latitude
-							</label>
+							<label class="col-form-label float-right">Latitude</label>
 						</div>
 						<div class="col">
-							<input type="text" class="form-control" name="latitude" [(ngModel)]="model.latitude" required>
+							<input type="text" class="form-control" name="lat" [(ngModel)]="lat" required>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -70,14 +71,13 @@
 							</label>
 						</div>
 						<div class="col">
-							<input type="text" class="form-control" name="longitude" [(ngModel)]="model.longitude" required>
+							<input type="text" class="form-control" name="lng" [(ngModel)]="lng" required>
 						</div>
 					</div>
 
 					<button type="button"
-							class="btn btn-primary float-right"
-							(click)="onApply()">Apply</button>
-
+							class="btn btn-primary pull-right"
+							(click)="doApply()">Apply</button>
 				</form>
 
 			</div>
@@ -88,7 +88,9 @@
 				<div leaflet style="height: 300px;"
 					 [leafletOptions]="options"
 					 [leafletZoom]="zoom"
-					 [leafletCenter]="center">
+					 (leafletZoomChange)="onZoomChange($event)"
+					 [leafletCenter]="center"
+				     (leafletCenterChange)="onCenterChange($event)">
 				</div>
 
 			</div>

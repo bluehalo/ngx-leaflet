@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, NgZone, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import { LatLng, LatLngBounds, Map, MapOptions } from 'leaflet';
+import { LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map, MapOptions } from 'leaflet';
 export declare class LeafletDirective implements OnChanges, OnInit {
     private element;
     private zone;
@@ -15,8 +15,25 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     options: MapOptions;
     mapReady: EventEmitter<Map>;
     zoom: number;
+    zoomChange: EventEmitter<number>;
     center: LatLng;
+    centerChange: EventEmitter<LatLng>;
     fitBounds: LatLngBounds;
+    maxBounds: LatLngBounds;
+    minZoom: number;
+    maxZoom: number;
+    onClick: EventEmitter<LeafletMouseEvent>;
+    onDoubleClick: EventEmitter<LeafletMouseEvent>;
+    onMouseDown: EventEmitter<LeafletMouseEvent>;
+    onMouseUp: EventEmitter<LeafletMouseEvent>;
+    onMouseMove: EventEmitter<LeafletMouseEvent>;
+    onMouseOver: EventEmitter<LeafletMouseEvent>;
+    onMapMove: EventEmitter<LeafletEvent>;
+    onMapMoveStart: EventEmitter<LeafletEvent>;
+    onMapMoveEnd: EventEmitter<LeafletEvent>;
+    onMapZoom: EventEmitter<LeafletEvent>;
+    onMapZoomStart: EventEmitter<LeafletEvent>;
+    onMapZoomEnd: EventEmitter<LeafletEvent>;
     constructor(element: ElementRef, zone: NgZone);
     ngOnInit(): void;
     ngOnChanges(changes: {
@@ -24,6 +41,7 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     }): void;
     getMap(): Map;
     onResize(): void;
+    private addMapEventListeners();
     /**
      * Resize the map to fit it's parent container
      */
@@ -50,7 +68,22 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     private setCenter(center);
     /**
      * Fit the map to the bounds
-     * @param center the center point
+     * @param latLngBounds the boundary to set
      */
     private setFitBounds(latLngBounds);
+    /**
+     * Set the map's max bounds
+     * @param latLngBounds the boundary to set
+     */
+    private setMaxBounds(latLngBounds);
+    /**
+     * Set the map's min zoom
+     * @param number the new min zoom
+     */
+    private setMinZoom(zoom);
+    /**
+     * Set the map's min zoom
+     * @param number the new min zoom
+     */
+    private setMaxZoom(zoom);
 }

@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
+import { Directive, EventEmitter, Input, KeyValueDiffers, NgZone, Output } from '@angular/core';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from './leaflet-control-layers.wrapper';
@@ -17,8 +17,9 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     function LeafletLayersControlDirective(leafletDirective, differs, zone) {
         this.differs = differs;
         this.zone = zone;
+        this.layersControlReady = new EventEmitter();
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(this.zone);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
         // Generate differs
         this.baseLayersDiffer = this.differs.find({}).create();
         this.overlaysDiffer = this.differs.find({}).create();
@@ -97,6 +98,7 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     LeafletLayersControlDirective.propDecorators = {
         "layersControlConfig": [{ type: Input, args: ['leafletLayersControl',] },],
         "layersControlOptions": [{ type: Input, args: ['leafletLayersControlOptions',] },],
+        "layersControlReady": [{ type: Output, args: ['leafletLayersControlReady',] },],
     };
     return LeafletLayersControlDirective;
 }());

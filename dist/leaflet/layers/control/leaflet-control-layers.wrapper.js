@@ -1,9 +1,9 @@
 import { control } from 'leaflet';
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 var LeafletControlLayersWrapper = /** @class */ (function () {
-    function LeafletControlLayersWrapper(zone) {
-        // Nothing here
+    function LeafletControlLayersWrapper(zone, layersControlReady) {
         this.zone = zone;
+        this.layersControlReady = layersControlReady;
     }
     LeafletControlLayersWrapper.prototype.getLayersControl = function () {
         return this.layersControl;
@@ -16,6 +16,7 @@ var LeafletControlLayersWrapper = /** @class */ (function () {
         this.zone.runOutsideAngular(function () {
             _this.layersControl = control.layers(baseLayers, overlays, controlOptions);
         });
+        this.layersControlReady.emit(this.layersControl);
         return this.layersControl;
     };
     LeafletControlLayersWrapper.prototype.applyBaseLayerChanges = function (changes) {

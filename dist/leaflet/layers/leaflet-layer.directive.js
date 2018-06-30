@@ -1,7 +1,8 @@
-import { Directive, Input, NgZone } from '@angular/core';
+import { Directive, EventEmitter, Input, NgZone, Output } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
+import { LeafletUtil } from '../core/leaflet.util';
 /**
  * Layer directive
  *
@@ -12,6 +13,9 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 var LeafletLayerDirective = /** @class */ (function () {
     function LeafletLayerDirective(leafletDirective, zone) {
         this.zone = zone;
+        // Layer Events
+        this.onAdd = new EventEmitter();
+        this.onRemove = new EventEmitter();
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
     }
     LeafletLayerDirective.prototype.ngOnInit = function () {
@@ -32,10 +36,16 @@ var LeafletLayerDirective = /** @class */ (function () {
                     p_1.remove();
                 }
                 if (null != n_1) {
+                    _this.addLayerEventListeners(n_1);
                     _this.leafletDirective.getMap().addLayer(n_1);
                 }
             });
         }
+    };
+    LeafletLayerDirective.prototype.addLayerEventListeners = function (l) {
+        var _this = this;
+        l.on('add', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onAdd, e); });
+        l.on('remove', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onRemove, e); });
     };
     LeafletLayerDirective.decorators = [
         { type: Directive, args: [{
@@ -49,6 +59,8 @@ var LeafletLayerDirective = /** @class */ (function () {
     ]; };
     LeafletLayerDirective.propDecorators = {
         "layer": [{ type: Input, args: ['leafletLayer',] },],
+        "onAdd": [{ type: Output, args: ['leafletLayerAdd',] },],
+        "onRemove": [{ type: Output, args: ['leafletLayerRemove',] },],
     };
     return LeafletLayerDirective;
 }());

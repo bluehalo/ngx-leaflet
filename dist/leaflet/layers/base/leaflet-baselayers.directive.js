@@ -1,4 +1,4 @@
-import { Directive, Input, KeyValueDiffers, NgZone } from '@angular/core';
+import { Directive, EventEmitter, Input, KeyValueDiffers, NgZone, Output } from '@angular/core';
 import { Control } from 'leaflet';
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
@@ -19,8 +19,10 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     function LeafletBaseLayersDirective(leafletDirective, differs, zone) {
         this.differs = differs;
         this.zone = zone;
+        // Output for once the layers control is ready
+        this.layersControlReady = new EventEmitter();
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(this.zone);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
         this.baseLayersDiffer = this.differs.find({}).create();
     }
     Object.defineProperty(LeafletBaseLayersDirective.prototype, "baseLayers", {
@@ -116,6 +118,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     LeafletBaseLayersDirective.propDecorators = {
         "baseLayers": [{ type: Input, args: ['leafletBaseLayers',] },],
         "layersControlOptions": [{ type: Input, args: ['leafletLayersControlOptions',] },],
+        "layersControlReady": [{ type: Output, args: ['leafletLayersControlReady',] },],
     };
     return LeafletBaseLayersDirective;
 }());

@@ -1,0 +1,77 @@
+<div class="card">
+	<div class="card-body">
+
+		<h1 class="card-title">Map and Layer Events</h1>
+		<p>
+			In this example, we demonstrate how to use the various Map and Layer events using output binding.
+			Mouse events are exposed using a pattern similar to <code>(leafletClick)</code>, <code>(leafletMouseDown)</code>, etc.
+			The map Zoom/Move events are exposed using <code>(leafletMapMove)</code>, <code>(leafletMapZoom)</code>, etc.
+		</p>
+
+		<div class="card bg-light">
+			<div class="card-body">
+
+<pre>
+&lt;div leaflet style="height: 300px;"
+        [leafletOptions]="options"
+        (leafletClick)="handleEvent('click', $event)"
+        (leafletMapMoveEnd)="handleEvent('mapMoveEnd', $event)"
+        (leafletMapZoomEnd)="handleEvent('mapZoomEnd', $event)"&gt;
+    &lt;div [leafletLayer]="baselayer"
+         (leafletLayerAdd)="handleEvent('layerAdd', $event)"&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="card-body">
+
+		<div class="row">
+
+			<!-- Event Log -->
+			<div class="col-sm-12 col-md-6 col-lg-4">
+
+				<form>
+
+					<div class="form-group">
+						<label class="col-form-label">Event Log:</label>
+						<textarea type="textarea"
+						          class="form-control"
+						          name="eventLog"
+						          rows="8"
+						          disabled
+						          [ngModel]="eventLog"></textarea>
+					</div>
+
+				</form>
+
+			</div>
+
+			<!-- Map -->
+			<div class="col-sm-12 col-md-6 col-lg-8">
+
+				<div leaflet style="height: 300px;"
+					 [leafletOptions]="options"
+				     (leafletClick)="handleEvent('click', $event)"
+					 (leafletMapMoveEnd)="handleEvent('mapMoveEnd', $event)"
+					 (leafletMapZoomEnd)="handleEvent('mapZoomEnd', $event)">
+
+					<div [leafletLayer]="baselayer"
+					     (leafletLayerAdd)="handleEvent('layerAdd', $event)">
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+
+
