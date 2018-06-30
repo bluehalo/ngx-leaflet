@@ -719,14 +719,15 @@ Here's a list of articles, tutorials, guides, and help resources:
 
 ## Changelog
 
+### 3.0
+Support for Angular 5. Also cleaned up some of the functionality related to Angular zone management.
+Added documentation to README on Zone management.
+
 #### 3.1.0
 Added [map events](#map-events), [layer events](#layer-events).
 Added several input bound map options including ```[leafletMaxBounds]```, ```[leafletMaxZoom]```, and ```[leafletMinZoom]```.
 Added output binding for map center - ```(leafletMapCenter)``` and map zoom - ```(leafletMapZoom)```.
 
-### 3.0
-Support for Angular 5. Also cleaned up some of the functionality related to Angular zone management.
-Added documentation to README on Zone management.
 
 ### 2.0
 Support for Angular 4.
