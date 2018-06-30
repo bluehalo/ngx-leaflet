@@ -24,13 +24,15 @@
 	"scripts": {
 		"build": "npm run compile && npm run bundle",
 		"prebuild": "npm run lint",
-		"dev": "webpack-dev-server",
+		"demo": "(webpack-dev-server & npm run watch)",
+		"predemo": "npm run lint",
 
 		"bundle": "npm run rollup && npm run uglify",
 		"compile": "ngc -p tsconfig-aot.json",
 		"lint": "tslint -c tslint.json -t stylish 'src/**/*.ts'",
 		"rollup": "rollup -c rollup.config.js",
-		"uglify": "uglifyjs --comments 'license' -o ./dist/bundles/ngx-template.min.js -- ./dist/bundles/ngx-template.js"
+		"uglify": "uglifyjs --comments 'license' -o ./dist/bundles/ngx-template.min.js -- ./dist/bundles/ngx-template.js",
+		"watch": " watch 'npm run lint' ./src"
 	},
 
 	"peerDependencies": {
@@ -65,13 +67,13 @@
 		"css-loader": "0.28",
 		"file-loader": "1.1",
 		"html-loader": "0.5",
+		"node-sass": "4",
 		"resolve-url-loader": "2",
 		"sass-loader": "7",
 		"source-map-loader": "0.2",
 		"style-loader": "0.21",
 		"url-loader": "1",
-
-		"node-sass": "4"
+		"watch": "1"
 
 	}
 }

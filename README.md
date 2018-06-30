@@ -5,47 +5,49 @@
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-template/
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-template.svg
 
-
 > Template project for an Angular.io (v2+) Component.
-> Provides a template project structure, Gulp build, and Webpack dev server configuration for packaging an Angular.io component and for running a local demo of that component. 
+> Provides a template project structure, npm script build, and Webpack dev server configuration for packaging an Angular.io component and for running a local demo of that component. 
+
 
 ## Table of Contents
 - [Install](#install)
 - [Usage](#usage)
 - [Structure](#structure)
+- [Changelog](#changelog)
 - [Contribute](#contribute)
 - [License](#license)
 
+
 ## Install
-This package is intended to be a starting point for a new project in a new repository. As such, installation involves forking the repository, or cloning it and optionally removing the .git directory to get rid of the repository history.
+This package is intended to be a starting point for a new project in a new repository.
+As such, installation involves forking the repository, or cloning it and optionally removing the .git directory to get rid of the repository history.
 
-Forking the repository will allow you to maintain a common history with this project. This will allow you to periodically perform git merges with this repository to pull in patches and improvements. If you want total freedom and are willing to manually merge changes in the future, feel free to delete the git history of your clone. 
+Forking the repository will allow you to maintain a common history with this project.
+This will allow you to periodically perform git merges with this repository to pull in patches and improvements. If you want total freedom and are willing to manually merge changes in the future, feel free to delete the git history of your clone. 
 
-To get started, ensure that Node and NPM are installed.
-* Node and NPM (https://nodejs.org)
-* Gulp (https://gulpjs.org)
+To get started, ensure that Node and Yarn are installed.
+We recommend using NVM to manage your node versions.
+* NVM  (https://github.com/creationix/nvm)
+* Node (https://nodejs.org)
+* Yarn (https://yarnpkg.com)
 
-Use npm to install gulp globally:
+Clone the repository and then install the npm packages in the project directory: 
 ```
-npm install -g gulp
-```
-
-Next, clone the repository and then install the npm packages in the project directory: 
-```
-npm install
+yarn install
 ```
 
 At this point, you should be ready to build the project.
 
 
 ## Usage
-This project uses Gulp as a build framework. There are two primary tasks: build and dev, which build distribution artifacts and run the development server respecitvely. 
+This project uses Node scripts as a build framework.
+There are two primary tasks: build and demo, which build distribution artifacts and run the development server respecitvely. 
 
 ### Building Artifacts for Distribution
 To build the distribution bundle run:
 
 ```
-gulp build
+npm run build
 ```
 
 This task runs TSLint over the source Typescript to ensure code quality and consistency. 
@@ -58,16 +60,17 @@ The build generates all artifacts necessary for consuming libraries to utilize A
 ### Run the Demo for Development
 To run the demo using Webpack dev server, run
 ```
-gulp dev
+npm run demo
 ```
 
-This task will run Webpack dev server, watch all of the files in the project for changes, and make a server available where you can run the demo application.
-Gulp watch will monitor for changes to Typescript source and re-run the TSLint.
-
-In dev mode, tsc (as opposed to ngc) is used. This means the bundle that is served by Webpack dev server is not utilizing AOT.
+This task will run lint and watch for changes and start the Webpack dev server.
+Webpack dev server will make a server available where you can run the demo application.
+In dev mode, tsc (as opposed to ngc) is used.
+This means the bundle that is served by Webpack dev server is not utilizing AOT.
 
 ### Customize
-Once you've got your own copy of the template, you will need to adapt the template to your own project. To do so, make changes to the following files:
+Once you've got your own copy of the template, you will need to adapt the template to your own project.
+To do so, make changes to the following files:
 
 #### ./package.json
 Modify all of the metadata about the package to be specific to your module.
@@ -83,17 +86,20 @@ If you want the license to be something other than MIT, modify this file. You sh
 You can modify this README.md file by removing this section and updating the other relevant content.
 
 #### ./src/index.ts
-This file should export your Angular.io module(s). The build treats this as the primary library entry point. 
+This file should export your Angular.io module(s).
+The build treats this as the primary library entry point.
+In other words, this file should create a dependency tree of and export your entire library. 
 
 #### ./src
-Obviously. Change stuff here.
+This is where all your library code should go. Obviously. Change stuff here.
 
 ### Polyfills
-We're using a few polyfills to help with building and bundling
+We're using a few polyfills to help with building and bundling.
 
 #### core-js
 https://github.com/zloirock/core-js
-core-js bundles a bunch of es5/es6/es7 polyfills. We're importing the es6 and some of the es7 ones into our demo example application.
+core-js bundles a bunch of es5/es6/es7 polyfills.
+We're importing the es6 and some of the es7 ones into our demo example application.
 
 
 ## Structure
@@ -109,31 +115,18 @@ Git ignore file.
 **./.travis.yml**
 Travis CI configuration file. See (https://travis-ci.org/). If you configure this correctly, you can get automated builds working via Travis.
 
-**./gulpfile.js**
-Gulp build file. The Gulp build currently has two primary modes: build and dev. Build will generate the bundle files, and dev will run Webpack Dev Server.
-
 **./tsconfig-aot.json**
 Typescript configuration file used by ngc to build the production component code. See https://www.typescriptlang.org/docs/tutorial.html.
-
 This config is used for bundling. The Gulp build runs ngc using this config file, and generates es5 Javascript, but uses es2015 modules. This is because the output of this compile step is fed into Rollup to generate the bundle files. Rollup will change the module format to umd. 
-
 
 **./tsconfig.json**
 Typescript configuration file used by webpack dev server to build the development component code. This file is essentially the same as ```./tsconfig-aot.json``` only it changes a few settings since it is not being bundled for external consumption and not using ngc.
-
 This config is used by Webpack dev server to compile the Typescript files in memory and serve them for the demo example application. In this config, we disable declaration since the d.ts files aren't needed, and we build to es5 with commonjs as the module system (so it's compatible with es5).
 
 **./tslint.json**
 TSLint configuration file. Specifies code conventions and Typescript static analysis checks. See https://palantir.github.io/tslint/.
 
-
-### ./config/ (Configuration)
-Contains most of the major config files used to build and develop
-
-**./config/assets.js**
-Centrally specifies paths used by the build
-
-**./config/webpack.config.js**
+**./webpack.config.js**
 Webpack configuration file used to build the component and demo and run Webpack Dev Server.
 
 
@@ -152,6 +145,14 @@ Contains a lightweight Angular.io application that is built and run using Webpac
 
 **./src/!(demo)**
 This is up to you. A good basic convention is to package modules into directories. You can use the example component as a basic guideline.
+
+
+## Changelog
+
+### 3.0.0
+- Angular 6
+- Migrated to npm scripts from gulp for build system
+- Upgrade to Webpack 4.x
 
 ## Contribute
 PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.
