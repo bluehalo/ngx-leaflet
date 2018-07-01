@@ -7,7 +7,7 @@
 
 > Leaflet packages for Angular.io (v2+).
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
-> Supports Angular v5, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
+> Supports Angular v6, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
 ## Table of Contents
 - [Install](#install)
@@ -21,19 +21,20 @@
 - [Credits](#credits)
 
 
+
 ## Install
-Install the package and its peer dependencies via npm (or yarn):
+Install the package and its peer dependencies via yarn (or npm):
 ```
-npm install leaflet
-npm install @asymmetrik/ngx-leaflet
+yarn add leaflet
+yarn add @asymmetrik/ngx-leaflet
 ```
 
 If you intend to use this library in a typescript project (utilizing the typings), you'll need to install the leaflet typings:
 ```
-npm install --save-dev @types/leaflet
+yarn add --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```npm install```, ```npm run demo``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```yarn install```, ```npm run demo``` and then go to http://localhost:9000/src/demo/index.html
 
 
 ## Usage
@@ -629,7 +630,6 @@ ngOnInit() {
 ``` 
 
 
-
 ### A Note About Markers
 If you use this component in an Angular.io project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
 The issue is related to how Leaflet manipulates the image URLs used to render markers when you are using the default marker images.
@@ -719,6 +719,11 @@ Here's a list of articles, tutorials, guides, and help resources:
 
 ## Changelog
 
+### 4.0
+Support for Angular 6.
+Also migrated to using npm scripts for the build (no more dev dependency on gulp).
+
+
 ### 3.0
 Support for Angular 5. Also cleaned up some of the functionality related to Angular zone management.
 Added documentation to README on Zone management.
@@ -741,6 +746,7 @@ Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
 #### 2.3.0
 Renamed the package to ```ngx-leaflet```
+
 
 
 ## Contribute
