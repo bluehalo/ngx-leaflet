@@ -29,9 +29,8 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         get: function () {
             return this.baseLayersValue;
         },
-        set: 
         // Set/get baseLayers
-        function (v) {
+        set: function (v) {
             this.baseLayersValue = v;
             this.updateBaseLayers();
         },
@@ -48,7 +47,6 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
         this.leafletDirective.init();
         // Create the control outside angular to prevent events from triggering chnage detection
         this.zone.runOutsideAngular(function () {
-            // Initially configure the controlLayers
             // Initially configure the controlLayers
             _this.controlLayers
                 .init({}, _this.layersControlOptions)
@@ -73,13 +71,7 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     /**
      * Check the current base layer and change it to the new one if necessary
      */
-    /**
-         * Check the current base layer and change it to the new one if necessary
-         */
-    LeafletBaseLayersDirective.prototype.syncBaseLayer = /**
-         * Check the current base layer and change it to the new one if necessary
-         */
-    function () {
+    LeafletBaseLayersDirective.prototype.syncBaseLayer = function () {
         var _this = this;
         var map = this.leafletDirective.getMap();
         var layers = LeafletUtil.mapToArray(this.baseLayers);
@@ -111,14 +103,14 @@ var LeafletBaseLayersDirective = /** @class */ (function () {
     ];
     /** @nocollapse */
     LeafletBaseLayersDirective.ctorParameters = function () { return [
-        { type: LeafletDirective, },
-        { type: KeyValueDiffers, },
-        { type: NgZone, },
+        { type: LeafletDirective },
+        { type: KeyValueDiffers },
+        { type: NgZone }
     ]; };
     LeafletBaseLayersDirective.propDecorators = {
-        "baseLayers": [{ type: Input, args: ['leafletBaseLayers',] },],
-        "layersControlOptions": [{ type: Input, args: ['leafletLayersControlOptions',] },],
-        "layersControlReady": [{ type: Output, args: ['leafletLayersControlReady',] },],
+        baseLayers: [{ type: Input, args: ['leafletBaseLayers',] }],
+        layersControlOptions: [{ type: Input, args: ['leafletLayersControlOptions',] }],
+        layersControlReady: [{ type: Output, args: ['leafletLayersControlReady',] }]
     };
     return LeafletBaseLayersDirective;
 }());

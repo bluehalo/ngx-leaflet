@@ -27,9 +27,8 @@ var LeafletLayersDirective = /** @class */ (function () {
         get: function () {
             return this.layersValue;
         },
-        set: 
         // Set/get the layers
-        function (v) {
+        set: function (v) {
             this.layersValue = v;
             // Now that we have a differ, do an immediate layer update
             this.updateLayers();
@@ -55,19 +54,7 @@ var LeafletLayersDirective = /** @class */ (function () {
      * This is important because it allows us to react to changes to the contents of the array as well
      * as changes to the actual array instance.
      */
-    /**
-         * Update the state of the layers.
-         * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
-         * This is important because it allows us to react to changes to the contents of the array as well
-         * as changes to the actual array instance.
-         */
-    LeafletLayersDirective.prototype.updateLayers = /**
-         * Update the state of the layers.
-         * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
-         * This is important because it allows us to react to changes to the contents of the array as well
-         * as changes to the actual array instance.
-         */
-    function () {
+    LeafletLayersDirective.prototype.updateLayers = function () {
         var map = this.leafletDirective.getMap();
         if (null != map && null != this.layersDiffer) {
             var changes_1 = this.layersDiffer.diff(this.layersValue);
@@ -91,12 +78,12 @@ var LeafletLayersDirective = /** @class */ (function () {
     ];
     /** @nocollapse */
     LeafletLayersDirective.ctorParameters = function () { return [
-        { type: LeafletDirective, },
-        { type: IterableDiffers, },
-        { type: NgZone, },
+        { type: LeafletDirective },
+        { type: IterableDiffers },
+        { type: NgZone }
     ]; };
     LeafletLayersDirective.propDecorators = {
-        "layers": [{ type: Input, args: ['leafletLayers',] },],
+        layers: [{ type: Input, args: ['leafletLayers',] }]
     };
     return LeafletLayersDirective;
 }());

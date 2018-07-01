@@ -54,7 +54,6 @@ var LeafletLayersControlDirective = /** @class */ (function () {
         // Set up control outside of angular to avoid change detection when using the control
         this.zone.runOutsideAngular(function () {
             // Set up all the initial settings
-            // Set up all the initial settings
             _this.controlLayers
                 .init({}, _this.layersControlOptions)
                 .addTo(_this.leafletDirective.getMap());
@@ -91,14 +90,14 @@ var LeafletLayersControlDirective = /** @class */ (function () {
     ];
     /** @nocollapse */
     LeafletLayersControlDirective.ctorParameters = function () { return [
-        { type: LeafletDirective, },
-        { type: KeyValueDiffers, },
-        { type: NgZone, },
+        { type: LeafletDirective },
+        { type: KeyValueDiffers },
+        { type: NgZone }
     ]; };
     LeafletLayersControlDirective.propDecorators = {
-        "layersControlConfig": [{ type: Input, args: ['leafletLayersControl',] },],
-        "layersControlOptions": [{ type: Input, args: ['leafletLayersControlOptions',] },],
-        "layersControlReady": [{ type: Output, args: ['leafletLayersControlReady',] },],
+        layersControlConfig: [{ type: Input, args: ['leafletLayersControl',] }],
+        layersControlOptions: [{ type: Input, args: ['leafletLayersControlOptions',] }],
+        layersControlReady: [{ type: Output, args: ['leafletLayersControlReady',] }]
     };
     return LeafletLayersControlDirective;
 }());

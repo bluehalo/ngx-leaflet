@@ -54,13 +54,13 @@ var LeafletLayerDirective = /** @class */ (function () {
     ];
     /** @nocollapse */
     LeafletLayerDirective.ctorParameters = function () { return [
-        { type: LeafletDirective, },
-        { type: NgZone, },
+        { type: LeafletDirective },
+        { type: NgZone }
     ]; };
     LeafletLayerDirective.propDecorators = {
-        "layer": [{ type: Input, args: ['leafletLayer',] },],
-        "onAdd": [{ type: Output, args: ['leafletLayerAdd',] },],
-        "onRemove": [{ type: Output, args: ['leafletLayerRemove',] },],
+        layer: [{ type: Input, args: ['leafletLayer',] }],
+        onAdd: [{ type: Output, args: ['leafletLayerAdd',] }],
+        onRemove: [{ type: Output, args: ['leafletLayerRemove',] }]
     };
     return LeafletLayerDirective;
 }());
