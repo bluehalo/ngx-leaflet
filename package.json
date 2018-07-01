@@ -3,7 +3,7 @@
 	"artifactName": "ngx-template",
 	"moduleName": "ngxTemplate",
 	"description": "Angular.io components template project",
-	"version": "2.0.0",
+	"version": "3.0.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2017 - All Rights Reserved.",
 	"license": "MIT",
@@ -21,61 +21,59 @@
 		"url": "https://github.com/Asymmetrik/ngx-template.git"
 	},
 
+	"scripts": {
+		"build": "npm run compile && npm run bundle",
+		"prebuild": "npm run lint",
+		"demo": "(webpack-dev-server & npm run watch)",
+		"predemo": "npm run lint",
+
+		"bundle": "npm run rollup && npm run uglify",
+		"compile": "ngc -p tsconfig-aot.json",
+		"lint": "tslint -c tslint.json -t stylish 'src/**/*.ts'",
+		"rollup": "rollup -c rollup.config.js",
+		"uglify": "uglifyjs --comments 'license' -o ./dist/bundles/ngx-template.min.js -- ./dist/bundles/ngx-template.js",
+		"watch": " watch 'npm run lint' ./src"
+	},
+
 	"peerDependencies": {
-		"@angular/core": ">=5",
-		"@angular/common": ">=5"
+		"@angular/core": ">=6",
+		"@angular/common": ">=6"
 	},
 
 	"devDependencies": {
-		"@angular/common": "5",
-		"@angular/compiler": "5",
-		"@angular/compiler-cli": "5",
-		"@angular/core": "5",
-		"@angular/platform-browser": "5",
-		"@angular/platform-browser-dynamic": "5",
+		"@angular/common": "6",
+		"@angular/compiler": "6",
+		"@angular/compiler-cli": "6",
+		"@angular/core": "6",
+		"@angular/platform-browser": "6",
+		"@angular/platform-browser-dynamic": "6",
 
 		"core-js": "2.5",
-
-		"rxjs": "5.5",
+		"rxjs": "6",
 		"zone.js": "0.8",
-		"@types/node": "8",
+		"@types/node": "10",
 
-		"merge2": "1.2",
-		"rollup": "0.53",
+		"typescript": "2.7",
+		"tslint": "5",
 
-		"typescript": "2.6",
-		"tslint": "5.8",
-		"tslint-stylish": "2.1",
+		"rollup": "0.62",
+		"uglify-js": "3",
 
-		"webpack": "3.10",
-		"webpack-dev-server": "2.9",
+		"webpack": "4",
+		"webpack-cli": "3",
+		"webpack-dev-server": "3",
 		"angular2-template-loader": "0.6",
-		"awesome-typescript-loader": "3.4",
+		"awesome-typescript-loader": "5",
 		"css-loader": "0.28",
 		"file-loader": "1.1",
 		"html-loader": "0.5",
-		"resolve-url-loader": "2.2",
-		"sass-loader": "6.0",
-		"style-loader": "0.19",
-		"awesome-typescript-loader": "3.4",
-		"url-loader": "0.6",
+		"node-sass": "4",
+		"resolve-url-loader": "2",
+		"sass-loader": "7",
 		"source-map-loader": "0.2",
-		"style-loader": "0.19",
-		"url-loader": "0.6",
-
-		"gulp": "3.9",
-		"gulp-filter": "5.0",
-		"gulp-insert": "0.5",
-		"gulp-load-plugins": "1.5",
-		"gulp-rename": "1.2",
-		"gulp-sourcemaps": "2.6",
-		"gulp-typescript": "3.2",
-		"gulp-tslint": "8.1",
-		"gulp-uglify": "3.0",
-		"gulp-util": "3.0",
-		"run-sequence": "2.2",
-		"through2": "2.0",
-		"node-sass": "4.7"
+		"style-loader": "0.21",
+		"url-loader": "1",
+		"watch": "1"
 
 	}
 }

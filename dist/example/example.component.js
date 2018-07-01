@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 var ExampleComponent = /** @class */ (function () {
     function ExampleComponent() {
         this.message = 'Hello';
@@ -15,8 +15,6 @@ var ExampleComponent = /** @class */ (function () {
                     template: '{{message}}'
                 },] },
     ];
-    /** @nocollapse */
-    ExampleComponent.ctorParameters = function () { return []; };
     return ExampleComponent;
 }());
 export { ExampleComponent };
