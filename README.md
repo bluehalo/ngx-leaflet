@@ -102,7 +102,7 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
           "options": {
            ...
             "styles": [
-              "src/styles.scss",
+              "src/styles.css",
               "node_modules/leaflet/dist/leaflet.css"
             ],
             ...
