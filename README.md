@@ -89,22 +89,24 @@ And then in your webpack config file:
 
 
 #### Adding Styles in Angular CLI
-If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular-cli.json```
+If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular.json```
 
 ```js
 {
-    ...
-    "apps": [
-        {
-            ...
+    "projects": {
+    "route-web-client": {
+      ...
+      "architect": {
+        "build": {
+          ...
+          "options": {
+           ...
             "styles": [
-                "styles.css",
-                "../node_modules/leaflet/dist/leaflet.css"
+              "src/styles.scss",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             ...
-        }
-    ]
-    ...
+          },
 }
 ```
 
