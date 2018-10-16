@@ -7,23 +7,19 @@
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2018 - All Rights Reserved.",
 	"license": "MIT",
-
 	"main": "dist/bundles/ngx-leaflet.js",
 	"module": "dist/index.js",
 	"jsnext:main": "dist/index.js",
 	"typings": "dist/index.d.ts",
-
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Asymmetrik/ngx-leaflet.git"
 	},
-
 	"scripts": {
 		"build": "npm run compile && npm run bundle",
 		"prebuild": "npm run lint",
 		"demo": "(webpack-dev-server & npm run watch)",
 		"predemo": "npm run lint",
-
 		"bundle": "npm run rollup && npm run uglify",
 		"compile": "ngc -p tsconfig-aot.json",
 		"lint": "tslint -c tslint.json -t stylish 'src/**/*.ts'",
@@ -31,14 +27,11 @@
 		"uglify": "uglifyjs --comments 'license' -o ./dist/bundles/ngx-leaflet.min.js -- ./dist/bundles/ngx-leaflet.js",
 		"watch": " watch 'npm run lint' ./src"
 	},
-
 	"peerDependencies": {
-		"@angular/core": ">=6",
 		"@angular/common": ">=6",
-
+		"@angular/core": ">=6",
 		"leaflet": "1"
 	},
-
 	"devDependencies": {
 		"@angular/common": "6",
 		"@angular/compiler": "6",
@@ -47,39 +40,32 @@
 		"@angular/forms": "6",
 		"@angular/platform-browser": "6",
 		"@angular/platform-browser-dynamic": "6",
-
-		"bootstrap": "4",
-
-		"leaflet": "1",
 		"@types/leaflet": "1",
-
-		"core-js": "2.5",
-		"rxjs": "6",
-		"zone.js": "0.8",
 		"@types/node": "10",
-
-		"typescript": "2.7",
-		"tslint": "5",
-
-		"rollup": "0.62",
-		"uglify-js": "3",
-
-		"webpack": "4",
-		"webpack-cli": "3",
-		"webpack-dev-server": "3",
 		"angular2-template-loader": "0.6",
 		"awesome-typescript-loader": "5",
+		"bootstrap": "4",
+		"core-js": "2.5",
 		"css-loader": "0.28",
 		"file-loader": "1.1",
 		"html-loader": "0.5",
-
+		"leaflet": "1",
 		"node-sass": "4",
 		"resolve-url-loader": "2",
+		"rollup": "0.62",
+		"rxjs": "6",
 		"sass-loader": "7",
 		"source-map-loader": "0.2",
 		"style-loader": "0.21",
+		"tslint": "5",
+		"typescript": "2.7",
+		"uglify-js": "3",
 		"url-loader": "1",
-		"watch": "1"
-
+		"watch": "1",
+		"webpack": "4",
+		"webpack-cli": "3",
+		"webpack-dev-server": "3",
+		"webpack-stats-plugin": "^0.2.1",
+		"zone.js": "0.8"
 	}
 }
