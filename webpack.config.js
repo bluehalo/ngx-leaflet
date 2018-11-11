@@ -3,6 +3,7 @@
 const
 	path = require('path'),
 	webpack = require('webpack'),
+	HtmlWebpackPlugin = require('html-webpack-plugin'),
 
 	pkg = require('./package.json');
 
@@ -76,6 +77,13 @@ module.exports = () => {
 		// Configured loaders
 		rules: [
 
+			{
+				// Mark files inside `@angular/core` as using SystemJS style dynamic imports.
+				// Removing this will cause deprecation warnings to appear.
+				test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+				parser: { system: true },  // enable SystemJS
+			},
+
 			// Typescript loader
 			{
 				test: /\.ts$/,
@@ -139,7 +147,11 @@ module.exports = () => {
 		new webpack.ContextReplacementPlugin(
 			/(.+)?angular(\\|\/)core(.+)?/,
 			path.posix.resolve('./src')
-		)
+		),
+		new HtmlWebpackPlugin({
+			template: path.posix.resolve('./src/demo/index.html'),
+			inject: 'body'
+		})
 	);
 
 	return wpConfig;
