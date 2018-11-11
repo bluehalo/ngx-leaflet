@@ -19,7 +19,7 @@ module.exports = () => {
 	 * Dev Server Configuration
 	 */
 	wpConfig.devServer = {
-		port: 9000,
+		port: 4200,
 		stats: {
 			modules: false,
 			colors: true
