@@ -23,18 +23,18 @@
 
 
 ## Install
-Install the package and its peer dependencies via yarn (or npm):
+Install the package and its peer dependencies via npm (or yarn):
 ```
-yarn add leaflet
-yarn add @asymmetrik/ngx-leaflet
+npm install leaflet
+npm install @asymmetrik/ngx-leaflet
 ```
 
 If you intend to use this library in a typescript project (utilizing the typings), you'll need to install the leaflet typings:
 ```
-yarn add @types/leaflet --dev
+npm install --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```yarn install```, ```npm run demo``` and then go to http://localhost:4200
+If you want to run the demo, clone the repository, perform an ```npm install```, ```npm run demo``` and then go to http://localhost:4200
 
 
 ## Usage
