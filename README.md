@@ -31,7 +31,7 @@ yarn add @asymmetrik/ngx-leaflet
 
 If you intend to use this library in a typescript project (utilizing the typings), you'll need to install the leaflet typings:
 ```
-yarn add --save-dev @types/leaflet
+yarn add @types/leaflet --dev
 ```
 
 If you want to run the demo, clone the repository, perform an ```yarn install```, ```npm run demo``` and then go to http://localhost:9000/src/demo/index.html
