@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
 import { latLng, tileLayer } from 'leaflet';
@@ -27,7 +27,7 @@ export class LeafletEventsDemoComponent {
 				scan((acc: string, v: string) => `${++this.eventCount}: ${v}\n${acc}`, ''),
 				debounceTime(50)
 			)
-			.subscribe((v) => { this.eventLog = v; } );
+			.subscribe((v: string) => { this.eventLog = v; } );
 	}
 
 	handleEvent(eventType: string) {

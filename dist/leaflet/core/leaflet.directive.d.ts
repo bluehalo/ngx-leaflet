@@ -3,7 +3,7 @@ import { LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map, MapOptions 
 export declare class LeafletDirective implements OnChanges, OnInit {
     private element;
     private zone;
-    readonly DEFAULT_ZOOM: number;
+    readonly DEFAULT_ZOOM = 1;
     readonly DEFAULT_CENTER: LatLng;
     readonly DEFAULT_FPZ_OPTIONS: {};
     resizeTimer: any;
@@ -41,49 +41,49 @@ export declare class LeafletDirective implements OnChanges, OnInit {
     }): void;
     getMap(): Map;
     onResize(): void;
-    private addMapEventListeners();
+    private addMapEventListeners;
     /**
      * Resize the map to fit it's parent container
      */
-    private doResize();
+    private doResize;
     /**
      * Manage a delayed resize of the component
      */
-    private delayResize();
+    private delayResize;
     /**
      * Set the view (center/zoom) all at once
      * @param center The new center
      * @param zoom The new zoom level
      */
-    private setView(center, zoom);
+    private setView;
     /**
      * Set the map zoom level
      * @param zoom the new zoom level for the map
      */
-    private setZoom(zoom);
+    private setZoom;
     /**
      * Set the center of the map
      * @param center the center point
      */
-    private setCenter(center);
+    private setCenter;
     /**
      * Fit the map to the bounds
      * @param latLngBounds the boundary to set
      */
-    private setFitBounds(latLngBounds);
+    private setFitBounds;
     /**
      * Set the map's max bounds
      * @param latLngBounds the boundary to set
      */
-    private setMaxBounds(latLngBounds);
+    private setMaxBounds;
     /**
      * Set the map's min zoom
      * @param number the new min zoom
      */
-    private setMinZoom(zoom);
+    private setMinZoom;
     /**
      * Set the map's min zoom
      * @param number the new min zoom
      */
-    private setMaxZoom(zoom);
+    private setMaxZoom;
 }

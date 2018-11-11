@@ -5,7 +5,7 @@
 [travis-url]: https://travis-ci.org/Asymmetrik/ngx-leaflet/
 [travis-image]: https://travis-ci.org/Asymmetrik/ngx-leaflet.svg?branch=master
 
-> Leaflet packages for Angular.io (v2+).
+> Leaflet packages for Angular.io.
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
 > Supports Angular v6, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
@@ -23,18 +23,18 @@
 
 
 ## Install
-Install the package and its peer dependencies via yarn (or npm):
+Install the package and its peer dependencies via npm (or yarn):
 ```
-yarn add leaflet
-yarn add @asymmetrik/ngx-leaflet
+npm install leaflet
+npm install @asymmetrik/ngx-leaflet
 ```
 
 If you intend to use this library in a typescript project (utilizing the typings), you'll need to install the leaflet typings:
 ```
-yarn add --save-dev @types/leaflet
+npm install --save-dev @types/leaflet
 ```
 
-If you want to run the demo, clone the repository, perform an ```yarn install```, ```npm run demo``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```npm install```, ```npm run demo``` and then go to http://localhost:4200
 
 
 ## Usage
@@ -719,9 +719,17 @@ Here's a list of articles, tutorials, guides, and help resources:
 
 ## Changelog
 
+### 5.0
+Support for Angular.io 7.
+Also moved demo to `localhost:4200`.
+
+
 ### 4.0
 Support for Angular 6.
 Also migrated to using npm scripts for the build (no more dev dependency on gulp).
+
+#### 4.1.0
+Exporting the `LeafletUtil` class.
 
 
 ### 3.0
@@ -746,7 +754,6 @@ Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
 #### 2.3.0
 Renamed the package to ```ngx-leaflet```
-
 
 
 ## Contribute
