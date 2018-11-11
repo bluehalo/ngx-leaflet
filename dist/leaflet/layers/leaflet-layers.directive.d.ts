@@ -33,5 +33,5 @@ export declare class LeafletLayersDirective implements DoCheck, OnDestroy, OnIni
      * This is important because it allows us to react to changes to the contents of the array as well
      * as changes to the actual array instance.
      */
-    private updateLayers();
+    private updateLayers;
 }

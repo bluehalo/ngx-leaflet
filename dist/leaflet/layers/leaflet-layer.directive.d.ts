@@ -20,5 +20,5 @@ export declare class LeafletLayerDirective implements OnChanges, OnDestroy, OnIn
     ngOnChanges(changes: {
         [key: string]: SimpleChange;
     }): void;
-    private addLayerEventListeners(l);
+    private addLayerEventListeners;
 }

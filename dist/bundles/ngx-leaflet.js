@@ -1,4 +1,4 @@
-/*! @asymmetrik/ngx-leaflet - 4.0.0 - Copyright Asymmetrik, Ltd. 2007-2018 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-leaflet - 5.0.0 - Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved. + */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
     typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
@@ -28,6 +28,15 @@
         return LeafletUtil;
     }());
 
+    var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
     var LeafletDirective = /** @class */ (function () {
         function LeafletDirective(element, zone) {
             this.element = element;
@@ -104,9 +113,11 @@
             if (changes['zoom'] && changes['center'] && null != this.zoom && null != this.center) {
                 this.setView(changes['center'].currentValue, changes['zoom'].currentValue);
             }
+            // Set the zoom level
             else if (changes['zoom']) {
                 this.setZoom(changes['zoom'].currentValue);
             }
+            // Set the map center
             else if (changes['center']) {
                 this.setCenter(changes['center'].currentValue);
             }
@@ -246,45 +257,122 @@
                 this.map.setMaxZoom(zoom);
             }
         };
-        LeafletDirective.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[leaflet]'
-                    },] },
-        ];
-        /** @nocollapse */
-        LeafletDirective.ctorParameters = function () { return [
-            { type: core.ElementRef },
-            { type: core.NgZone }
-        ]; };
-        LeafletDirective.propDecorators = {
-            fitBoundsOptions: [{ type: core.Input, args: ['leafletFitBoundsOptions',] }],
-            panOptions: [{ type: core.Input, args: ['leafletPanOptions',] }],
-            zoomOptions: [{ type: core.Input, args: ['leafletZoomOptions',] }],
-            zoomPanOptions: [{ type: core.Input, args: ['leafletZoomPanOptions',] }],
-            options: [{ type: core.Input, args: ['leafletOptions',] }],
-            mapReady: [{ type: core.Output, args: ['leafletMapReady',] }],
-            zoom: [{ type: core.Input, args: ['leafletZoom',] }],
-            zoomChange: [{ type: core.Output, args: ['leafletZoomChange',] }],
-            center: [{ type: core.Input, args: ['leafletCenter',] }],
-            centerChange: [{ type: core.Output, args: ['leafletCenterChange',] }],
-            fitBounds: [{ type: core.Input, args: ['leafletFitBounds',] }],
-            maxBounds: [{ type: core.Input, args: ['leafletMaxBounds',] }],
-            minZoom: [{ type: core.Input, args: ['leafletMinZoom',] }],
-            maxZoom: [{ type: core.Input, args: ['leafletMaxZoom',] }],
-            onClick: [{ type: core.Output, args: ['leafletClick',] }],
-            onDoubleClick: [{ type: core.Output, args: ['leafletDoubleClick',] }],
-            onMouseDown: [{ type: core.Output, args: ['leafletMouseDown',] }],
-            onMouseUp: [{ type: core.Output, args: ['leafletMouseUp',] }],
-            onMouseMove: [{ type: core.Output, args: ['leafletMouseMove',] }],
-            onMouseOver: [{ type: core.Output, args: ['leafletMouseOver',] }],
-            onMapMove: [{ type: core.Output, args: ['leafletMapMove',] }],
-            onMapMoveStart: [{ type: core.Output, args: ['leafletMapMoveStart',] }],
-            onMapMoveEnd: [{ type: core.Output, args: ['leafletMapMoveEnd',] }],
-            onMapZoom: [{ type: core.Output, args: ['leafletMapZoom',] }],
-            onMapZoomStart: [{ type: core.Output, args: ['leafletMapZoomStart',] }],
-            onMapZoomEnd: [{ type: core.Output, args: ['leafletMapZoomEnd',] }],
-            onResize: [{ type: core.HostListener, args: ['window:resize', [],] }]
-        };
+        __decorate([
+            core.Input('leafletFitBoundsOptions'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "fitBoundsOptions", void 0);
+        __decorate([
+            core.Input('leafletPanOptions'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "panOptions", void 0);
+        __decorate([
+            core.Input('leafletZoomOptions'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "zoomOptions", void 0);
+        __decorate([
+            core.Input('leafletZoomPanOptions'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "zoomPanOptions", void 0);
+        __decorate([
+            core.Input('leafletOptions'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "options", void 0);
+        __decorate([
+            core.Output('leafletMapReady'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "mapReady", void 0);
+        __decorate([
+            core.Input('leafletZoom'),
+            __metadata("design:type", Number)
+        ], LeafletDirective.prototype, "zoom", void 0);
+        __decorate([
+            core.Output('leafletZoomChange'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "zoomChange", void 0);
+        __decorate([
+            core.Input('leafletCenter'),
+            __metadata("design:type", leaflet.LatLng)
+        ], LeafletDirective.prototype, "center", void 0);
+        __decorate([
+            core.Output('leafletCenterChange'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "centerChange", void 0);
+        __decorate([
+            core.Input('leafletFitBounds'),
+            __metadata("design:type", leaflet.LatLngBounds)
+        ], LeafletDirective.prototype, "fitBounds", void 0);
+        __decorate([
+            core.Input('leafletMaxBounds'),
+            __metadata("design:type", leaflet.LatLngBounds)
+        ], LeafletDirective.prototype, "maxBounds", void 0);
+        __decorate([
+            core.Input('leafletMinZoom'),
+            __metadata("design:type", Number)
+        ], LeafletDirective.prototype, "minZoom", void 0);
+        __decorate([
+            core.Input('leafletMaxZoom'),
+            __metadata("design:type", Number)
+        ], LeafletDirective.prototype, "maxZoom", void 0);
+        __decorate([
+            core.Output('leafletClick'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onClick", void 0);
+        __decorate([
+            core.Output('leafletDoubleClick'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onDoubleClick", void 0);
+        __decorate([
+            core.Output('leafletMouseDown'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMouseDown", void 0);
+        __decorate([
+            core.Output('leafletMouseUp'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMouseUp", void 0);
+        __decorate([
+            core.Output('leafletMouseMove'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMouseMove", void 0);
+        __decorate([
+            core.Output('leafletMouseOver'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMouseOver", void 0);
+        __decorate([
+            core.Output('leafletMapMove'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMapMove", void 0);
+        __decorate([
+            core.Output('leafletMapMoveStart'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMapMoveStart", void 0);
+        __decorate([
+            core.Output('leafletMapMoveEnd'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMapMoveEnd", void 0);
+        __decorate([
+            core.Output('leafletMapZoom'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMapZoom", void 0);
+        __decorate([
+            core.Output('leafletMapZoomStart'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMapZoomStart", void 0);
+        __decorate([
+            core.Output('leafletMapZoomEnd'),
+            __metadata("design:type", Object)
+        ], LeafletDirective.prototype, "onMapZoomEnd", void 0);
+        __decorate([
+            core.HostListener('window:resize', []),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", []),
+            __metadata("design:returntype", void 0)
+        ], LeafletDirective.prototype, "onResize", null);
+        LeafletDirective = __decorate([
+            core.Directive({
+                selector: '[leaflet]'
+            }),
+            __metadata("design:paramtypes", [core.ElementRef, core.NgZone])
+        ], LeafletDirective);
         return LeafletDirective;
     }());
 
@@ -301,6 +389,15 @@
         return LeafletDirectiveWrapper;
     }());
 
+    var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata$1 = (undefined && undefined.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
     /**
      * Layer directive
      *
@@ -345,24 +442,36 @@
             l.on('add', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onAdd, e); });
             l.on('remove', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onRemove, e); });
         };
-        LeafletLayerDirective.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[leafletLayer]'
-                    },] },
-        ];
-        /** @nocollapse */
-        LeafletLayerDirective.ctorParameters = function () { return [
-            { type: LeafletDirective },
-            { type: core.NgZone }
-        ]; };
-        LeafletLayerDirective.propDecorators = {
-            layer: [{ type: core.Input, args: ['leafletLayer',] }],
-            onAdd: [{ type: core.Output, args: ['leafletLayerAdd',] }],
-            onRemove: [{ type: core.Output, args: ['leafletLayerRemove',] }]
-        };
+        __decorate$1([
+            core.Input('leafletLayer'),
+            __metadata$1("design:type", leaflet.Layer)
+        ], LeafletLayerDirective.prototype, "layer", void 0);
+        __decorate$1([
+            core.Output('leafletLayerAdd'),
+            __metadata$1("design:type", Object)
+        ], LeafletLayerDirective.prototype, "onAdd", void 0);
+        __decorate$1([
+            core.Output('leafletLayerRemove'),
+            __metadata$1("design:type", Object)
+        ], LeafletLayerDirective.prototype, "onRemove", void 0);
+        LeafletLayerDirective = __decorate$1([
+            core.Directive({
+                selector: '[leafletLayer]'
+            }),
+            __metadata$1("design:paramtypes", [LeafletDirective, core.NgZone])
+        ], LeafletLayerDirective);
         return LeafletLayerDirective;
     }());
 
+    var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
     /**
      * Layers directive
      *
@@ -433,20 +542,17 @@
                 }
             }
         };
-        LeafletLayersDirective.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[leafletLayers]'
-                    },] },
-        ];
-        /** @nocollapse */
-        LeafletLayersDirective.ctorParameters = function () { return [
-            { type: LeafletDirective },
-            { type: core.IterableDiffers },
-            { type: core.NgZone }
-        ]; };
-        LeafletLayersDirective.propDecorators = {
-            layers: [{ type: core.Input, args: ['leafletLayers',] }]
-        };
+        __decorate$2([
+            core.Input('leafletLayers'),
+            __metadata$2("design:type", Array),
+            __metadata$2("design:paramtypes", [Array])
+        ], LeafletLayersDirective.prototype, "layers", null);
+        LeafletLayersDirective = __decorate$2([
+            core.Directive({
+                selector: '[leafletLayers]'
+            }),
+            __metadata$2("design:paramtypes", [LeafletDirective, core.IterableDiffers, core.NgZone])
+        ], LeafletLayersDirective);
         return LeafletLayersDirective;
     }());
 
@@ -529,6 +635,15 @@
         return LeafletControlLayersConfig;
     }());
 
+    var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
     /**
      * Layers Control
      *
@@ -609,25 +724,37 @@
                 }
             }
         };
-        LeafletLayersControlDirective.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[leafletLayersControl]'
-                    },] },
-        ];
-        /** @nocollapse */
-        LeafletLayersControlDirective.ctorParameters = function () { return [
-            { type: LeafletDirective },
-            { type: core.KeyValueDiffers },
-            { type: core.NgZone }
-        ]; };
-        LeafletLayersControlDirective.propDecorators = {
-            layersControlConfig: [{ type: core.Input, args: ['leafletLayersControl',] }],
-            layersControlOptions: [{ type: core.Input, args: ['leafletLayersControlOptions',] }],
-            layersControlReady: [{ type: core.Output, args: ['leafletLayersControlReady',] }]
-        };
+        __decorate$3([
+            core.Input('leafletLayersControl'),
+            __metadata$3("design:type", LeafletControlLayersConfig),
+            __metadata$3("design:paramtypes", [LeafletControlLayersConfig])
+        ], LeafletLayersControlDirective.prototype, "layersControlConfig", null);
+        __decorate$3([
+            core.Input('leafletLayersControlOptions'),
+            __metadata$3("design:type", Object)
+        ], LeafletLayersControlDirective.prototype, "layersControlOptions", void 0);
+        __decorate$3([
+            core.Output('leafletLayersControlReady'),
+            __metadata$3("design:type", Object)
+        ], LeafletLayersControlDirective.prototype, "layersControlReady", void 0);
+        LeafletLayersControlDirective = __decorate$3([
+            core.Directive({
+                selector: '[leafletLayersControl]'
+            }),
+            __metadata$3("design:paramtypes", [LeafletDirective, core.KeyValueDiffers, core.NgZone])
+        ], LeafletLayersControlDirective);
         return LeafletLayersControlDirective;
     }());
 
+    var __decorate$4 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
     /**
      * Baselayers directive
      *
@@ -720,49 +847,60 @@
                 }
             }
         };
-        LeafletBaseLayersDirective.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[leafletBaseLayers]'
-                    },] },
-        ];
-        /** @nocollapse */
-        LeafletBaseLayersDirective.ctorParameters = function () { return [
-            { type: LeafletDirective },
-            { type: core.KeyValueDiffers },
-            { type: core.NgZone }
-        ]; };
-        LeafletBaseLayersDirective.propDecorators = {
-            baseLayers: [{ type: core.Input, args: ['leafletBaseLayers',] }],
-            layersControlOptions: [{ type: core.Input, args: ['leafletLayersControlOptions',] }],
-            layersControlReady: [{ type: core.Output, args: ['leafletLayersControlReady',] }]
-        };
+        __decorate$4([
+            core.Input('leafletBaseLayers'),
+            __metadata$4("design:type", Object),
+            __metadata$4("design:paramtypes", [Object])
+        ], LeafletBaseLayersDirective.prototype, "baseLayers", null);
+        __decorate$4([
+            core.Input('leafletLayersControlOptions'),
+            __metadata$4("design:type", Object)
+        ], LeafletBaseLayersDirective.prototype, "layersControlOptions", void 0);
+        __decorate$4([
+            core.Output('leafletLayersControlReady'),
+            __metadata$4("design:type", Object)
+        ], LeafletBaseLayersDirective.prototype, "layersControlReady", void 0);
+        LeafletBaseLayersDirective = __decorate$4([
+            core.Directive({
+                selector: '[leafletBaseLayers]'
+            }),
+            __metadata$4("design:paramtypes", [LeafletDirective, core.KeyValueDiffers, core.NgZone])
+        ], LeafletBaseLayersDirective);
         return LeafletBaseLayersDirective;
     }());
 
+    var __decorate$5 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
     var LeafletModule = /** @class */ (function () {
         function LeafletModule() {
         }
+        LeafletModule_1 = LeafletModule;
         LeafletModule.forRoot = function () {
-            return { ngModule: LeafletModule, providers: [] };
+            return { ngModule: LeafletModule_1, providers: [] };
         };
-        LeafletModule.decorators = [
-            { type: core.NgModule, args: [{
-                        exports: [
-                            LeafletDirective,
-                            LeafletLayerDirective,
-                            LeafletLayersDirective,
-                            LeafletLayersControlDirective,
-                            LeafletBaseLayersDirective
-                        ],
-                        declarations: [
-                            LeafletDirective,
-                            LeafletLayerDirective,
-                            LeafletLayersDirective,
-                            LeafletLayersControlDirective,
-                            LeafletBaseLayersDirective
-                        ]
-                    },] },
-        ];
+        var LeafletModule_1;
+        LeafletModule = LeafletModule_1 = __decorate$5([
+            core.NgModule({
+                exports: [
+                    LeafletDirective,
+                    LeafletLayerDirective,
+                    LeafletLayersDirective,
+                    LeafletLayersControlDirective,
+                    LeafletBaseLayersDirective
+                ],
+                declarations: [
+                    LeafletDirective,
+                    LeafletLayerDirective,
+                    LeafletLayersDirective,
+                    LeafletLayersControlDirective,
+                    LeafletBaseLayersDirective
+                ]
+            })
+        ], LeafletModule);
         return LeafletModule;
     }());
 
@@ -823,6 +961,7 @@
     exports.LeafletDirective = LeafletDirective;
     exports.LeafletDirectiveWrapper = LeafletDirectiveWrapper;
     exports.LeafletTileLayerDefinition = LeafletTileLayerDefinition;
+    exports.LeafletUtil = LeafletUtil;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

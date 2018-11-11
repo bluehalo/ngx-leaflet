@@ -10,5 +10,5 @@ export declare class LeafletControlLayersWrapper {
     init(controlConfig: any, controlOptions: any): Control.Layers;
     applyBaseLayerChanges(changes: KeyValueChanges<string, Layer>): LeafletControlLayersChanges;
     applyOverlayChanges(changes: KeyValueChanges<string, Layer>): LeafletControlLayersChanges;
-    private applyChanges(changes, addFn);
+    private applyChanges;
 }

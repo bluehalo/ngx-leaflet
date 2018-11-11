@@ -1,3 +1,12 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import { Directive, EventEmitter, Input, NgZone, Output } from '@angular/core';
 import { Layer } from 'leaflet';
 import { LeafletDirective } from '../core/leaflet.directive';
@@ -47,21 +56,24 @@ var LeafletLayerDirective = /** @class */ (function () {
         l.on('add', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onAdd, e); });
         l.on('remove', function (e) { return LeafletUtil.handleEvent(_this.zone, _this.onRemove, e); });
     };
-    LeafletLayerDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[leafletLayer]'
-                },] },
-    ];
-    /** @nocollapse */
-    LeafletLayerDirective.ctorParameters = function () { return [
-        { type: LeafletDirective },
-        { type: NgZone }
-    ]; };
-    LeafletLayerDirective.propDecorators = {
-        layer: [{ type: Input, args: ['leafletLayer',] }],
-        onAdd: [{ type: Output, args: ['leafletLayerAdd',] }],
-        onRemove: [{ type: Output, args: ['leafletLayerRemove',] }]
-    };
+    __decorate([
+        Input('leafletLayer'),
+        __metadata("design:type", Layer)
+    ], LeafletLayerDirective.prototype, "layer", void 0);
+    __decorate([
+        Output('leafletLayerAdd'),
+        __metadata("design:type", Object)
+    ], LeafletLayerDirective.prototype, "onAdd", void 0);
+    __decorate([
+        Output('leafletLayerRemove'),
+        __metadata("design:type", Object)
+    ], LeafletLayerDirective.prototype, "onRemove", void 0);
+    LeafletLayerDirective = __decorate([
+        Directive({
+            selector: '[leafletLayer]'
+        }),
+        __metadata("design:paramtypes", [LeafletDirective, NgZone])
+    ], LeafletLayerDirective);
     return LeafletLayerDirective;
 }());
 export { LeafletLayerDirective };

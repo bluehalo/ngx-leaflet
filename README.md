@@ -34,7 +34,7 @@ If you intend to use this library in a typescript project (utilizing the typings
 yarn add @types/leaflet --dev
 ```
 
-If you want to run the demo, clone the repository, perform an ```yarn install```, ```npm run demo``` and then go to http://localhost:9000/src/demo/index.html
+If you want to run the demo, clone the repository, perform an ```yarn install```, ```npm run demo``` and then go to http://localhost:4200
 
 
 ## Usage
@@ -719,6 +719,11 @@ Here's a list of articles, tutorials, guides, and help resources:
 
 ## Changelog
 
+### 5.0
+Support for Angular.io 7.
+Also moved demo to `localhost:4200`.
+
+
 ### 4.0
 Support for Angular 6.
 Also migrated to using npm scripts for the build (no more dev dependency on gulp).
@@ -749,7 +754,6 @@ Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
 #### 2.3.0
 Renamed the package to ```ngx-leaflet```
-
 
 
 ## Contribute
