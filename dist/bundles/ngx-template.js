@@ -1,8 +1,8 @@
-/*! @asymmetrik/ngx-leaflet - 5.0.1 - Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved. + */
+/*! @asymmetrik/ngx-template - 4.1.0 - Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved. + */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('leaflet')) :
     typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'leaflet'], factory) :
-    (factory((global.ngxLeaflet = {}),global.ng.core,global.L));
+    (factory((global.ngxTemplate = {}),global.ng.core,global.L));
 }(this, (function (exports,core,leaflet) { 'use strict';
 
     var LeafletUtil = /** @class */ (function () {
@@ -966,4 +966,4 @@
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=ngx-leaflet.js.map
+//# sourceMappingURL=ngx-template.js.map
