@@ -13,6 +13,12 @@ export default {
 			'@angular/core': 'ng.core'
 		},
 		name: pkg.moduleName,
-		sourcemap: true
+		sourcemap: true,
+	},
+	onwarn: ( warning, next ) => {
+		if ( warning.code === 'THIS_IS_UNDEFINED' ) {
+			return;
+		}
+		next( warning );
 	}
 };
