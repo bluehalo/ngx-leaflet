@@ -89,7 +89,7 @@ And then in your webpack config file:
 
 
 #### Adding Styles in Angular CLI
-If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular-cli.json```
+If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```angular.json```
 
 ```js
 {
@@ -99,7 +99,7 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
             ...
             "styles": [
                 "styles.css",
-                "../node_modules/leaflet/dist/leaflet.css"
+                "node_modules/leaflet/dist/leaflet.css"
             ],
             ...
         }
@@ -665,7 +665,7 @@ But, here is a rough overview of the steps taken to get them working.
 
 If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), you can make the default leaflet marker assets available by doing the following:
 
-1. Edit `.angular-cli` (formerly `angular-cli.json`)
+1. Edit `angular.json`
 1. Configure the CLI to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
     ```json
     {
