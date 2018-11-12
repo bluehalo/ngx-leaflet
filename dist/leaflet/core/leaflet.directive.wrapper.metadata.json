@@ -1,1 +1,0 @@
-[{"__symbolic":"module","version":4,"metadata":{"LeafletDirectiveWrapper":{"__symbolic":"class","members":{"__ctor__":[{"__symbolic":"constructor","parameters":[{"__symbolic":"reference","module":"./leaflet.directive","name":"LeafletDirective","line":9,"character":31}]}],"init":[{"__symbolic":"method"}],"getMap":[{"__symbolic":"method"}]}}}}]
