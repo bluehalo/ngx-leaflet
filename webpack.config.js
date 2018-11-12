@@ -3,6 +3,7 @@
 const
 	path = require('path'),
 	webpack = require('webpack'),
+	StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin,
 	HtmlWebpackPlugin = require('html-webpack-plugin'),
 
 	pkg = require('./package.json');
@@ -143,6 +144,12 @@ module.exports = () => {
 		new webpack.ProvidePlugin({
 			// Declare global libraries here (eg. D3, JQuery, etc)
 			// d3: 'd3'
+		}),
+		// Stats writer generates a file with webpack stats that can be analyzed at https://chrisbateman.github.io/webpack-visualizer/
+		new StatsWriterPlugin({
+			chunkModules: true,
+			filename: 'webpack-stats.json',
+			fields: null
 		}),
 		new webpack.ContextReplacementPlugin(
 			/(.+)?angular(\\|\/)core(.+)?/,
