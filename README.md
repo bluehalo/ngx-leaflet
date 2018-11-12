@@ -7,7 +7,7 @@
 
 > Leaflet packages for Angular.io.
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
-> Supports Angular v6, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
+> Supports Angular v7, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
 
 ## Table of Contents
 - [Install](#install)
@@ -89,21 +89,15 @@ And then in your webpack config file:
 
 
 #### Adding Styles in Angular CLI
-If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```.angular-cli.json```
+If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```angular.json```
 
-```js
+```json
 {
     ...
-    "apps": [
-        {
-            ...
-            "styles": [
-                "styles.css",
-                "../node_modules/leaflet/dist/leaflet.css"
-            ],
-            ...
-        }
-    ]
+    "styles": [
+        "styles.css",
+        "./node_modules/leaflet/dist/leaflet.css"
+    ],
     ...
 }
 ```
@@ -147,7 +141,9 @@ imports: [
 
 #### Not Using Typescript?
 You brave soul.
-The code is exported using UMD (bundles are in the ./dist dir) so you should be able to import is using whatever module system/builder you're using, even if you aren't using Typescript.
+The code is exported using UMD.
+The bundles are generated as part of the build (`npm run build`) and placed into the ./dist dir.
+You should be able to import is using whatever module system/builder you're using, even if you aren't using Typescript.
 
 
 ### Create and Configure a Map
@@ -665,27 +661,20 @@ But, here is a rough overview of the steps taken to get them working.
 
 If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), you can make the default leaflet marker assets available by doing the following:
 
-1. Edit `.angular-cli` (formerly `angular-cli.json`)
-1. Configure the CLI to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
+1. Configure the CLI (by editing `angular.json`)to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
     ```json
     {
-      "project": {
-        ...
-      },
-      "apps": [
+      ...
+      "assets": [
+        "assets",
+        "favicon.ico",
         {
-          ...
-          "assets": [
-            "assets",
-            "favicon.ico",
-            {
-              "glob": "**/*",
-              "input": "../node_modules/leaflet/dist/images",
-              "output": "./assets/"
-            }
-          ]
+          "glob": "**/*",
+          "input": "./node_modules/leaflet/dist/images",
+          "output": "assets/"
         }
-      ]
+      ],
+      ...
     }
     ```
 

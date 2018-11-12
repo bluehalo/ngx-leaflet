@@ -3,7 +3,7 @@
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved.",
 	"license": "MIT",
@@ -27,6 +27,10 @@
 		"uglify": "uglifyjs --comments 'license' -o ./dist/bundles/ngx-leaflet.min.js -- ./dist/bundles/ngx-leaflet.js",
 		"watch": " watch 'npm run lint' ./src"
 	},
+	"files": [
+		"dist",
+		"src"
+	],
 	"peerDependencies": {
 		"@angular/core": ">=7",
 		"@angular/common": ">=7",
@@ -49,7 +53,7 @@
 		"css-loader": "1",
 		"file-loader": "2",
 		"html-loader": "0.5",
-		"html-webpack-plugin": "^3.2.0",
+		"html-webpack-plugin": "3",
 		"leaflet": "1",
 		"node-sass": "4",
 		"resolve-url-loader": "3",
