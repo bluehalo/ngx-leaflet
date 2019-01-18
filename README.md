@@ -326,7 +326,7 @@ Input and Output binding for the map zoom level.
 #### [leafletMaxZoom]: number
 Input binding for the maximum zoom level for the map.
 
-#### [leafletMinZoon]: number
+#### [leafletMinZoom]: number
 Input binding for the minimum zoom level for the map.
 
 #### [(leafletCenter)]: LatLng
