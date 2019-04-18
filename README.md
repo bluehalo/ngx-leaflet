@@ -196,7 +196,7 @@ Example layersControl object:
 layersControl = {
 	baseLayers: {
 		'Open Street Map': tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-		'Open Cycle Map': tileLayer('http://{s}.tile.opencyclemap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+		'Open Cycle Map': tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
 	},
 	overlays: {
 		'Big Circle': circle([ 46.95, -122 ], { radius: 5000 }),
