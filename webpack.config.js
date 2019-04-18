@@ -106,18 +106,18 @@ module.exports = () => {
 				enforce: 'pre'
 			},
 
-			// CSS loader
-			{ test: /\.css$/, use: [ 'style-loader', 'css-loader' ] },
-
-			// SCSS loader
-			{ test: /\.scss$/, use: [ 'style-loader', 'css-loader', 'sass-loader' ] },
+			// CSS and SCSS loader
+			{
+				test: /\.(css|scss)$/,
+				use: [ 'to-string-loader', 'style-loader', 'css-loader', 'sass-loader' ]
+			},
 
 			// Image file loader
 			{ test: /\.png$/, use: 'file-loader' },
 			{ test: /\.(gif|jpg|jpeg)$/, use: 'file-loader' },
 
 			// Font file loader (mostly for bootstrap/font-awesome)
-			{ test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff' },
+			{ test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/, use: 'file-loader' },
 
 			// Font file loader (mostly for bootstrap/font-awesome)
 			{ test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/, use: 'file-loader' },

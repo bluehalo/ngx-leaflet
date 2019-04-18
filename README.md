@@ -15,7 +15,6 @@
 - [API](#api)
 - [Extensions](#extensions)
 - [Getting Help](#help)
-- [Changelog](#changelog)
 - [Contribute](#contribute)
 - [License](#license)
 - [Credits](#credits)
@@ -381,6 +380,7 @@ This directive internally uses the layers control, so if you add both, they'll i
 Because it uses ```control.layers``` under the hood, you can still provide options for the layers control.   
 
 
+<<<<<<< HEAD
 #### [leafletLayersControlOptions]
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the layers control constructor on creation.
@@ -705,44 +705,6 @@ Here's a list of articles, tutorials, guides, and help resources:
    * [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://www.asymmetrik.com/ngx-leaflet-tutorial-angular-cli)
    * [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet-tutorial-3rd-party-libs)
    
-
-## Changelog
-
-### 5.0
-Support for Angular.io 7.
-Also moved demo to `localhost:4200`.
-
-
-### 4.0
-Support for Angular 6.
-Also migrated to using npm scripts for the build (no more dev dependency on gulp).
-
-#### 4.1.0
-Exporting the `LeafletUtil` class.
-
-
-### 3.0
-Support for Angular 5. Also cleaned up some of the functionality related to Angular zone management.
-Added documentation to README on Zone management.
-
-#### 3.1.0
-Added [map events](#map-events), [layer events](#layer-events).
-Added several input bound map options including ```[leafletMaxBounds]```, ```[leafletMaxZoom]```, and ```[leafletMinZoom]```.
-Added output binding for map center - ```(leafletMapCenter)``` and map zoom - ```(leafletMapZoom)```.
-
-
-### 2.0
-Support for Angular 4.
-
-#### 2.6.0 
-Wrapping several map operations in ```NgZone.runOutsideAngular``` in order to prevent excessive dirty checking.
-If you encounter an unexpected issue due to this change, please file an issue.
-
-#### 2.5.0
-Added the ```[leafletLayer]``` directive for adding/removing individual layers.
-
-#### 2.3.0
-Renamed the package to ```ngx-leaflet```
 
 
 ## Contribute
