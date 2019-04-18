@@ -41,6 +41,7 @@ nb-configuration.xml
 node_modules/
 npm-debug.log
 *.tgz
+yarn.lock
 
 # Common
 bin/
