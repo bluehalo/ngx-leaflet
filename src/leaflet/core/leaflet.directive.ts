@@ -62,6 +62,7 @@ export class LeafletDirective
 	@Output('leafletMouseUp') onMouseUp = new EventEmitter<LeafletMouseEvent>();
 	@Output('leafletMouseMove') onMouseMove = new EventEmitter<LeafletMouseEvent>();
 	@Output('leafletMouseOver') onMouseOver = new EventEmitter<LeafletMouseEvent>();
+	@Output('leafletMouseOut') onMouseOut = new EventEmitter<LeafletMouseEvent>();
 
 	// Map Move Events
 	@Output('leafletMapMove') onMapMove = new EventEmitter<LeafletEvent>();
@@ -179,6 +180,7 @@ export class LeafletDirective
 		this.map.on('mousedown', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseDown, e));
 		this.map.on('mouseup', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseUp, e));
 		this.map.on('mouseover', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOver, e));
+		this.map.on('mouseout', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOut, e));
 		this.map.on('mousemove', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseMove, e));
 
 		this.map.on('zoomstart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomStart, e));
