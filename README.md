@@ -380,7 +380,6 @@ This directive internally uses the layers control, so if you add both, they'll i
 Because it uses ```control.layers``` under the hood, you can still provide options for the layers control.   
 
 
-<<<<<<< HEAD
 #### [leafletLayersControlOptions]
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the layers control constructor on creation.
