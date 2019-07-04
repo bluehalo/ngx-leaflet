@@ -475,6 +475,7 @@ The following events are provided:
 * ```(leafletMouseUp)```
 * ```(leafletMouseMove)```
 * ```(leafletMouseOver)``` 
+* ```(leafletMouseOut)``` 
 
 #### Map Zoom and Move: LeafletEvent
 The following events are provided:
