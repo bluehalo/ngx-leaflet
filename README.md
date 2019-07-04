@@ -380,7 +380,6 @@ This directive internally uses the layers control, so if you add both, they'll i
 Because it uses ```control.layers``` under the hood, you can still provide options for the layers control.   
 
 
-<<<<<<< HEAD
 #### [leafletLayersControlOptions]
 Input binding for Control.Layers options (see [Leaflet's](http://leafletjs.com) docs).
 These options are passed into the layers control constructor on creation.
@@ -475,6 +474,7 @@ The following events are provided:
 * ```(leafletMouseUp)```
 * ```(leafletMouseMove)```
 * ```(leafletMouseOver)``` 
+* ```(leafletMouseOut)``` 
 
 #### Map Zoom and Move: LeafletEvent
 The following events are provided:
@@ -521,9 +521,14 @@ and just need to add some limited functionality or register some event handlers.
 
 
 #### Inject LeafletDirective into your Component
+This is the more advanced technique and it won't always work depending on your setup.
+In particular, this will likely not work unless you are writing your own third-party library that extends the functionality of `ngx-leaflet`.
+If this approach does not work for you, try using the `leafletMapReady` event described above.
+
 In Angular.io, directives are injectable the same way that Services are.
 This means that you can create your own component or directive and inject the ```LeafletDirective``` into it.
 This will only work if your custom component/directive exists on the same DOM element and is ordered after the injected LeafletDirective, or if it is on a child DOM element.
+
 
 ```html
 <!-- On the same DOM element -->
@@ -556,6 +561,7 @@ export class MyCustomDirective {
 ```
 
 The benefit of this approach is it's a bit cleaner if you're interested in adding some reusable capability to the existing leaflet map directive.
+As mentioned above, it might not work depending on how you are packaging your component.
 This is how the ```@asymmetrik/ngx-leaflet-draw``` and ```@asymmetrik/ngx-leaflet-d3``` packages work, so you can use them as references.
 
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.0
+Support for Angular.io 8.
+
 ## 5.0
 Support for Angular.io 7.
 Also moved demo to `localhost:4200`.
@@ -35,4 +38,3 @@ Added the ```[leafletLayer]``` directive for adding/removing individual layers.
 
 ### 2.3.0
 Renamed the package to ```ngx-leaflet```
-
