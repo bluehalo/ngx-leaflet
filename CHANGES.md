@@ -1,5 +1,8 @@
 # Changelog
 
+## 5.0.0
+- Angular 8
+
 ## 4.0.0
 - Angular 7
 - Started using the HtmlWebpackPlugin to generate the index.html file in the dist dir, so you don't need to add `/src/demo` to the end of the URL to hit the demo.
