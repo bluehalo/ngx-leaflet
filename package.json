@@ -3,7 +3,7 @@
 	"artifactName": "ngx-template",
 	"moduleName": "ngxTemplate",
 	"description": "Angular.io components template project",
-	"version": "4.4.1",
+	"version": "5.0.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved.",
 	"license": "MIT",
@@ -32,22 +32,22 @@
 		"src"
 	],
 	"peerDependencies": {
-		"@angular/core": ">=7",
-		"@angular/common": ">=7"
+		"@angular/core": ">=8",
+		"@angular/common": ">=8"
 	},
 	"devDependencies": {
-		"@angular/common": "7",
-		"@angular/compiler": "7",
-		"@angular/compiler-cli": "7",
-		"@angular/core": "7",
-		"@angular/platform-browser": "7",
-		"@angular/platform-browser-dynamic": "7",
-		"@types/node": "10",
+		"@angular/common": "8",
+		"@angular/compiler": "8",
+		"@angular/compiler-cli": "8",
+		"@angular/core": "8",
+		"@angular/platform-browser": "8",
+		"@angular/platform-browser-dynamic": "8",
+		"@types/node": "12",
 		"angular2-template-loader": "0.6",
 		"awesome-typescript-loader": "5",
-		"core-js": "2.6",
-		"css-loader": "2",
-		"file-loader": "3",
+		"core-js": "2",
+		"css-loader": "3",
+		"file-loader": "4",
 		"html-loader": "0.5",
 		"html-webpack-plugin": "3",
 		"node-sass": "4",
@@ -59,14 +59,14 @@
 		"style-loader": "0.23",
 		"to-string-loader": "1.1",
 		"tslint": "5",
-		"typescript": "3.1",
+		"typescript": "3.4",
 		"uglify-js": "3",
-		"url-loader": "1",
+		"url-loader": "2",
 		"watch": "1",
 		"webpack": "4",
 		"webpack-cli": "3",
 		"webpack-dev-server": "3",
 		"webpack-stats-plugin": "0.2",
-		"zone.js": "0.8"
+		"zone.js": "0.9"
 	}
 }
