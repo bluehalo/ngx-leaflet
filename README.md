@@ -35,6 +35,7 @@ npm install --save-dev @types/leaflet
 
 If you want to run the demo, clone the repository, perform an ```npm install```, ```npm run demo``` and then go to http://localhost:4200
 
+Not using the latest version of Angular.io? Have a look in [CHANGES.md](/CHANGES.md) to find the right version for your project.
 
 ## Usage
 To use this library, there are a handful of setup steps to go through that vary based on your app environment (e.g., Webpack, ngCli, SystemJS, etc.).
