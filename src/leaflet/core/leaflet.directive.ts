@@ -80,12 +80,10 @@ export class LeafletDirective
 	}
 
 	ngOnInit() {
-
 		// Create the map outside of angular so the various map events don't trigger change detection
+		this.map = map(this.element.nativeElement, this.options);
 		this.zone.runOutsideAngular(() => {
-
 			// Create the map with some reasonable defaults
-			this.map = map(this.element.nativeElement, this.options);
 			this.addMapEventListeners();
 
 		});
@@ -117,6 +115,10 @@ export class LeafletDirective
 		// Fire map ready event
 		this.mapReady.emit(this.map);
 
+	}
+
+	ngOnDestroy() {
+		this.map.remove();
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
@@ -324,5 +326,6 @@ export class LeafletDirective
 		}
 
 	}
+
 
 }
