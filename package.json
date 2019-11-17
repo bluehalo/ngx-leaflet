@@ -1,9 +1,9 @@
 {
-	"name": "@asymmetrik/ngx-leaflet",
+	"name": "@vchangal/ngx-leaflet",
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "6.0.1",
+	"version": "6.0.10",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved.",
 	"license": "MIT",
@@ -13,7 +13,7 @@
 	"typings": "dist/index.d.ts",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Asymmetrik/ngx-leaflet.git"
+		"url": "https://github.com/vchangal/ngx-leaflet.git"
 	},
 	"scripts": {
 		"build": "npm run compile && npm run bundle",

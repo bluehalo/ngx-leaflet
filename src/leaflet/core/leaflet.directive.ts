@@ -1,6 +1,5 @@
 import {
-	Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnInit, Output,
-	SimpleChange
+	Directive, ElementRef, EventEmitter, Input, NgZone, OnInit, Output,
 } from '@angular/core';
 
 import { latLng, LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, map, Map, MapOptions } from 'leaflet';
@@ -11,7 +10,7 @@ import { LeafletUtil } from './leaflet.util';
 	selector: '[leaflet]'
 })
 export class LeafletDirective
-	implements OnChanges, OnInit {
+	implements OnInit {
 
 	readonly DEFAULT_ZOOM = 1;
 	readonly DEFAULT_CENTER = latLng(38.907192, -77.036871);
@@ -81,9 +80,9 @@ export class LeafletDirective
 
 	ngOnInit() {
 		// Create the map outside of angular so the various map events don't trigger change detection
-		this.map = map(this.element.nativeElement, this.options);
 		this.zone.runOutsideAngular(() => {
 			// Create the map with some reasonable defaults
+			this.map = map(this.element.nativeElement, this.options);
 			this.addMapEventListeners();
 
 		});
@@ -110,69 +109,24 @@ export class LeafletDirective
 			this.setMaxZoom(this.maxZoom);
 		}
 
-		this.doResize();
+		this.delayResize();
 
-		// Fire map ready event
-		this.mapReady.emit(this.map);
 
-	}
+}
 
 	ngOnDestroy() {
 		this.map.remove();
-	}
-
-	ngOnChanges(changes: { [key: string]: SimpleChange }) {
-
-		/*
-		 * The following code is to address an issue with our (basic) implementation of
-		 * zooming and panning. From our testing, it seems that a pan operation followed
-		 * by a zoom operation in the same thread will interfere with eachother. The zoom
-		 * operation interrupts/cancels the pan, resulting in a final center point that is
-		 * inaccurate. The solution seems to be to either separate them with a timeout or
-		  * to collapse them into a setView call.
-		 */
-
-		// Zooming and Panning
-		if (changes['zoom'] && changes['center'] && null != this.zoom && null != this.center) {
-			this.setView(changes['center'].currentValue, changes['zoom'].currentValue);
-		}
-		// Set the zoom level
-		else if (changes['zoom']) {
-			this.setZoom(changes['zoom'].currentValue);
-		}
-		// Set the map center
-		else if (changes['center']) {
-			this.setCenter(changes['center'].currentValue);
-		}
-
-		// Other options
-		if (changes['fitBounds']) {
-			this.setFitBounds(changes['fitBounds'].currentValue);
-		}
-
-		if (changes['maxBounds']) {
-			this.setMaxBounds(changes['maxBounds'].currentValue);
-		}
-
-		if (changes['minZoom']) {
-			this.setMinZoom(changes['minZoom'].currentValue);
-		}
-
-		if (changes['maxZoom']) {
-			this.setMaxZoom(changes['maxZoom'].currentValue);
-		}
-
 	}
 
 	public getMap() {
 		return this.map;
 	}
 
-
+/*
 	@HostListener('window:resize', [])
 	onResize() {
 		this.delayResize();
-	}
+	}*/
 
 	private addMapEventListeners() {
 
@@ -183,15 +137,22 @@ export class LeafletDirective
 		this.map.on('mouseup', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseUp, e));
 		this.map.on('mouseover', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOver, e));
 		this.map.on('mouseout', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOut, e));
-		this.map.on('mousemove', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseMove, e));
+		// this.map.on('mousemove', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseMove, e));
 
 		this.map.on('zoomstart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomStart, e));
 		this.map.on('zoom', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoom, e));
 		this.map.on('zoomend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomEnd, e));
 		this.map.on('movestart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveStart, e));
-		this.map.on('move', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMove, e));
+		// this.map.on('move', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMove, e));
 		this.map.on('moveend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveEnd, e));
 
+		// Fire map ready event
+		this.map.on('load', () => {
+			this.zone.run(() => {
+
+			this.mapReady.emit(this.map);
+			});
+		});
 
 		// Update any things for which we provide output bindings
 		this.map.on('zoomend moveend', () => {
@@ -259,26 +220,26 @@ export class LeafletDirective
 	 * Set the map zoom level
 	 * @param zoom the new zoom level for the map
 	 */
-	private setZoom(zoom: number) {
+/*	private setZoom(zoom: number) {
 
 		if (this.map && null != zoom) {
 			this.map.setZoom(zoom, this.zoomOptions);
 		}
 
 	}
-
+*/
 	/**
 	 * Set the center of the map
 	 * @param center the center point
 	 */
-	private setCenter(center: LatLng) {
+/*	private setCenter(center: LatLng) {
 
 		if (this.map && null != center) {
 			this.map.panTo(center, this.panOptions);
 		}
 
 	}
-
+*/
 	/**
 	 * Fit the map to the bounds
 	 * @param latLngBounds the boundary to set

@@ -16,8 +16,8 @@
 		"suppressImplicitAnyIndexErrors": true,
 
 		"allowUnreachableCode": false,
-		"noUnusedParameters": true,
-		"noUnusedLocals": true,
+		"noUnusedParameters": false,
+		"noUnusedLocals": false,
 
 		"sourceMap": true,
 
