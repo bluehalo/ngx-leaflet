@@ -145,12 +145,10 @@ export class LeafletDirective
 		this.map.on('movestart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveStart, e));
 		// this.map.on('move', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMove, e));
 		this.map.on('moveend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveEnd, e));
-
 		// Fire map ready event
-		this.map.on('load', () => {
+		this.map.whenReady(() => {
 			this.zone.run(() => {
-
-			this.mapReady.emit(this.map);
+				this.mapReady.emit(this.map);
 			});
 		});
 
