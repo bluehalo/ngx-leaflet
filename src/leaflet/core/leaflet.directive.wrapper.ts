@@ -1,6 +1,6 @@
 import { LeafletDirective } from './leaflet.directive';
 
-import { Map } from 'leaflet';
+import { Map } from '@vchangal/leaflet';
 
 export class LeafletDirectiveWrapper {
 

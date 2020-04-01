@@ -2,7 +2,7 @@ import {
 	Directive, ElementRef, EventEmitter, Input, NgZone, OnInit, Output,
 } from '@angular/core';
 
-import { latLng, LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, map, Map, MapOptions } from 'leaflet';
+import { latLng, LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, map, Map, MapOptions } from '@vchangal/leaflet';
 
 import { LeafletUtil } from './leaflet.util';
 

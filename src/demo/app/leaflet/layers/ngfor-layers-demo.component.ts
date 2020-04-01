@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { icon, latLng, marker, Marker, tileLayer } from 'leaflet';
+import { icon, latLng, marker, Marker, tileLayer } from '@vchangal/leaflet';
 
 @Component({
 	selector: 'leafletNgForLayersDemo',

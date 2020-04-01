@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { latLng, tileLayer } from 'leaflet';
+import { latLng, tileLayer } from '@vchangal/leaflet';
 
 @Component({
 	selector: 'leafletBaselayersDemo',

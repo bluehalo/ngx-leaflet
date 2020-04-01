@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { latLng, Layer, tileLayer } from 'leaflet';
+import { latLng, Layer, tileLayer } from '@vchangal/leaflet';
 
 @Component({
 	selector: 'leafletWrapper',

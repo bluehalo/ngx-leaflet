@@ -1,6 +1,6 @@
 import { EventEmitter, KeyValueChanges, NgZone } from '@angular/core';
 
-import { control, Control, Layer } from 'leaflet';
+import { control, Control, Layer } from '@vchangal/leaflet';
 
 import { LeafletControlLayersChanges } from './leaflet-control-layers-changes.model';
 

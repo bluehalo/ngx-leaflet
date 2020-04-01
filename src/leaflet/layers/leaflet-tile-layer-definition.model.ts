@@ -1,4 +1,4 @@
-import { tileLayer, TileLayer } from 'leaflet';
+import { tileLayer, TileLayer } from '@vchangal/leaflet';
 
 export class LeafletTileLayerDefinition {
 

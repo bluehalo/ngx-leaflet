@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { icon, Layer, marker } from 'leaflet';
+import { icon, Layer, marker } from '@vchangal/leaflet';
 
 @Component({
 	selector: 'leafletPerformanceDemo',

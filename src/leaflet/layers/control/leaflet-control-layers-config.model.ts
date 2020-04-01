@@ -1,4 +1,4 @@
-import { Layer } from 'leaflet';
+import { Layer } from '@vchangal/leaflet';
 
 export class LeafletControlLayersConfig {
 	baseLayers: { [name: string]: Layer } = {};

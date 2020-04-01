@@ -3,7 +3,7 @@ import {
 	OnInit, Output
 } from '@angular/core';
 
-import { Control, Layer } from 'leaflet';
+import { Control, Layer } from '@vchangal/leaflet';
 
 import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';

@@ -6,7 +6,7 @@ export default {
 	input: 'dist/index.js',
 	external: [
 		'@angular/core',
-		'leaflet'
+		'@vchangal/leaflet'
 	],
 	output: {
 		banner: `/*! ${pkg.name} - ${pkg.version} - ${pkg.copyright} + */`,
@@ -14,7 +14,7 @@ export default {
 		format: 'umd',
 		globals: {
 			'@angular/core': 'ng.core',
-			'leaflet': 'L'
+			'@vchangal/leaflet': 'L'
 		},
 		name: pkg.moduleName,
 		sourcemap: true,

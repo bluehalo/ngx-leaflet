@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
-import { latLng, tileLayer } from 'leaflet';
+import { latLng, tileLayer } from '@vchangal/leaflet';
 
 
 @Component({

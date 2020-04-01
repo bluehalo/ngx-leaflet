@@ -12,12 +12,13 @@
 
 		"lib": [ "es5", "es2015", "es2018", "dom" ],
 
-		"noImplicitAny": true,
+		"noImplicitAny": false,
 		"suppressImplicitAnyIndexErrors": true,
 
 		"allowUnreachableCode": false,
 		"noUnusedParameters": true,
 		"noUnusedLocals": true,
+		"typeRoots": [ "./types", "./node_modules/@types"],
 
 		"sourceMap": true
 	},

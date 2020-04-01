@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
+import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from '@vchangal/leaflet';
 
 import { LeafletLayersDemoModel } from './layers-demo.model';
 

@@ -12,7 +12,7 @@
 
 		"lib": [ "es5", "es2015", "es2018", "dom" ],
 
-		"noImplicitAny": true,
+		"noImplicitAny": false,
 		"suppressImplicitAnyIndexErrors": true,
 
 		"allowUnreachableCode": false,
@@ -20,6 +20,7 @@
 		"noUnusedLocals": false,
 
 		"sourceMap": true,
+		"typeRoots": [ "./types", "./node_modules/@types"],
 
 		"outDir": "./dist"
 	},
