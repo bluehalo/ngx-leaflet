@@ -3,7 +3,7 @@
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "6.0.14",
+	"version": "6.0.15",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2019 - All Rights Reserved.",
 	"license": "MIT",
@@ -34,7 +34,7 @@
 	"peerDependencies": {
 		"@angular/core": ">=8",
 		"@angular/common": ">=8",
-		"leaflet": "1"
+		"@vchangal/leaflet": "^1.6.2"
 	},
 	"devDependencies": {
 		"@angular/common": "8",
@@ -72,8 +72,5 @@
 		"webpack-dev-server": "3",
 		"webpack-stats-plugin": "0.2",
 		"zone.js": "0.9"
-	},
-	"dependencies": {
-		"@vchangal/leaflet": "^1.6.2"
 	}
 }
