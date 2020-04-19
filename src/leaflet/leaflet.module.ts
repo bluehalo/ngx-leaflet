@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { LeafletDirective } from './core/leaflet.directive';
 import { LeafletLayerDirective } from './layers/leaflet-layer.directive';
@@ -23,9 +23,5 @@ import { LeafletBaseLayersDirective } from './layers/base/leaflet-baselayers.dir
 	]
 })
 export class LeafletModule {
-
-	static forRoot(): ModuleWithProviders {
-		return { ngModule: LeafletModule, providers: [] };
-	}
 
 }
