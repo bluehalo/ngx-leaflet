@@ -6,10 +6,10 @@ import pkg from './package.json';
 
 export default [
 	{
-		input: 'dist/out-tsc/index.js',
+		input: 'dist/index.js',
 		external: [
 			'@angular/core',
-			'tslib'
+			//'tslib'
 		],
 		output: {
 			banner: `/* @license ${pkg.name} - ${pkg.version} - ${pkg.copyright} + */`,
@@ -17,7 +17,7 @@ export default [
 			format: 'umd',
 			globals: {
 				'@angular/core': 'ng.core',
-				'tslib': 'tslib'
+				//'tslib': 'tslib'
 			},
 			name: pkg.moduleName,
 			sourcemap: true

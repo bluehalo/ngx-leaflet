@@ -2,27 +2,28 @@
 	"compileOnSave": false,
 	"compilerOptions": {
 		"baseUrl": "./",
-		"outDir": "../dist/out-tsc",
 		"rootDir": "./",
+		"outDir": "../dist",
 		"sourceMap": true,
+
+		"module": "esnext",
+		"moduleResolution": "node",
+		"target": "es5",
+
 		"declaration": true,
 		"downlevelIteration": true,
 		"experimentalDecorators": true,
-		"module": "esnext",
-		"moduleResolution": "node",
 		"importHelpers": true,
-		"inlineSources": true,
-		"target": "es5",
-		"types": [],
+
 		"lib": [ "dom", "es2018" ]
 	},
 	"angularCompilerOptions": {
 		"enableIvy": false,
-		"enableResourceInlining": true,
 		"fullTemplateTypeCheck": true,
 		"skipTemplateCodegen": true,
 		"strictInjectionParameters": true,
-		"strictMetadataEmit": true
+		"strictMetadataEmit": true,
+		"enableResourceInlining": true
 	},
 	"exclude": [
 		"./test.ts",

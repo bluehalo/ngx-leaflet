@@ -7,7 +7,7 @@
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2020 - All Rights Reserved.",
 	"license": "MIT",
-	"main": "dist/bundles/ngx-template.js",
+	"main": "dist/bundles/ngx-template.umd.js",
 	"module": "dist/index.js",
 	"jsnext:main": "dist/index.js",
 	"typings": "dist/index.d.ts",
