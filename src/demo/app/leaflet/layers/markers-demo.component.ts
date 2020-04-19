@@ -27,8 +27,9 @@ export class LeafletMarkersDemoComponent {
 				icon: icon({
 					iconSize: [ 25, 41 ],
 					iconAnchor: [ 13, 41 ],
-					iconUrl: '2273e3d8ad9264b7daa5bdbf8e6b47f8.png',
-					shadowUrl: '44a526eed258222515aa21eaffd14a96.png'
+					iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
+					iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
+					shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
 				})
 			}
 		);
