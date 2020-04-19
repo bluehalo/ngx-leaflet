@@ -6,7 +6,7 @@
 		"indent": [ true, "tabs" ],
 		"max-line-length": false,
 		"member-access": false,
-		"member-ordering": [ true, { "order": "fields-first" } ],
+		"member-ordering": false,
 		"no-consecutive-blank-lines": [ true, 2 ],
 		"no-empty": true,
 		"no-string-literal": false,
