@@ -20,7 +20,7 @@ import { LeafletWrapperComponent } from './performance/leaflet-wrapper.component
 		CommonModule,
 		FormsModule,
 
-		LeafletModule.forRoot()
+		LeafletModule
 	],
 	declarations: [
 		LeafletDemoComponent,
