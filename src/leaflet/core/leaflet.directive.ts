@@ -115,7 +115,9 @@ export class LeafletDirective
 }
 
 	ngOnDestroy() {
-		this.map.remove();
+		if(this.map){
+			this.map.remove();
+		}
 	}
 
 	public getMap() {
