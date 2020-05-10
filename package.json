@@ -45,7 +45,7 @@
 		"@angular/platform-browser-dynamic": "9",
 		"@rollup/plugin-commonjs": "11",
 		"@rollup/plugin-node-resolve": "7",
-		"@types/node": "12",
+		"@types/node": "13",
 		"angular2-template-loader": "0.6",
 		"awesome-typescript-loader": "5",
 		"core-js": "3",
