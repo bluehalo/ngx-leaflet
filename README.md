@@ -32,7 +32,7 @@ We recommend using NVM to manage your node versions.
 
 Clone the repository and then install the npm packages in the project directory: 
 ```
-yarn install
+npm install
 ```
 
 At this point, you should be ready to build the project.
