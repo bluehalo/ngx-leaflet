@@ -75,15 +75,15 @@ import 'leaflet/dist/leaflet.css';
 And then in your webpack config file:
 ```js
 {
-    ...
-    "module" : {
+	...
+	"module" : {
 		loaders: [
-		    ...
-		    { test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
-		    ...
-		]    
-    },
-    ...
+			...
+			{ test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
+			...
+		]	
+	},
+	...
 }
 ```
 
@@ -93,12 +93,12 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 
 ```json
 {
-    ...
-    "styles": [
-        "styles.css",
-        "./node_modules/leaflet/dist/leaflet.css"
-    ],
-    ...
+	...
+	"styles": [
+		"styles.css",
+		"./node_modules/leaflet/dist/leaflet.css"
+	],
+	...
 }
 ```
 
@@ -116,8 +116,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 ...
 imports: [
-    ...
-    LeafletModule
+	...
+	LeafletModule
 ]
 ...
 
@@ -131,8 +131,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 ...
 imports: [
-    ...
-    LeafletModule
+	...
+	LeafletModule
 ]
 ...
 
@@ -226,9 +226,9 @@ Template:
 Layers array:
 ```js
 layers = [
-    circle([ 46.95, -122 ], { radius: 5000 }),
-    polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
-    marker([ 46.879966, -121.726909 ])
+	circle([ 46.95, -122 ], { radius: 5000 }),
+	polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
+	marker([ 46.879966, -121.726909 ])
 ];
 ```
 
@@ -445,7 +445,7 @@ If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get so
 ```html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options">
-     <div *ngFor="let l of layers" [leafletLayer]="l"></div>
+	<div *ngFor="let l of layers" [leafletLayer]="l"></div>
 </div>
 ```
 
@@ -513,7 +513,7 @@ The event will only fire when the map exists and is ready for manipulation.
 
 ```js
 onMapReady(map: Map) {
-   // Do stuff with map
+	// Do stuff with map
 }
 ```
 
@@ -538,26 +538,26 @@ This will only work if your custom component/directive exists on the same DOM el
 
 <!-- On a child DOM element -->
 <div leaflet>
-   <div myCustomDirective></div>
+	<div myCustomDirective></div>
 </div>
 ```
 
 ```js
 @Directive({
-   selector: '[myCustomDirective]'
+	selector: '[myCustomDirective]'
 })
 export class MyCustomDirective {
-   leafletDirective: LeafletDirective;
-	
-   constructor(leafletDirective: LeafletDirective) {
-      this.leafletDirective = leafletDirective;
-   }
+	leafletDirective: LeafletDirective;
 
-   someFunction() {
-      if (null != this.leafletDirective.getMap()) {
-         // Do stuff with the map
-      }
-   }
+	constructor(leafletDirective: LeafletDirective) {
+		this.leafletDirective = leafletDirective;
+	}
+
+	someFunction() {
+		if (null != this.leafletDirective.getMap()) {
+			// Do stuff with the map
+		}
+	}
 }
 ```
 
@@ -591,16 +591,16 @@ circle = circle([ 46.95, -122 ], { radius: 5000 });
 constructor(private zone: NgZone) {}
 
 ngOnInit() {
-	
+
 	// The 'add' event callback handler happens outside of the Angular zone
 	this.circle.on('add', () => {
-		
+
 		// But, we can run stuff inside of Angular's zone by calling NgZone.run()
 		// everything inside the arrow function body happens inside of Angular's zone, where changes will be detected
 		this.zone.run(() => {
 			this.fitBounds = this.circle.getBounds();
 		});
-		
+
 	});
 }
 ``` 
@@ -618,16 +618,16 @@ circle = circle([ 46.95, -122 ], { radius: 5000 });
 constructor(private changeDetector: ChangeDetectorRef) {}
 
 ngOnInit() {
-	
+
 	// The 'add' event callback happens outside of the Angular zone
 	this.circle.on('add', () => {
-		
+
 		// Because we're outside of Angular's zone, this change won't be detected
 		this.fitBounds = this.circle.getBounds();
-		
+
 		// But, it will if we tell Angular to detect changes 
 		this.changeDetector.detectChanges();
-		
+
 	});
 }
 ``` 
@@ -644,75 +644,74 @@ But, here is a rough overview of the steps taken to get them working.
 
 1. Import the marker images in your vendor file to get Webpack to process the images in the asset pipeline
 
-   ```js
-   import 'leaflet/dist/images/marker-shadow.png';
-   import 'leaflet/dist/images/marker-icon.png';
-   ```
+	```js
+	import 'leaflet/dist/images/marker-shadow.png';
+	import 'leaflet/dist/images/marker-icon.png';
+	```
 
 1. Either host the images statically or use the file-loader Webpack plugin to generate the images.
 1. Determine the correct URL for the marker and marker-shadow images. If you're using a file hasher, you should be able to check Webpack's output for the generated images. If you are serving them directly without chunk hashing just figure out how to resolve the images on your server.
 1. Configure Leaflet to use the correct URLs as customer marker images
 
-   ```js
-   let layer = marker([ 46.879966, -121.726909 ], {
-      icon: icon({
-         iconSize: [ 25, 41 ],
-         iconAnchor: [ 13, 41 ],
-         iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
-         iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
-         shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
-      })
-   });
-   ```
+	```js
+	let layer = marker([ 46.879966, -121.726909 ], {
+		icon: icon({
+			iconSize: [ 25, 41 ],
+			iconAnchor: [ 13, 41 ],
+			iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
+			iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
+			shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
+		})
+	});
+	```
 
 #### Angular CLI Marker Workaround
 
 If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), you can make the default leaflet marker assets available by doing the following:
 
 1. Configure the CLI (by editing `angular.json`)to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
-    ```json
-    {
-      ...
-      "assets": [
-        "assets",
-        "favicon.ico",
-        {
-          "glob": "**/*",
-          "input": "./node_modules/leaflet/dist/images",
-          "output": "assets/"
-        }
-      ],
-      ...
-    }
-    ```
+	```json
+	{
+		...
+		"assets": [
+			"assets",
+			"favicon.ico",
+			{
+				"glob": "**/*",
+				"input": "./node_modules/leaflet/dist/images",
+				"output": "assets/"
+			}
+		],
+		...
+	}
+	```
 
 1. Configure Leaflet to use the correct URLs as customer marker images
 
-   ```js
-   let layer = marker([ 46.879966, -121.726909 ], {
-      icon: icon({
-         iconSize: [ 25, 41 ],
-         iconAnchor: [ 13, 41 ],
-         iconUrl: 'assets/marker-icon.png',
-         shadowUrl: 'assets/marker-shadow.png'
-      })
-   });
-   ```
+	```js
+	let layer = marker([ 46.879966, -121.726909 ], {
+		icon: icon({
+			iconSize: [ 25, 41 ],
+			iconAnchor: [ 13, 41 ],
+			iconUrl: 'assets/marker-icon.png',
+			shadowUrl: 'assets/marker-shadow.png'
+		})
+	});
+	```
 
 ## Extensions
 There are several libraries that extend the core functionality of ngx-leaflet:
-   * [Leaflet Draw](https://github.com/Asymmetrik/ngx-leaflet-draw)
-   * [Leaflet Markercluster](https://github.com/Asymmetrik/ngx-leaflet-markercluster)
-   * [Leaflet D3 (Hexbins)](https://github.com/Asymmetrik/ngx-leaflet-d3)
+* [Leaflet Draw](https://github.com/Asymmetrik/ngx-leaflet-draw)
+* [Leaflet Markercluster](https://github.com/Asymmetrik/ngx-leaflet-markercluster)
+* [Leaflet D3 (Hexbins)](https://github.com/Asymmetrik/ngx-leaflet-d3)
 
 
 ## <a name="help">Getting Help</a>
 Here's a list of articles, tutorials, guides, and help resources:
-   * [ngx-leaflet on Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
-   * [High-level intro to @asymmetrik/ngx-leaflet](https://www.asymmetrik.com/introducing-ngx-leaflet)
-   * [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://www.asymmetrik.com/ngx-leaflet-tutorial-angular-cli)
-   * [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet-tutorial-3rd-party-libs)
-   
+* [ngx-leaflet on Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
+* [High-level intro to @asymmetrik/ngx-leaflet](https://www.asymmetrik.com/introducing-ngx-leaflet)
+* [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://www.asymmetrik.com/ngx-leaflet-tutorial-angular-cli)
+* [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet-tutorial-3rd-party-libs)
 
 
 ## Contribute
