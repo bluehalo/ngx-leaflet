@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { ExampleComponent } from './example.component';
 
@@ -7,9 +7,5 @@ import { ExampleComponent } from './example.component';
 	declarations: [ ExampleComponent ]
 })
 export class ExampleModule {
-
-	static forRoot(): ModuleWithProviders {
-		return { ngModule: ExampleModule, providers: [] };
-	}
 
 }
