@@ -3,7 +3,7 @@ import {
 	SimpleChange
 } from '@angular/core';
 
-import {Layer, LeafletEvent } from 'leaflet';
+import { Layer, LeafletEvent } from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';

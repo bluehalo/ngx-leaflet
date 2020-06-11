@@ -3,7 +3,7 @@
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "7.0.0",
+	"version": "7.0.1",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2020 - All Rights Reserved.",
 	"license": "MIT",
@@ -24,7 +24,7 @@
 		"compile": "ngc -p src/tsconfig-lib.json",
 		"lint": "tslint -c tslint.json -t stylish 'src/**/*.ts'",
 		"rollup": "rollup -c rollup.config.js",
-		"uglify": "uglifyjs --comments 'license' -o ./dist/bundles/ngx-leaflet.umd.min.js -- ./dist/bundles/ngx-leaflet.umd.js",
+		"uglify": "uglifyjs --comments -o ./dist/bundles/ngx-leaflet.umd.min.js -- ./dist/bundles/ngx-leaflet.umd.js",
 		"watch": " watch 'npm run lint' ./src"
 	},
 	"files": [
@@ -48,7 +48,7 @@
 		"@rollup/plugin-commonjs": "11",
 		"@rollup/plugin-node-resolve": "7",
 		"@types/leaflet": "1",
-		"@types/node": "12",
+		"@types/node": "12.12.36",
 		"angular2-template-loader": "0.6",
 		"awesome-typescript-loader": "5",
 		"bootstrap": "4",

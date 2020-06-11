@@ -2,9 +2,15 @@
 
 ## 7.0
 Support for Angular.io 9. 🎉
+
 - Are your markers broken? In Leaflet 1.6, the marker icons changed enough to create new hashes. See [README](https://github.com/Asymmetrik/ngx-leaflet/blob/master/README.md#a-note-about-markers) for more details.
 - Renamed UMD bundle to `ngx-leaflet.umd.js`. This shouldn't affect anyone unless you're manually including the bundle.
 - Angular deprecated parameterless forRoot, so I removed the static function. You may need to update your import.
+
+### 7.0.1
+Fixed an error running the demo.
+Cleanup in the README.
+Fixing minification to exclude comments and include license.
 
 
 ## 6.0
