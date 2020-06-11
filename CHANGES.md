@@ -7,6 +7,11 @@ Support for Angular.io 9. 🎉
 - Renamed UMD bundle to `ngx-leaflet.umd.js`. This shouldn't affect anyone unless you're manually including the bundle.
 - Angular deprecated parameterless forRoot, so I removed the static function. You may need to update your import.
 
+### 7.0.1
+Fixed an error running the demo.
+Cleanup in the README.
+Fixing minification to exclude comments and include license.
+
 
 ## 6.0
 Support for Angular.io 8.

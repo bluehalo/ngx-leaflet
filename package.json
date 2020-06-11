@@ -48,7 +48,7 @@
 		"@rollup/plugin-commonjs": "11",
 		"@rollup/plugin-node-resolve": "7",
 		"@types/leaflet": "1",
-		"@types/node": "12",
+		"@types/node": "12.12.36",
 		"angular2-template-loader": "0.6",
 		"awesome-typescript-loader": "5",
 		"bootstrap": "4",
