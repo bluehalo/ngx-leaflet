@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.0
+Support for Angular.io 10.
+
 ## 7.0
 Support for Angular.io 9. 🎉
 
