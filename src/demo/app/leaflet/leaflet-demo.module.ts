@@ -6,6 +6,7 @@ import { LeafletModule } from '../../../leaflet/leaflet.module';
 
 import { LeafletDemoComponent } from './leaflet-demo.component';
 import { LeafletCoreDemoComponent } from './core/core-demo.component';
+import { LeafletMultiMapDemoComponent } from'./core/multi-map-demo.component';
 import { LeafletEventsDemoComponent } from './events/events-demo.component';
 import { LeafletLayersDemoComponent } from './layers/layers-demo.component';
 import { LeafletNgForLayersDemoComponent } from './layers/ngfor-layers-demo.component';
@@ -31,6 +32,7 @@ import { LeafletWrapperComponent } from './performance/leaflet-wrapper.component
 		LeafletBaseLayersDemoComponent,
 		LeafletMarkersDemoComponent,
 		LeafletPerformanceDemoComponent,
+		LeafletMultiMapDemoComponent,
 		LeafletWrapperComponent
 	],
 	exports: [

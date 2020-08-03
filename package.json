@@ -3,7 +3,7 @@
 	"artifactName": "ngx-leaflet",
 	"moduleName": "ngxLeaflet",
 	"description": "Angular.io components for Leaflet",
-	"version": "8.0.0",
+	"version": "8.1.0",
 	"author": "Asymmetrik, Ltd.",
 	"copyright": "Copyright Asymmetrik, Ltd. 2007-2020 - All Rights Reserved.",
 	"license": "MIT",

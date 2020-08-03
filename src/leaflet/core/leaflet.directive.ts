@@ -1,5 +1,5 @@
 import {
-	Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnInit, Output,
+	Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnDestroy, OnInit, Output,
 	SimpleChange
 } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { LeafletUtil } from './leaflet.util';
 	selector: '[leaflet]'
 })
 export class LeafletDirective
-	implements OnChanges, OnInit {
+	implements OnChanges, OnDestroy, OnInit {
 
 	readonly DEFAULT_ZOOM = 1;
 	readonly DEFAULT_CENTER = latLng(38.907192, -77.036871);
@@ -160,6 +160,11 @@ export class LeafletDirective
 			this.setMaxZoom(changes['maxZoom'].currentValue);
 		}
 
+	}
+
+	ngOnDestroy() {
+		// If this directive is destroyed, the map is too
+		this.map.remove();
 	}
 
 	public getMap() {

@@ -3,6 +3,12 @@
 ## 8.0
 Support for Angular.io 10.
 
+## 8.1
+Added call to Map.remove in OnDestroy handler.
+This should ensure that any outstanding event handlers are cleaned up.
+Added demo example for adding/removing maps dynamically. 
+
+
 ## 7.0
 Support for Angular.io 9. 🎉
 
