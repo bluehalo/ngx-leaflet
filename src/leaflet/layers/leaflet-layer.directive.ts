@@ -29,6 +29,10 @@ export class LeafletLayerDirective
 	@Output('leafletLayerAdd') onAdd = new EventEmitter<LeafletEvent>();
 	@Output('leafletLayerRemove') onRemove = new EventEmitter<LeafletEvent>();
 
+	// Layer Event handlers
+	private onAddLayerHandler: any;
+	private onRemoveLayerHandler: any;
+
 	// Wrapper for the leaflet directive (manages the parent directive)
 	private leafletDirective: LeafletDirectiveWrapper;
 
@@ -44,7 +48,16 @@ export class LeafletLayerDirective
 	}
 
 	ngOnDestroy() {
-		this.layer.remove();
+
+		if (null != this.layer) {
+
+			// Unregister the event handlers
+			this.removeLayerEventListeners(this.layer);
+
+			// Remove the layer from the map
+			this.layer.remove();
+		}
+
 	}
 
 	ngOnChanges(changes: { [key: string]: SimpleChange }) {
@@ -57,6 +70,7 @@ export class LeafletLayerDirective
 
 			this.zone.runOutsideAngular(() => {
 				if (null != p) {
+					this.removeLayerEventListeners(p);
 					p.remove();
 				}
 				if (null != n) {
@@ -71,8 +85,18 @@ export class LeafletLayerDirective
 
 	private addLayerEventListeners(l: Layer) {
 
-		l.on('add', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onAdd, e));
-		l.on('remove', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onRemove, e));
+		this.onAddLayerHandler = (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onAdd, e);
+		l.on('add', this.onAddLayerHandler);
+
+		this.onRemoveLayerHandler = (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onRemove, e);
+		l.on('remove', this.onRemoveLayerHandler);
+
+	}
+
+	private removeLayerEventListeners(l: Layer) {
+
+		l.off('add', this.onAddLayerHandler);
+		l.off('remove', this.onRemoveLayerHandler);
 
 	}
 
