@@ -1,5 +1,5 @@
 import {
-	Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnInit, Output,
+	Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, OnChanges, OnDestroy, OnInit, Output,
 	SimpleChange
 } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { LeafletUtil } from './leaflet.util';
 	selector: '[leaflet]'
 })
 export class LeafletDirective
-	implements OnChanges, OnInit {
+	implements OnChanges, OnDestroy, OnInit {
 
 	readonly DEFAULT_ZOOM = 1;
 	readonly DEFAULT_CENTER = latLng(38.907192, -77.036871);
@@ -74,6 +74,7 @@ export class LeafletDirective
 	@Output('leafletMapZoomStart') onMapZoomStart = new EventEmitter<LeafletEvent>();
 	@Output('leafletMapZoomEnd') onMapZoomEnd = new EventEmitter<LeafletEvent>();
 
+	private mapEventHandlers: any = {};
 
 	constructor(private element: ElementRef, private zone: NgZone) {
 		// Nothing here
@@ -162,6 +163,11 @@ export class LeafletDirective
 
 	}
 
+	ngOnDestroy() {
+		// If this directive is destroyed, the map is too
+		this.map.remove();
+	}
+
 	public getMap() {
 		return this.map;
 	}
@@ -174,25 +180,31 @@ export class LeafletDirective
 
 	private addMapEventListeners() {
 
-		// Add all the pass-through mouse event handlers
-		this.map.on('click', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onClick, e));
-		this.map.on('dblclick', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onDoubleClick, e));
-		this.map.on('mousedown', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseDown, e));
-		this.map.on('mouseup', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseUp, e));
-		this.map.on('mouseover', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOver, e));
-		this.map.on('mouseout', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOut, e));
-		this.map.on('mousemove', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseMove, e));
+		const registerEventHandler = (eventName: string, handler: (e: LeafletEvent) => any) => {
+			this.mapEventHandlers[eventName] = handler;
+			this.map.on(eventName, handler);
+		};
 
-		this.map.on('zoomstart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomStart, e));
-		this.map.on('zoom', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoom, e));
-		this.map.on('zoomend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomEnd, e));
-		this.map.on('movestart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveStart, e));
-		this.map.on('move', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMove, e));
-		this.map.on('moveend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveEnd, e));
+
+		// Add all the pass-through mouse event handlers
+		registerEventHandler('click', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onClick, e));
+		registerEventHandler('dblclick', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onDoubleClick, e));
+		registerEventHandler('mousedown', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseDown, e));
+		registerEventHandler('mouseup', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseUp, e));
+		registerEventHandler('mouseover', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOver, e));
+		registerEventHandler('mouseout', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseOut, e));
+		registerEventHandler('mousemove', (e: LeafletMouseEvent) => LeafletUtil.handleEvent(this.zone, this.onMouseMove, e));
+
+		registerEventHandler('zoomstart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomStart, e));
+		registerEventHandler('zoom', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoom, e));
+		registerEventHandler('zoomend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapZoomEnd, e));
+		registerEventHandler('movestart', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveStart, e));
+		registerEventHandler('move', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMove, e));
+		registerEventHandler('moveend', (e: LeafletEvent) => LeafletUtil.handleEvent(this.zone, this.onMapMoveEnd, e));
 
 
 		// Update any things for which we provide output bindings
-		this.map.on('zoomend moveend', () => {
+		const outputUpdateHandler = () => {
 			const zoom = this.map.getZoom();
 			if (zoom !== this.zoom) {
 				this.zoom = zoom;
@@ -210,9 +222,11 @@ export class LeafletDirective
 
 				}
 			}
-		});
-	}
+		};
 
+		registerEventHandler('moveend', outputUpdateHandler);
+		registerEventHandler('zoomend', outputUpdateHandler);
+	}
 
 	/**
 	 * Resize the map to fit it's parent container

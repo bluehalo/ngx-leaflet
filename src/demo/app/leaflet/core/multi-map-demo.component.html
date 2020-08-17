@@ -1,0 +1,59 @@
+<div class="card">
+	<div class="card-body">
+
+		<h1 class="card-title">Adding Multiple Maps</h1>
+		<p>
+			This is a demonstration of creating and managing multiple maps on a single template.
+			This code demonstrates the proper way of making sure to not reuse Leaflet objects between multiple maps.
+		</p>
+
+		<div class="card bg-light">
+			<div class="card-body">
+
+<pre>
+&lt;div *ngFor="let m of maps"
+	leaflet style="height: 300px;"
+	[leafletOptions]="m.options"&gt;
+&lt;/div&gt;
+</pre>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="card-body">
+
+		<div class="row">
+
+			<!-- Control Form -->
+			<div class="col">
+
+				<form>
+					<button type="button" class="btn btn-primary m-1" (click)="doAddMap()">Add Map</button>
+					<button type="button" class="btn btn-secondary m-1" (click)="doRemoveMap()">Remove Map</button>
+				</form>
+
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<!-- Map -->
+			<div class="col-sm-12 col-md-5 col-lg-3 m-1" *ngFor="let m of maps">
+
+				<div style="height: 300px;"
+					 leaflet
+					 [leafletOptions]="m.options">
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+
+
