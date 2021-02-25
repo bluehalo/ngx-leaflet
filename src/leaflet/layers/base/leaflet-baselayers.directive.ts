@@ -65,7 +65,9 @@ export class LeafletBaseLayersDirective
 
 	ngOnDestroy() {
 		this.baseLayers = {};
-		this.controlLayers.getLayersControl().remove();
+		if (null != this.controlLayers.getLayersControl()) {
+			this.controlLayers.getLayersControl().remove();
+		}
 	}
 
 	ngOnInit() {
