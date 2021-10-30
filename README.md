@@ -656,8 +656,7 @@ But, here is a rough overview of the steps taken to get them working.
 	```js
 	let layer = marker([ 46.879966, -121.726909 ], {
 		icon: icon({
-			iconSize: [ 25, 41 ],
-			iconAnchor: [ 13, 41 ],
+			...Icon.Default.prototype.options,
 			iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
 			iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
 			shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
@@ -691,9 +690,9 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
 	```js
 	let layer = marker([ 46.879966, -121.726909 ], {
 		icon: icon({
-			iconSize: [ 25, 41 ],
-			iconAnchor: [ 13, 41 ],
+			...Icon.Default.prototype.options,
 			iconUrl: 'assets/marker-icon.png',
+			iconRetinaUrl: 'assets/marker-icon-2x.png',
 			shadowUrl: 'assets/marker-shadow.png'
 		})
 	});
