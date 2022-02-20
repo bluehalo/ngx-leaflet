@@ -1,13 +1,16 @@
 # Changelog
 
-## 8.0
-Support for Angular.io 10.
+## 13.0
+Support for Angular.io 13. 🎉
+We skipped a bunch of versions to get to the Ivy built, Angular-CLI based latest.
 
 ## 8.1
 Added call to Map.remove in OnDestroy handler.
 This should ensure that any outstanding event handlers are cleaned up.
 Added demo example for adding/removing maps dynamically. 
 
+## 8.0
+Support for Angular.io 10.
 
 ## 7.0
 Support for Angular.io 9. 🎉
