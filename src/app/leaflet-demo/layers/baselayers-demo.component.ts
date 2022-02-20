@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { latLng, tileLayer } from 'leaflet';
+import { Control, latLng, tileLayer } from 'leaflet';
+import LayersOptions = Control.LayersOptions;
 
 @Component({
 	selector: 'leafletBaselayersDemo',
@@ -29,7 +30,7 @@ export class LeafletBaseLayersDemoComponent {
 	};
 
 	// Values to bind to Leaflet Directive
-	layersControlOptions = { position: 'bottomright' };
+	layersControlOptions: LayersOptions = { position: 'bottomright' };
 	baseLayers = {
 		'Open Street Map': this.LAYER_OSM.layer,
 		'Open Cycle Map': this.LAYER_OCM.layer

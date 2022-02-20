@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
-import { latLng, tileLayer } from 'leaflet';
+import { latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class LeafletEventsDemoComponent {
 			.subscribe((v: string) => { this.eventLog = v; } );
 	}
 
-	handleEvent(eventType: string) {
+	handleEvent(eventType: string, event: any) {
 		this.eventSubject.next(eventType);
 	}
 
