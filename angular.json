@@ -28,7 +28,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "*.png",
+                "input": "node_modules/leaflet/dist/images/",
+                "output": "assets/leaflet/"
+              }
             ],
             "styles": [
               "src/styles.scss",
