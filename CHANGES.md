@@ -5,6 +5,9 @@ Support for Angular.io 13. 🎉
 We skipped a bunch of versions to get to the Ivy built, Angular-CLI based latest.
 This was a big migration to a new structure and build process, so file a bug if you encounter any issues.
 
+### 13.0.1
+Minor cleanup in the project and removed an accidental dependency
+
 ## 8.1
 Added call to Map.remove in OnDestroy handler.
 This should ensure that any outstanding event handlers are cleaned up.
