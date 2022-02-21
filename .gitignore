@@ -1,64 +1,48 @@
-###################
-# Project Specific
-###################
-dist/
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-###################
-# Editors
-###################
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
 
-# Eclipse
-.project
-.settings
-.classpath
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+yarn.lock
 
-# IntelliJ
+# IDEs and editors
 .idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 *.iml
-*.iws
 
-# Net Beans
-nbactions.xml
-nb-configuration.xml
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
 
-# VS
-.vscode
-
-# Vi, etc
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
 *.swp
 *.tmp
 *.bak
-
-# General
 *~
 
-
-###################
-# Build
-###################
-
-# Node
-node_modules/
-npm-debug.log
-*.tgz
-yarn.lock
-
-# Common
-bin/
-tmp/
-
-# Apple
-*~.nib
-
-
-###################
-# OS
-###################
-
-# MacOS
+# System files
 .DS_Store
-
-
-###################
-# Tests
-###################
+Thumbs.db
