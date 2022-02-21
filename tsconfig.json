@@ -12,8 +12,7 @@
 	"noFallthroughCasesInSwitch": true,
 	"sourceMap": true,
 	"paths": {
-	  "ngx-sentio": [
-		"dist/ngx-leaflet/ngx-leaflet",
+	  "ngx-leaflet": [
 		"dist/ngx-leaflet"
 	  ]
 	},
