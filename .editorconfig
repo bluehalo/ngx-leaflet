@@ -15,3 +15,7 @@ quote_type = single
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
+
+[*.json]
+indent_style = space
+indent_size = 2
