@@ -7,7 +7,7 @@
 
 > Leaflet packages for Angular.io.
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
-> Supports Angular v10, Ahead-of-Time compilation (AOT), and use in Angular-CLI based projects.
+> Supports Angular v13 and use in Angular-CLI based projects.
 
 ## Table of Contents
 - [Install](#install)
@@ -295,19 +295,19 @@ There are several input bindings available for configuring the map.
 ```
 
 #### [leafletOptions]
-Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#map-option) docs). These options can only be set initially because they are used to create the map. Later changes are ignored.
+Input binding for the initial leaflet map options (see [Leaflet's](http://leafletjs.com/reference.html#map-option) docs). These options can only be set initially because they are used to create the map. Later changes are ignored.
 
 #### [leafletPanOptions]
-Input binding for pan options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#pan-options) docs). These options are stored and used whenever pan operations are invoked.
+Input binding for pan options (see [Leaflet's](http://leafletjs.com/reference.html#pan-options) docs). These options are stored and used whenever pan operations are invoked.
 
 #### [leafletZoomOptions]
-Input binding for zoom options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#zoom-options) docs). These options are stored and used whenever zoom operations are invoked.
+Input binding for zoom options (see [Leaflet's](http://leafletjs.com/reference.html#zoom-options) docs). These options are stored and used whenever zoom operations are invoked.
 
 #### [leafletZoomPanOptions]
-Input binding for zoom/pan options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#zoom/pan-options) docs). These options are stored and used whenever zoom/pan operations are invoked.
+Input binding for zoom/pan options (see [Leaflet's](http://leafletjs.com/reference.html#zoom/pan-options) docs). These options are stored and used whenever zoom/pan operations are invoked.
 
 #### [leafletFitBoundsOptions]
-Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com/reference-1.3.0.html#fitbounds-options) docs). These options are stored and used whenever FitBounds operations are invoked.
+Input binding for FitBounds options (see [Leaflet's](http://leafletjs.com/reference.html#fitbounds-options) docs). These options are stored and used whenever FitBounds operations are invoked.
 
 
 ### Dynamically changing zoom level, center, fitBounds, etc.
@@ -656,8 +656,7 @@ But, here is a rough overview of the steps taken to get them working.
 	```js
 	let layer = marker([ 46.879966, -121.726909 ], {
 		icon: icon({
-			iconSize: [ 25, 41 ],
-			iconAnchor: [ 13, 41 ],
+			...Icon.Default.prototype.options,
 			iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
 			iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
 			shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
@@ -691,9 +690,9 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
 	```js
 	let layer = marker([ 46.879966, -121.726909 ], {
 		icon: icon({
-			iconSize: [ 25, 41 ],
-			iconAnchor: [ 13, 41 ],
+			...Icon.Default.prototype.options,
 			iconUrl: 'assets/marker-icon.png',
+			iconRetinaUrl: 'assets/marker-icon-2x.png',
 			shadowUrl: 'assets/marker-shadow.png'
 		})
 	});
