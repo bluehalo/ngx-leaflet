@@ -12,14 +12,14 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.2.0",
-    "@angular/common": "~13.2.0",
-    "@angular/compiler": "~13.2.0",
-    "@angular/core": "~13.2.0",
-    "@angular/forms": "~13.2.0",
-    "@angular/platform-browser": "~13.2.0",
-    "@angular/platform-browser-dynamic": "~13.2.0",
-    "@angular/router": "~13.2.0",
+    "@angular/animations": "^14.0.2",
+    "@angular/common": "^14.0.2",
+    "@angular/compiler": "^14.0.2",
+    "@angular/core": "^14.0.2",
+    "@angular/forms": "^14.0.2",
+    "@angular/platform-browser": "^14.0.2",
+    "@angular/platform-browser-dynamic": "^14.0.2",
+    "@angular/router": "^14.0.2",
     "@types/leaflet": "1",
     "bootstrap": "^4.6.1",
     "copyfiles": "^2.4.1",
@@ -29,9 +29,9 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.2.3",
-    "@angular/cli": "~13.2.3",
-    "@angular/compiler-cli": "~13.2.0",
+    "@angular-devkit/build-angular": "^14.0.2",
+    "@angular/cli": "^14.0.2",
+    "@angular/compiler-cli": "^14.0.2",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~4.0.0",
@@ -40,7 +40,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "ng-packagr": "^13.0.0",
-    "typescript": "~4.5.2"
+    "ng-packagr": "^14.0.2",
+    "typescript": "~4.7.4"
   }
 }
