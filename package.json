@@ -6,9 +6,9 @@
   "scripts": {
     "ng": "ng",
     "demo": "ng serve ngx-leaflet-demo",
-    "build": "ng build --configuration production && copyfiles README.md LICENSE CHANGES.md ./dist/ngx-leaflet",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build": "ng build ngx-leaflet --configuration production && copyfiles README.md LICENSE CHANGES.md ./dist/ngx-leaflet",
+    "watch": "ng build ngx-leaflet --watch --configuration development",
+    "test": "ng test ngx-leaflet"
   },
   "private": true,
   "dependencies": {
