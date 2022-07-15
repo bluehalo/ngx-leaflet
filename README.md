@@ -708,9 +708,9 @@ There are several libraries that extend the core functionality of ngx-leaflet:
 ## <a name="help">Getting Help</a>
 Here's a list of articles, tutorials, guides, and help resources:
 * [ngx-leaflet on Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
-* [High-level intro to @asymmetrik/ngx-leaflet](https://www.asymmetrik.com/introducing-ngx-leaflet)
-* [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://www.asymmetrik.com/ngx-leaflet-tutorial-angular-cli)
-* [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet-tutorial-3rd-party-libs)
+* [High-level intro to @asymmetrik/ngx-leaflet](https://github.com/Asymmetrik/ngx-leaflet/wiki)
+* [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://github.com/Asymmetrik/ngx-leaflet/wiki/Getting-Started-Tutorial)
+* [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet/wiki/Integrating-Plugins)
 
 
 ## Contribute
