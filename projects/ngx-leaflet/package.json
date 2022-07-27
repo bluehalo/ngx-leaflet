@@ -1,13 +1,13 @@
 {
   "name": "@asymmetrik/ngx-leaflet",
   "description": "Angular.io components for Leaflet",
-  "version": "14.0.0",
-  "author": "Asymmetrik, Ltd.",
-  "copyright": "Copyright Asymmetrik, A BlueHalo Company 2007-2022 - All Rights Reserved.",
+  "version": "14.0.1",
+  "author": "BlueHalo, LLC",
+  "copyright": "Copyright BlueHalo 2007-2022 - All Rights Reserved.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Asymmetrik/ngx-leaflet.git"
+    "url": "https://github.com/bluehalo/ngx-leaflet.git"
   },
 
   "peerDependencies": {
