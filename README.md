@@ -700,21 +700,21 @@ If you build your project using the [Angular CLI](https://github.com/angular/ang
 
 ## Extensions
 There are several libraries that extend the core functionality of ngx-leaflet:
-* [Leaflet Draw](https://github.com/Asymmetrik/ngx-leaflet-draw)
-* [Leaflet Markercluster](https://github.com/Asymmetrik/ngx-leaflet-markercluster)
-* [Leaflet D3 (Hexbins)](https://github.com/Asymmetrik/ngx-leaflet-d3)
+* [Leaflet Draw](https://github.com/BlueHalo/ngx-leaflet-draw)
+* [Leaflet Markercluster](https://github.com/BlueHalo/ngx-leaflet-markercluster)
+* [Leaflet D3 (Hexbins)](https://github.com/BlueHalo/ngx-leaflet-d3)
 
 
 ## <a name="help">Getting Help</a>
 Here's a list of articles, tutorials, guides, and help resources:
 * [ngx-leaflet on Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
-* [High-level intro to @asymmetrik/ngx-leaflet](https://github.com/Asymmetrik/ngx-leaflet/wiki)
-* [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://github.com/Asymmetrik/ngx-leaflet/wiki/Getting-Started-Tutorial)
-* [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/Asymmetrik/ngx-leaflet/wiki/Integrating-Plugins)
+* [High-level intro to @asymmetrik/ngx-leaflet](https://github.com/BlueHalo/ngx-leaflet/wiki)
+* [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://github.com/BlueHalo/ngx-leaflet/wiki/Getting-Started-Tutorial)
+* [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/BlueHalo/ngx-leaflet/wiki/Integrating-Plugins)
 
 
 ## Contribute
-PRs accepted. If you are part of Asymmetrik, please make contributions on feature branches off of the ```develop``` branch. If you are outside of Asymmetrik, please fork our repo to make contributions.
+PRs accepted. If you are part of BlueHalo, please make contributions on feature branches off of the ```develop``` branch. If you are outside of BlueHalo, please fork our repo to make contributions.
 
 
 ## License
