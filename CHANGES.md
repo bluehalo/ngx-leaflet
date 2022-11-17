@@ -1,5 +1,8 @@
 # Changelog
 
+## 15.0
+Support for Angular.io 15. 🎉
+
 ## 14.0
 Support for Angular.io 14. 🎉
 

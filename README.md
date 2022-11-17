@@ -7,7 +7,7 @@
 
 > Leaflet packages for Angular.io.
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
-> Supports Angular v14 and use in Angular-CLI based projects.
+> Supports Angular v15 and use in Angular-CLI based projects.
 
 ## Table of Contents
 - [Install](#install)
