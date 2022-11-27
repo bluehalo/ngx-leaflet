@@ -1,7 +1,7 @@
 {
   "name": "@asymmetrik/ngx-leaflet",
   "description": "Angular.io components for Leaflet",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "author": "BlueHalo, LLC",
   "copyright": "Copyright BlueHalo 2007-2022 - All Rights Reserved.",
   "license": "MIT",
