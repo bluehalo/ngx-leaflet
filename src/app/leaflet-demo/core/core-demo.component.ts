@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 
 import { latLng, LatLng, tileLayer } from 'leaflet';
+import { LeafletDirective } from '../../../../projects/ngx-leaflet/src/lib/core/leaflet.directive';
+import { NgFor, JsonPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-	selector: 'leafletCoreDemo',
-	templateUrl: './core-demo.component.html'
+    selector: 'leafletCoreDemo',
+    templateUrl: './core-demo.component.html',
+    standalone: true,
+    imports: [FormsModule, NgFor, LeafletDirective, JsonPipe]
 })
 export class LeafletCoreDemoComponent {
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { LeafletModule } from '../../../projects/ngx-leaflet/src/lib/leaflet.module';
+
 
 import { LeafletDemoComponent } from './leaflet-demo.component';
 import { LeafletCoreDemoComponent } from './core/core-demo.component';
@@ -17,28 +17,24 @@ import { LeafletWrapperComponent } from './performance/leaflet-wrapper.component
 
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-
-		LeafletModule
-	],
-	declarations: [
-		LeafletDemoComponent,
-		LeafletCoreDemoComponent,
-		LeafletEventsDemoComponent,
-		LeafletLayersDemoComponent,
-		LeafletNgForLayersDemoComponent,
-		LeafletBaseLayersDemoComponent,
-		LeafletMarkersDemoComponent,
-		LeafletPerformanceDemoComponent,
-		LeafletMultiMapDemoComponent,
-		LeafletWrapperComponent
-	],
-	exports: [
-		LeafletDemoComponent
-	],
-	bootstrap: [ LeafletDemoComponent ],
-	providers: [ ]
+    imports: [
+    CommonModule,
+    FormsModule,
+    LeafletCoreDemoComponent,
+    LeafletEventsDemoComponent,
+    LeafletLayersDemoComponent,
+    LeafletNgForLayersDemoComponent,
+    LeafletBaseLayersDemoComponent,
+    LeafletMarkersDemoComponent,
+    LeafletPerformanceDemoComponent,
+    LeafletMultiMapDemoComponent,
+    LeafletWrapperComponent
+],
+    declarations: [LeafletDemoComponent],
+    exports: [
+        LeafletDemoComponent
+    ],
+    bootstrap: [LeafletDemoComponent],
+    providers: []
 })
 export class LeafletDemoModule { }

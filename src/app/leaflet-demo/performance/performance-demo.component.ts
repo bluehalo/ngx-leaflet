@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { icon, Layer, marker } from 'leaflet';
+import { LeafletWrapperComponent } from './leaflet-wrapper.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-	selector: 'leafletPerformanceDemo',
-	templateUrl: './performance-demo.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'leafletPerformanceDemo',
+    templateUrl: './performance-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FormsModule, LeafletWrapperComponent]
 })
 export class LeafletPerformanceDemoComponent {
 

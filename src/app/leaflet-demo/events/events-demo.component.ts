@@ -3,11 +3,16 @@ import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
 import { latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
+import { LeafletLayerDirective } from '../../../../projects/ngx-leaflet/src/lib/layers/leaflet-layer.directive';
+import { LeafletDirective } from '../../../../projects/ngx-leaflet/src/lib/core/leaflet.directive';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
-	selector: 'leafletEventsDemo',
-	templateUrl: './events-demo.component.html'
+    selector: 'leafletEventsDemo',
+    templateUrl: './events-demo.component.html',
+    standalone: true,
+    imports: [FormsModule, LeafletDirective, LeafletLayerDirective]
 })
 export class LeafletEventsDemoComponent {
 

@@ -3,10 +3,17 @@ import { Component } from '@angular/core';
 import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
 
 import { LeafletLayersDemoModel } from './layers-demo.model';
+import { LeafletLayersControlDirective } from '../../../../projects/ngx-leaflet/src/lib/layers/control/leaflet-control-layers.directive';
+import { LeafletLayersDirective } from '../../../../projects/ngx-leaflet/src/lib/layers/leaflet-layers.directive';
+import { LeafletDirective } from '../../../../projects/ngx-leaflet/src/lib/core/leaflet.directive';
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-	selector: 'leafletLayersDemo',
-	templateUrl: './layers-demo.component.html'
+    selector: 'leafletLayersDemo',
+    templateUrl: './layers-demo.component.html',
+    standalone: true,
+    imports: [FormsModule, NgFor, NgIf, LeafletDirective, LeafletLayersDirective, LeafletLayersControlDirective]
 })
 export class LeafletLayersDemoComponent {
 

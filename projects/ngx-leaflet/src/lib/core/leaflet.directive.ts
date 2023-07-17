@@ -8,7 +8,8 @@ import { latLng, LatLng, LatLngBounds, LeafletEvent, LeafletMouseEvent, map, Map
 import { LeafletUtil } from './leaflet.util';
 
 @Directive({
-	selector: '[leaflet]'
+    selector: '[leaflet]',
+    standalone: true
 })
 export class LeafletDirective
 	implements OnChanges, OnDestroy, OnInit {

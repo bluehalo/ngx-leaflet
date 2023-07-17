@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
 
 import { latLng, MapOptions, tileLayer } from 'leaflet';
+import { LeafletDirective } from '../../../../projects/ngx-leaflet/src/lib/core/leaflet.directive';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface MapSpec {
 	options: MapOptions;
 }
 
 @Component({
-	selector: 'leafletMultiMapDemo',
-	templateUrl: './multi-map-demo.component.html'
+    selector: 'leafletMultiMapDemo',
+    templateUrl: './multi-map-demo.component.html',
+    standalone: true,
+    imports: [FormsModule, NgFor, LeafletDirective]
 })
 export class LeafletMultiMapDemoComponent {
 

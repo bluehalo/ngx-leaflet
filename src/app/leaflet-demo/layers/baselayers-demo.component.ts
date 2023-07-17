@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 
 import { Control, latLng, tileLayer } from 'leaflet';
+import { LeafletBaseLayersDirective } from '../../../../projects/ngx-leaflet/src/lib/layers/base/leaflet-baselayers.directive';
+import { LeafletDirective } from '../../../../projects/ngx-leaflet/src/lib/core/leaflet.directive';
 import LayersOptions = Control.LayersOptions;
 
 @Component({
-	selector: 'leafletBaselayersDemo',
-	templateUrl: './baselayers-demo.component.html'
+    selector: 'leafletBaselayersDemo',
+    templateUrl: './baselayers-demo.component.html',
+    standalone: true,
+    imports: [LeafletDirective, LeafletBaseLayersDirective]
 })
 export class LeafletBaseLayersDemoComponent {
 
