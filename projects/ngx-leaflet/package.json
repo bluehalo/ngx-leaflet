@@ -1,7 +1,7 @@
 {
   "name": "@asymmetrik/ngx-leaflet",
   "description": "Angular.io components for Leaflet",
-  "version": "16.0.1",
+  "version": "17.0.0",
   "author": "BlueHalo, LLC",
   "copyright": "Copyright BlueHalo 2007-2023 - All Rights Reserved.",
   "license": "MIT",
@@ -11,8 +11,8 @@
   },
 
   "peerDependencies": {
-    "@angular/common": "16",
-    "@angular/core": "16",
+    "@angular/common": "17",
+    "@angular/core": "17",
     "leaflet": "1"
   },
   "dependencies": {
