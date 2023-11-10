@@ -1,5 +1,8 @@
 # Changelog
 
+## 17.0
+Support for Angular.io 17. 🎉
+
 ## 16.0
 Support for Angular.io 16.
 
