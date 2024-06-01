@@ -7,7 +7,10 @@
 
 > Leaflet packages for Angular.io.
 > Provides flexible and extensible components for integrating Leaflet v0.7.x and v1.x into Angular.io projects.
-> Supports Angular v17 and use in Angular-CLI based projects.
+> Supports Angular v18 and use in Angular-CLI based projects.
+
+> NOTE: This is the last version of this package that will be published under the @asymmetrik namespace.
+> This and future versions will be published under the namespace: @bluehalo
 
 ## Table of Contents
 - [Install](#install)

@@ -1,5 +1,12 @@
 # Changelog
 
+## 18.0
+Support for Angular.io 18.
+
+Also, we are deprecating the @asymmetrik namespace.
+This will be the last version of this package we publish under that namespace. Future versions will be under the @bluehalo namespace. 
+🫗
+
 ## 17.0
 Support for Angular.io 17. 🎉
 
