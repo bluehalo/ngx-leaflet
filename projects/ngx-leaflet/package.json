@@ -1,7 +1,7 @@
 {
   "name": "@bluehalo/ngx-leaflet",
   "description": "Angular.io components for Leaflet",
-  "version": "18.0.1",
+  "version": "18.0.2",
   "author": "BlueHalo, LLC",
   "copyright": "Copyright BlueHalo 2007-2024 - All Rights Reserved.",
   "license": "MIT",
