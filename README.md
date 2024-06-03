@@ -1,4 +1,4 @@
-# @asymmetrik/ngx-leaflet
+# @bluehalo/ngx-leaflet
 
 [![Build Status][travis-image]][travis-url]
 
@@ -28,7 +28,7 @@
 Install the package and its peer dependencies via npm (or yarn):
 ```
 npm install leaflet
-npm install @asymmetrik/ngx-leaflet
+npm install @bluehalo/ngx-leaflet
 ```
 
 If you intend to use this library in a typescript project (utilizing the typings), you'll need to install the leaflet typings:
@@ -115,7 +115,7 @@ Before you can use the module in your Angular.io app, you'll need to import it i
 For example, in your ```app.module.ts```, add:
  
 ```js
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
 
 ...
 imports: [
@@ -130,7 +130,7 @@ Potentially, you'll also need to import it into the module of the component that
 See Angular.io docs of modules for more details (https://angular.io/guide/ngmodule). In this case, in ```my-module.module.ts```, add:
  
 ```js
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletModule } from '@bluehalo/ngx-leaflet';
 
 ...
 imports: [
@@ -566,7 +566,7 @@ export class MyCustomDirective {
 
 The benefit of this approach is it's a bit cleaner if you're interested in adding some reusable capability to the existing leaflet map directive.
 As mentioned above, it might not work depending on how you are packaging your component.
-This is how the ```@asymmetrik/ngx-leaflet-draw``` and ```@asymmetrik/ngx-leaflet-d3``` packages work, so you can use them as references.
+This is how the ```@bluehalo/ngx-leaflet-draw``` and ```@bluehalo/ngx-leaflet-d3``` packages work, so you can use them as references.
 
 
 ### A Note About Change Detection
@@ -711,9 +711,9 @@ There are several libraries that extend the core functionality of ngx-leaflet:
 ## <a name="help">Getting Help</a>
 Here's a list of articles, tutorials, guides, and help resources:
 * [ngx-leaflet on Stack Overflow](https://stackoverflow.com/questions/tagged/ngx-leaflet)
-* [High-level intro to @asymmetrik/ngx-leaflet](https://github.com/BlueHalo/ngx-leaflet/wiki)
-* [Using @asymmetrik/ngx-leaflet in Angular CLI projects](https://github.com/BlueHalo/ngx-leaflet/wiki/Getting-Started-Tutorial)
-* [Integrating 3rd Party Leaflet Libraries with @asymmetrik/ngx-leaflet and @angular/cli](https://github.com/BlueHalo/ngx-leaflet/wiki/Integrating-Plugins)
+* [High-level intro to @bluehalo/ngx-leaflet](https://github.com/BlueHalo/ngx-leaflet/wiki)
+* [Using @bluehalo/ngx-leaflet in Angular CLI projects](https://github.com/BlueHalo/ngx-leaflet/wiki/Getting-Started-Tutorial)
+* [Integrating 3rd Party Leaflet Libraries with @bluehalo/ngx-leaflet and @angular/cli](https://github.com/BlueHalo/ngx-leaflet/wiki/Integrating-Plugins)
 
 
 ## Contribute
