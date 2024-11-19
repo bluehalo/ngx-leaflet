@@ -23,7 +23,8 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
  * using the layers directive. Otherwise, the plugin will use the last one it sees.
  */
 @Directive({
-	selector: '[leafletBaseLayers]'
+    selector: '[leafletBaseLayers]',
+    standalone: false
 })
 export class LeafletBaseLayersDirective
 	implements DoCheck, OnDestroy, OnInit {

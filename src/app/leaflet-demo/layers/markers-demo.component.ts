@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
 
 @Component({
-	selector: 'leafletMarkersDemo',
-	templateUrl: './markers-demo.component.html'
+    selector: 'leafletMarkersDemo',
+    templateUrl: './markers-demo.component.html',
+    standalone: false
 })
 export class LeafletMarkersDemoComponent {
 
