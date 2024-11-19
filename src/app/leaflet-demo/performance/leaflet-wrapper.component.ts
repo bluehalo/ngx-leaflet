@@ -3,9 +3,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { latLng, Layer, tileLayer } from 'leaflet';
 
 @Component({
-	selector: 'leafletWrapper',
-	templateUrl: './leaflet-wrapper.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'leafletWrapper',
+    templateUrl: './leaflet-wrapper.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LeafletWrapperComponent {
 

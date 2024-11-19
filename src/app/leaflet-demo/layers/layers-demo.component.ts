@@ -5,8 +5,9 @@ import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from
 import { LeafletLayersDemoModel } from './layers-demo.model';
 
 @Component({
-	selector: 'leafletLayersDemo',
-	templateUrl: './layers-demo.component.html'
+    selector: 'leafletLayersDemo',
+    templateUrl: './layers-demo.component.html',
+    standalone: false
 })
 export class LeafletLayersDemoComponent {
 

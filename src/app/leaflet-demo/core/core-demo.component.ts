@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 import { latLng, LatLng, tileLayer } from 'leaflet';
 
 @Component({
-	selector: 'leafletCoreDemo',
-	templateUrl: './core-demo.component.html'
+    selector: 'leafletCoreDemo',
+    templateUrl: './core-demo.component.html',
+    standalone: false
 })
 export class LeafletCoreDemoComponent {
 

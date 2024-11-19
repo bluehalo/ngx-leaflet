@@ -4,8 +4,9 @@ import { Control, latLng, tileLayer } from 'leaflet';
 import LayersOptions = Control.LayersOptions;
 
 @Component({
-	selector: 'leafletBaselayersDemo',
-	templateUrl: './baselayers-demo.component.html'
+    selector: 'leafletBaselayersDemo',
+    templateUrl: './baselayers-demo.component.html',
+    standalone: false
 })
 export class LeafletBaseLayersDemoComponent {
 

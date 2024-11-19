@@ -7,8 +7,9 @@ interface MapSpec {
 }
 
 @Component({
-	selector: 'leafletMultiMapDemo',
-	templateUrl: './multi-map-demo.component.html'
+    selector: 'leafletMultiMapDemo',
+    templateUrl: './multi-map-demo.component.html',
+    standalone: false
 })
 export class LeafletMultiMapDemoComponent {
 

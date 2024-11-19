@@ -6,8 +6,9 @@ import { latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
 
 
 @Component({
-	selector: 'leafletEventsDemo',
-	templateUrl: './events-demo.component.html'
+    selector: 'leafletEventsDemo',
+    templateUrl: './events-demo.component.html',
+    standalone: false
 })
 export class LeafletEventsDemoComponent {
 

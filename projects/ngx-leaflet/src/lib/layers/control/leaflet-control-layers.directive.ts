@@ -22,7 +22,8 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
  * using the layers directive. Otherwise, the last one it sees will be used.
  */
 @Directive({
-	selector: '[leafletLayersControl]'
+    selector: '[leafletLayersControl]',
+    standalone: false
 })
 export class LeafletLayersControlDirective
 	implements DoCheck, OnDestroy, OnInit {
