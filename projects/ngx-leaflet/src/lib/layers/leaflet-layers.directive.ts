@@ -22,7 +22,8 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
  *
  */
 @Directive({
-	selector: '[leafletLayers]'
+    selector: '[leafletLayers]',
+    standalone: false
 })
 export class LeafletLayersDirective
 	implements DoCheck, OnDestroy, OnInit {

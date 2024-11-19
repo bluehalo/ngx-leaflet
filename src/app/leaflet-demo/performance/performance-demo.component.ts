@@ -3,9 +3,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { icon, Layer, marker } from 'leaflet';
 
 @Component({
-	selector: 'leafletPerformanceDemo',
-	templateUrl: './performance-demo.component.html',
-	changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'leafletPerformanceDemo',
+    templateUrl: './performance-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LeafletPerformanceDemoComponent {
 
