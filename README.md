@@ -41,12 +41,13 @@ If you want to run the demo, clone the repository, perform an ```npm install```,
 Not using the latest version of Angular.io? Have a look in [CHANGES.md](/CHANGES.md) to find the right version for your project.
 
 ## Usage
-To use this library, there are a handful of setup steps to go through that vary based on your app environment (e.g., Webpack, ngCli, SystemJS, etc.).
+> NOTE: We've simplified the getting started instructions to be more targeted at the most recent versions of Angular.io and the use of Angular CLI.
+
 Generally, the steps are:
 
 * Install Leaflet, this library, and potentially the Leaflet typings (see above).
 * Import the Leaflet stylesheet
-* Import the Leaflet module into your Angular project
+* Import the ```LeafletModule``` into your Angular project
 * Create and configure a map (see docs below and/or demo)
 
 
@@ -66,31 +67,6 @@ If you are just building a webpage and not using a bundler for your css, you'll 
 </head>
 ```
 
-#### Configuring Webpack Style Loaders
-If you are using Webpack, you will need to import the css file and have a style-loader configured.
-You can use the demo included in this application as a reference.
-
-Generally, in ```vendor.ts```:
-```ts
-import 'leaflet/dist/leaflet.css';
-```
-
-And then in your webpack config file:
-```js
-{
-	...
-	"module" : {
-		loaders: [
-			...
-			{ test: /\.css$/, loaders: [ 'style-loader', 'css-loader' ] },
-			...
-		]	
-	},
-	...
-}
-```
-
-
 #### Adding Styles in Angular CLI
 If you are using Angular CLI, you will need to add the Leaflet CSS file to the styles array contained in ```angular.json```
 
@@ -105,52 +81,61 @@ If you are using Angular CLI, you will need to add the Leaflet CSS file to the s
 }
 ```
 
-### Import Code Dependencies and Module
-This project is exported using UMD and it includes typings.
-So, you shouldn't have to do anything special to use it if you're building your project in Typescript.
+#### A Note About Markers
+Leaflet marker URLs don't play well with the Angular CLI build pipeline without some special handling.
+The demo contained in this project demonstrates how to get around this problem. Here is a rough overview of the steps taken to get them working.
 
-#### Typescript Angular.io Module Import
-Before you can use the module in your Angular.io app, you'll need to import it in your application (and potentially the module that's using it).
+1. Include the leaflet marker assets so they are copied intact to the build output.
+```json
+{
+	...
+	"assets": [
+		{
+			"glob": "**/*",
+			"input": "public"
+		},
+		{
+			"glob": "**/*",
+			"input": "./node_modules/leaflet/dist/images",
+			"output": "assets/"
+		}
+	],
+	...
+}
+```
 
-For example, in your ```app.module.ts```, add:
+1. Configure Leaflet to use the asset URLs as custom marker images.
+
+```js
+let layer = marker([ 46.879966, -121.726909 ], {
+	icon: icon({
+		...Icon.Default.prototype.options,
+		iconUrl: 'assets/marker-icon.png',
+		iconRetinaUrl: 'assets/marker-icon-2x.png',
+		shadowUrl: 'assets/marker-shadow.png'
+   })
+});
+```
+
+
+### Import LeafletModule
+
+Before you can use the Leaflet components in your Angular.io app, you'll need to import it in your application.
+Depending on if you're using standalone mode or not, you will import it into your modules and/or components.
  
 ```js
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 
 ...
 imports: [
-	...
-	LeafletModule
+       ...
+       LeafletModule
 ]
 ...
 
 ```
-
-Potentially, you'll also need to import it into the module of the component that is going to actually use the ngx-leaflet directives.
-See Angular.io docs of modules for more details (https://angular.io/guide/ngmodule). In this case, in ```my-module.module.ts```, add:
- 
-```js
-import { LeafletModule } from '@bluehalo/ngx-leaflet';
-
-...
-imports: [
-	...
-	LeafletModule
-]
-...
-
-```
-
-
-#### Not Using Typescript?
-You brave soul.
-The code is exported using UMD.
-The bundles are generated as part of the build (`npm run build`) and placed into the ./dist dir.
-You should be able to import is using whatever module system/builder you're using, even if you aren't using Typescript.
-
 
 ### Create and Configure a Map
-Once the dependencies are installed and you have imported the ```LeafletModule```, you're ready to add a map to your page.
 To get a basic map to work, you have to:
 
 * Apply the ```leaflet``` attribute directive (see the example below) to an existing DOM element.
@@ -633,73 +618,7 @@ ngOnInit() {
 
 	});
 }
-``` 
-
-
-### A Note About Markers
-If you use this component in an Angular.io project and your project uses a bundler like Webpack, you might run into issues using Markers on maps.
-The issue is related to how Leaflet manipulates the image URLs used to render markers when you are using the default marker images.
-The url manipulation is done at runtime and it alters the URLs in a way that breaks their format (this happens regardless of if you're using a file-loader or a url-loader).
-The demo contained in this project demonstrates how to get around this problem (at least in a Webpack environment).
-But, here is a rough overview of the steps taken to get them working.
-
-#### Webpack Marker Workaround
-
-1. Import the marker images in your vendor file to get Webpack to process the images in the asset pipeline
-
-	```js
-	import 'leaflet/dist/images/marker-shadow.png';
-	import 'leaflet/dist/images/marker-icon.png';
-	```
-
-1. Either host the images statically or use the file-loader Webpack plugin to generate the images.
-1. Determine the correct URL for the marker and marker-shadow images. If you're using a file hasher, you should be able to check Webpack's output for the generated images. If you are serving them directly without chunk hashing just figure out how to resolve the images on your server.
-1. Configure Leaflet to use the correct URLs as customer marker images
-
-	```js
-	let layer = marker([ 46.879966, -121.726909 ], {
-		icon: icon({
-			...Icon.Default.prototype.options,
-			iconUrl: '2b3e1faf89f94a4835397e7a43b4f77d.png',
-			iconRetinaUrl: '680f69f3c2e6b90c1812a813edf67fd7.png',
-			shadowUrl: 'a0c6cc1401c107b501efee6477816891.png'
-		})
-	});
-	```
-
-#### Angular CLI Marker Workaround
-
-If you build your project using the [Angular CLI](https://github.com/angular/angular-cli), you can make the default leaflet marker assets available by doing the following:
-
-1. Configure the CLI (by editing `angular.json`)to include leaflet assets as below. Detailed instructions can be found in the [asset-configuration](https://github.com/angular/angular-cli/blob/master/docs/documentation/stories/asset-configuration.md) documentation. 
-	```json
-	{
-		...
-		"assets": [
-			"assets",
-			"favicon.ico",
-			{
-				"glob": "**/*",
-				"input": "./node_modules/leaflet/dist/images",
-				"output": "assets/"
-			}
-		],
-		...
-	}
-	```
-
-1. Configure Leaflet to use the correct URLs as customer marker images
-
-	```js
-	let layer = marker([ 46.879966, -121.726909 ], {
-		icon: icon({
-			...Icon.Default.prototype.options,
-			iconUrl: 'assets/marker-icon.png',
-			iconRetinaUrl: 'assets/marker-icon-2x.png',
-			shadowUrl: 'assets/marker-shadow.png'
-		})
-	});
-	```
+```
 
 ## Extensions
 There are several libraries that extend the core functionality of ngx-leaflet:
