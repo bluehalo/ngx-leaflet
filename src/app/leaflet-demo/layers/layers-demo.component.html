@@ -1,14 +1,14 @@
 <div class="card">
-	<div class="card-body">
+    <div class="card-body">
 
-		<h1 class="card-title">Layers and Layer Controls</h1>
-		<p>
-			This example demonstrates how to add/remove arbitrary layers to the map using the <code>[leafletLayers]</code> directive
-			together with the layers control using the <code>[leafletLayersControl]</code> directive.
-		</p>
+        <h1 class="card-title">Layers and Layer Controls</h1>
+        <p>
+            This example demonstrates how to add/remove arbitrary layers to the map using the <code>[leafletLayers]</code> directive
+            together with the layers control using the <code>[leafletLayersControl]</code> directive.
+        </p>
 
-		<div class="card bg-light">
-			<div class="card-body">
+        <div class="card bg-light">
+            <div class="card-body">
 
 <pre>
 &lt;div leaflet style="height: 300px;"
@@ -18,68 +18,68 @@
 &lt;/div&gt;
 </pre>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-	</div>
-	<div class="card-body">
+    </div>
+    <div class="card-body">
 
-		<div class="row">
+        <div class="row">
 
-			<!-- Control Form -->
-			<div class="col-sm-12 col-md-6 col-lg-4">
+            <!-- Control Form -->
+            <div class="col-sm-12 col-md-6 col-lg-4">
 
-				<form>
+                <form>
 
-					<!-- Base Layers -->
-					<div class="form-group row">
-						<label class="col-12 col-form-label">Base Layers</label>
-						<div class="col-11 offset-1" *ngFor="let layer of model.baseLayers">
-							<div class="form-check">
-								<label class="form-check-label">
-									<input class="form-check-input" type="radio"
-										   [name]="layer.id"
-										   [(ngModel)]="model.baseLayer"
-										   (ngModelChange)="apply()"
-										   [value]="layer.id">
-									{{layer.name}}
-								</label>
-							</div>
-						</div>
-					</div>
+                    <!-- Base Layers -->
+                    <div class="form-group row">
+                        <label class="col-12 col-form-label">Base Layers</label>
+                        <div class="col-11 offset-1" *ngFor="let layer of model.baseLayers">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio"
+                                           [name]="layer.id"
+                                           [(ngModel)]="model.baseLayer"
+                                           (ngModelChange)="apply()"
+                                           [value]="layer.id">
+                                    {{layer.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-					<!-- Overlay Layers -->
-					<div class="form-group row" *ngIf="model.overlayLayers?.length > 0">
-						<label class="col-12 col-form-label">Overlay Layers</label>
-						<div class="col-11 offset-1" *ngFor="let layer of model.overlayLayers; let i = index;">
-							<div class="form-check">
-								<label class="form-check-label">
-									<input class="form-check-input" type="checkbox"
-									       [name]="layer.id"
-									       [(ngModel)]="model.overlayLayers[i].enabled"
-										   (ngModelChange)="apply()">
-									{{layer.name}}
-								</label>
-							</div>
-						</div>
-					</div>
+                    <!-- Overlay Layers -->
+                    <div class="form-group row" *ngIf="model.overlayLayers?.length > 0">
+                        <label class="col-12 col-form-label">Overlay Layers</label>
+                        <div class="col-11 offset-1" *ngFor="let layer of model.overlayLayers; let i = index;">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox"
+                                           [name]="layer.id"
+                                           [(ngModel)]="model.overlayLayers[i].enabled"
+                                           (ngModelChange)="apply()">
+                                    {{layer.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-				</form>
+                </form>
 
-			</div>
+            </div>
 
-		<!-- Map -->
-		<div class="col-sm-12 col-md-6 col-lg-8 m-2">
+        <!-- Map -->
+        <div class="col-sm-12 col-md-6 col-lg-8 m-2">
 
-			<div leaflet style="height: 300px;"
-			     [leafletOptions]="options"
-			     [leafletLayers]="layers"
-			     [leafletLayersControl]="layersControl">
-			</div>
+            <div leaflet style="height: 300px;"
+                 [leafletOptions]="options"
+                 [leafletLayers]="layers"
+                 [leafletLayersControl]="layersControl">
+            </div>
 
-		</div>
+        </div>
 
-	</div>
+    </div>
 
 </div>
 

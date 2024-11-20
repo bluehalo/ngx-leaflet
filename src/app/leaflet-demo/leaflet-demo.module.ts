@@ -17,28 +17,28 @@ import { LeafletWrapperComponent } from './performance/leaflet-wrapper.component
 
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
+    imports: [
+        CommonModule,
+        FormsModule,
 
-		LeafletModule
-	],
-	declarations: [
-		LeafletDemoComponent,
-		LeafletCoreDemoComponent,
-		LeafletEventsDemoComponent,
-		LeafletLayersDemoComponent,
-		LeafletNgForLayersDemoComponent,
-		LeafletBaseLayersDemoComponent,
-		LeafletMarkersDemoComponent,
-		LeafletPerformanceDemoComponent,
-		LeafletMultiMapDemoComponent,
-		LeafletWrapperComponent
-	],
-	exports: [
-		LeafletDemoComponent
-	],
-	bootstrap: [ LeafletDemoComponent ],
-	providers: [ ]
+        LeafletModule
+    ],
+    declarations: [
+        LeafletDemoComponent,
+        LeafletCoreDemoComponent,
+        LeafletEventsDemoComponent,
+        LeafletLayersDemoComponent,
+        LeafletNgForLayersDemoComponent,
+        LeafletBaseLayersDemoComponent,
+        LeafletMarkersDemoComponent,
+        LeafletPerformanceDemoComponent,
+        LeafletMultiMapDemoComponent,
+        LeafletWrapperComponent
+    ],
+    exports: [
+        LeafletDemoComponent
+    ],
+    bootstrap: [ LeafletDemoComponent ],
+    providers: [ ]
 })
 export class LeafletDemoModule { }

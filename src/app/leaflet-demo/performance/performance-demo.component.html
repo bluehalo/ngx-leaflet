@@ -1,52 +1,52 @@
 <div class="card">
-	<div class="card-body">
-		<h1 class="card-title">Efficient Change Detection</h1>
-		<p>
-			We currently use iterable and key/value differs to track changes to allow mutable changes to the bound objects/arrays.
-			This can become inefficient for large layer arrays because we have to compare the contents of the arrays to tell if they are different.
-		</p>
-		<p>
-			There are several strategies for mitigating this performance impact if it becomes an issue:
-		</p>
-		<ul>
-			<li>
-				First, you can wrap the directive in a compoment that uses the <a href="https://angular.io/api/core/ChangeDetectionStrategy">OnPush change detection strategy</a>.
-				That way, you can ensure that change detection is only applied when you want.
-			</li>
-			<li>
-				Second, you can wrap large sets of layers (e.g., markers) in Leaflet <code>LayerGroup</code> layers to keep the bound array size small.
-				But, this will be difficult to manage
-			</li>
-		</ul>
-		<p>
-			This example shows how to use OnPush to improve change detection efficiency. See the README for more details.
-		</p>
+    <div class="card-body">
+        <h1 class="card-title">Efficient Change Detection</h1>
+        <p>
+            We currently use iterable and key/value differs to track changes to allow mutable changes to the bound objects/arrays.
+            This can become inefficient for large layer arrays because we have to compare the contents of the arrays to tell if they are different.
+        </p>
+        <p>
+            There are several strategies for mitigating this performance impact if it becomes an issue:
+        </p>
+        <ul>
+            <li>
+                First, you can wrap the directive in a compoment that uses the <a href="https://angular.io/api/core/ChangeDetectionStrategy">OnPush change detection strategy</a>.
+                That way, you can ensure that change detection is only applied when you want.
+            </li>
+            <li>
+                Second, you can wrap large sets of layers (e.g., markers) in Leaflet <code>LayerGroup</code> layers to keep the bound array size small.
+                But, this will be difficult to manage
+            </li>
+        </ul>
+        <p>
+            This example shows how to use OnPush to improve change detection efficiency. See the README for more details.
+        </p>
 
-	</div>
-	<div class="card-body">
+    </div>
+    <div class="card-body">
 
-		<div class="row">
-			<form class="col">
-				<button type="button"
-						class="btn btn-primary mr-1"
-						(click)="mutableAdd()">Mutable Add Marker</button>
+        <div class="row">
+            <form class="col">
+                <button type="button"
+                        class="btn btn-primary mr-1"
+                        (click)="mutableAdd()">Mutable Add Marker</button>
 
-				<button type="button"
-						class="btn btn-primary mr-1"
-						(click)="mutableRemove()">Mutable Remove Marker</button>
+                <button type="button"
+                        class="btn btn-primary mr-1"
+                        (click)="mutableRemove()">Mutable Remove Marker</button>
 
-				<button type="button"
-						class="btn btn-primary"
-						(click)="newArray()">Update Array Instance</button>
-			</form>
-		</div>
-		<div class="row">
-			<label class="col col-form-label">{{markers?.length}} Markers</label>
-		</div>
+                <button type="button"
+                        class="btn btn-primary"
+                        (click)="newArray()">Update Array Instance</button>
+            </form>
+        </div>
+        <div class="row">
+            <label class="col col-form-label">{{markers?.length}} Markers</label>
+        </div>
 
-		<leafletWrapper [leafletMarkers]="markers"></leafletWrapper>
+        <leafletWrapper [leafletMarkers]="markers"></leafletWrapper>
 
-	</div>
+    </div>
 </div>
 
 

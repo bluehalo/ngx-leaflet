@@ -6,14 +6,14 @@ import { Component } from '@angular/core';
     standalone: false
 })
 export class LeafletDemoComponent {
-	showDemo = false;
+    showDemo = false;
 
-	ngOnInit() {
+    ngOnInit() {
 
-		// Primarily for debugging
-		setTimeout(() => {
-			this.showDemo = true;
-		}, 1000);
+        // Primarily for debugging
+        setTimeout(() => {
+            this.showDemo = true;
+        }, 1000);
 
-	}
+    }
 }

@@ -1,6 +1,6 @@
 import {
-	Directive, DoCheck, EventEmitter, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit,
-	Output
+    Directive, DoCheck, EventEmitter, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy, OnInit,
+    Output
 } from '@angular/core';
 
 import { Control, Layer } from 'leaflet';
@@ -26,99 +26,99 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
     standalone: false
 })
 export class LeafletLayersControlDirective
-	implements DoCheck, OnDestroy, OnInit {
+    implements DoCheck, OnDestroy, OnInit {
 
-	// Control Layers Configuration
-	layersControlConfigValue: LeafletControlLayersConfig;
+    // Control Layers Configuration
+    layersControlConfigValue: LeafletControlLayersConfig;
 
-	baseLayersDiffer: KeyValueDiffer<string, Layer>;
-	overlaysDiffer: KeyValueDiffer<string, Layer>;
+    baseLayersDiffer: KeyValueDiffer<string, Layer>;
+    overlaysDiffer: KeyValueDiffer<string, Layer>;
 
-	@Input('leafletLayersControl')
-	set layersControlConfig(v: LeafletControlLayersConfig) {
+    @Input('leafletLayersControl')
+    set layersControlConfig(v: LeafletControlLayersConfig) {
 
-		// Validation/init stuff
-		if (null == v) { v = new LeafletControlLayersConfig(); }
-		if (null == v.baseLayers) { v.baseLayers = {}; }
-		if (null == v.overlays) { v.overlays = {}; }
+        // Validation/init stuff
+        if (null == v) { v = new LeafletControlLayersConfig(); }
+        if (null == v.baseLayers) { v.baseLayers = {}; }
+        if (null == v.overlays) { v.overlays = {}; }
 
-		// Store the value
-		this.layersControlConfigValue = v;
+        // Store the value
+        this.layersControlConfigValue = v;
 
-		// Update the map
-		this.updateLayers();
+        // Update the map
+        this.updateLayers();
 
-	}
-	get layersControlConfig(): LeafletControlLayersConfig {
-		return this.layersControlConfigValue;
-	}
+    }
+    get layersControlConfig(): LeafletControlLayersConfig {
+        return this.layersControlConfigValue;
+    }
 
-	@Input('leafletLayersControlOptions') layersControlOptions: any;
+    @Input('leafletLayersControlOptions') layersControlOptions: any;
 
-	@Output('leafletLayersControlReady') layersControlReady = new EventEmitter<Control.Layers>();
+    @Output('leafletLayersControlReady') layersControlReady = new EventEmitter<Control.Layers>();
 
-	private controlLayers: LeafletControlLayersWrapper;
-	private leafletDirective: LeafletDirectiveWrapper;
+    private controlLayers: LeafletControlLayersWrapper;
+    private leafletDirective: LeafletDirectiveWrapper;
 
-	constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
-		this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-		this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
+    constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
+        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+        this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
 
-		// Generate differs
-		this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
-		this.overlaysDiffer = this.differs.find({}).create<string, Layer>();
+        // Generate differs
+        this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
+        this.overlaysDiffer = this.differs.find({}).create<string, Layer>();
 
-	}
+    }
 
-	ngOnInit() {
+    ngOnInit() {
 
-		// Init the map
-		this.leafletDirective.init();
+        // Init the map
+        this.leafletDirective.init();
 
-		// Set up control outside of angular to avoid change detection when using the control
-		this.zone.runOutsideAngular(() => {
+        // Set up control outside of angular to avoid change detection when using the control
+        this.zone.runOutsideAngular(() => {
 
-			// Set up all the initial settings
-			this.controlLayers
-				.init({}, this.layersControlOptions)
-				.addTo(this.leafletDirective.getMap());
+            // Set up all the initial settings
+            this.controlLayers
+                .init({}, this.layersControlOptions)
+                .addTo(this.leafletDirective.getMap());
 
-		});
+        });
 
-		this.updateLayers();
+        this.updateLayers();
 
-	}
+    }
 
-	ngOnDestroy() {
-		this.layersControlConfig = { baseLayers: {}, overlays: {} };
-		this.controlLayers.getLayersControl().remove();
-	}
+    ngOnDestroy() {
+        this.layersControlConfig = { baseLayers: {}, overlays: {} };
+        this.controlLayers.getLayersControl().remove();
+    }
 
-	ngDoCheck() {
-		this.updateLayers();
-	}
+    ngDoCheck() {
+        this.updateLayers();
+    }
 
-	protected updateLayers() {
+    protected updateLayers() {
 
-		const map = this.leafletDirective.getMap();
-		const layersControl = this.controlLayers.getLayersControl();
+        const map = this.leafletDirective.getMap();
+        const layersControl = this.controlLayers.getLayersControl();
 
-		if (null != map && null != layersControl) {
+        if (null != map && null != layersControl) {
 
-			// Run the baselayers differ
-			if (null != this.baseLayersDiffer && null != this.layersControlConfigValue.baseLayers) {
-				const changes = this.baseLayersDiffer.diff(this.layersControlConfigValue.baseLayers);
-				this.controlLayers.applyBaseLayerChanges(changes);
-			}
+            // Run the baselayers differ
+            if (null != this.baseLayersDiffer && null != this.layersControlConfigValue.baseLayers) {
+                const changes = this.baseLayersDiffer.diff(this.layersControlConfigValue.baseLayers);
+                this.controlLayers.applyBaseLayerChanges(changes);
+            }
 
-			// Run the overlays differ
-			if (null != this.overlaysDiffer && null != this.layersControlConfigValue.overlays) {
-				const changes = this.overlaysDiffer.diff(this.layersControlConfigValue.overlays);
-				this.controlLayers.applyOverlayChanges(changes);
-			}
+            // Run the overlays differ
+            if (null != this.overlaysDiffer && null != this.layersControlConfigValue.overlays) {
+                const changes = this.overlaysDiffer.diff(this.layersControlConfigValue.overlays);
+                this.controlLayers.applyOverlayChanges(changes);
+            }
 
-		}
+        }
 
-	}
+    }
 
 }
