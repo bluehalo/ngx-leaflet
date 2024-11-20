@@ -1,5 +1,8 @@
 # Changelog
 
+## 19.0
+Support for Angular.io 19.
+
 ## 18.0
 Support for Angular.io 18.
 
