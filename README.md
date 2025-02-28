@@ -160,7 +160,7 @@ options = {
 Changes to leafletOptions are ignored after they are initially set.
 This is because these options are passed into the map constructor, so they can't be changed anyways.
 So, make sure the object exists before the map is created.
-You'll want to create the object in ```ngOnInit``` or hide the map DOM element with ```*ngIf``` until you can create the options object.
+You'll want to create the object in ```ngOnInit``` or hide the map DOM element with ```@if```until you can create the options object.
 
 
 ### Add a Layers Control
@@ -217,14 +217,16 @@ layers = [
 ```
 
 You can also add an individual layer to the map using the ```[leafletLayer]``` directive.
-Using this approach allows you to use ```*ngFor``` and ```*ngIf``` to control whether individual layers are added to or removed from the map.
+Using this approach allows you to use ```@for``` and ```@if``` to control whether individual layers are added to or removed from the map.
 
 Template:
 ```html
 <div style="height: 300px;"
      leaflet
      [leafletOptions]="options">
-     <div *ngIf="showLayer" [leafletLayer]="layer"></div>
+	@if(showLayer) {
+		<div [leafletLayer]="layer"></div>
+	}
 </div>
 ```
 
@@ -420,16 +422,18 @@ Input binding for Control.Layers options (see [Leaflet's](https://leafletjs.com/
 These options are passed into the constructor on creation.
 
 
-### Advanced Layer Management: Individual Layers and *ngFor / *ngIf
+### Advanced Layer Management: Individual Layers and @for / @if
 The ```[leafletLayer]``` input bindings gives you the ability to add a single layer to the map.
 While this may seem limiting, you can nest elements inside the map element, each with a ```[leafletLayer]``` input. 
 The result of this is that each layer will be added to the map.
-If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get some added flexibility when controlling layers.  
+If you add a structural directive - ```@for``` or ```@if``` - you can get some added flexibility when controlling layers.  
 
 ```html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options">
-	<div *ngFor="let l of layers" [leafletLayer]="l"></div>
+	@for (l of layers; track $index) {
+		<div [leafletLayer]="l"></div>
+	}
 </div>
 ```
 

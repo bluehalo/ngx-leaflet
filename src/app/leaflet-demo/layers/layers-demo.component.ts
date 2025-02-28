@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
+
+import { LeafletDirective, LeafletLayersDirective, LeafletLayersControlDirective } from '../../../../projects/ngx-leaflet/src/public-api';
 
 import { LeafletLayersDemoModel } from './layers-demo.model';
 
 @Component({
     selector: 'leafletLayersDemo',
     templateUrl: './layers-demo.component.html',
-    standalone: false
+    imports: [FormsModule, LeafletDirective, LeafletLayersDirective, LeafletLayersControlDirective]
 })
 export class LeafletLayersDemoComponent {
 

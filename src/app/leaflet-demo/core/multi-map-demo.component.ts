@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { latLng, MapOptions, tileLayer } from 'leaflet';
 
+import { LeafletDirective } from '../../../../projects/ngx-leaflet/src/public-api';
+
 interface MapSpec {
     options: MapOptions;
 }
@@ -9,7 +11,7 @@ interface MapSpec {
 @Component({
     selector: 'leafletMultiMapDemo',
     templateUrl: './multi-map-demo.component.html',
-    standalone: false
+    imports: [LeafletDirective]
 })
 export class LeafletMultiMapDemoComponent {
 

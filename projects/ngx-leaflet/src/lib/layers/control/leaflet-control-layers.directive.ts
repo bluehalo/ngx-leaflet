@@ -23,7 +23,6 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
  */
 @Directive({
     selector: '[leafletLayersControl]',
-    standalone: false
 })
 export class LeafletLayersControlDirective
     implements DoCheck, OnDestroy, OnInit {

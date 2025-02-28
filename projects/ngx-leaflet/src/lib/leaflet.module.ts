@@ -14,7 +14,7 @@ import { LeafletBaseLayersDirective } from './layers/base/leaflet-baselayers.dir
         LeafletLayersControlDirective,
         LeafletBaseLayersDirective
     ],
-    declarations: [
+    imports: [
         LeafletDirective,
         LeafletLayerDirective,
         LeafletLayersDirective,

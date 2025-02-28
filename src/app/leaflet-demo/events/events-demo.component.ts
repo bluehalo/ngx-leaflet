@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
-import { latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
+import { latLng, tileLayer } from 'leaflet';
+
+import { LeafletDirective, LeafletLayerDirective } from '../../../../projects/ngx-leaflet/src/public-api';
 
 
 @Component({
     selector: 'leafletEventsDemo',
     templateUrl: './events-demo.component.html',
-    standalone: false
+    imports: [FormsModule, LeafletDirective, LeafletLayerDirective]
 })
 export class LeafletEventsDemoComponent {
 
