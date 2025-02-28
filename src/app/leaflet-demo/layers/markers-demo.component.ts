@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 
 import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
 
+import { LeafletDirective, LeafletLayersDirective } from '../../../../projects/ngx-leaflet/src/public-api';
+
 @Component({
     selector: 'leafletMarkersDemo',
     templateUrl: './markers-demo.component.html',
-    standalone: false
+    imports: [LeafletDirective, LeafletLayersDirective]
 })
 export class LeafletMarkersDemoComponent {
 

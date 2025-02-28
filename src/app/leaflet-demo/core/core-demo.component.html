@@ -50,7 +50,9 @@
                         </div>
                         <div class="col">
                             <select class="form-control" name="zoom" [(ngModel)]="formZoom" required>
-                                <option *ngFor="let z of zoomLevels" [value]="z">{{z}}</option>
+                                @for(z of zoomLevels; track $index) {
+                                    <option [value]="z">{{z}}</option>
+                                }
                             </select>
                         </div>
                     </div>
