@@ -165,6 +165,7 @@ export class LeafletDirective
     ngOnDestroy() {
         // If this directive is destroyed, the map is too
         if (null != this.map) {
+            this.map.off();
             this.map.remove();
         }
     }
