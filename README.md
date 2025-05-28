@@ -43,9 +43,10 @@ Generally, the steps are:
 
 * Install Leaflet, this library, and potentially the Leaflet typings (see above).
 * Import the Leaflet stylesheet
-* Import the ```LeafletModule``` into your Angular project
+* Import the `LeafletDirective` etc. into your Module or standalone Component
 * Create and configure a map (see docs below and/or demo)
 
+Alternatively, you can use the `LeafletModule` to import the module into your application.
 
 ### Import the Leaflet Stylesheet
 For leaflet to work, you need to have the leaflet stylesheets loaded into your application.
@@ -55,7 +56,7 @@ How you include the stylesheet will depend on your specific setup. Here are a fe
 #### Direct Import from HTML
 If you are just building a webpage and not using a bundler for your css, you'll want to directly import the css file in your HTML page.
 
-```html
+```angular181html
 <head>
 	...
 	<link rel="stylesheet" type="text/css" href="./node_modules/leaflet/dist/leaflet.css">
@@ -102,7 +103,7 @@ The demo contained in this project demonstrates how to get around this problem. 
 
 1. Configure Leaflet to use the asset URLs as custom marker images.
 
-```js
+```typescript
 let layer = marker([ 46.879966, -121.726909 ], {
 	icon: icon({
 		...Icon.Default.prototype.options,
@@ -114,21 +115,31 @@ let layer = marker([ 46.879966, -121.726909 ], {
 ```
 
 
-### Import LeafletModule
+### Import LeafletDirective
 
 Before you can use the Leaflet components in your Angular.io app, you'll need to import it in your application.
 Depending on if you're using standalone mode or not, you will import it into your modules and/or components.
- 
-```js
+
+```typescript
+import { LeafletDirective } from '@bluehalo/ngx-leaflet';
+
+@Component({
+    imports: [
+        LeafletDirective // Import the LeafletDirective here
+        // import other directives as needed
+    ],
+})
+```
+
+Alternatively:
+```typescript
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 
-...
-imports: [
-       ...
-       LeafletModule
-]
-...
-
+@NgModule({
+    imports: [
+        LeafletModule // Import the LeafletModule here
+    ],
+})
 ```
 
 ### Create and Configure a Map
@@ -139,7 +150,7 @@ To get a basic map to work, you have to:
 * Provide an initial zoom/center and set of layers either via ```leafletOptions``` or by binding to ```leafletZoom```, ```leafletCenter```, and ```leafletLayers```.
 
 Template:
-```html
+```angular181html
 <div style="height: 300px;"
      leaflet 
      [leafletOptions]="options">
@@ -147,7 +158,7 @@ Template:
 ```
 
 Example leafletOptions object:
-```js
+```typescript
 options = {
 	layers: [
 		tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
@@ -168,7 +179,7 @@ The ```[leafletLayersControl]``` input bindings give you the ability to add the 
 The layers control lets the user toggle layers and overlays on and off.
 
 Template:
-```html
+```angular181html
 <div style="height: 300px;"
      leaflet 
      [leafletOptions]="options"
@@ -176,17 +187,27 @@ Template:
 </div>
 ```
 
-Example layersControl object:
-```js
-layersControl = {
-	baseLayers: {
-		'Open Street Map': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-		'Open Cycle Map': tileLayer('https://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
-	},
-	overlays: {
-		'Big Circle': circle([ 46.95, -122 ], { radius: 5000 }),
-		'Big Square': polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
-	}
+Component with example layersControl object:
+```typescript
+import { LeafletDirective, LeafletLayersControlDirective } from '@bluehalo/ngx-leaflet';
+
+@Component({
+    imports: [
+        LeafletDirective,
+        LeafletLayersControlDirective,
+    ],
+})
+export class MyComponent {
+    protected readonly layersControl = {
+        baseLayers: {
+            'Open Street Map': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+            'Open Cycle Map': tileLayer('https://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+        },
+        overlays: {
+            'Big Circle': circle([ 46.95, -122 ], { radius: 5000 }),
+            'Big Square': polygon([[ 46.8, -121.55 ], [ 46.9, -121.55 ], [ 46.9, -121.7 ], [ 46.8, -121.7 ]])
+        }
+    }
 }
 ```
 
@@ -199,7 +220,7 @@ There are several different ways to add layers to the map.
 You can add layers (baselayers, markers, or custom layers) to the map without showing them in the layer control using the ```[leafletLayers]``` directive.
 
 Template:
-```html
+```angular181html
 <div style="height: 300px;"
      leaflet
      [leafletOptions]="options"
@@ -208,7 +229,7 @@ Template:
 ```
 
 Layers array:
-```js
+```typescript
 layers = [
 	circle([ 46.95, -122 ], { radius: 5000 }),
 	polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
@@ -217,19 +238,22 @@ layers = [
 ```
 
 You can also add an individual layer to the map using the ```[leafletLayer]``` directive.
-Using this approach allows you to use ```*ngFor``` and ```*ngIf``` to control whether individual layers are added to or removed from the map.
+Using this approach allows you to use ```@for``` and ```@if``` to control whether individual layers are added to or removed from the map.
 
 Template:
-```html
+```angular181html
 <div style="height: 300px;"
      leaflet
      [leafletOptions]="options">
-     <div *ngIf="showLayer" [leafletLayer]="layer"></div>
+    
+    @if (showLayer) {
+        <div [leafletLayer]="layer"></div>
+    }
 </div>
 ```
 
 Layer:
-```js
+```typescript
 layer = circle([ 46.95, -122 ], { radius: 5000 });
 ```
 
@@ -268,7 +292,7 @@ This section includes more detailed documentation of the functionality of the di
 ### Advanced Map Configuration
 There are several input bindings available for configuring the map.
 
-```html
+```angular181html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"
      [leafletPanOptions]="panOptions"
@@ -295,7 +319,7 @@ Input binding for FitBounds options (see [Leaflet's](https://leafletjs.com/Slava
 
 
 ### Dynamically changing zoom level, center, fitBounds, etc.
-```html
+```angular181html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"
      [(leafletZoom)]="zoom"
@@ -336,7 +360,7 @@ If you plan to show more than just baselayers, you should use the more advanced 
 
 For an example of the basic map setup, you should check out the *Simple Base Layers* demo.
 
-```html
+```angular181html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"
      [leafletBaseLayers]="baseLayers"
@@ -347,7 +371,7 @@ For an example of the basic map setup, you should check out the *Simple Base Lay
 #### [leafletBaseLayers]: Control.LayersObject
 Input bind an ```Control.LayersObject``` to be synced to the map.
 
-```js
+```typescript
 baseLayers: {
 	'layer1': Layer,
 	'layer2': Layer
@@ -383,7 +407,7 @@ And, use ```[leafletLayersControl]``` to allow users to optionally turn layers/o
 
 For an example of using the layers controls, you should check out the *Layers and Layer Controls* demo.
 
-```html
+```angular181html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options"
      [leafletLayers]="layers"
@@ -404,7 +428,7 @@ As a result of how the map is synced, the order of layers is not guaranteed to b
 #### [leafletLayersControl]: Control.Layers
 Input bind a Control.Layers specification. The object contains properties for each of the two constructor arguments for the Control.Layers constructor.
 
-```js
+```typescript
 layersControl: {
 	baseLayers: {
 		'layerName': Layer
@@ -420,16 +444,20 @@ Input binding for Control.Layers options (see [Leaflet's](https://leafletjs.com/
 These options are passed into the constructor on creation.
 
 
-### Advanced Layer Management: Individual Layers and *ngFor / *ngIf
+### Advanced Layer Management: Individual Layers and @for / @if
 The ```[leafletLayer]``` input bindings gives you the ability to add a single layer to the map.
 While this may seem limiting, you can nest elements inside the map element, each with a ```[leafletLayer]``` input. 
 The result of this is that each layer will be added to the map.
-If you add a structural directive - ```*ngFor``` or ```*ngIf``` - you can get some added flexibility when controlling layers.  
+If you add a structural directive - ```@for``` or ```@if``` - you can get some added flexibility when controlling layers.  
 
-```html
+```angular181html
 <div leaflet style="height: 300px;"
      [leafletOptions]="options">
-	<div *ngFor="let l of layers" [leafletLayer]="l"></div>
+    
+    @for (layer of layers; track layer.id) {
+        <div [leafletLayer]="layer"></div>
+    }
+    
 </div>
 ```
 
@@ -488,14 +516,14 @@ With a reference to the directive, you can invoke the ```getMap()``` function to
 This output is emitted when once when the map is initially created inside of the Leaflet directive.
 The event will only fire when the map exists and is ready for manipulation.
 
-```html
+```angular181html
 <div leaflet
      [leafletOptions]="options"
      (leafletMapReady)="onMapReady($event)">
 </div>
 ```
 
-```js
+```typescript
 onMapReady(map: Map) {
 	// Do stuff with map
 }
@@ -515,33 +543,29 @@ This means that you can create your own component or directive and inject the ``
 This will only work if your custom component/directive exists on the same DOM element and is ordered after the injected LeafletDirective, or if it is on a child DOM element.
 
 
-```html
+```angular181html
 <!-- On the same DOM element -->
-<div leaflet myCustomDirective>
-</div>
+<div leaflet myCustomDirective></div>
 
 <!-- On a child DOM element -->
 <div leaflet>
-	<div myCustomDirective></div>
+    <div myCustomDirective></div>
 </div>
 ```
 
-```js
+```typescript
+
 @Directive({
-	selector: '[myCustomDirective]'
+    selector: '[myCustomDirective]'
 })
 export class MyCustomDirective {
-	leafletDirective: LeafletDirective;
+    readonly #leafletDirective = inject(LeafletDirective);
 
-	constructor(leafletDirective: LeafletDirective) {
-		this.leafletDirective = leafletDirective;
-	}
-
-	someFunction() {
-		if (null != this.leafletDirective.getMap()) {
-			// Do stuff with the map
-		}
-	}
+    someFunction() {
+        if (null !== this.#leafletDirective.getMap()) {
+            // Do stuff with the map
+        }
+    }
 }
 ```
 
@@ -567,7 +591,7 @@ Leaflet event handlers run outside of Angular's zone, where changes to input bou
 To ensure your changes are detected and applied, you need to make those changed inside of Angular's zone.
 Fortunately, this is extremely easy.
 
-```js
+```typescript
 fitBounds: any = null;
 circle = circle([ 46.95, -122 ], { radius: 5000 });
 
@@ -594,7 +618,7 @@ Another option is to manually tell the change detector to detect changes.
 The drawback to this option is that it is less precise.
 This will trigger change detection for this component and all of its children.
 
-```js
+```typescript
 fitBounds: any = null;
 circle = circle([ 46.95, -122 ], { radius: 5000 });
 

@@ -7,14 +7,14 @@ import { LeafletLayersControlDirective } from './layers/control/leaflet-control-
 import { LeafletBaseLayersDirective } from './layers/base/leaflet-baselayers.directive';
 
 @NgModule({
-    exports: [
+    imports: [
         LeafletDirective,
         LeafletLayerDirective,
         LeafletLayersDirective,
         LeafletLayersControlDirective,
         LeafletBaseLayersDirective
     ],
-    declarations: [
+    exports: [
         LeafletDirective,
         LeafletLayerDirective,
         LeafletLayersDirective,
