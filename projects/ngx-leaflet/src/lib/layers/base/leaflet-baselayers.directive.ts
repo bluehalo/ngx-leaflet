@@ -24,7 +24,6 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
  */
 @Directive({
     selector: '[leafletBaseLayers]',
-    standalone: false
 })
 export class LeafletBaseLayersDirective
     implements DoCheck, OnDestroy, OnInit {

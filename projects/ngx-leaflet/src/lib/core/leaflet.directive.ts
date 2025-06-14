@@ -9,7 +9,6 @@ import { LeafletUtil } from './leaflet.util';
 
 @Directive({
     selector: '[leaflet]',
-    standalone: false
 })
 export class LeafletDirective
     implements OnChanges, OnDestroy, OnInit {
