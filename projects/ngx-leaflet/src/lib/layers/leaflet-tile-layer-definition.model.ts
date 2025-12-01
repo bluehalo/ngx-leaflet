@@ -1,12 +1,11 @@
 import { tileLayer, TileLayer } from 'leaflet';
 
 export class LeafletTileLayerDefinition {
-
     constructor(
         public type: string,
         public url: string,
-        public options: any) { }
-
+        public options: any,
+    ) {}
 
     /**
      * Creates a TileLayer from the provided definition. This is a convenience function
@@ -20,11 +19,11 @@ export class LeafletTileLayerDefinition {
 
         switch (layerDef.type) {
             case 'xyz':
-                layer = tileLayer(layerDef.url,  layerDef.options);
+                layer = tileLayer(layerDef.url, layerDef.options);
                 break;
             case 'wms':
             default:
-                layer = tileLayer.wms(layerDef.url,  layerDef.options);
+                layer = tileLayer.wms(layerDef.url, layerDef.options);
                 break;
         }
 
@@ -38,12 +37,16 @@ export class LeafletTileLayerDefinition {
      * @param layerDefs A map of key to tile layer definition
      * @returns {{[p: string]: TileLayer}} A new map of key to TileLayer
      */
-    static createTileLayers(layerDefs: { [ key: string ]: LeafletTileLayerDefinition }): { [ key: string ]: TileLayer } {
-        const layers: { [ key: string ]: TileLayer } = {};
+    static createTileLayers(layerDefs: {
+        [key: string]: LeafletTileLayerDefinition;
+    }): { [key: string]: TileLayer } {
+        const layers: { [key: string]: TileLayer } = {};
 
         for (const k in layerDefs) {
             if (layerDefs.hasOwnProperty(k)) {
-                layers[k] = (LeafletTileLayerDefinition.createTileLayer(layerDefs[k]));
+                layers[k] = LeafletTileLayerDefinition.createTileLayer(
+                    layerDefs[k],
+                );
             }
         }
 

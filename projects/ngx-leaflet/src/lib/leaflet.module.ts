@@ -12,16 +12,14 @@ import { LeafletBaseLayersDirective } from './layers/base/leaflet-baselayers.dir
         LeafletLayerDirective,
         LeafletLayersDirective,
         LeafletLayersControlDirective,
-        LeafletBaseLayersDirective
+        LeafletBaseLayersDirective,
     ],
     exports: [
         LeafletDirective,
         LeafletLayerDirective,
         LeafletLayersDirective,
         LeafletLayersControlDirective,
-        LeafletBaseLayersDirective
-    ]
+        LeafletBaseLayersDirective,
+    ],
 })
-export class LeafletModule {
-
-}
+export class LeafletModule {}

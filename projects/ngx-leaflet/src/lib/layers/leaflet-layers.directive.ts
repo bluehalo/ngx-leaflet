@@ -1,10 +1,18 @@
-import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {
+    Directive,
+    DoCheck,
+    Input,
+    IterableDiffer,
+    IterableDiffers,
+    NgZone,
+    OnDestroy,
+    OnInit,
+} from '@angular/core';
 
-import { Layer} from 'leaflet';
+import { Layer } from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
-
 
 /**
  * Layers directive
@@ -24,9 +32,7 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
 @Directive({
     selector: '[leafletLayers]',
 })
-export class LeafletLayersDirective
-    implements DoCheck, OnDestroy, OnInit {
-
+export class LeafletLayersDirective implements DoCheck, OnDestroy, OnInit {
     // Array of configured layers
     layersValue: Layer[];
 
@@ -48,7 +54,11 @@ export class LeafletLayersDirective
     // Wrapper for the leaflet directive (manages the parent directive)
     private leafletDirective: LeafletDirectiveWrapper;
 
-    constructor(leafletDirective: LeafletDirective, private differs: IterableDiffers, private zone: NgZone) {
+    constructor(
+        leafletDirective: LeafletDirective,
+        private differs: IterableDiffers,
+        private zone: NgZone,
+    ) {
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
         this.layersDiffer = this.differs.find([]).create<Layer>();
     }
@@ -58,13 +68,11 @@ export class LeafletLayersDirective
     }
 
     ngOnInit() {
-
         // Init the map
         this.leafletDirective.init();
 
         // Update layers once the map is ready
         this.updateLayers();
-
     }
 
     ngOnDestroy() {
@@ -78,30 +86,21 @@ export class LeafletLayersDirective
      * as changes to the actual array instance.
      */
     private updateLayers() {
-
         const map = this.leafletDirective.getMap();
 
         if (null != map && null != this.layersDiffer) {
-
             const changes = this.layersDiffer.diff(this.layersValue);
             if (null != changes) {
-
                 // Run outside angular to ensure layer events don't trigger change detection
                 this.zone.runOutsideAngular(() => {
-
                     changes.forEachRemovedItem((c) => {
                         map.removeLayer(c.item);
                     });
                     changes.forEachAddedItem((c) => {
                         map.addLayer(c.item);
                     });
-
                 });
-
             }
-
         }
-
     }
-
 }

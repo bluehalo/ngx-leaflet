@@ -1,31 +1,31 @@
-<div class="container" *ngIf="showDemo" style="margin-top: 30px;">
+@if (showDemo) {
+    <div class="container" style="margin-top: 30px">
+        <leafletCoreDemo></leafletCoreDemo>
+        <br />
 
-    <leafletCoreDemo></leafletCoreDemo>
-    <br/>
+        <leafletBaseLayersDemo></leafletBaseLayersDemo>
+        <br />
 
-    <leafletBaselayersDemo></leafletBaselayersDemo>
-    <br/>
+        <leafletLayersDemo></leafletLayersDemo>
+        <br />
 
-    <leafletLayersDemo></leafletLayersDemo>
-    <br/>
+        <leafletNgForLayersDemo></leafletNgForLayersDemo>
+        <br />
 
-    <leafletNgForLayersDemo></leafletNgForLayersDemo>
-    <br/>
+        <leafletMarkersDemo></leafletMarkersDemo>
+        <br />
 
-    <leafletMarkersDemo></leafletMarkersDemo>
-    <br/>
+        <leafletPerformanceDemo></leafletPerformanceDemo>
+        <br />
 
-    <leafletPerformanceDemo></leafletPerformanceDemo>
-    <br/>
+        <leafletEventsDemo></leafletEventsDemo>
+        <br />
 
-    <leafletEventsDemo></leafletEventsDemo>
-    <br/>
-
-    <leafletMultiMapDemo></leafletMultiMapDemo>
-    <br/>
-
-</div>
-
-
-
-
+        <leafletMultiMapDemo></leafletMultiMapDemo>
+        <br />
+    </div>
+} @else {
+    <div class="container" style="margin-top: 30px">
+        <h3>Loading Demo...</h3>
+    </div>
+}

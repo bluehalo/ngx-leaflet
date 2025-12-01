@@ -4,6 +4,10 @@ export class LeafletControlLayersChanges {
     layersAdded: number = 0;
 
     changed(): boolean {
-        return !(this.layersRemoved === 0 && this.layersChanged === 0 && this.layersAdded === 0);
+        return !(
+            this.layersRemoved === 0 &&
+            this.layersChanged === 0 &&
+            this.layersAdded === 0
+        );
     }
 }

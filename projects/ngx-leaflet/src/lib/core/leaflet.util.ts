@@ -1,8 +1,7 @@
 import { EventEmitter, NgZone } from '@angular/core';
 
 export class LeafletUtil {
-
-    static mapToArray<T>(map: { [ key: string ]: T }): T[] {
+    static mapToArray<T>(map: { [key: string]: T }): T[] {
         const toReturn: T[] = [];
 
         for (const k in map) {
@@ -14,14 +13,16 @@ export class LeafletUtil {
         return toReturn;
     }
 
-    static handleEvent<T>(zone: NgZone, eventEmitter: EventEmitter<T>, event: T) {
-
+    static handleEvent<T>(
+        zone: NgZone,
+        eventEmitter: EventEmitter<T>,
+        event: T,
+    ) {
         // Don't want to emit if there are no observers
         if (0 < eventEmitter.observers.length) {
             zone.run(() => {
                 eventEmitter.emit(event);
             });
         }
-
     }
 }

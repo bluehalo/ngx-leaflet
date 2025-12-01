@@ -1,6 +1,14 @@
 import {
-    Directive, DoCheck, EventEmitter, Input, KeyValueDiffer, KeyValueDiffers, NgZone, OnDestroy,
-    OnInit, Output
+    Directive,
+    DoCheck,
+    EventEmitter,
+    Input,
+    KeyValueDiffer,
+    KeyValueDiffers,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    Output,
 } from '@angular/core';
 
 import { Control, Layer } from 'leaflet';
@@ -9,7 +17,6 @@ import { LeafletUtil } from '../../core/leaflet.util';
 import { LeafletDirective } from '../../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../../core/leaflet.directive.wrapper';
 import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.wrapper';
-
 
 /**
  * Baselayers directive
@@ -25,9 +32,7 @@ import { LeafletControlLayersWrapper } from '../control/leaflet-control-layers.w
 @Directive({
     selector: '[leafletBaseLayers]',
 })
-export class LeafletBaseLayersDirective
-    implements DoCheck, OnDestroy, OnInit {
-
+export class LeafletBaseLayersDirective implements DoCheck, OnDestroy, OnInit {
     // Base Layers
     baseLayersValue: { [name: string]: Layer };
 
@@ -46,10 +51,12 @@ export class LeafletBaseLayersDirective
     }
 
     // Control Options
-    @Input('leafletLayersControlOptions') layersControlOptions: Control.LayersOptions;
+    @Input('leafletLayersControlOptions')
+    layersControlOptions: Control.LayersOptions;
 
     // Output for once the layers control is ready
-    @Output('leafletLayersControlReady') layersControlReady = new EventEmitter<Control.Layers>();
+    @Output('leafletLayersControlReady') layersControlReady =
+        new EventEmitter<Control.Layers>();
 
     // Active Base Layer
     private baseLayer: Layer;
@@ -57,9 +64,16 @@ export class LeafletBaseLayersDirective
     private leafletDirective: LeafletDirectiveWrapper;
     private controlLayers: LeafletControlLayersWrapper;
 
-    constructor(leafletDirective: LeafletDirective, private differs: KeyValueDiffers, private zone: NgZone) {
+    constructor(
+        leafletDirective: LeafletDirective,
+        private differs: KeyValueDiffers,
+        private zone: NgZone,
+    ) {
         this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.controlLayers = new LeafletControlLayersWrapper(this.zone, this.layersControlReady);
+        this.controlLayers = new LeafletControlLayersWrapper(
+            this.zone,
+            this.layersControlReady,
+        );
         this.baseLayersDiffer = this.differs.find({}).create<string, Layer>();
     }
 
@@ -71,22 +85,18 @@ export class LeafletBaseLayersDirective
     }
 
     ngOnInit() {
-
         // Init the map
         this.leafletDirective.init();
 
         // Create the control outside angular to prevent events from triggering chnage detection
         this.zone.runOutsideAngular(() => {
-
             // Initially configure the controlLayers
             this.controlLayers
                 .init({}, this.layersControlOptions)
                 .addTo(this.leafletDirective.getMap());
-
         });
 
         this.updateBaseLayers();
-
     }
 
     ngDoCheck() {
@@ -94,11 +104,14 @@ export class LeafletBaseLayersDirective
     }
 
     protected updateBaseLayers() {
-
         const map = this.leafletDirective.getMap();
         const layersControl = this.controlLayers.getLayersControl();
 
-        if (null != map && null != layersControl && null != this.baseLayersDiffer) {
+        if (
+            null != map &&
+            null != layersControl &&
+            null != this.baseLayersDiffer
+        ) {
             const changes = this.baseLayersDiffer.diff(this.baseLayersValue);
             const results = this.controlLayers.applyBaseLayerChanges(changes);
 
@@ -106,29 +119,26 @@ export class LeafletBaseLayersDirective
                 this.syncBaseLayer();
             }
         }
-
     }
 
     /**
      * Check the current base layer and change it to the new one if necessary
      */
     protected syncBaseLayer() {
-
         const map = this.leafletDirective.getMap();
         const layers = LeafletUtil.mapToArray(this.baseLayers);
         let foundLayer: Layer;
 
         // Search all the layers in the map to see if we can find them in the baselayer array
         map.eachLayer((l: Layer) => {
-            foundLayer = layers.find((bl) => (l === bl));
+            foundLayer = layers.find((bl) => l === bl);
         });
 
         // Did we find the layer?
         if (null != foundLayer) {
             // Yes - set the baselayer to the one we found
             this.baseLayer = foundLayer;
-        }
-        else {
+        } else {
             // No - set the baselayer to the first in the array and add it to the map
             if (layers.length > 0) {
                 this.baseLayer = layers[0];
@@ -139,6 +149,5 @@ export class LeafletBaseLayersDirective
                 });
             }
         }
-
     }
 }

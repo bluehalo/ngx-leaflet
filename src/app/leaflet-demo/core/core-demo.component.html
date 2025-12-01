@@ -1,19 +1,23 @@
 <div class="card">
     <div class="card-body">
-
         <h1 class="card-title">Core - Using options</h1>
         <p>
-            This is a demonstration of setting up a basic map with initial options, including a base layer, an initial zoom level, and a center LatLng position.
-            The zoom level and center position are bound as inputs - <code>[leafletZoom]</code> and <code>[leafletCenter]</code> respectively - so changes are automatically applied to the map.
-            There are also outputs for <code>(leafletZoomChange)</code> and <code>(leafletCenterChange)</code> as well, so changes to the map are communicated to the component.
-            The map is initialized with the options bound to <code>[leafletOptions]</code>.
-            After initialization, changes to the options are ignored.
+            This is a demonstration of setting up a basic map with initial
+            options, including a base layer, an initial zoom level, and a center
+            LatLng position. The zoom level and center position are bound as
+            inputs - <code>[leafletZoom]</code> and
+            <code>[leafletCenter]</code> respectively - so changes are
+            automatically applied to the map. There are also outputs for
+            <code>(leafletZoomChange)</code> and
+            <code>(leafletCenterChange)</code> as well, so changes to the map
+            are communicated to the component. The map is initialized with the
+            options bound to <code>[leafletOptions]</code>. After
+            initialization, changes to the options are ignored.
         </p>
 
         <div class="card bg-light">
             <div class="card-body">
-
-<pre>
+                <pre>
 &lt;div leaflet style="height: 300px;"
         [leafletOptions]="options"
         [leafletZoom]="zoom"
@@ -21,24 +25,21 @@
         [leafletCenter]="center"
         (leafletCenterChange)="onCenterChange($event)"&gt;
 &lt;/div&gt;
-</pre>
-
+</pre
+                >
             </div>
         </div>
-
     </div>
     <div class="card-body">
-
         <div class="row">
-
             <!-- Control Form -->
             <div class="col-sm-12 col-md-6 col-lg-4">
-
                 <form>
-
                     <div class="form-group">
                         <label class="col-form-label">Options:</label>
-                        <small class="form-text">{{ optionsSpec | json }}</small>
+                        <small class="form-text">{{
+                            optionsSpec | json
+                        }}</small>
                     </div>
 
                     <!-- Zoom Levels -->
@@ -49,8 +50,15 @@
                             </label>
                         </div>
                         <div class="col">
-                            <select class="form-control" name="zoom" [(ngModel)]="formZoom" required>
-                                <option *ngFor="let z of zoomLevels" [value]="z">{{z}}</option>
+                            <select
+                                class="form-control"
+                                name="zoom"
+                                [(ngModel)]="formZoom"
+                                required
+                            >
+                                @for (z of zoomLevels; track $index) {
+                                    <option [value]="z">{{ z }}</option>
+                                }
                             </select>
                         </div>
                     </div>
@@ -58,10 +66,18 @@
                     <!-- Lat/Long -->
                     <div class="form-group row">
                         <div class="col-4">
-                            <label class="col-form-label float-right">Latitude</label>
+                            <label class="col-form-label float-right"
+                                >Latitude</label
+                            >
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" name="lat" [(ngModel)]="lat" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="lat"
+                                [(ngModel)]="lat"
+                                required
+                            />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -71,41 +87,44 @@
                             </label>
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control" name="lng" [(ngModel)]="lng" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="lng"
+                                [(ngModel)]="lng"
+                                required
+                            />
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col offset-4">
                             <div class="clearfix">
-                                <button type="button"
-                                        class="btn btn-primary"
-                                        (click)="doApply()">Apply</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    (click)="doApply()"
+                                >
+                                    Apply
+                                </button>
                             </div>
                         </div>
                     </div>
                 </form>
-
             </div>
 
             <!-- Map -->
             <div class="col-sm-12 col-md-6 col-lg-8">
-
-                <div leaflet style="height: 300px;"
-                     [leafletOptions]="options"
-                     [leafletZoom]="zoom"
-                     (leafletZoomChange)="onZoomChange($event)"
-                     [leafletCenter]="center"
-                     (leafletCenterChange)="onCenterChange($event)">
-                </div>
-
+                <div
+                    leaflet
+                    style="height: 300px"
+                    [leafletOptions]="options"
+                    [leafletZoom]="zoom"
+                    (leafletZoomChange)="onZoomChange($event)"
+                    [leafletCenter]="center"
+                    (leafletCenterChange)="onCenterChange($event)"
+                ></div>
             </div>
-
         </div>
-
     </div>
 </div>
-
-
-
-
