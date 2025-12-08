@@ -123,7 +123,7 @@ export class LeafletDirective
         /*
          * The following code is to address an issue with our (basic) implementation of
          * zooming and panning. From our testing, it seems that a pan operation followed
-         * by a zoom operation in the same thread will interfere with eachother. The zoom
+         * by a zoom operation in the same thread will interfere with each other. The zoom
          * operation interrupts/cancels the pan, resulting in a final center point that is
          * inaccurate. The solution seems to be to either separate them with a timeout or
           * to collapse them into a setView call.
