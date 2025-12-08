@@ -30,6 +30,7 @@
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
+    "enableBlockSyntax": true,
 	"enableI18nLegacyMessageIdFormat": false,
 	"strictInjectionParameters": true,
 	"strictInputAccessModifiers": true,
