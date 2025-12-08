@@ -1,11 +1,14 @@
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { latLng, LatLng, tileLayer } from 'leaflet';
+import { LeafletDirective } from 'projects/ngx-leaflet/src/public-api';
 
 @Component({
     selector: 'leafletCoreDemo',
     templateUrl: './core-demo.component.html',
-    standalone: false
+    imports: [FormsModule, JsonPipe, LeafletDirective],
 })
 export class LeafletCoreDemoComponent {
 
@@ -26,22 +29,18 @@ export class LeafletCoreDemoComponent {
 
     // Form bindings
     formZoom = this.zoom;
-    zoomLevels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ];
+    zoomLevels = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ];
     lat = this.center.lat;
     lng = this.center.lng;
 
     // Output binding for center
     onCenterChange(center: LatLng) {
-        setTimeout(() => {
-            this.lat = center.lat;
-            this.lng = center.lng;
-        });
+        this.lat = center.lat;
+        this.lng = center.lng;
     }
 
     onZoomChange(zoom: number) {
-        setTimeout(() => {
-            this.formZoom = zoom;
-        });
+        this.formZoom = zoom;
     }
 
     doApply() {

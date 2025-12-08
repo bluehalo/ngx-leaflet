@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { latLng, Layer, tileLayer } from 'leaflet';
+import { LeafletDirective, LeafletLayersDirective } from 'projects/ngx-leaflet/src/public-api';
 
 @Component({
     selector: 'leafletWrapper',
     templateUrl: './leaflet-wrapper.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [LeafletDirective, LeafletLayersDirective],
 })
 export class LeafletWrapperComponent {
 

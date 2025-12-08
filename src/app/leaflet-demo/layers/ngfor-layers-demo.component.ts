@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { icon, latLng, marker, Marker, tileLayer } from 'leaflet';
+import { LeafletDirective, LeafletLayerDirective } from 'projects/ngx-leaflet/src/public-api';
 
 @Component({
     selector: 'leafletNgForLayersDemo',
     templateUrl: './ngfor-layers-demo.component.html',
-    standalone: false
+    imports: [LeafletDirective, LeafletLayerDirective],
 })
 export class LeafletNgForLayersDemoComponent {
 
