@@ -15,7 +15,7 @@ import { LeafletDirective, LeafletLayerDirective } from 'projects/ngx-leaflet/sr
 export class LeafletEventsDemoComponent {
 
     eventCount = 0;
-    eventLog: string = '';
+    eventLog = '';
 
     options = {
         zoom: 5,
