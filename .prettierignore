@@ -1,0 +1,15 @@
+# Builds
+dist
+coverage
+.angular
+
+# Dependencies
+node_modules
+projects/ngx-leaflet-demo/node_modules
+
+# Generated files
+package-lock.json
+
+# Config files
+.gitignore
+.prettierignore
