@@ -1,54 +1,36 @@
 <div class="card">
-    <div class="card-body">
+  <div class="card-body">
+    <h1 class="card-title">Markers</h1>
+    <p>
+      Markers are just like any other layer. You can add them to a map by creating them and adding them to an array
+      bound to <code>leafletLayers</code>.
+    </p>
 
-        <h1 class="card-title">Markers</h1>
-        <p>
-            Markers are just like any other layer.
-            You can add them to a map by creating them and adding them to an array bound to <code>leafletLayers</code>.
-        </p>
-
-        <div class="card bg-light">
-            <div class="card-body">
-
-<pre>
+    <div class="card bg-light">
+      <div class="card-body">
+        <pre>
 &lt;div leaflet style="height: 300px;"
         [leafletOptions]="options"
         [leafletLayers]="markers"&gt;
 &lt;/div&gt;
-</pre>
-            </div>
-        </div>
-
+</pre
+        >
+      </div>
     </div>
-    <div class="card-body">
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <form class="col">
+        <button type="button" class="btn btn-primary m-1" (click)="addMarker()">Add Marker</button>
 
-        <div class="row">
-            <form class="col">
-
-                <button type="button"
-                        class="btn btn-primary m-1"
-                        (click)="addMarker()">Add Marker</button>
-
-                <button type="button"
-                        class="btn btn-primary m-1"
-                        (click)="removeMarker()">Remove Marker</button>
-
-            </form>
-        </div>
-        <div class="row">
-            <label class="col col-form-label">{{markers?.length}} Markers</label>
-        </div>
-
-        <!-- Map -->
-        <div leaflet style="height: 300px;"
-             [leafletOptions]="options"
-             [leafletLayers]="markers">
-        </div>
-
+        <button type="button" class="btn btn-primary m-1" (click)="removeMarker()">Remove Marker</button>
+      </form>
+    </div>
+    <div class="row">
+      <label class="col col-form-label">{{ markers?.length }} Markers</label>
     </div>
 
+    <!-- Map -->
+    <div leaflet style="height: 300px" [leafletOptions]="options" [leafletLayers]="markers"></div>
+  </div>
 </div>
-
-
-
-

@@ -7,4 +7,3 @@ If this is a bug, issue, enhancement request, etc. verify the following before s
 - [ ] Review the README to see if your issue is covered, and pay particular attention to the [Getting Help](https://github.com/Asymmetrik/ngx-leaflet#help) section.
 - [ ] Tell us what version of Leaflet, Angular, and ngx-leaflet you're using
 - [ ] Include code that reproduces your issue
-
