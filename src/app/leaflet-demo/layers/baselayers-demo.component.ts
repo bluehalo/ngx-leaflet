@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 
 import { Control, latLng, tileLayer } from 'leaflet';
+import { LeafletBaseLayersDirective, LeafletDirective } from 'projects/ngx-leaflet/src/public-api';
 import LayersOptions = Control.LayersOptions;
 
 @Component({
   selector: 'leafletBaselayersDemo',
   templateUrl: './baselayers-demo.component.html',
-  standalone: false,
+  imports: [LeafletDirective, LeafletBaseLayersDirective],
 })
 export class LeafletBaseLayersDemoComponent {
   // Open Street Map and Open Cycle Map definitions

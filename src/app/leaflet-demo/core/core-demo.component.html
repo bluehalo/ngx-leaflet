@@ -42,7 +42,9 @@
             </div>
             <div class="col">
               <select class="form-control" name="zoom" [(ngModel)]="formZoom" required>
-                <option *ngFor="let z of zoomLevels" [value]="z">{{ z }}</option>
+                @for (z of zoomLevels; track $index) {
+                  <option [value]="z">{{ z }}</option>
+                }
               </select>
             </div>
           </div>
@@ -68,7 +70,7 @@
           <div class="form-group row">
             <div class="col offset-4">
               <div class="clearfix">
-                <button type="button" class="btn btn-primary" (click)="doApply()">Apply</button>
+                <button type="button" class="btn btn-primary mt-2" (click)="doApply()">Apply</button>
               </div>
             </div>
           </div>

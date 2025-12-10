@@ -9,7 +9,7 @@
     <p>There are several strategies for mitigating this performance impact if it becomes an issue:</p>
     <ul>
       <li>
-        First, you can wrap the directive in a compoment that uses the
+        First, you can wrap the directive in a component that uses the
         <a href="https://angular.io/api/core/ChangeDetectionStrategy">OnPush change detection strategy</a>. That way,
         you can ensure that change detection is only applied when you want.
       </li>
@@ -23,17 +23,17 @@
   <div class="card-body">
     <div class="row">
       <form class="col">
-        <button type="button" class="btn btn-primary mr-1" (click)="mutableAdd()">Mutable Add Marker</button>
+        <button type="button" class="btn btn-primary m-1" (click)="mutableAdd()">Mutable Add Marker</button>
 
-        <button type="button" class="btn btn-primary mr-1" (click)="mutableRemove()">Mutable Remove Marker</button>
+        <button type="button" class="btn btn-primary m-1" (click)="mutableRemove()">Mutable Remove Marker</button>
 
-        <button type="button" class="btn btn-primary" (click)="newArray()">Update Array Instance</button>
+        <button type="button" class="btn btn-primary m-1" (click)="newArray()">Update Array Instance</button>
       </form>
     </div>
     <div class="row">
       <label class="col col-form-label">{{ markers?.length }} Markers</label>
     </div>
 
-    <leafletWrapper [leafletMarkers]="markers"></leafletWrapper>
+    <leafletWrapper [leafletMarkers]="markers" />
   </div>
 </div>

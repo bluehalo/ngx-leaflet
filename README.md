@@ -180,7 +180,7 @@ options = {
 Changes to leafletOptions are ignored after they are initially set.
 This is because these options are passed into the map constructor, so they can't be changed anyways.
 So, make sure the object exists before the map is created.
-You'll want to create the object in `ngOnInit` or hide the map DOM element with `*ngIf` until you can create the options object.
+You'll want to create the object in `ngOnInit` or hide the map DOM element with `@if` until you can create the options object.
 
 ### Add a Layers Control
 

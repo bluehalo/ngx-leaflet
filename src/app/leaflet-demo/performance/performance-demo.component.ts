@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { icon, Layer, marker } from 'leaflet';
+import { LeafletWrapperComponent } from './leaflet-wrapper.component';
 
 @Component({
   selector: 'leafletPerformanceDemo',
   templateUrl: './performance-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [LeafletWrapperComponent],
 })
 export class LeafletPerformanceDemoComponent {
   markers: Layer[] = [];
