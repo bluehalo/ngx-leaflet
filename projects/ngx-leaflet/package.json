@@ -9,7 +9,6 @@
     "type": "git",
     "url": "git+https://github.com/bluehalo/ngx-leaflet.git"
   },
-
   "peerDependencies": {
     "@angular/common": "21",
     "@angular/core": "21",

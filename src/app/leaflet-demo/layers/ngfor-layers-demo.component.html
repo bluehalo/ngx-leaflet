@@ -1,58 +1,41 @@
 <div class="card">
-    <div class="card-body">
+  <div class="card-body">
+    <h1 class="card-title">Layers and &#64;for</h1>
+    <p>
+      You can also use &#64;for or &#64;if to show/hide individual layers by nesting them inside the map element. In
+      this case, you can use [leafletLayer] to bind an individual layer.
+    </p>
 
-        <h1 class="card-title">Layers and &#64;for</h1>
-        <p>
-            You can also use &#64;for or &#64;if to show/hide individual layers by nesting them inside the map element.
-            In this case, you can use [leafletLayer] to bind an individual layer.
-        </p>
-
-        <div class="card bg-light">
-            <div class="card-body">
-
-<pre>
+    <div class="card bg-light">
+      <div class="card-body">
+        <pre>
 &lt;div leaflet style="height: 300px;" [leafletOptions]="options"&gt;
-    &#64;for(m of markers; track $index) {{ "{" }}
+    &#64;for(m of markers; track $index) {{ '{' }}
         &lt;div [leafletLayer]="m"&gt;&lt;/div&gt;
-    {{ "}" }}
+    {{ '}' }}
 &lt;/div&gt;
-</pre>
-
-            </div>
-        </div>
-
+</pre
+        >
+      </div>
     </div>
-    <div class="card-body">
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <form class="col">
+        <button type="button" class="btn btn-primary m-1" (click)="addMarker()">Add Marker</button>
 
-        <div class="row">
-            <form class="col">
-
-                <button type="button"
-                    class="btn btn-primary m-1"
-                    (click)="addMarker()">Add Marker</button>
-
-                <button type="button"
-                    class="btn btn-primary m-1"
-                    (click)="removeMarker()">Remove Marker</button>
-
-            </form>
-        </div>
-        <div class="row">
-            <label class="col col-form-label">{{markers?.length}} Markers</label>
-        </div>
-
-        <!-- Map -->
-        <div leaflet style="height: 300px;" [leafletOptions]="options">
-            @for (m of markers; track $index) {
-                <div [leafletLayer]="m"></div>
-            }
-        </div>
-
-
+        <button type="button" class="btn btn-primary m-1" (click)="removeMarker()">Remove Marker</button>
+      </form>
+    </div>
+    <div class="row">
+      <label class="col col-form-label">{{ markers?.length }} Markers</label>
     </div>
 
+    <!-- Map -->
+    <div leaflet style="height: 300px" [leafletOptions]="options">
+      @for (m of markers; track $index) {
+        <div [leafletLayer]="m"></div>
+      }
+    </div>
+  </div>
 </div>
-
-
-
-

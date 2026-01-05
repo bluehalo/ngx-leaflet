@@ -8,6 +8,8 @@
     "demo": "ng serve ngx-leaflet-demo",
     "build": "ng build ngx-leaflet --configuration production && copyfiles README.md LICENSE CHANGES.md ./dist/ngx-leaflet",
     "watch": "ng build ngx-leaflet --watch --configuration development",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "ng test ngx-leaflet"
   },
   "private": true,
@@ -40,6 +42,8 @@
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.7.4",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "ng-packagr": "^21.0.0",
     "typescript": "~5.9.3"
   }

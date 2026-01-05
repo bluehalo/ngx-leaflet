@@ -4,40 +4,38 @@ import { latLng, MapOptions, tileLayer } from 'leaflet';
 import { LeafletDirective } from 'projects/ngx-leaflet/src/public-api';
 
 interface MapSpec {
-    options: MapOptions;
+  options: MapOptions;
 }
 
 @Component({
-    selector: 'leafletMultiMapDemo',
-    templateUrl: './multi-map-demo.component.html',
-    imports: [LeafletDirective],
+  selector: 'leafletMultiMapDemo',
+  templateUrl: './multi-map-demo.component.html',
+  imports: [LeafletDirective],
 })
 export class LeafletMultiMapDemoComponent {
+  optionsSpec: any = {
+    layers: [{ url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: 'Open Street Map' }],
+    zoom: 5,
+    center: [46.879966, -121.726909],
+  };
 
-    optionsSpec: any = {
-        layers: [{ url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: 'Open Street Map' }],
-        zoom: 5,
-        center: [ 46.879966, -121.726909 ]
+  maps: MapSpec[] = [];
+
+  doAddMap() {
+    this.maps.push(this.createMapSpec(this.optionsSpec));
+  }
+
+  doRemoveMap() {
+    this.maps.pop();
+  }
+
+  private createMapSpec(optionsSpec: any): MapSpec {
+    return {
+      options: {
+        layers: [tileLayer(optionsSpec.layers[0].url, { attribution: optionsSpec.layers[0].attribution })],
+        zoom: optionsSpec.zoom,
+        center: latLng(optionsSpec.center),
+      },
     };
-
-    maps: MapSpec[] = [];
-
-    doAddMap() {
-        this.maps.push(this.createMapSpec(this.optionsSpec));
-    }
-
-    doRemoveMap() {
-        this.maps.pop();
-    }
-
-    private createMapSpec(optionsSpec: any): MapSpec {
-        return {
-            options: {
-                layers: [ tileLayer(optionsSpec.layers[0].url, { attribution: optionsSpec.layers[0].attribution }) ],
-                zoom: optionsSpec.zoom,
-                center: latLng(optionsSpec.center)
-            }
-        };
-    }
-
+  }
 }

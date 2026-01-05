@@ -1,10 +1,9 @@
 import { Directive, DoCheck, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, OnInit } from '@angular/core';
 
-import { Layer} from 'leaflet';
+import { Layer } from 'leaflet';
 
 import { LeafletDirective } from '../core/leaflet.directive';
 import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
-
 
 /**
  * Layers directive
@@ -22,86 +21,77 @@ import { LeafletDirectiveWrapper } from '../core/leaflet.directive.wrapper';
  *
  */
 @Directive({
-    selector: '[leafletLayers]',
+  selector: '[leafletLayers]',
 })
-export class LeafletLayersDirective
-    implements DoCheck, OnDestroy, OnInit {
+export class LeafletLayersDirective implements DoCheck, OnDestroy, OnInit {
+  // Array of configured layers
+  layersValue: Layer[];
 
-    // Array of configured layers
-    layersValue: Layer[];
+  // Differ to do change detection on the array
+  layersDiffer: IterableDiffer<Layer>;
 
-    // Differ to do change detection on the array
-    layersDiffer: IterableDiffer<Layer>;
+  // Set/get the layers
+  @Input('leafletLayers')
+  set layers(v: Layer[]) {
+    this.layersValue = v;
 
-    // Set/get the layers
-    @Input('leafletLayers')
-    set layers(v: Layer[]) {
-        this.layersValue = v;
+    // Now that we have a differ, do an immediate layer update
+    this.updateLayers();
+  }
+  get layers(): Layer[] {
+    return this.layersValue;
+  }
 
-        // Now that we have a differ, do an immediate layer update
-        this.updateLayers();
+  // Wrapper for the leaflet directive (manages the parent directive)
+  private leafletDirective: LeafletDirectiveWrapper;
+
+  constructor(
+    leafletDirective: LeafletDirective,
+    private differs: IterableDiffers,
+    private zone: NgZone
+  ) {
+    this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
+    this.layersDiffer = this.differs.find([]).create<Layer>();
+  }
+
+  ngDoCheck() {
+    this.updateLayers();
+  }
+
+  ngOnInit() {
+    // Init the map
+    this.leafletDirective.init();
+
+    // Update layers once the map is ready
+    this.updateLayers();
+  }
+
+  ngOnDestroy() {
+    this.layers = [];
+  }
+
+  /**
+   * Update the state of the layers.
+   * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
+   * This is important because it allows us to react to changes to the contents of the array as well
+   * as changes to the actual array instance.
+   */
+  private updateLayers() {
+    const map = this.leafletDirective.getMap();
+
+    if (null != map && null != this.layersDiffer) {
+      const changes = this.layersDiffer.diff(this.layersValue);
+      if (null != changes) {
+        // Run outside angular to ensure layer events don't trigger change detection
+        this.zone.runOutsideAngular(() => {
+          changes.forEachRemovedItem((c) => {
+            map.removeLayer(c.item);
+          });
+          changes.forEachAddedItem((c) => {
+            map.addLayer(c.item);
+          });
+        });
+      }
     }
-    get layers(): Layer[] {
-        return this.layersValue;
-    }
-
-    // Wrapper for the leaflet directive (manages the parent directive)
-    private leafletDirective: LeafletDirectiveWrapper;
-
-    constructor(leafletDirective: LeafletDirective, private differs: IterableDiffers, private zone: NgZone) {
-        this.leafletDirective = new LeafletDirectiveWrapper(leafletDirective);
-        this.layersDiffer = this.differs.find([]).create<Layer>();
-    }
-
-    ngDoCheck() {
-        this.updateLayers();
-    }
-
-    ngOnInit() {
-
-        // Init the map
-        this.leafletDirective.init();
-
-        // Update layers once the map is ready
-        this.updateLayers();
-
-    }
-
-    ngOnDestroy() {
-        this.layers = [];
-    }
-
-    /**
-     * Update the state of the layers.
-     * We use an iterable differ to synchronize the map layers with the state of the bound layers array.
-     * This is important because it allows us to react to changes to the contents of the array as well
-     * as changes to the actual array instance.
-     */
-    private updateLayers() {
-
-        const map = this.leafletDirective.getMap();
-
-        if (null != map && null != this.layersDiffer) {
-
-            const changes = this.layersDiffer.diff(this.layersValue);
-            if (null != changes) {
-
-                // Run outside angular to ensure layer events don't trigger change detection
-                this.zone.runOutsideAngular(() => {
-
-                    changes.forEachRemovedItem((c) => {
-                        map.removeLayer(c.item);
-                    });
-                    changes.forEachAddedItem((c) => {
-                        map.addLayer(c.item);
-                    });
-
-                });
-
-            }
-
-        }
-
-    }
-
+  }
 }
