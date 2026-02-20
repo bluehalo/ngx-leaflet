@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
-import { latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
+import { latLng, LeafletEvent, LeafletMouseEvent, tileLayer } from 'leaflet';
 import { FormsModule } from '@angular/forms';
 import { LeafletDirective, LeafletLayerDirective } from 'projects/ngx-leaflet/src/public-api';
 
@@ -33,7 +33,7 @@ export class LeafletEventsDemoComponent {
             .subscribe((v: string) => { this.eventLog = v; } );
     }
 
-    handleEvent(eventType: string, event: any) {
+    handleEvent(eventType: string, event: LeafletEvent | LeafletMouseEvent) {
         this.eventSubject.next(eventType);
     }
 

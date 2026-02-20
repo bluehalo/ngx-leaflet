@@ -12,7 +12,11 @@ import { LeafletDirective } from 'projects/ngx-leaflet/src/public-api';
 })
 export class LeafletCoreDemoComponent {
 
-    optionsSpec: any = {
+    optionsSpec: {
+        layers: { url: string, attribution: string }[],
+        zoom: number,
+        center: [number, number]
+    } = {
         layers: [{ url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: 'Open Street Map' }],
         zoom: 5,
         center: [ 46.879966, -121.726909 ]

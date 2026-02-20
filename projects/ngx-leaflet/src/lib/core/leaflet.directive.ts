@@ -17,7 +17,7 @@ export class LeafletDirective
     readonly DEFAULT_CENTER = latLng(38.907192, -77.036871);
     readonly DEFAULT_FPZ_OPTIONS = {};
 
-    resizeTimer: any;
+    resizeTimer: ReturnType<typeof setTimeout> | null;
 
     // Reference to the primary map object
     map: Map;
@@ -180,7 +180,7 @@ export class LeafletDirective
 
     private addMapEventListeners() {
 
-        const registerEventHandler = (eventName: string, handler: (e: LeafletEvent) => any) => {
+        const registerEventHandler = (eventName: string, handler: (e: LeafletEvent) => void) => {
             this.map.on(eventName, handler);
         };
 

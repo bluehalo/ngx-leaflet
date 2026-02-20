@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as geojson from 'geojson';
 
 import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
 
@@ -75,7 +76,7 @@ export class LeafletLayersDemoComponent {
         name: 'Geo JSON Polygon',
         enabled: true,
         layer: geoJSON(
-            ({
+            {
                 type: 'Polygon',
                 coordinates: [[
                     [ -121.6, 46.87 ],
@@ -83,7 +84,7 @@ export class LeafletLayersDemoComponent {
                     [ -121.5, 46.93],
                     [ -121.6, 46.87 ]
                 ]]
-            }) as any,
+            } as geojson.Polygon,
             { style: () => ({ color: '#ff7800' })})
     };
 
@@ -122,12 +123,12 @@ export class LeafletLayersDemoComponent {
     apply() {
 
         // Get the active base layer
-        const baseLayer = this.model.baseLayers.find((l: any) => (l.id === this.model.baseLayer));
+        const baseLayer = this.model.baseLayers.find((l: { id: string, name: string, enabled: boolean, layer: Layer }) => (l.id === this.model.baseLayer));
 
         // Get all the active overlay layers
         const newLayers = this.model.overlayLayers
-            .filter((l: any) => l.enabled)
-            .map((l: any) => l.layer);
+            .filter((l: { id: string, name: string, enabled: boolean, layer: Layer }) => l.enabled)
+            .map((l: { id: string, name: string, enabled: boolean, layer: Layer }) => l.layer);
         newLayers.unshift(baseLayer.layer);
 
         this.layers = newLayers;

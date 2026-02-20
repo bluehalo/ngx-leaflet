@@ -30,8 +30,8 @@ export class LeafletLayerDirective
     @Output('leafletLayerRemove') onRemove = new EventEmitter<LeafletEvent>();
 
     // Layer Event handlers
-    private onAddLayerHandler: any;
-    private onRemoveLayerHandler: any;
+    private onAddLayerHandler: (event: LeafletEvent) => void;
+    private onRemoveLayerHandler: (event: LeafletEvent) => void;
 
     // Wrapper for the leaflet directive (manages the parent directive)
     private leafletDirective: LeafletDirectiveWrapper;

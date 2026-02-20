@@ -14,7 +14,11 @@ interface MapSpec {
 })
 export class LeafletMultiMapDemoComponent {
 
-    optionsSpec: any = {
+    optionsSpec: {
+        layers: { url: string, attribution: string }[],
+        zoom: number,
+        center: [number, number]
+    } = {
         layers: [{ url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: 'Open Street Map' }],
         zoom: 5,
         center: [ 46.879966, -121.726909 ]
@@ -30,7 +34,11 @@ export class LeafletMultiMapDemoComponent {
         this.maps.pop();
     }
 
-    private createMapSpec(optionsSpec: any): MapSpec {
+    private createMapSpec(optionsSpec: {
+        layers: { url: string, attribution: string }[],
+        zoom: number,
+        center: [number, number]
+    }): MapSpec {
         return {
             options: {
                 layers: [ tileLayer(optionsSpec.layers[0].url, { attribution: optionsSpec.layers[0].attribution }) ],

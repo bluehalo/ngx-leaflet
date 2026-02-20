@@ -52,7 +52,7 @@ export class LeafletLayersControlDirective
         return this.layersControlConfigValue;
     }
 
-    @Input('leafletLayersControlOptions') layersControlOptions: any;
+    @Input('leafletLayersControlOptions') layersControlOptions: Control.LayersOptions;
 
     @Output('leafletLayersControlReady') layersControlReady = new EventEmitter<Control.Layers>();
 

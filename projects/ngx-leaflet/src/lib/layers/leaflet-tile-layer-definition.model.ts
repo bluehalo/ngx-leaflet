@@ -1,11 +1,11 @@
-import { tileLayer, TileLayer } from 'leaflet';
+import { tileLayer, TileLayer, TileLayerOptions } from 'leaflet';
 
 export class LeafletTileLayerDefinition {
 
     constructor(
         public type: string,
         public url: string,
-        public options: any) { }
+        public options: TileLayerOptions) { }
 
 
     /**

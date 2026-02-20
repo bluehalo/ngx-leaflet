@@ -20,7 +20,7 @@ export class LeafletControlLayersWrapper {
         return this.layersControl;
     }
 
-    init(controlConfig: any, controlOptions: any): Control.Layers {
+    init(controlConfig: { baseLayers?: { [name: string]: Layer }, overlays?: { [name: string]: Layer } }, controlOptions: Control.LayersOptions): Control.Layers {
 
         const baseLayers = controlConfig.baseLayers || {};
         const overlays = controlConfig.overlays || {};
