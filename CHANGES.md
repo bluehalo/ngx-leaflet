@@ -1,5 +1,8 @@
 # Changelog
 
+## 22.0.0
+Support for Angular.io 22.
+
 ## 21.2.1
 - Docs: restructured README — extracted API reference and Recipes to docs/; added Angular component popup pattern to Recipes
 - Tests: expanded unit test coverage to 91 tests across all directives; added Codecov integration
