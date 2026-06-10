@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { latLng, MapOptions, tileLayer } from 'leaflet';
 import { LeafletDirective } from 'projects/ngx-leaflet/src/public-api';
@@ -10,6 +10,7 @@ interface MapSpec {
 @Component({
     selector: 'leafletMultiMapDemo',
     templateUrl: './multi-map-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [LeafletDirective],
 })
 export class LeafletMultiMapDemoComponent {

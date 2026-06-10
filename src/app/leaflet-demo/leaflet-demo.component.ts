@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LeafletCoreDemoComponent } from './core/core-demo.component';
 import { LeafletBaseLayersDemoComponent } from './layers/baselayers-demo.component';
 import { LeafletLayersDemoComponent } from './layers/layers-demo.component';
@@ -11,6 +11,7 @@ import { LeafletMultiMapDemoComponent } from './core/multi-map-demo.component';
 @Component({
     selector: 'leafletDemo',
     templateUrl: './leaflet-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         LeafletCoreDemoComponent,
         LeafletBaseLayersDemoComponent,

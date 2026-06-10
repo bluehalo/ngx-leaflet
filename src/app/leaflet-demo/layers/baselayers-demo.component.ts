@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { Control, latLng, tileLayer } from 'leaflet';
 import LayersOptions = Control.LayersOptions;
@@ -7,6 +7,7 @@ import { LeafletBaseLayersDirective, LeafletDirective } from 'projects/ngx-leafl
 @Component({
     selector: 'leafletBaselayersDemo',
     templateUrl: './baselayers-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [LeafletDirective, LeafletBaseLayersDirective],
 })
 export class LeafletBaseLayersDemoComponent {

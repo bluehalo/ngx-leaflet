@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { latLng, LatLng, tileLayer } from 'leaflet';
@@ -8,6 +8,7 @@ import { LeafletDirective } from 'projects/ngx-leaflet/src/public-api';
 @Component({
     selector: 'leafletCoreDemo',
     templateUrl: './core-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, JsonPipe, LeafletDirective],
 })
 export class LeafletCoreDemoComponent {
