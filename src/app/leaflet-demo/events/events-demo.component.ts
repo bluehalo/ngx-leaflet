@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, scan } from 'rxjs/operators';
 
@@ -10,6 +10,7 @@ import { LeafletDirective, LeafletLayerDirective } from 'projects/ngx-leaflet/sr
 @Component({
     selector: 'leafletEventsDemo',
     templateUrl: './events-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, LeafletDirective, LeafletLayerDirective],
 })
 export class LeafletEventsDemoComponent {

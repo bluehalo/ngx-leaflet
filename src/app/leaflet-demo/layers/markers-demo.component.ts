@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
 import { LeafletDirective, LeafletLayersDirective } from 'projects/ngx-leaflet/src/public-api';
@@ -6,6 +6,7 @@ import { LeafletDirective, LeafletLayersDirective } from 'projects/ngx-leaflet/s
 @Component({
     selector: 'leafletMarkersDemo',
     templateUrl: './markers-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [LeafletDirective, LeafletLayersDirective],
 })
 export class LeafletMarkersDemoComponent {

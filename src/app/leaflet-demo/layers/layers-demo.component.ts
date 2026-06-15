@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import * as geojson from 'geojson';
 
 import { circle, geoJSON, icon, latLng, Layer, marker, polygon, tileLayer } from 'leaflet';
@@ -10,6 +10,7 @@ import { LeafletDirective, LeafletLayersControlDirective, LeafletLayersDirective
 @Component({
     selector: 'leafletLayersDemo',
     templateUrl: './layers-demo.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         FormsModule,
         LeafletDirective,

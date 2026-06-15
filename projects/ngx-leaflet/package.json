@@ -1,7 +1,7 @@
 {
   "name": "@bluehalo/ngx-leaflet",
   "description": "Angular.io components for Leaflet",
-  "version": "21.2.1",
+  "version": "22.0.0",
   "author": "BlueHalo",
   "copyright": "Copyright (c) BlueHalo LLC",
   "license": "MIT",
@@ -11,8 +11,8 @@
   },
 
   "peerDependencies": {
-    "@angular/common": "21",
-    "@angular/core": "21",
+    "@angular/common": "22",
+    "@angular/core": "22",
     "leaflet": "1"
   },
   "dependencies": {

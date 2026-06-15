@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,6 +11,7 @@ import { LeafletControlLayersConfig } from './leaflet-control-layers-config.mode
 
 @Component({
 	imports: [LeafletDirective, LeafletLayersControlDirective],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	template: `
 		<div style="width: 400px; height: 400px;"
 			leaflet
